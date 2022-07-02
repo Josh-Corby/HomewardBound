@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class PlayerPickUp : MonoBehaviour
+using TMPro;
+public class PlayerPickUp : GameBehaviour
 {
     InputManager inputManager;
     public bool canPickUp;
     public GameObject objectToPickUp;
+
+    public int lightPickUpValue = 8;
     private void Awake()
     {
         inputManager = GetComponentInParent<InputManager>();
@@ -24,7 +26,22 @@ public class PlayerPickUp : MonoBehaviour
 
             if (canPickUp)
             {
-                Debug.Log("Picked up small object");
+                if (objectToPickUp.CompareTag("LightPickUp"))
+                {
+                    FL.ChangeIntensity(lightPickUpValue);
+                }
+
+                if (objectToPickUp.CompareTag("SmallRock"))
+                {
+                    GM.smallRocksCollected +=1;
+                    UI.UpdateSmallRocksCollectedText();
+                    Debug.Log(GM.smallRocksCollected);
+
+                }
+                    
+
+
+                //Debug.Log("Picked up small object");
                 Destroy(objectToPickUp);
                 canPickUp = false;
                 objectToPickUp = null;
@@ -33,11 +50,19 @@ public class PlayerPickUp : MonoBehaviour
 
         }
     }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("SmallObject"))
+        if (other.CompareTag("SmallRock"))
         {
-            Debug.Log("collide with small object");
+            //Debug.Log("collide with small rock");
+            other.GetComponent<Outline>().enabled = true;
+            canPickUp = true;
+            objectToPickUp = other.gameObject;
+        }
+        if (other.CompareTag("LightPickUp"))
+        {
+            Debug.Log("Light PickUp detected");
             other.GetComponent<Outline>().enabled = true;
             canPickUp = true;
             objectToPickUp = other.gameObject;
@@ -46,7 +71,7 @@ public class PlayerPickUp : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("SmallObject"))
+        if (other.CompareTag("SmallObject") || other.CompareTag("LightPickUp"))
         {
             other.GetComponent<Outline>().enabled = false;
             canPickUp = false;

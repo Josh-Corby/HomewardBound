@@ -10,6 +10,8 @@ public class GameBehaviour : JMC
     protected static CameraManager CM { get { return CameraManager.INSTANCE; } }
     protected static AnimatorManager AM { get { return AnimatorManager.INSTANCE; } }
     protected static InputManager IM { get { return InputManager.INSTANCE; } }
+    protected static FlashLight FL { get { return FlashLight.INSTANCE; } }
+    protected static UIManager UI { get { return UIManager.INSTANCE; } }
 
 }
 

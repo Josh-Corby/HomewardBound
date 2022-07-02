@@ -6,6 +6,8 @@ TagManager:
   tags:
   - SmallObject
   - Mud
+  - LightPickUp
+  - SmallRock
   layers:
   - Default
   - TransparentFX
