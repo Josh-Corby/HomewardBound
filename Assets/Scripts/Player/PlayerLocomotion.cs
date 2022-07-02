@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
 {
     PlayerManager playerManager;
@@ -10,7 +11,7 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
     Rigidbody playerRigidBody;
 
 
-    Vector3 moveDirection;
+    public Vector3 moveDirection;
     Transform cameraObject;
 
     [Header("Falling")]
@@ -26,6 +27,7 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
     public bool isJumping;
 
     [Header("Movement Speeds")]
+    public float mudSpeed = 0.5f;
     public float walkingSpeed = 1.5f;
     public float runningSpeed = 5f;
     public float sprintingSpeed = 7f;
@@ -162,4 +164,6 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
             playerRigidBody.velocity = playerVelocity;
         }
     }
+
+
 }

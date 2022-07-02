@@ -29,7 +29,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>
 
     private void LateUpdate()
     {
-        cameraManager.HandleAllCameraMovement();
+        //cameraManager.HandleAllCameraMovement();
 
         isInteracting = animator.GetBool("isInteracting");
         playerLocomotion.isJumping = animator.GetBool("isJumping");
