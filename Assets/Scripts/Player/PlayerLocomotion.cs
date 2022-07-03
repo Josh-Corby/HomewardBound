@@ -5,11 +5,7 @@ using UnityEngine;
 
 public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
 {
-    PlayerManager playerManager;
-    InputManager inputManager;
-    AnimatorManager animatorManager;
     Rigidbody playerRigidBody;
-
 
     public Vector3 moveDirection;
     Transform cameraObject;
@@ -39,9 +35,6 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
 
     private void Awake()
     {
-        playerManager = GetComponent<PlayerManager>();
-        inputManager = GetComponent<InputManager>();
-        animatorManager = GetComponent<AnimatorManager>();
         playerRigidBody = GetComponent<Rigidbody>();
         cameraObject = Camera.main.transform;
     }
@@ -49,7 +42,7 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
     public void HandleAllMovement()
     {
         HandleFallingAndLanding();
-        if (playerManager.isInteracting) return;
+        if (PM.isInteracting) return;
 
         HandleMovement();
         HandleRotation();
@@ -58,8 +51,8 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
     {
         if (isJumping) return;
         moveDirection = new Vector3(cameraObject.forward.x, 0f, cameraObject.forward.z) 
-            * inputManager.verticalInput;
-        moveDirection += cameraObject.right * inputManager.horizontalInput;
+            * IM.verticalInput;
+        moveDirection += cameraObject.right * IM.horizontalInput;
         moveDirection.Normalize();
         moveDirection.y = 0;
 
@@ -69,7 +62,7 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
         }
         else
         {
-            if (inputManager.moveAmount >= 0.5f)
+            if (IM.moveAmount >= 0.5f)
             {
                 moveDirection *= runningSpeed;
             }
@@ -86,8 +79,8 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
     {
         if (isJumping) return;
         Vector3 targetDirection = Vector3.zero;
-        targetDirection = cameraObject.forward * inputManager.verticalInput;
-        targetDirection += cameraObject.right * inputManager.horizontalInput;
+        targetDirection = cameraObject.forward * IM.verticalInput;
+        targetDirection += cameraObject.right * IM.horizontalInput;
         targetDirection.Normalize();
         targetDirection.y = 0;
 
@@ -111,9 +104,9 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
 
         if (!isGrounded && !isJumping)
         {
-            if (!playerManager.isInteracting)
+            if (!PM.isInteracting)
             {
-                animatorManager.PlayTargetAnimation("Falling", true);
+                AM.PlayTargetAnimation("Falling", true);
             }
 
             inAirTimer += Time.deltaTime;
@@ -122,16 +115,16 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
         }
         if (Physics.SphereCast(rayCastOrigin, 0.2f, Vector3.down, out hit, 0.5f, groundLayer))
         {
-            if(!isGrounded && playerManager.isInteracting)
+            if(!isGrounded && PM.isInteracting)
             {
-                animatorManager.PlayTargetAnimation("LandSoft", true);
+                AM.PlayTargetAnimation("LandSoft", true);
             }
 
             Vector3 rayCastHitPoint = hit.point;
             targetPosition.y = rayCastHitPoint.y;
             inAirTimer = 0;
             isGrounded = true;
-            playerManager.isInteracting = false;
+            PM.isInteracting = false;
         }
         else
         {
@@ -140,7 +133,7 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
 
         if(isGrounded && !isJumping)
         {
-            if(playerManager.isInteracting || inputManager.moveAmount > 0)
+            if(PM.isInteracting || IM.moveAmount > 0)
             {
                 transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime / 0.1f);
             }
@@ -155,8 +148,8 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
     {
         if (isGrounded)
         {
-            animatorManager.animator.SetBool("isJumping", true);
-            animatorManager.PlayTargetAnimation("Jump", false);
+            AM.animator.SetBool("isJumping", true);
+            AM.PlayTargetAnimation("Jump", false);
 
             float jumpingVelocity = Mathf.Sqrt(-2 * gravityIntensity * jumpHeight);
             Vector3 playerVelocity = moveDirection;

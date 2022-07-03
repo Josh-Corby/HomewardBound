@@ -5,25 +5,16 @@ using UnityEngine;
 public class InputManager : GameBehaviour<InputManager>
 {
     PlayerControls playerControls;
-    PlayerLocomotion playerLocomotion;
-    AnimatorManager animatorManager;
 
     public Vector2 movementInput, cameraInput;
-
     public float cameraInputX, cameraInputY;
     public float moveAmount;
     public float verticalInput, horizontalInput;
-
-
     public bool sprint_Input;
     public bool jump_Input;
     public bool interact_Input;
 
-    private void Awake()
-    {
-        playerLocomotion = GetComponent<PlayerLocomotion>();
-        animatorManager = GetComponent<AnimatorManager>();
-    }
+
 
     private void OnEnable()
     {
@@ -66,18 +57,18 @@ public class InputManager : GameBehaviour<InputManager>
         cameraInputY = cameraInput.y;
 
         moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
-        animatorManager.UpdateAnimatorValues(0, moveAmount, playerLocomotion.isSprinting);
+        AM.UpdateAnimatorValues(0, moveAmount, PL.isSprinting);
     }
 
     private void HandleSprintingInput()
     {
         if (sprint_Input && moveAmount > 0.5f)
         {
-            playerLocomotion.isSprinting = true;
+            PL.isSprinting = true;
         }
         else
         {
-            playerLocomotion.isSprinting = false;
+            PL.isSprinting = false;
         }
     }
 
@@ -86,7 +77,7 @@ public class InputManager : GameBehaviour<InputManager>
         if (jump_Input)
         {
             jump_Input = false;
-            playerLocomotion.HandleJumping();
+            PL.HandleJumping();
         }
     }
 

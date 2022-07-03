@@ -7,7 +7,12 @@ public class UIManager : GameBehaviour<UIManager>
 {
     public TMP_Text flashLightIntensity;
     public TMP_Text smallRocksCollected;
+    public TMP_Text canBuildText;
 
+    private void Start()
+    {
+        UpdateCanBuildText(false);
+    }
     private void Update()
     {
         flashLightIntensity.text = "Light Power: " + 
@@ -18,5 +23,23 @@ public class UIManager : GameBehaviour<UIManager>
     {
         smallRocksCollected.text = "Small Rocks Collected: " +  
             GM.smallRocksCollected.ToString();
+    }
+
+
+    public void UpdateCanBuildText(bool canBuild)
+    {
+        if (!canBuild)
+        {
+            canBuildText.text = "";
+        }
+        if (canBuild)
+        {
+            canBuildText.text = "Build";
+        }
+    }
+
+    public void UpdateCanBuildText(string text)
+    {
+        canBuildText.text = text;
     }
 }

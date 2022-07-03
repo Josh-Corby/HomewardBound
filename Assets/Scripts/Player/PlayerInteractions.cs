@@ -2,25 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class PlayerPickUp : GameBehaviour
+public class PlayerInteractions : GameBehaviour
 {
-    InputManager inputManager;
     public bool canPickUp;
     public GameObject objectToPickUp;
-
     public int lightPickUpValue = 8;
-    private void Awake()
-    {
-        inputManager = GetComponentInParent<InputManager>();
-    }
 
     private void Update()
     {
-        if (inputManager.interact_Input)
+        if (IM.interact_Input)
         {
-            if (objectToPickUp == false)
+            if (objectToPickUp == null)
             {
-                inputManager.interact_Input = false;
+                IM.interact_Input = false;
                 return;
             }
 
@@ -38,14 +32,12 @@ public class PlayerPickUp : GameBehaviour
                     Debug.Log(GM.smallRocksCollected);
 
                 }
-                    
-
 
                 //Debug.Log("Picked up small object");
                 Destroy(objectToPickUp);
                 canPickUp = false;
                 objectToPickUp = null;
-                inputManager.interact_Input = false;
+                IM.interact_Input = false;
             }
 
         }
@@ -71,7 +63,7 @@ public class PlayerPickUp : GameBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("SmallObject") || other.CompareTag("LightPickUp"))
+        if (other.CompareTag("SmallRock") || other.CompareTag("LightPickUp"))
         {
             other.GetComponent<Outline>().enabled = false;
             canPickUp = false;

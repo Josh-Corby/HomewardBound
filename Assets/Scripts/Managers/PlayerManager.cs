@@ -2,29 +2,25 @@ using UnityEngine;
 
 public class PlayerManager : GameBehaviour<PlayerManager>
 {
-    InputManager inputManager;
     CameraManager cameraManager;
     Animator animator;
-    PlayerLocomotion playerLocomotion;
 
     public bool isInteracting;
 
     private void Awake()
     {
-        inputManager = GetComponent<InputManager>();
         cameraManager = FindObjectOfType<CameraManager>();
-        playerLocomotion = GetComponent<PlayerLocomotion>();
         animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        inputManager.HandleAllInputs();
+        IM.HandleAllInputs();
     }
 
     private void FixedUpdate()
     {
-        playerLocomotion.HandleAllMovement();
+        PL.HandleAllMovement();
     }
 
     private void LateUpdate()
@@ -32,7 +28,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>
         //cameraManager.HandleAllCameraMovement();
 
         isInteracting = animator.GetBool("isInteracting");
-        playerLocomotion.isJumping = animator.GetBool("isJumping");
-        animator.SetBool("isGrounded", playerLocomotion.isGrounded);
+        PL.isJumping = animator.GetBool("isJumping");
+        animator.SetBool("isGrounded", PL.isGrounded);
     }
 }

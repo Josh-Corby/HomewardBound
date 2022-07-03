@@ -8,6 +8,7 @@ TagManager:
   - Mud
   - LightPickUp
   - SmallRock
+  - BuildZone
   layers:
   - Default
   - TransparentFX
