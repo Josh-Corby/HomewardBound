@@ -5,7 +5,7 @@ using UnityEngine;
 public class BuildDetectionZone : GameBehaviour
 {
     public int buildCost;
-    bool canBuild;
+    public bool canBuild;
     public GameObject buildPrefab;
     public Vector3 buildLocation;
     private void Start()
@@ -16,11 +16,13 @@ public class BuildDetectionZone : GameBehaviour
 
     private void Update()
     {
-        if (IM.interact_Input)
+        if (IM.interact_Input) 
         {
+            
             if (canBuild)
             {
-                if(GM.smallRocksCollected >= buildCost)
+                Debug.Log("Interact");
+                if (GM.smallRocksCollected >= buildCost)
                 {
                     Instantiate(buildPrefab, buildLocation, Quaternion.identity);
                     GM.smallRocksCollected -= buildCost;
