@@ -16,7 +16,6 @@ public class InputManager : GameBehaviour<InputManager>
     public bool glide_Input;
 
 
-
     private void OnEnable()
     {
         if (playerControls == null)

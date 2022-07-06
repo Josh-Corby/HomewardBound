@@ -5,6 +5,7 @@ using TMPro;
 public class PlayerInteractions : GameBehaviour
 {
     public bool canPickUp;
+    public bool canClimb;
     public GameObject objectToPickUp;
     public int lightPickUpValue = 8;
 
@@ -12,12 +13,17 @@ public class PlayerInteractions : GameBehaviour
     {
         if (IM.interact_Input)
         {
+            if (canClimb)
+            {
+                PM.isClimbing = true;
+                Debug.Log("ClimbingLadder");
+            }
             if (objectToPickUp == null)
             {
                 IM.interact_Input = false;
                 return;
             }
-
+            
             if (canPickUp)
             {
                 if (objectToPickUp.CompareTag("LightPickUp"))
@@ -41,6 +47,8 @@ public class PlayerInteractions : GameBehaviour
             }
 
         }
+
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -59,6 +67,12 @@ public class PlayerInteractions : GameBehaviour
             canPickUp = true;
             objectToPickUp = other.gameObject;
         }
+        if (other.CompareTag("Ladder"))
+        {
+            Debug.Log("Enter Ladder");
+            canClimb = true;
+        }
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -68,6 +82,13 @@ public class PlayerInteractions : GameBehaviour
             other.GetComponent<Outline>().enabled = false;
             canPickUp = false;
             objectToPickUp = null;
+        }
+
+        if (other.CompareTag("Ladder"))
+        {
+            Debug.Log("Exit Ladder");
+            PM.isClimbing = false;
+            canClimb = false;
         }
     }
 }

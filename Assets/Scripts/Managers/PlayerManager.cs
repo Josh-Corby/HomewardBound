@@ -6,11 +6,13 @@ public class PlayerManager : GameBehaviour<PlayerManager>
     Animator animator;
 
     public bool isInteracting;
+    public bool isClimbing;
 
     private void Awake()
     {
         cameraManager = FindObjectOfType<CameraManager>();
         animator = GetComponent<Animator>();
+        isClimbing = false;
     }
 
     private void Update()

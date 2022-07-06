@@ -9,6 +9,7 @@ TagManager:
   - LightPickUp
   - SmallRock
   - BuildZone
+  - Ladder
   layers:
   - Default
   - TransparentFX

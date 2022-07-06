@@ -31,6 +31,7 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
     public float runningSpeed = 5f;
     public float sprintingSpeed = 7f;
     public float rotationSpeed = 15f;
+    public float climbSpeed = 5f;
 
     [Header("Jump Speeds")]
     public float jumpHeight = 3;
@@ -45,8 +46,18 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
 
     public void HandleAllMovement()
     {
+        if (PM.isClimbing)
+        {
+            HandleClimbing();
+            return;
+        }
+        
+
         HandleFallingAndLanding();
-        if (PM.isInteracting) return;
+        if (PM.isInteracting)
+        {
+            return;
+        }
 
         HandleMovement();
         HandleRotation();
@@ -124,7 +135,7 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
             inAirTimer += Time.deltaTime;
 
             //playerRigidBody.AddForce(transform.forward * leapingVelocity);
-            playerRigidBody.AddForce(-Vector3.up * glideVelocity * inAirTimer);
+            playerRigidBody.AddForce(glideVelocity * inAirTimer * -Vector3.up);
         }
         //Player is falling
         else if (!isGrounded && !isJumping)
@@ -135,10 +146,9 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
                 AM.PlayTargetAnimation("Falling", true);
 
             }
-            inAirTimer = 0f;
             inAirTimer += Time.deltaTime;
             //playerRigidBody.AddForce(transform.forward * leapingVelocity);
-            playerRigidBody.AddForce(-Vector3.up * fallingVelocity * inAirTimer);
+            playerRigidBody.AddForce(fallingVelocity * inAirTimer * -Vector3.up);
         }
 
         //Grounded/landing check
@@ -195,5 +205,14 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
             playerRigidBody.velocity = playerVelocity;
             fallTimer = fallTimerMax;
         }
+    }
+
+    public void HandleClimbing()
+    {
+        moveDirection = new Vector3(0, 0, 0);
+        moveDirection.y = IM.verticalInput;
+        moveDirection *= climbSpeed;
+        Vector3 movementVelocity = moveDirection;
+        playerRigidBody.velocity = movementVelocity;
     }
 }
