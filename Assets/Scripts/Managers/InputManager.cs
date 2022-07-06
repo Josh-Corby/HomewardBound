@@ -13,6 +13,7 @@ public class InputManager : GameBehaviour<InputManager>
     public bool sprint_Input;
     public bool jump_Input;
     public bool interact_Input;
+    public bool glide_Input;
 
 
 
@@ -31,6 +32,9 @@ public class InputManager : GameBehaviour<InputManager>
             playerControls.PlayerActions.Jump.performed += i => jump_Input = true;
 
             playerControls.PlayerActions.Interact.performed += i => interact_Input = true;
+
+            playerControls.PlayerActions.Glide.performed += i => glide_Input = true;
+            playerControls.PlayerActions.Glide.canceled += i => glide_Input = false;
         }
 
         playerControls.Enable();

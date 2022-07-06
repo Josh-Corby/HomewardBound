@@ -2,9 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerStates
+{
+    Grounded,
+    Jumping,
+    Falling,
+    Gliding,
 
+}
 public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
 {
+    public PlayerStates playerState;
+
     Rigidbody playerRigidBody;
 
     public Vector3 moveDirection;
@@ -14,13 +23,17 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
     public float inAirTimer;
     public float leapingVelocity;
     public float fallingVelocity;
+    public float glideVelocity;
     public float rayCastHeightOffSet = 0.5f;
     public LayerMask groundLayer;
+    public float fallTimer;
+    public float fallTimerMax = 3f;
 
     [Header("Movement Flags")]
     public bool isSprinting;
     public bool isGrounded;
     public bool isJumping;
+    public bool isGliding;
 
     [Header("Movement Speeds")]
     public float mudSpeed = 0.5f;
@@ -37,6 +50,7 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
     {
         playerRigidBody = GetComponent<Rigidbody>();
         cameraObject = Camera.main.transform;
+        fallTimer = fallTimerMax;
     }
 
     public void HandleAllMovement()
@@ -44,54 +58,7 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
         HandleFallingAndLanding();
         if (PM.isInteracting) return;
 
-        HandleMovement();
-        HandleRotation();
-    }
-    private void HandleMovement()
-    {
-        if (isJumping) return;
-        moveDirection = new Vector3(cameraObject.forward.x, 0f, cameraObject.forward.z) 
-            * IM.verticalInput;
-        moveDirection += cameraObject.right * IM.horizontalInput;
-        moveDirection.Normalize();
-        moveDirection.y = 0;
-
-        if (isSprinting)
-        {
-            moveDirection *= sprintingSpeed;
-        }
-        else
-        {
-            if (IM.moveAmount >= 0.5f)
-            {
-                moveDirection *= runningSpeed;
-            }
-            else
-            {
-                moveDirection *= walkingSpeed;
-            }
-        }
-
-        Vector3 movementVelocity = moveDirection;
-        playerRigidBody.velocity = movementVelocity;
-    }
-    private void HandleRotation()
-    {
-        if (isJumping) return;
-        Vector3 targetDirection = Vector3.zero;
-        targetDirection = cameraObject.forward * IM.verticalInput;
-        targetDirection += cameraObject.right * IM.horizontalInput;
-        targetDirection.Normalize();
-        targetDirection.y = 0;
-
-        if (targetDirection == Vector3.zero)
-            targetDirection = transform.forward;
-
-        Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-        Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, 
-            rotationSpeed * Time.deltaTime);
-
-        transform.rotation = playerRotation;
+        ManageStates();
     }
 
     private void HandleFallingAndLanding()
@@ -102,20 +69,45 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
         rayCastOrigin.y += rayCastHeightOffSet;
         targetPosition = transform.position;
 
-        if (!isGrounded && !isJumping)
+        //Glide check
+        if (IM.glide_Input)
         {
+            isGliding = true;
+            Debug.Log("Player is gliding");
+        }
+
+        if (!IM.glide_Input)
+            isGliding = false;
+
+        //Player is gliding
+        if (!isGrounded && !isJumping && isGliding)
+        {
+            fallTimer = fallTimerMax;
+            inAirTimer = 0f;
+            inAirTimer += Time.deltaTime;
+
+            //playerRigidBody.AddForce(transform.forward * leapingVelocity);
+            playerRigidBody.AddForce(-Vector3.up * glideVelocity * inAirTimer);
+        }
+        //Player is falling
+        else if (!isGrounded && !isJumping)
+        {
+            fallTimer -= Time.deltaTime;
             if (!PM.isInteracting)
             {
                 AM.PlayTargetAnimation("Falling", true);
-            }
 
+            }
+            inAirTimer = 0f;
             inAirTimer += Time.deltaTime;
-            playerRigidBody.AddForce(transform.forward * leapingVelocity);
+            //playerRigidBody.AddForce(transform.forward * leapingVelocity);
             playerRigidBody.AddForce(-Vector3.up * fallingVelocity * inAirTimer);
         }
-        if (Physics.SphereCast(rayCastOrigin, 0.2f, Vector3.down, out hit, 0.5f, groundLayer))
+
+        //Grounded/landing check
+        if (Physics.SphereCast(rayCastOrigin, 0.2f, Vector3.down, out hit, 1, groundLayer))
         {
-            if(!isGrounded && PM.isInteracting)
+            if (!isGrounded && PM.isInteracting)
             {
                 AM.PlayTargetAnimation("LandSoft", true);
             }
@@ -123,17 +115,26 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
             Vector3 rayCastHitPoint = hit.point;
             targetPosition.y = rayCastHitPoint.y;
             inAirTimer = 0;
+            if (fallTimer <= 0)
+            {
+                Debug.Log("Player died of fall damage");
+                this.gameObject.transform.position = GM.spawnPoint.transform.position;
+            }
+            fallTimer = fallTimerMax;
             isGrounded = true;
             PM.isInteracting = false;
         }
         else
         {
-            isGrounded = false; 
+            isGrounded = false;
         }
 
-        if(isGrounded && !isJumping)
+        if (isGrounded)
+            isGliding = false;
+        //Ground movement
+        if (isGrounded && !isJumping)
         {
-            if(PM.isInteracting || IM.moveAmount > 0)
+            if (PM.isInteracting || IM.moveAmount > 0)
             {
                 transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime / 0.1f);
             }
@@ -155,8 +156,70 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
             Vector3 playerVelocity = moveDirection;
             playerVelocity.y = jumpingVelocity;
             playerRigidBody.velocity = playerVelocity;
+            fallTimer = fallTimerMax;
         }
     }
 
+    public void ManageStates()
+    {
+        switch (playerState)
+        {
+            #region Grounded
+            case PlayerStates.Grounded: 
+                //Handle Movement
+                if (isJumping) return;
+                moveDirection = new Vector3(cameraObject.forward.x, 0f, cameraObject.forward.z)
+                    * IM.verticalInput;
+                moveDirection += cameraObject.right * IM.horizontalInput;
+                moveDirection.Normalize();
+                moveDirection.y = 0;
 
+                if (isSprinting)
+                {
+                    moveDirection *= sprintingSpeed;
+                }
+                else
+                {
+                    if (IM.moveAmount >= 0.5f)
+                    {
+                        moveDirection *= runningSpeed;
+                    }
+                    else
+                    {
+                        moveDirection *= walkingSpeed;
+                    }
+                }
+
+                Vector3 movementVelocity = moveDirection;
+                playerRigidBody.velocity = movementVelocity;
+
+                //Handle Rotation
+                if (isJumping) return;
+                Vector3 targetDirection = Vector3.zero;
+                targetDirection = cameraObject.forward * IM.verticalInput;
+                targetDirection += cameraObject.right * IM.horizontalInput;
+                targetDirection.Normalize();
+                targetDirection.y = 0;
+
+                if (targetDirection == Vector3.zero)
+                    targetDirection = transform.forward;
+
+                Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+                Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation,
+                    rotationSpeed * Time.deltaTime);
+
+                transform.rotation = playerRotation;
+
+                break;
+            #endregion
+            case PlayerStates.Jumping:
+                break;
+
+            case PlayerStates.Gliding:
+                break;
+
+            case PlayerStates.Falling:
+                break;
+        }
+    }
 }

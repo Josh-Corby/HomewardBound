@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterDetection : MonoBehaviour
+public class CatDetection : MonoBehaviour
 {
     Color startColor = Color.green;
     Color endColor = Color.red;

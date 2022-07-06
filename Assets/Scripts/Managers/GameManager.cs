@@ -5,13 +5,10 @@ using TMPro;
 public class GameManager : GameBehaviour<GameManager>
 {
     public int smallRocksCollected = 0;
-    public GameObject SquarePrefab;
-
-    public void BuildSquare()
+    public GameObject Player;
+    public Transform spawnPoint;
+    private void Start()
     {
-        if(smallRocksCollected >= 4)
-        {
-
-        }
+        //Player.transform.position = spawnPoint.transform.position;
     }
 }

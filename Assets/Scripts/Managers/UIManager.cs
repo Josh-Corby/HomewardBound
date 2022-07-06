@@ -7,7 +7,8 @@ public class UIManager : GameBehaviour<UIManager>
 {
     public TMP_Text flashLightIntensity;
     public TMP_Text smallRocksCollected;
-    public TMP_Text canBuildText;
+    public TMP_Text canBuild;
+    public TMP_Text fallTimer;
 
     private void Start()
     {
@@ -17,6 +18,8 @@ public class UIManager : GameBehaviour<UIManager>
     {
         flashLightIntensity.text = "Light Power: " + 
             FL.myLight.intensity.ToString("F2") + " /10";
+
+        fallTimer.text = "Fall timer: " +  PL.fallTimer.ToString();
     }
 
     public void UpdateSmallRocksCollectedText()
@@ -30,16 +33,17 @@ public class UIManager : GameBehaviour<UIManager>
     {
         if (!canBuild)
         {
-            canBuildText.text = "";
+            this.canBuild.text = "";
         }
         if (canBuild)
         {
-            canBuildText.text = "Build";
+            this.canBuild.text = "Build";
         }
     }
 
     public void UpdateCanBuildText(string text)
     {
-        canBuildText.text = text;
+        canBuild.text = text;
     }
+
 }
