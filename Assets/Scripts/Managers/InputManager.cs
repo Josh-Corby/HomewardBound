@@ -38,6 +38,7 @@ public class InputManager : GameBehaviour<InputManager>
         }
 
         playerControls.Enable();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void OnDisable()

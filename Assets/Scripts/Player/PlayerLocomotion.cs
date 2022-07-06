@@ -2,18 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PlayerStates
-{
-    Grounded,
-    Jumping,
-    Falling,
-    Gliding,
-
-}
 public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
 {
-    public PlayerStates playerState;
-
     Rigidbody playerRigidBody;
 
     public Vector3 moveDirection;
@@ -58,9 +48,56 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
         HandleFallingAndLanding();
         if (PM.isInteracting) return;
 
-        ManageStates();
+        HandleMovement();
+        HandleRotation();
     }
 
+    private void HandleMovement()
+    {
+        if (isJumping) return;
+        moveDirection = new Vector3(cameraObject.forward.x, 0f, cameraObject.forward.z)
+            * IM.verticalInput;
+        moveDirection += cameraObject.right * IM.horizontalInput;
+        moveDirection.Normalize();
+        moveDirection.y = 0;
+
+        if (isSprinting)
+        {
+            moveDirection *= sprintingSpeed;
+        }
+        else
+        {
+            if (IM.moveAmount >= 0.5f)
+            {
+                moveDirection *= runningSpeed;
+            }
+            else
+            {
+                moveDirection *= walkingSpeed;
+            }
+        }
+
+        Vector3 movementVelocity = moveDirection;
+        playerRigidBody.velocity = movementVelocity;
+    }
+    private void HandleRotation()
+    {
+        if (isJumping) return;
+        Vector3 targetDirection = Vector3.zero;
+        targetDirection = cameraObject.forward * IM.verticalInput;
+        targetDirection += cameraObject.right * IM.horizontalInput;
+        targetDirection.Normalize();
+        targetDirection.y = 0;
+
+        if (targetDirection == Vector3.zero)
+            targetDirection = transform.forward;
+
+        Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+        Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation,
+            rotationSpeed * Time.deltaTime);
+
+        transform.rotation = playerRotation;
+    }
     private void HandleFallingAndLanding()
     {
         RaycastHit hit;
@@ -157,69 +194,6 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
             playerVelocity.y = jumpingVelocity;
             playerRigidBody.velocity = playerVelocity;
             fallTimer = fallTimerMax;
-        }
-    }
-
-    public void ManageStates()
-    {
-        switch (playerState)
-        {
-            #region Grounded
-            case PlayerStates.Grounded: 
-                //Handle Movement
-                if (isJumping) return;
-                moveDirection = new Vector3(cameraObject.forward.x, 0f, cameraObject.forward.z)
-                    * IM.verticalInput;
-                moveDirection += cameraObject.right * IM.horizontalInput;
-                moveDirection.Normalize();
-                moveDirection.y = 0;
-
-                if (isSprinting)
-                {
-                    moveDirection *= sprintingSpeed;
-                }
-                else
-                {
-                    if (IM.moveAmount >= 0.5f)
-                    {
-                        moveDirection *= runningSpeed;
-                    }
-                    else
-                    {
-                        moveDirection *= walkingSpeed;
-                    }
-                }
-
-                Vector3 movementVelocity = moveDirection;
-                playerRigidBody.velocity = movementVelocity;
-
-                //Handle Rotation
-                if (isJumping) return;
-                Vector3 targetDirection = Vector3.zero;
-                targetDirection = cameraObject.forward * IM.verticalInput;
-                targetDirection += cameraObject.right * IM.horizontalInput;
-                targetDirection.Normalize();
-                targetDirection.y = 0;
-
-                if (targetDirection == Vector3.zero)
-                    targetDirection = transform.forward;
-
-                Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-                Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation,
-                    rotationSpeed * Time.deltaTime);
-
-                transform.rotation = playerRotation;
-
-                break;
-            #endregion
-            case PlayerStates.Jumping:
-                break;
-
-            case PlayerStates.Gliding:
-                break;
-
-            case PlayerStates.Falling:
-                break;
         }
     }
 }
