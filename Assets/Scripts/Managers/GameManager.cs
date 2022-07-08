@@ -4,7 +4,9 @@ using UnityEngine;
 using TMPro;
 public class GameManager : GameBehaviour<GameManager>
 {
-    public int smallRocksCollected = 0;
+    public int pebblesCollected = 0;
+    public int sticksCollected = 0;
+    public int mushroomsCollected = 0;
     public GameObject Player;
     public Transform spawnPoint;
     private void Start()

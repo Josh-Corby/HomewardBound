@@ -2,19 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class PlayerInteractions : GameBehaviour
+public class InteractionZone : GameBehaviour
 {
     public bool canPickUp;
     public bool canClimb;
+    public GameObject player;
     public GameObject objectToPickUp;
+    private GameObject LadderEntry;
     public int lightPickUpValue = 8;
 
     private void Update()
     {
+        #region World Interactions
         if (IM.interact_Input)
         {
             if (canClimb)
             {
+                if(LadderEntry != null)
+                {
+                    player.transform.position = LadderEntry.transform.position;
+                    player.transform.rotation = LadderEntry.transform.rotation;
+                    PM.isClimbing = true;
+                }
                 PM.isClimbing = true;
                 Debug.Log("ClimbingLadder");
             }
@@ -33,10 +42,22 @@ public class PlayerInteractions : GameBehaviour
 
                 if (objectToPickUp.CompareTag("SmallRock"))
                 {
-                    GM.smallRocksCollected +=1;
-                    UI.UpdateSmallRocksCollectedText();
-                    Debug.Log(GM.smallRocksCollected);
+                    GM.pebblesCollected +=1;
+                    UI.UpdatePebblesCollected();
+                    Debug.Log(GM.pebblesCollected);
+                }
 
+                if (objectToPickUp.CompareTag("Stick"))
+                {
+                    GM.sticksCollected += 1;
+                    UI.UpdateSticksCollected();
+                    Debug.Log(GM.sticksCollected);
+                }
+                if (objectToPickUp.CompareTag("Mushroom"))
+                {
+                    GM.mushroomsCollected += 1;
+                    UI.UpdateMushroomsCollected();
+                    Debug.Log(GM.mushroomsCollected);
                 }
 
                 //Debug.Log("Picked up small object");
@@ -44,16 +65,16 @@ public class PlayerInteractions : GameBehaviour
                 canPickUp = false;
                 objectToPickUp = null;
                 IM.interact_Input = false;
-            }
-
+            } 
         }
+        #endregion
 
 
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("SmallRock"))
+        if (other.CompareTag("SmallRock") || other.CompareTag("Stick") || other.CompareTag("Mushroom"))
         {
             //Debug.Log("collide with small rock");
             other.GetComponent<Outline>().enabled = true;
@@ -73,6 +94,12 @@ public class PlayerInteractions : GameBehaviour
             canClimb = true;
         }
 
+        if (other.CompareTag("LadderTop") || other.CompareTag("LadderBottom"))
+        {
+            Debug.Log("Can Climb");
+            canClimb = true;
+            LadderEntry = other.gameObject;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -89,6 +116,12 @@ public class PlayerInteractions : GameBehaviour
             Debug.Log("Exit Ladder");
             PM.isClimbing = false;
             canClimb = false;
+        }
+        if (other.CompareTag("LadderTop") || other.CompareTag("LadderBottom"))
+        {
+            Debug.Log("Can't Climb");
+            canClimb = false;
+            LadderEntry = null;
         }
     }
 }

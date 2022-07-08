@@ -19,6 +19,15 @@ public class PauseController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
             Pause();
+
+        if (paused)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        if (!paused)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 
      public void Pause()

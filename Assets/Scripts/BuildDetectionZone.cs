@@ -22,18 +22,18 @@ public class BuildDetectionZone : GameBehaviour
             if (canBuild)
             {
                 Debug.Log("Interact");
-                if (GM.smallRocksCollected >= buildCost)
+                if (GM.pebblesCollected >= buildCost)
                 {
                     Instantiate(buildPrefab, buildLocation, Quaternion.identity);
-                    GM.smallRocksCollected -= buildCost;
-                    UI.UpdateSmallRocksCollectedText();
+                    GM.pebblesCollected -= buildCost;
+                    UI.UpdatePebblesCollected();
                     this.gameObject.SetActive(false);
                     IM.interact_Input = false;
                     UI.UpdateCanBuildText(false);
                     Debug.Log("Prefab Built");
                     return;
                 }
-                if(GM.smallRocksCollected < buildCost)
+                if(GM.pebblesCollected < buildCost)
                 {
                     UI.UpdateCanBuildText("Not enough rocks!");
                 }
