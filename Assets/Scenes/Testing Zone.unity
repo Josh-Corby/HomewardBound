@@ -883,6 +883,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmallRock
       objectReference: {fileID: 0}
+    - target: {fileID: 3955830984392798557, guid: 4d78646c02483574e9c0b405061a88ef,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f6909867f7cf3f34b8accb8eb029d72a, type: 2}
     m_RemovedComponents:
     - {fileID: 4892543822594197661, guid: 4d78646c02483574e9c0b405061a88ef, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4d78646c02483574e9c0b405061a88ef, type: 3}
@@ -1192,6 +1197,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmallRock (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3955830984392798557, guid: 4d78646c02483574e9c0b405061a88ef,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f6909867f7cf3f34b8accb8eb029d72a, type: 2}
     m_RemovedComponents:
     - {fileID: 4892543822594197661, guid: 4d78646c02483574e9c0b405061a88ef, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4d78646c02483574e9c0b405061a88ef, type: 3}
@@ -1262,6 +1272,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmallRock (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3955830984392798557, guid: 4d78646c02483574e9c0b405061a88ef,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f6909867f7cf3f34b8accb8eb029d72a, type: 2}
     m_RemovedComponents:
     - {fileID: 4892543822594197661, guid: 4d78646c02483574e9c0b405061a88ef, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4d78646c02483574e9c0b405061a88ef, type: 3}
@@ -1391,14 +1406,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Version: 1
-  m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
-  m_LightLayerMask: 1
-  m_CustomShadowLayers: 0
-  m_ShadowLayerMask: 1
-  m_LightCookieSize: {x: 1, y: 1}
-  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1 &1298435508
 GameObject:
   m_ObjectHideFlags: 0
@@ -1768,27 +1775,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
-  m_Cameras: []
-  m_RendererIndex: -1
-  m_VolumeLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  m_VolumeTrigger: {fileID: 0}
-  m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
-  m_AntialiasingQuality: 2
-  m_StopNaN: 0
-  m_Dithering: 0
-  m_ClearDepth: 1
-  m_AllowXRRendering: 1
-  m_RequiresDepthTexture: 0
-  m_RequiresColorTexture: 0
-  m_Version: 2
 --- !u!114 &1540920862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1923,6 +1909,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stick (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6687845744440111784, guid: a0a38055e32c20f47acbaae7cafd293d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 502209fcebe2ecf4c93174d6682fe63c, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0a38055e32c20f47acbaae7cafd293d, type: 3}
 --- !u!1 &1706991619 stripped
@@ -2173,6 +2164,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stick (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6687845744440111784, guid: a0a38055e32c20f47acbaae7cafd293d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 502209fcebe2ecf4c93174d6682fe63c, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0a38055e32c20f47acbaae7cafd293d, type: 3}
 --- !u!1 &1962268966
@@ -2313,7 +2309,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d1af8e91f2182e6448a68b679e4b01ab, type: 2}
+  - {fileID: 2100000, guid: 1042233703c620f46a2bd151b87700b2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3484,7 +3480,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-6246
+  m_Name: pb_Mesh30292
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3788,5 +3784,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stick
       objectReference: {fileID: 0}
+    - target: {fileID: 6687845744440111784, guid: a0a38055e32c20f47acbaae7cafd293d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 502209fcebe2ecf4c93174d6682fe63c, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0a38055e32c20f47acbaae7cafd293d, type: 3}
