@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class InteractionZone : GameBehaviour
+public class InteractionZone : GameBehaviour<InteractionZone>
 {
     public bool canPickUp;
     public bool canClimb;
@@ -27,7 +27,7 @@ public class InteractionZone : GameBehaviour
                 PM.isClimbing = true;
                 Debug.Log("ClimbingLadder");
             }
-            if (objectToPickUp == null)
+            if (objectToPickUp == null && !BM.isBuilding)
             {
                 IM.interact_Input = false;
                 return;
@@ -68,26 +68,19 @@ public class InteractionZone : GameBehaviour
             } 
         }
         #endregion
-
-
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("SmallRock") || other.CompareTag("Stick") || other.CompareTag("Mushroom"))
+        if (other.CompareTag("SmallRock") || other.CompareTag("Stick") || 
+            other.CompareTag("Mushroom") || other.CompareTag("LightPickUp"))
         {
             //Debug.Log("collide with small rock");
             other.GetComponent<Outline>().enabled = true;
             canPickUp = true;
             objectToPickUp = other.gameObject;
         }
-        if (other.CompareTag("LightPickUp"))
-        {
-            Debug.Log("Light PickUp detected");
-            other.GetComponent<Outline>().enabled = true;
-            canPickUp = true;
-            objectToPickUp = other.gameObject;
-        }
+
         if (other.CompareTag("Ladder"))
         {
             Debug.Log("Enter Ladder");
@@ -104,7 +97,7 @@ public class InteractionZone : GameBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("SmallRock") || other.CompareTag("LightPickUp"))
+        if (other.CompareTag("SmallRock") || other.CompareTag("Stick") || other.CompareTag("Mushroom"))
         {
             other.GetComponent<Outline>().enabled = false;
             canPickUp = false;
@@ -123,5 +116,17 @@ public class InteractionZone : GameBehaviour
             canClimb = false;
             LadderEntry = null;
         }
+    }
+
+    public void DisableOutline()
+    {
+        objectToPickUp.GetComponent<Outline>().enabled = false;
+        objectToPickUp = null;
+        canPickUp = false;
+    }
+    public void Toggle(bool isEnabled)
+    {
+        
+        this.gameObject.SetActive(isEnabled);
     }
 }

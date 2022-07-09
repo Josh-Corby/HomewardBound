@@ -18,14 +18,21 @@ public class UIManager : GameBehaviour<UIManager>
     public GameObject buildPanel;
     public bool buildPanelStatus;
 
+    public Button buildLadderButton;
+    public Button buildBridgeButton;
+    public Button buildGliderButton;
+
+
+    
+
     public float timeScale;
 
     private void Start()
     {
-        gameUI.SetActive(!buildPanelStatus);
+        gameUI.SetActive(true);
         buildPanelStatus = false;
         UpdateCanBuildText(false);
-        buildPanel.SetActive(buildPanelStatus);
+        buildPanel.SetActive(false);
     }
     private void Update()
     {
@@ -38,6 +45,13 @@ public class UIManager : GameBehaviour<UIManager>
     }
 
     #region Text Updaters
+
+    public void UpdateMaterialsCollected()
+    {
+        UpdatePebblesCollected();
+        UpdateSticksCollected();
+        UpdateMushroomsCollected();
+    }
     public void UpdatePebblesCollected()
     {
         smallRocksCollected.text = "Pebbles Collected: " + GM.pebblesCollected.ToString();
@@ -71,27 +85,52 @@ public class UIManager : GameBehaviour<UIManager>
     }
     #endregion
 
+    #region Button Updaters
+
+    public void IsButtonClickable()
+    {
+        buildLadderButton.interactable = BM.LadderCheck();
+        buildBridgeButton.interactable = BM.BridgeCheck();
+        buildGliderButton.interactable = BM.GliderCheck();
+    }
+    #endregion
     public void ToggleBuildMenu()
     {
+        
+        if (BM.haveGlider)
+        {
+            buildGliderButton.interactable = false;
+        }
+
         if (IM.buildMenu_Input)
         {
+            IsButtonClickable();
+            BuildMenuToggle();
             
-            buildPanelStatus = !buildPanelStatus;
-            gameUI.SetActive(!buildPanelStatus);
-            buildPanel.SetActive(buildPanelStatus);
+            
             IM.buildMenu_Input = false;
-            if (buildPanelStatus)
-            {
-                Time.timeScale = 0f;
-                Cursor.lockState = CursorLockMode.None;
-            }
+        
+        }
+    }
 
-            if (!buildPanelStatus)
-            {
-                Time.timeScale = 1;
-                Cursor.lockState = CursorLockMode.Locked;
-            }
-                
+    public void BuildMenuToggle()
+    {
+        buildPanelStatus = !buildPanelStatus;
+        buildPanel.SetActive(buildPanelStatus);
+        gameUI.SetActive(!buildPanelStatus);
+
+        if (buildPanelStatus)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Time.timeScale = 0f;
+
+        }
+
+        if (!buildPanelStatus)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1;
+
         }
     }
 }

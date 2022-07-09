@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseController : MonoBehaviour
+public class PauseController : GameBehaviour
 {
     public GameObject pausePanel;
     public bool paused;
@@ -20,14 +20,15 @@ public class PauseController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
             Pause();
 
-        if (paused)
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
-        if (!paused)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
+
+        //if (paused && !UI.buildPanelStatus)
+        //{
+        //    Cursor.lockState = CursorLockMode.None;
+        //}
+        //if (!paused && !UI.buildPanelStatus)
+        //{
+        //    Cursor.lockState = CursorLockMode.Locked;
+        //}
     }
 
      public void Pause()
