@@ -12,6 +12,8 @@ public class GameBehaviour : JMC
     protected static InputManager IM { get { return InputManager.INSTANCE; } }
     protected static FlashLight FL { get { return FlashLight.INSTANCE; } }
     protected static UIManager UI { get { return UIManager.INSTANCE; } }
+    protected static BuildManager BM { get { return BuildManager.INSTANCE; } }
+    protected static InteractionZone IZ { get { return InteractionZone.INSTANCE; } }
 
 }
 
