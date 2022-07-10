@@ -11,6 +11,11 @@ public class GameManager : GameBehaviour<GameManager>
     public Transform spawnPoint;
     private void Start()
     {
-        //Player.transform.position = spawnPoint.transform.position;
+        RespawnPlayer();
+    }
+
+    public void RespawnPlayer()
+    {
+        Player.transform.position = spawnPoint.transform.position;
     }
 }

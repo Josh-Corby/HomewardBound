@@ -120,6 +120,8 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
     public void DisableOutline()
     {
+        if (objectToPickUp == null)
+            return;
         objectToPickUp.GetComponent<Outline>().enabled = false;
         objectToPickUp = null;
         canPickUp = false;

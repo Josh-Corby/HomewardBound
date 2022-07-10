@@ -78,7 +78,7 @@ public class BuildManager : GameBehaviour<BuildManager>
                 break;
         }
         
-        IZ.Toggle(false);
+        IZ.Toggle(true);
         IZ.DisableOutline();
     }
 
