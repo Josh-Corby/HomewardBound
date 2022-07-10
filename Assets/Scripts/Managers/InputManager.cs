@@ -14,7 +14,7 @@ public class InputManager : GameBehaviour<InputManager>
     public bool jump_Input;
     public bool interact_Input;
     public bool glide_Input;
-
+    public bool buildMenu_Input;
 
     private void OnEnable()
     {
@@ -34,6 +34,8 @@ public class InputManager : GameBehaviour<InputManager>
 
             playerControls.PlayerActions.Glide.performed += i => glide_Input = true;
             playerControls.PlayerActions.Glide.canceled += i => glide_Input = false;
+
+            playerControls.PlayerActions.OpenBuildMenu.performed += i => buildMenu_Input = true;
         }
 
         playerControls.Enable();

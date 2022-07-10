@@ -46,6 +46,8 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
 
     public void HandleAllMovement()
     {
+         if (!IM.glide_Input)
+                isGliding = false;
         if (PM.isClimbing)
         {
             HandleClimbing();
@@ -117,15 +119,15 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
         rayCastOrigin.y += rayCastHeightOffSet;
         targetPosition = transform.position;
 
-        //Glide check
-        if (IM.glide_Input)
+        if (BM.haveGlider)
         {
-            isGliding = true;
-            Debug.Log("Player is gliding");
+            //Glide check
+            if (IM.glide_Input)
+            {
+                isGliding = true;
+                Debug.Log("Player is gliding");
+            }    
         }
-
-        if (!IM.glide_Input)
-            isGliding = false;
 
         //Player is gliding
         if (!isGrounded && !isJumping && isGliding)
@@ -138,7 +140,7 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
             playerRigidBody.AddForce(glideVelocity * inAirTimer * -Vector3.up);
         }
         //Player is falling
-        else if (!isGrounded && !isJumping)
+        else if (!isGrounded && !isJumping && !isGliding)
         {
             fallTimer -= Time.deltaTime;
             if (!PM.isInteracting)
@@ -177,7 +179,12 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
         }
 
         if (isGrounded)
+        {
             isGliding = false;
+            //inAirTimer = 0;
+        }
+           
+
         //Ground movement
         if (isGrounded && !isJumping)
         {
