@@ -6,24 +6,50 @@ public class PlayerPickUpBig : MonoBehaviour
 {
     public Transform theDes;
 
-    void OnMouseDown()
+    private void OnTriggerEnter(Collider other)
     {
-        GetComponent<BoxCollider>().enabled = false;
-        GetComponent<Rigidbody>().useGravity = false;
-        GetComponent<Rigidbody>().freezeRotation = true;
-
-        this.transform.parent = GameObject.Find("Destination").transform;
-        this.transform.position = theDes.position;
-        
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("Pick Up Object");
+        }
     }
 
-    void OnMouseUp()
+    private void OnTriggerStay(Collider other)
     {
-        this.transform.parent = null;
-        GetComponent<Rigidbody>().freezeRotation = false;
-        GetComponent<Rigidbody>().useGravity = true;
-        GetComponent<BoxCollider>().enabled = true;
+        if (other.CompareTag("Player") && Input.GetKey(KeyCode.E))
+        {
+            GetComponent<Rigidbody>().useGravity = false;
+            this.transform.position = theDes.position;
+            GetComponent<Rigidbody>().freezeRotation = true;
+
+            this.transform.parent = GameObject.Find("Destination").transform;
+        }
+        else
+        {
+            this.transform.parent = null;
+            GetComponent<Rigidbody>().freezeRotation = false;
+            GetComponent<Rigidbody>().useGravity = true;
+        }
     }
+
+    //void OnMouseDown()
+    //{
+    //    GetComponent<BoxCollider>().enabled = false;
+    //    GetComponent<Rigidbody>().useGravity = false;
+    //    GetComponent<Rigidbody>().freezeRotation = true;
+
+    //    this.transform.parent = GameObject.Find("Destination").transform;
+    //    this.transform.position = theDes.position;
+
+    //}
+
+    //void OnMouseUp()
+    //{
+    //    this.transform.parent = null;
+    //    GetComponent<Rigidbody>().freezeRotation = false;
+    //    GetComponent<Rigidbody>().useGravity = true;
+    //    GetComponent<BoxCollider>().enabled = true;
+    //}
 
     //[Header("Pick Up Settings")]
     //[SerializeField] Transform holdArea;
