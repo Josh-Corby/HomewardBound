@@ -37,6 +37,10 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
     public float jumpHeight = 3;
     public float gravityIntensity = -15;
 
+    private Vector3 playerVelocity;
+    private float playerVelocityX;
+    private float playerVelocityZ;
+
     private void Awake()
     {
         playerRigidBody = GetComponent<Rigidbody>();
@@ -130,7 +134,7 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
         }
 
         //Player is gliding
-        if (!isGrounded && !isJumping && isGliding)
+        if (!isGrounded  && isGliding)
         {
             fallTimer = fallTimerMax;
             inAirTimer = 0f;
@@ -151,6 +155,8 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
             inAirTimer += Time.deltaTime;
             //playerRigidBody.AddForce(transform.forward * leapingVelocity);
             playerRigidBody.AddForce(fallingVelocity * inAirTimer * -Vector3.up);
+            //playerRigidBody.AddForce(playerVelocity);
+
         }
 
         //Grounded/landing check
@@ -207,10 +213,14 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
             AM.PlayTargetAnimation("Jump", false);
 
             float jumpingVelocity = Mathf.Sqrt(-2 * gravityIntensity * jumpHeight);
-            Vector3 playerVelocity = moveDirection;
+            playerVelocity = moveDirection;
             playerVelocity.y = jumpingVelocity;
             playerRigidBody.velocity = playerVelocity;
             fallTimer = fallTimerMax;
+
+
+            playerVelocityX = playerVelocity.x;
+            playerVelocityZ = playerVelocity.z;
         }
     }
 

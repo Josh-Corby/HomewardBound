@@ -692,7 +692,7 @@ MonoBehaviour:
   sprintingSpeed: 7
   rotationSpeed: 15
   climbSpeed: 5
-  jumpHeight: 2
+  jumpHeight: 1
   gravityIntensity: -15
 --- !u!114 &7009901781954826588
 MonoBehaviour:
@@ -1146,7 +1146,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2593212941081059998}
   m_LocalRotation: {x: -0, y: -0.000000014901159, z: -0, w: 1}
-  m_LocalPosition: {x: 0.382267, y: -0.11253059, z: -0.20047379}
+  m_LocalPosition: {x: 0.382, y: -0.11253059, z: -0.687}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1164,8 +1164,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.76, y: 0.276706, z: 0.68}
-  m_Center: {x: 0, y: -0.1, z: 0}
+  m_Size: {x: 1.25, y: 0.1, z: 1.5}
+  m_Center: {x: 0, y: -0.10000001, z: 0}
 --- !u!114 &3056540995937129766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4137,7 +4137,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8698618974503712246}
   m_LocalRotation: {x: -0, y: -0.000000014901159, z: -0, w: 1}
-  m_LocalPosition: {x: 0.382267, y: -0.3725306, z: -0.6464739}
+  m_LocalPosition: {x: 0.382267, y: -0.3725306, z: 0.247}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
