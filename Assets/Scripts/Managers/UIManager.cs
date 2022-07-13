@@ -115,6 +115,8 @@ public class UIManager : GameBehaviour<UIManager>
 
     public void BuildMenuToggle()
     {
+        if (PC.paused)
+            return;
         buildPanelStatus = !buildPanelStatus;
         buildPanel.SetActive(buildPanelStatus);
 

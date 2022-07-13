@@ -13,6 +13,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 {
     public bool haveGlider;
     public bool isBuilding;
+    public bool canBuild;
 
     private bool pebbleCheck;
     private bool stickCheck;
@@ -27,6 +28,9 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     private GameObject prefabToSpawn;
 
+    private GameObject buildingObject;
+    private Color objectColor;
+
     #region Build Prefabs
     [SerializeField] private GameObject ladderPrefab;
     [SerializeField] private GameObject bridgePrefab;
@@ -39,12 +43,40 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     private void Update()
     {
+        if (isBuilding)
+        {
+            if (IM.cancel_Input)
+            {
+                if(prefabToSpawn != null)
+                {
+                    Destroy(buildingObject);
+                    AddCost();
+                    prefabToSpawn = null;
+                    isBuilding = false;
+                }
+            }
+        }
         if (IM.interact_Input && isBuilding)
         {
-            Debug.Log("Object Built");
-            buildZone.transform.DetachChildren();
-            IZ.Toggle(true);
-            isBuilding = false;
+            if (canBuild)
+            {
+                objectColor.a = 1f;
+                buildingObject.GetComponent<MeshRenderer>().material.color = objectColor;
+                Debug.Log("Object Built");
+                buildZone.transform.DetachChildren();
+                canBuild = false;
+                IZ.Toggle(true);
+                isBuilding = false;
+                SubtractCost();
+                
+            }
+
+            if (!canBuild)
+            {
+                IM.interact_Input = false;
+                return;
+            }
+            
         }
     }
     public void BuildItem(int value)
@@ -55,19 +87,16 @@ public class BuildManager : GameBehaviour<BuildManager>
                 LadderCheck();
                 prefabToSpawn = LadderCheck() ? ladderPrefab : null;
                 isBuilding = LadderCheck();
-                SubtractCost();
-                UI.BuildMenuToggle();
-                Instantiate(prefabToSpawn, buildZone.transform);
+                BuildObject();
+                canBuild = true;
                 break;
 
             case BuildObjects.Bridge:
                 BridgeCheck();
-
                 prefabToSpawn = BridgeCheck() ? bridgePrefab : null;
                 isBuilding = BridgeCheck();
-                SubtractCost();
-                UI.BuildMenuToggle();
-                Instantiate(prefabToSpawn, buildZone.transform);
+                BuildObject();
+                canBuild = true;
                 break;
 
             case BuildObjects.Glider:
@@ -80,6 +109,16 @@ public class BuildManager : GameBehaviour<BuildManager>
         
         IZ.Toggle(true);
         IZ.DisableOutline();
+    }
+
+    private void BuildObject()
+    {
+        
+        Instantiate(prefabToSpawn, buildZone.transform);
+        buildingObject = buildZone.transform.GetChild(0).gameObject;
+        objectColor = buildingObject.GetComponent<MeshRenderer>().material.color;
+        UI.BuildMenuToggle();
+        
     }
 
     #region Materials Comparisons
@@ -125,6 +164,14 @@ public class BuildManager : GameBehaviour<BuildManager>
         GM.pebblesCollected -= pebbleCost;
         GM.sticksCollected -= stickCost;
         GM.mushroomsCollected -= mushroomCost;
+        UI.UpdateMaterialsCollected();
+    }
+
+    private void AddCost()
+    {
+        GM.pebblesCollected += pebbleCost;
+        GM.sticksCollected += stickCost;
+        GM.mushroomsCollected += mushroomCost;
         UI.UpdateMaterialsCollected();
     }
     #endregion

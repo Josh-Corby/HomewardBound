@@ -273,6 +273,24 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Destroy"",
+                    ""type"": ""Button"",
+                    ""id"": ""98788d3b-931d-414c-9365-1c6c69c608d4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""80199764-aed0-44d7-8e98-f7db4b91f266"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -363,6 +381,28 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""OpenBuildMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a1cbec7b-e876-4a89-a066-22cad325235b"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Destroy"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""21088b37-464b-401f-938e-ed4c2d8a3aec"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -380,6 +420,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_PlayerActions_Interact = m_PlayerActions.FindAction("Interact", throwIfNotFound: true);
         m_PlayerActions_Glide = m_PlayerActions.FindAction("Glide", throwIfNotFound: true);
         m_PlayerActions_OpenBuildMenu = m_PlayerActions.FindAction("OpenBuildMenu", throwIfNotFound: true);
+        m_PlayerActions_Destroy = m_PlayerActions.FindAction("Destroy", throwIfNotFound: true);
+        m_PlayerActions_Cancel = m_PlayerActions.FindAction("Cancel", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -485,6 +527,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_Interact;
     private readonly InputAction m_PlayerActions_Glide;
     private readonly InputAction m_PlayerActions_OpenBuildMenu;
+    private readonly InputAction m_PlayerActions_Destroy;
+    private readonly InputAction m_PlayerActions_Cancel;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
@@ -494,6 +538,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_PlayerActions_Interact;
         public InputAction @Glide => m_Wrapper.m_PlayerActions_Glide;
         public InputAction @OpenBuildMenu => m_Wrapper.m_PlayerActions_OpenBuildMenu;
+        public InputAction @Destroy => m_Wrapper.m_PlayerActions_Destroy;
+        public InputAction @Cancel => m_Wrapper.m_PlayerActions_Cancel;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -518,6 +564,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @OpenBuildMenu.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnOpenBuildMenu;
                 @OpenBuildMenu.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnOpenBuildMenu;
                 @OpenBuildMenu.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnOpenBuildMenu;
+                @Destroy.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnDestroy;
+                @Destroy.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnDestroy;
+                @Destroy.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnDestroy;
+                @Cancel.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnCancel;
+                @Cancel.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnCancel;
+                @Cancel.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnCancel;
             }
             m_Wrapper.m_PlayerActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -537,6 +589,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @OpenBuildMenu.started += instance.OnOpenBuildMenu;
                 @OpenBuildMenu.performed += instance.OnOpenBuildMenu;
                 @OpenBuildMenu.canceled += instance.OnOpenBuildMenu;
+                @Destroy.started += instance.OnDestroy;
+                @Destroy.performed += instance.OnDestroy;
+                @Destroy.canceled += instance.OnDestroy;
+                @Cancel.started += instance.OnCancel;
+                @Cancel.performed += instance.OnCancel;
+                @Cancel.canceled += instance.OnCancel;
             }
         }
     }
@@ -553,5 +611,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnGlide(InputAction.CallbackContext context);
         void OnOpenBuildMenu(InputAction.CallbackContext context);
+        void OnDestroy(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
     }
 }

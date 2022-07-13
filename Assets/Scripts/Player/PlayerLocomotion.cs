@@ -19,6 +19,9 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
     public float fallTimer;
     public float fallTimerMax = 3f;
 
+    public float glideTimer;
+    private float glideMaxTimer = 3f;
+
     [Header("Movement Flags")]
     public bool isSprinting;
     public bool isGrounded;
@@ -133,9 +136,19 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
             }    
         }
 
+  
+            
+
         //Player is gliding
         if (!isGrounded  && isGliding)
         {
+            
+            glideTimer -= Time.deltaTime;
+            if(glideTimer <= 0)
+            {
+                isGliding = false;
+                IM.glide_Input = false;
+            }
             fallTimer = fallTimerMax;
             inAirTimer = 0f;
             inAirTimer += Time.deltaTime;
@@ -187,6 +200,7 @@ public class PlayerLocomotion : GameBehaviour<PlayerLocomotion>
         if (isGrounded)
         {
             isGliding = false;
+            glideTimer = glideMaxTimer;
             //inAirTimer = 0;
         }
            

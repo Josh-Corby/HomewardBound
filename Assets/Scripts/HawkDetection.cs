@@ -5,13 +5,15 @@ using UnityEngine;
 public class HawkDetection : MonoBehaviour
 {
     public GameObject detectionCircle;
-    bool isGrowing;
+    public bool isGrowing;
     public Vector3 minScale;
     public Vector3 maxScale;
     float lerpTime = 0.3f;
 
+
     private void Start()
     {
+        detectionCircle.transform.localPosition = new Vector3(0, 0, 0);
         isGrowing = false;
     }
     private void Update()
@@ -31,17 +33,24 @@ public class HawkDetection : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player detected");
             isGrowing = true;
         }
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            detectionCircle.transform.position = new Vector3( other.transform.position.x, other.transform.position.y+0.01f, other.transform.position.z);    
+        }
+        
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player not detected");
             isGrowing = false;
+            detectionCircle.transform.localPosition = new Vector3(0, 0, 0);
         }
     }
 }
