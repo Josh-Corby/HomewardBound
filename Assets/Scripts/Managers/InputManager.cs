@@ -9,7 +9,10 @@ public class InputManager : GameBehaviour<InputManager>
     public Vector2 movementInput, cameraInput;
     public float cameraInputX, cameraInputY;
     public float moveAmount;
-    public float verticalInput, horizontalInput;
+    [HideInInspector]
+    public float verticalInput; 
+    [HideInInspector]
+    public float horizontalInput;
     public bool sprint_Input;
     public bool jump_Input;
     public bool interact_Input;
@@ -29,6 +32,7 @@ public class InputManager : GameBehaviour<InputManager>
             playerControls.PlayerActions.Sprint.canceled += i => sprint_Input = false;
 
             playerControls.PlayerActions.Jump.performed += i => jump_Input = true;
+           playerControls.PlayerActions.Jump.canceled += i => jump_Input = false;
 
             playerControls.PlayerActions.Interact.performed += i => interact_Input = true;
 
@@ -47,12 +51,17 @@ public class InputManager : GameBehaviour<InputManager>
         playerControls.Disable();
     }
 
-    public void HandleAllInputs()
+    private void Update()
     {
-        HandleMovementInput();
-        HandleSprintingInput();
-        HandleJumpingInput();
+        //HandleMovementInput();
     }
+
+    //public void HandleAllInputs()
+    //{
+    //    HandleMovementInput();
+    //    HandleSprintingInput();
+    //    HandleJumpingInput();
+    //}
 
     private void HandleMovementInput()
     {
@@ -62,29 +71,30 @@ public class InputManager : GameBehaviour<InputManager>
         cameraInputX = cameraInput.x;
         cameraInputY = cameraInput.y;
 
-        moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
-        AM.UpdateAnimatorValues(0, moveAmount, PL.isSprinting);
+
+        //moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
+        //AM.UpdateAnimatorValues(0, moveAmount, PL.isSprinting);
     }
 
-    private void HandleSprintingInput()
-    {
-        if (sprint_Input && moveAmount > 0.5f)
-        {
-            PL.isSprinting = true;
-        }
-        else
-        {
-            PL.isSprinting = false;
-        }
-    }
+    //private void HandleSprintingInput()
+    //{
+    //    if (sprint_Input && moveAmount > 0.5f)
+    //    {
+    //        PL.isSprinting = true;
+    //    }
+    //    else
+    //    {
+    //        PL.isSprinting = false;
+    //    }
+    //}
 
-    private void HandleJumpingInput()
-    {
-        if (jump_Input)
-        {
-            jump_Input = false;
-            PL.HandleJumping();
-        }
-    }
+    //private void HandleJumpingInput()
+    //{
+    //    if (jump_Input)
+    //    {
+    //        jump_Input = false;
+    //        PL.playerStates = PlayerStates.Jumping;
+    //    }
+    //}
 
 }
