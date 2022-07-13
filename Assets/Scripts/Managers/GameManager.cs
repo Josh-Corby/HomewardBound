@@ -11,7 +11,6 @@ public class GameManager : GameBehaviour<GameManager>
     public Transform spawnPoint;
     private void Start()
     {
-        Application.targetFrameRate = 60;
         RespawnPlayer();
     }
 
