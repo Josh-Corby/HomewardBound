@@ -39,7 +39,7 @@ public class UIManager : GameBehaviour<UIManager>
         flashLightIntensity.text = "Light Power: " + 
             FL.myLight.intensity.ToString("F2") + " /10";
 
-        //fallTimer.text = "Fall timer: " +  PL.fallTimer.ToString("F2");
+        fallTimer.text = "Fall timer: " +  PL.fallTimer.ToString("F2");
 
         ToggleBuildMenu();
     }
@@ -115,10 +115,6 @@ public class UIManager : GameBehaviour<UIManager>
 
     public void BuildMenuToggle()
     {
-        if (PC.paused)
-        {
-            return;
-        }
         buildPanelStatus = !buildPanelStatus;
         buildPanel.SetActive(buildPanelStatus);
 
