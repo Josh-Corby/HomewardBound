@@ -22,7 +22,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>
 
     private void FixedUpdate()
     {
-        PL.HandleAllMovement();
+        //PL.HandleAllMovement();
     }
 
     private void LateUpdate()
@@ -30,7 +30,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>
         //cameraManager.HandleAllCameraMovement();
 
         isInteracting = animator.GetBool("isInteracting");
-        PL.isJumping = animator.GetBool("isJumping");
-        animator.SetBool("isGrounded", PL.isGrounded);
+        //PL.isJumping = animator.GetBool("isJumping");
+        //animator.SetBool("isGrounded", PL.isGrounded);
     }
 }

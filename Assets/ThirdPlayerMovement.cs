@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThirdPlayerMovement : MonoBehaviour
+public class ThirdPlayerMovement : GameBehaviour
 {
     public CharacterController controller;
     public Transform cam;
+    ThirdPlayerMovement basicMovementScript;
 
     public float gravity = -9.81f;
 
     public float speed = 6f;
+    public float speedBoost = 12f;
 
     public float jumpHeight = 3f;
 
@@ -21,7 +23,14 @@ public class ThirdPlayerMovement : MonoBehaviour
     public LayerMask groundMask;
     bool isGrounded;
 
+    public float glidingSpeed = 2f;
+
     Vector3 velocity;
+
+    private void Start()
+    {
+        basicMovementScript = GetComponent<ThirdPlayerMovement>();
+    }
 
     void Update()
     {
@@ -55,5 +64,25 @@ public class ThirdPlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
+
+        if (IM.glide_Input && velocity.y <= 0)
+        {
+            gravity = 0;
+            velocity = new Vector3(velocity.z, -glidingSpeed);
+            //velocity.y = Mathf.Sqrt(gravity * -0.1f / jumpHeight);
+        }
+        else
+        {
+            gravity = -9.81f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            Debug.Log("Sprinitng");
+            basicMovementScript.speed += speedBoost;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+            basicMovementScript.speed -= speedBoost;
+        
     }
 }
