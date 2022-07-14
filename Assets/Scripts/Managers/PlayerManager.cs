@@ -15,10 +15,10 @@ public class PlayerManager : GameBehaviour<PlayerManager>
         isClimbing = false;
     }
 
-    private void Update()
-    {
-        IM.HandleAllInputs();
-    }
+    //private void Update()
+    //{
+    //    IM.HandleAllInputs();
+    //}
 
     private void FixedUpdate()
     {

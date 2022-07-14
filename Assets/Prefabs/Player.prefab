@@ -40,7 +40,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 375787854}
-  - component: {fileID: 375787858}
   - component: {fileID: 375787857}
   - component: {fileID: 375787856}
   - component: {fileID: 375787855}
@@ -70,32 +69,6 @@ Transform:
   m_Father: {fileID: 5534785947605002511}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &375787858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 375787853}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b49f25c6f5f5e304a97d7fdf14b04c3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementInput: {x: 0, y: 0}
-  cameraInput: {x: 0, y: 0}
-  cameraInputX: 0
-  cameraInputY: 0
-  moveAmount: 0
-  verticalInput: 0
-  horizontalInput: 0
-  sprint_Input: 0
-  jump_Input: 0
-  interact_Input: 0
-  glide_Input: 0
-  buildMenu_Input: 0
-  destroy_Input: 0
-  cancel_Input: 0
 --- !u!114 &375787857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,6 +99,7 @@ MonoBehaviour:
   cam: {fileID: 0}
   gravity: -9.81
   speed: 6
+  speedBoost: 12
   jumpHeight: 3
   turnSmoothTime: 0.1
   groundCheck: {fileID: 818741223}
@@ -133,6 +107,8 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+  glidingSpeed: 2
+  grounded: 0
 --- !u!143 &375787855
 CharacterController:
   m_ObjectHideFlags: 0
