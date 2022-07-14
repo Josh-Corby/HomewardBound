@@ -30,18 +30,17 @@ public class PauseController : GameBehaviour<PauseController>
         Time.timeScale = paused ? 0 : 1;
         pausePanel.SetActive(paused);
 
-        if (paused && !UI.buildPanelStatus)
+        if (paused)
         {
             Cursor.lockState = CursorLockMode.None;
         }
-        if (!paused && !UI.buildPanelStatus)
+        if (!paused)
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
         else if (!paused && UI.buildPanelStatus)
         {
             Cursor.lockState = CursorLockMode.Locked;
-            Time.timeScale = 0f;
         }
     }
 }

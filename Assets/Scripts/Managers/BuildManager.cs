@@ -28,7 +28,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     private GameObject prefabToSpawn;
 
-    private GameObject buildingObject;
+    public GameObject buildingObject;
     private Color objectColor;
 
     #region Build Prefabs
@@ -43,8 +43,18 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     private void Update()
     {
+        if (!isBuilding)
+        {
+            if (IM.cancel_Input)
+            {
+                IM.cancel_Input = false;
+                return;
+            }
+        }
+
         if (isBuilding)
         {
+            
             if (IM.cancel_Input)
             {
                 if(prefabToSpawn != null)
@@ -52,12 +62,18 @@ public class BuildManager : GameBehaviour<BuildManager>
                     Destroy(buildingObject);
                     AddCost();
                     prefabToSpawn = null;
+                    canBuild = false;
                     isBuilding = false;
                 }
             }
         }
         if (IM.interact_Input && isBuilding)
         {
+            if (!TPM.isGrounded)
+            {
+                IM.interact_Input = false;
+                return;
+            }
             if (canBuild)
             {
                 objectColor.a = 1f;
@@ -68,6 +84,7 @@ public class BuildManager : GameBehaviour<BuildManager>
                 IZ.Toggle(true);
                 isBuilding = false;
                 SubtractCost();
+                buildingObject = null;
                 
             }
 
@@ -87,7 +104,7 @@ public class BuildManager : GameBehaviour<BuildManager>
                 LadderCheck();
                 prefabToSpawn = LadderCheck() ? ladderPrefab : null;
                 isBuilding = LadderCheck();
-                BuildObject();
+                StartCoroutine(BuildObject());
                 canBuild = true;
                 break;
 
@@ -95,7 +112,7 @@ public class BuildManager : GameBehaviour<BuildManager>
                 BridgeCheck();
                 prefabToSpawn = BridgeCheck() ? bridgePrefab : null;
                 isBuilding = BridgeCheck();
-                BuildObject();
+                StartCoroutine(BuildObject());
                 canBuild = true;
                 break;
 
@@ -111,15 +128,18 @@ public class BuildManager : GameBehaviour<BuildManager>
         IZ.DisableOutline();
     }
 
-    private void BuildObject()
+    IEnumerator BuildObject()
     {
+        Destroy(buildingObject);
+        buildingObject = null;
         
+        yield return new WaitForEndOfFrame();
         Instantiate(prefabToSpawn, buildZone.transform);
         buildingObject = buildZone.transform.GetChild(0).gameObject;
         objectColor = buildingObject.GetComponent<MeshRenderer>().material.color;
         UI.BuildMenuToggle();
-        
     }
+
 
     #region Materials Comparisons
 

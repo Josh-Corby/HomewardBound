@@ -14,8 +14,8 @@ public class GameBehaviour : JMC
     protected static UIManager UI { get { return UIManager.INSTANCE; } }
     protected static BuildManager BM { get { return BuildManager.INSTANCE; } }
     protected static InteractionZone IZ { get { return InteractionZone.INSTANCE; } }
-
     protected static PauseController PC { get { return PauseController.INSTANCE; } }
+    protected static ThirdPlayerMovement TPM { get { return ThirdPlayerMovement.INSTANCE; } }
 }
 
 public class GameBehaviour<T> : GameBehaviour where T : GameBehaviour

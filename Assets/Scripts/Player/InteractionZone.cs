@@ -112,7 +112,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             LadderEntry = other.gameObject;
         }
 
-        if (other.CompareTag("Ladder"))
+        if (other.CompareTag("LadderBody"))
         {
 
             Debug.Log("Can Destroy Ladder");

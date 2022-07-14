@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: -4194144420811696702}
   m_Layer: 0
   m_Name: Ladder
-  m_TagString: Ladder
+  m_TagString: LadderBody
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -575,7 +575,7 @@ GameObject:
   - component: {fileID: 6064121116733540215}
   m_Layer: 0
   m_Name: LadderBodyTrigger
-  m_TagString: Ladder
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

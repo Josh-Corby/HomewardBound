@@ -36,8 +36,8 @@ public class UIManager : GameBehaviour<UIManager>
     }
     private void Update()
     {
-        flashLightIntensity.text = "Light Power: " + 
-            FL.myLight.intensity.ToString("F2") + " /10";
+        //flashLightIntensity.text = "Light Power: " + 
+            //FL.myLight.intensity.ToString("F2") + " /10";
 
         //fallTimer.text = "Fall timer: " +  PL.fallTimer.ToString("F2");
 
@@ -123,14 +123,12 @@ public class UIManager : GameBehaviour<UIManager>
         if (buildPanelStatus)
         {
             Cursor.lockState = CursorLockMode.None;
-            Time.timeScale = 0f;
 
         }
 
         if (!buildPanelStatus)
         {
             Cursor.lockState = CursorLockMode.Locked;
-            Time.timeScale = 1;
 
         }
     }

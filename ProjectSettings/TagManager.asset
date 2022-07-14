@@ -16,6 +16,7 @@ TagManager:
   - Mushroom
   - Bridge
   - Floor
+  - LadderBody
   layers:
   - Default
   - TransparentFX
