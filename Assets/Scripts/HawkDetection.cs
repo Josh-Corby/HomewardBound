@@ -11,7 +11,7 @@ public class HawkDetection : GameBehaviour
     float lerpTime = 0.3f;
 
     public float timer;
-    float maxTimer = 3f;
+    float maxTimer = 10f;
 
 
     private void Start()

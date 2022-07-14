@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameBehaviour : JMC
 {
     protected static GameManager GM { get { return GameManager.INSTANCE; } }
-    protected static PlayerLocomotion PL { get { return PlayerLocomotion.INSTANCE; } }
+    //protected static PlayerLocomotion PL { get { return PlayerLocomotion.INSTANCE; } }
     protected static PlayerManager PM { get { return PlayerManager.INSTANCE; } }
     protected static CameraManager CM { get { return CameraManager.INSTANCE; } }
     protected static AnimatorManager AM { get { return AnimatorManager.INSTANCE; } }

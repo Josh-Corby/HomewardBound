@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerManager : GameBehaviour<PlayerManager>
 {
     CameraManager cameraManager;
-    Animator animator;
+    //Animator animator;
 
     public bool isInteracting;
     public bool isClimbing;
@@ -11,7 +11,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>
     private void Awake()
     {
         cameraManager = FindObjectOfType<CameraManager>();
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
         isClimbing = false;
     }
 
@@ -22,15 +22,15 @@ public class PlayerManager : GameBehaviour<PlayerManager>
 
     private void FixedUpdate()
     {
-        PL.HandleAllMovement();
+        //PL.HandleAllMovement();
     }
 
     private void LateUpdate()
     {
         //cameraManager.HandleAllCameraMovement();
 
-        isInteracting = animator.GetBool("isInteracting");
-        PL.isJumping = animator.GetBool("isJumping");
-        animator.SetBool("isGrounded", PL.isGrounded);
+        //isInteracting = animator.GetBool("isInteracting");
+        //PL.isJumping = animator.GetBool("isJumping");
+        //animator.SetBool("isGrounded", PL.isGrounded);
     }
 }

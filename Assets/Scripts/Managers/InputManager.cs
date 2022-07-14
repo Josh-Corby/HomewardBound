@@ -69,18 +69,18 @@ public class InputManager : GameBehaviour<InputManager>
         cameraInputY = cameraInput.y;
 
         moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
-        AM.UpdateAnimatorValues(0, moveAmount, PL.isSprinting);
+        //AM.UpdateAnimatorValues(0, moveAmount, PL.isSprinting);
     }
 
     private void HandleSprintingInput()
     {
         if (sprint_Input && moveAmount > 0.5f)
         {
-            PL.isSprinting = true;
+            //PL.isSprinting = true;
         }
         else
         {
-            PL.isSprinting = false;
+            //PL.isSprinting = false;
         }
     }
 
@@ -89,7 +89,7 @@ public class InputManager : GameBehaviour<InputManager>
         if (jump_Input)
         {
             jump_Input = false;
-            PL.HandleJumping();
+            //PL.HandleJumping();
         }
     }
 
