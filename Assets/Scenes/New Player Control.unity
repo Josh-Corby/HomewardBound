@@ -3994,7 +3994,7 @@ GameObject:
   - component: {fileID: 942624213}
   - component: {fileID: 942624212}
   - component: {fileID: 942624211}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Ladder
   m_Icon: {fileID: 0}
@@ -4330,7 +4330,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 942624210}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17, y: 0, z: 30}
+  m_LocalPosition: {x: 17, y: -0.24, z: 28.651852}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4578,7 +4578,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1106615820}
-  m_LocalRotation: {x: 0.10410984, y: -0.000000017646427, z: 0.0000000018457357, w: 0.99456584}
+  m_LocalRotation: {x: 0.10410984, y: -0.000000017646425, z: 0.0000000018457478, w: 0.99456584}
   m_LocalPosition: {x: 2.4899302, y: 7.48, z: -14.719147}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4802,7 +4802,7 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 2.2
+  m_Height: 2
   m_Radius: 0.6
   m_SlopeLimit: 49.52
   m_StepOffset: 0
@@ -7061,7 +7061,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1965392721}
-  m_LocalRotation: {x: 0.08604984, y: 0.0000000042856403, z: -3.7015158e-10, w: 0.99629086}
+  m_LocalRotation: {x: 0.08604984, y: -0.0000000042856407, z: 3.701516e-10, w: 0.99629086}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
