@@ -322,6 +322,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Right Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""a5611142-b369-4627-9626-e76756630c3d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -434,6 +443,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Cancel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8f619c31-f1c7-4a93-b077-1ba5774d4b01"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -454,6 +474,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_PlayerActions_OpenBuildMenu = m_PlayerActions.FindAction("OpenBuildMenu", throwIfNotFound: true);
         m_PlayerActions_Destroy = m_PlayerActions.FindAction("Destroy", throwIfNotFound: true);
         m_PlayerActions_Cancel = m_PlayerActions.FindAction("Cancel", throwIfNotFound: true);
+        m_PlayerActions_RightClick = m_PlayerActions.FindAction("Right Click", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -569,6 +590,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_OpenBuildMenu;
     private readonly InputAction m_PlayerActions_Destroy;
     private readonly InputAction m_PlayerActions_Cancel;
+    private readonly InputAction m_PlayerActions_RightClick;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
@@ -580,6 +602,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @OpenBuildMenu => m_Wrapper.m_PlayerActions_OpenBuildMenu;
         public InputAction @Destroy => m_Wrapper.m_PlayerActions_Destroy;
         public InputAction @Cancel => m_Wrapper.m_PlayerActions_Cancel;
+        public InputAction @RightClick => m_Wrapper.m_PlayerActions_RightClick;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -610,6 +633,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Cancel.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnCancel;
                 @Cancel.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnCancel;
                 @Cancel.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnCancel;
+                @RightClick.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRightClick;
+                @RightClick.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRightClick;
+                @RightClick.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRightClick;
             }
             m_Wrapper.m_PlayerActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -635,6 +661,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Cancel.started += instance.OnCancel;
                 @Cancel.performed += instance.OnCancel;
                 @Cancel.canceled += instance.OnCancel;
+                @RightClick.started += instance.OnRightClick;
+                @RightClick.performed += instance.OnRightClick;
+                @RightClick.canceled += instance.OnRightClick;
             }
         }
     }
@@ -654,5 +683,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnOpenBuildMenu(InputAction.CallbackContext context);
         void OnDestroy(InputAction.CallbackContext context);
         void OnCancel(InputAction.CallbackContext context);
+        void OnRightClick(InputAction.CallbackContext context);
     }
 }

@@ -9,6 +9,8 @@ public class GameManager : GameBehaviour<GameManager>
     public int mushroomsCollected = 0;
     public GameObject Player;
     public Transform spawnPoint;
+
+    
     private void Start()
     {
         RespawnPlayer();
