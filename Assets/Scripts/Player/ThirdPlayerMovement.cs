@@ -28,16 +28,17 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private float glideTimer;
     private float glideTimerMax = 3f;
 
-    private LineRenderer lr;
     public GameObject grapplePoint;
-    public LayerMask whatIsGrappleable;
 
     [SerializeField] 
     private Transform debugHitPointTransform;
     [SerializeField]
     private Transform hookshotTransform;
 
+    public GameObject grappleHook;
+
     private Vector3 hookshotPosition;
+    [SerializeField]
     private float hookshotSize;
 
     private State state;
@@ -50,7 +51,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     private void Awake()
     {
-        lr = GetComponent<LineRenderer>();
         state = State.Normal;
         hookshotTransform.gameObject.SetActive(false);
     }
@@ -70,8 +70,15 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             case State.Normal:
                 
                 HandleMovement();
-                StartGrapple();
-                break;
+                if (BM.haveGrappleHook)
+                {
+                    StartGrapple();
+                }
+                else
+                {
+                    return;
+                }
+                    break;
             case State.HookshotThrown:
                 HandleHookShotThrow();
                 HandleMovement();
@@ -83,7 +90,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     }
     private void LateUpdate()
     {
-        transform.rotation = Camera.main.transform.rotation;
+        grappleHook.transform.rotation = Camera.main.transform.rotation;
+  
     }
     private void HandleMovement()
     {
@@ -186,7 +194,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
         float hookshotThrowSpeed = 70f;
         hookshotSize += hookshotThrowSpeed * Time.deltaTime;
-        hookshotTransform.localScale = new Vector3(1, 1, hookshotSize * 2);
+        hookshotTransform.localScale = new Vector3(1, 1, hookshotSize);
 
         if(hookshotSize >= Vector3.Distance(transform.position, hookshotPosition))
         {
@@ -208,6 +216,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         //Move character controller
         controller.Move(hookshotDir * hookshotSpeed * hookshotSpeedMultiplier * Time.deltaTime);
 
+        hookshotSize = Vector3.Distance(transform.position, hookshotPosition);
+        hookshotTransform.localScale = new Vector3(1, 1, hookshotSize);
         float reachedHookshotPositionDistance = 2f;
         if(Vector3.Distance(transform.position, hookshotPosition) < reachedHookshotPositionDistance)
         {

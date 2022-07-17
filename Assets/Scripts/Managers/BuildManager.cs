@@ -6,12 +6,14 @@ public enum BuildObjects
 {
     Bridge, 
     Ladder,
-    Glider
+    Glider,
+    GrappleHook
 }
 
 public class BuildManager : GameBehaviour<BuildManager>
 {
     public bool haveGlider;
+    public bool haveGrappleHook;
     public bool isBuilding;
     public bool canBuild;
 
@@ -122,6 +124,13 @@ public class BuildManager : GameBehaviour<BuildManager>
                 SubtractCost();
                 UI.BuildMenuToggle();
                 break;
+            case BuildObjects.GrappleHook:
+                GrappleHookCheck();
+                haveGrappleHook = GrappleHookCheck();
+                SubtractCost();
+                UI.BuildMenuToggle();
+                break;
+
         }
         
         IZ.Toggle(true);
@@ -164,6 +173,13 @@ public class BuildManager : GameBehaviour<BuildManager>
         pebbleCost = 1;
         stickCost = 2;
         mushroomCost = 3;
+        return CompareChecks();
+    }
+    public bool GrappleHookCheck()
+    {
+        pebbleCost = 2;
+        stickCost = 2;
+        mushroomCost = 2;
         return CompareChecks();
     }
 

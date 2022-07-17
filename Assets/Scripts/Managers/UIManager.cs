@@ -21,6 +21,7 @@ public class UIManager : GameBehaviour<UIManager>
     public Button buildLadderButton;
     public Button buildBridgeButton;
     public Button buildGliderButton;
+    public Button buildGrappleHookButton;
 
 
     
@@ -92,6 +93,7 @@ public class UIManager : GameBehaviour<UIManager>
         buildLadderButton.interactable = BM.LadderCheck();
         buildBridgeButton.interactable = BM.BridgeCheck();
         buildGliderButton.interactable = BM.GliderCheck();
+        buildGrappleHookButton.interactable = BM.GrappleHookCheck();
     }
     #endregion
     public void ToggleBuildMenu()
@@ -101,6 +103,12 @@ public class UIManager : GameBehaviour<UIManager>
         {
             buildGliderButton.interactable = false;
         }
+        if (BM.haveGrappleHook)
+        {
+            buildGrappleHookButton.interactable = false;
+        }
+
+
 
         if (IM.buildMenu_Input)
         {

@@ -14,10 +14,12 @@ public class GameManager : GameBehaviour<GameManager>
     private void Start()
     {
         RespawnPlayer();
+        
     }
 
     public void RespawnPlayer()
     {
         Player.transform.position = spawnPoint.transform.position;
+        Debug.Log("Player Respawned");
     }
 }
