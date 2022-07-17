@@ -30,6 +30,7 @@ public class UIManager : GameBehaviour<UIManager>
 
     private void Start()
     {
+        UpdateMaterialsCollected();
         gameUI.SetActive(true);
         buildPanelStatus = false;
         UpdateCanBuildText(false);

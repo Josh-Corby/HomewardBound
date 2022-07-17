@@ -56,7 +56,7 @@ public class HawkDetection : GameBehaviour
         if (other.CompareTag("Player"))
         {
             rayCasting = true;
-            isGrowing = true;
+            //isGrowing = true;
         }
         
     }
@@ -76,7 +76,7 @@ public class HawkDetection : GameBehaviour
                     {
                         detectionCircle.GetComponent<MeshRenderer>().enabled = true;
                         Debug.DrawLine(hawkRay.origin, hit.point, Color.red);
-                        detectionCircle.transform.position = new Vector3(other.transform.position.x, TPM.groundCheck.transform.position.y, other.transform.position.z);
+                        detectionCircle.transform.position = new Vector3(other.transform.position.x, TPM.groundCheck.transform.position.y -0.1f, other.transform.position.z);
                         isGrowing = true;
                     }
                     else

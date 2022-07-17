@@ -8,24 +8,28 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     public Transform cam;
     ThirdPlayerMovement basicMovementScript;
 
-    public float gravity = -9.81f;
-    public float speed = 6f;
-    public float speedBoost = 12f;
+    private float gravity = -9.81f;
+    private float speed = 8f;
+    private float speedBoost = 12f;
     public float jumpHeight = 3f;
 
-    public float turnSmoothTime = 0.1f;
+    public float fallTimer;
+    private float fallTimerMax = 2f;
+
+    private float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
 
     public Transform groundCheck;
-    public float groundDistance = 0.4f;
+    private float groundDistance = 0.4f;
     public LayerMask groundMask;
     public bool isGrounded;
+    private bool isGliding;
 
-    public float glidingSpeed = 2f;
+    private float glidingSpeed = 1f;
     Vector3 velocity;
     public Vector3 characterVelocityMomentum;
 
-    private float glideTimer;
+    public float glideTimer;
     private float glideTimerMax = 3f;
 
     public GameObject grapplePoint;
@@ -57,10 +61,9 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     private void Start()
     {
+        fallTimer = fallTimerMax;
         basicMovementScript = GetComponent<ThirdPlayerMovement>();
     }
-
-    
 
     void Update()
     {
@@ -99,11 +102,23 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
         if (isGrounded)
         {
+            if (fallTimer <= 0)
+            {
+                GM.RespawnPlayer();
+                fallTimer = fallTimerMax;
+            }
+            fallTimer = fallTimerMax;
             glideTimer = glideTimerMax;
         }
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
+        }
+
+        if(!isGrounded && !isGliding)
+        {
+            fallTimer -= Time.deltaTime;
+            
         }
 
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -143,10 +158,12 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         //    characterVelocityMomentum = Vector3.zero;
         //}
 
-        if (BM.haveGlider && IM.glide_Input && velocity.y <= 0)
+        if (glideTimer > 0 && BM.haveGlider && IM.glide_Input && velocity.y <= 0)
         {
+            isGliding = true;
             if (glideTimer <= 0)
             {
+                isGliding = false;
                 return;
             }
             gravity = 0;
@@ -173,7 +190,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     {
         if (IM.rClick_Input)
         {
-            if (Physics.Raycast(grapplePoint.transform.position, grapplePoint.transform.forward, out RaycastHit raycastHit))
+            if (Physics.Raycast(grapplePoint.transform.position, grapplePoint.transform.forward, out RaycastHit raycastHit, 100))
             {
                 debugHitPointTransform.position = raycastHit.point;
                 
@@ -192,7 +209,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     {
         hookshotTransform.LookAt(hookshotPosition);
 
-        float hookshotThrowSpeed = 70f;
+        float hookshotThrowSpeed = 150f;
         hookshotSize += hookshotThrowSpeed * Time.deltaTime;
         hookshotTransform.localScale = new Vector3(1, 1, hookshotSize);
 

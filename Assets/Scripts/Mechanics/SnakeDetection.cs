@@ -15,11 +15,14 @@ public class SnakeDetection : GameBehaviour
 
     public Light spotlight;
     public float viewDistance;
-    public LayerMask viewMask;
+    public LayerMask mask;
+    public bool rayCasting;
+    public bool canSeePlayer;
 
     float viewAngle;
-    public float playerVisibleTimer;
-    float timeToSpotPlayer = 5f;
+
+    public float timer;
+    readonly float maxTimer = 4f;
 
     GameObject player;
     Color originalSpotlightColor;
@@ -29,12 +32,16 @@ public class SnakeDetection : GameBehaviour
     private NavMeshAgent agent;
 
 
+
+
     private void Start()
     {
+        timer = maxTimer;
+        canSeePlayer = false;
         player = GameObject.Find("ThirdPersonPlayer");
-        viewAngle = spotlight.spotAngle;
-        originalSpotlightColor = spotlight.color;
-
+        //viewAngle = spotlight.spotAngle;
+        //originalSpotlightColor = spotlight.color;
+        rayCasting = false;
 
         agent = GetComponent<NavMeshAgent>();
 
@@ -43,27 +50,29 @@ public class SnakeDetection : GameBehaviour
         // approaches a destination point).
         //agent.autoBraking = false;
 
-        GotoNextPoint();
+        //GotoNextPoint();
     }
 
     private void Update()
     {
-        playerVisibleTimer = Mathf.Clamp(playerVisibleTimer, 0, timeToSpotPlayer);
-        if (CanSeePlayer())
+        timer = Mathf.Clamp(timer, 0, maxTimer);
+        if (canSeePlayer)
         {
-            playerVisibleTimer += Time.deltaTime;
+            transform.position = transform.position;
+            
+            if(timer <= 0)
+            {
+                GM.RespawnPlayer();
+                timer = maxTimer;
+                canSeePlayer = false;
+                rayCasting = false;
+            }
+            return;
         }
-        else
-        {
-            playerVisibleTimer -= Time.deltaTime;
-        }
-        
-        spotlight.color = Color.Lerp(originalSpotlightColor, Color.red, playerVisibleTimer / timeToSpotPlayer);
 
-        if (playerVisibleTimer >= timeToSpotPlayer)
-        {
-            GM.RespawnPlayer();
-        }
+        
+
+
 
         // Choose the next destination point when the agent gets
         // close to the current one.
@@ -73,6 +82,11 @@ public class SnakeDetection : GameBehaviour
 
     void GotoNextPoint()
     {
+        if (canSeePlayer)
+        {
+            agent.ResetPath();
+            return;
+        }
         // Returns if no points have been set up
         if (points.Length == 0)
             return;
@@ -85,33 +99,57 @@ public class SnakeDetection : GameBehaviour
         destPoint = (destPoint + 1) % points.Length;
     }
 
-    bool CanSeePlayer()
+    private void OnDrawGizmos()
     {
-        if (Vector3.Distance(transform.position, player.transform.position) < viewDistance)
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, transform.forward * viewDistance);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
         {
-            Debug.Log("Can see player");
-            Vector3 dirToPlayer = (player.transform.position - transform.position).normalized;
-            float angleBetweenGuardAndPlayer = Vector3.Angle(transform.forward, dirToPlayer);
-            if (angleBetweenGuardAndPlayer < viewAngle / 2f)
+            
+            rayCasting = true;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            transform.LookAt(other.gameObject.transform);
+            RaycastHit hit;
+            Ray snakeRay = new Ray(transform.position, Vector3.forward);
+
+            if (rayCasting)
             {
-                if (!Physics.Linecast(transform.position, player.transform.position, viewMask))
+                
+                if (Physics.Raycast(snakeRay, out hit, 100, mask))
                 {
-                    return true;
+                    if(hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
+                    {
+                        Debug.DrawLine(snakeRay.origin, hit.point, Color.red);
+                        canSeePlayer = true;
+                        Debug.Log(hit.collider.gameObject.name);
+                        timer -= Time.deltaTime;
+                    }
+                    else
+                    {
+                        canSeePlayer = false;
+                        Debug.DrawLine(snakeRay.origin, hit.point, Color.green);                 
+                    }
                 }
             }
         }
-        return false;
     }
 
-
-
-
-
-    private void OnDrawGizmos()
+    private void OnTriggerExit(Collider other)
     {
-
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, transform.forward * viewDistance);
+        if (other.CompareTag("Player"))
+        {
+            rayCasting = false;
+            canSeePlayer = false;
+        }
     }
 }
