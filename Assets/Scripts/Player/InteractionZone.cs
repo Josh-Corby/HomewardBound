@@ -7,15 +7,18 @@ public class InteractionZone : GameBehaviour<InteractionZone>
     public bool canPickUp;
     public bool canDestroy;
     public bool canClimb;
+    public bool canBreak;
     public GameObject player;
     public GameObject objectToPickUp;
     public GameObject objectToDestroy;
     private GameObject LadderEntry;
     public int lightPickUpValue = 8;
 
+    private int pebbleCounter = 0;
+
     private void Update()
     {
-        #region World Interactions
+        #region Item Pickups
         if (IM.interact_Input)
         {
             if (canClimb)
@@ -42,11 +45,11 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                     FL.ChangeIntensity(lightPickUpValue);
                 }
 
-                if (objectToPickUp.CompareTag("SmallRock"))
+                if (objectToPickUp.CompareTag("Rock"))
                 {
-                    GM.pebblesCollected +=1;
-                    UI.UpdatePebblesCollected();
-                    Debug.Log(GM.pebblesCollected);
+                    GM.rocksCollected +=1;
+                    UI.UpdateRocksCollected();
+                    Debug.Log(GM.rocksCollected);
                 }
 
                 if (objectToPickUp.CompareTag("Stick"))
@@ -61,6 +64,12 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                     UI.UpdateMushroomsCollected();
                     Debug.Log(GM.mushroomsCollected);
                 }
+                if (objectToPickUp.CompareTag("Pebble"))
+                {
+                    GM.pebblesCollected += 1;
+                    UI.UpdatePebblesCollected();
+                    Debug.Log(GM.pebblesCollected);
+                }
 
                 //Debug.Log("Picked up small object");
                 Destroy(objectToPickUp);
@@ -68,18 +77,39 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                 objectToPickUp = null;
                 IM.interact_Input = false;
                 
-            }
-
-            
+            }      
         }
         #endregion
 
+        //Break Items{
+        if (canBreak)
+        {
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                if (objectToPickUp.CompareTag("Rock"))
+                {
+                    for (int i = 1; i <= 3; i++)
+                    {
+                        GameObject pebble = Instantiate(GM.pebblePrefab);
+                        pebble.transform.parent = objectToPickUp.transform;
+                        pebble.transform.localPosition = new Vector3(Random.Range(0.0f, 1.0f), 0, Random.Range(0f, 1f));
+                        pebbleCounter += 1;
+                        pebble.transform.parent = null;
+                        pebble.name = "Pebble_" + pebbleCounter;                                           
+                    }          
+                    Destroy(objectToPickUp);
+                    TogglePickUpBools();
+                    canBreak = false;
+                }
+                else return;
+            }
+        }
         //Destroy Items
         if (IM.destroy_Input)
         {
             if (canDestroy)
             {
-                GM.pebblesCollected += 1;
+                GM.rocksCollected += 1;
                 GM.sticksCollected += 1;
                 GM.mushroomsCollected += 1;
                 Destroy(objectToDestroy);
@@ -90,19 +120,23 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             }
             if(!canDestroy)
                 IM.destroy_Input = false;
-        }
-        
+        }       
     }
 
     private void OnTriggerEnter(Collider other)
     {
         //Pickups
-        if (other.CompareTag("SmallRock") || other.CompareTag("Stick") || 
-            other.CompareTag("Mushroom") || other.CompareTag("LightPickUp"))
+        if (other.CompareTag("Rock") || other.CompareTag("Stick") || 
+            other.CompareTag("Mushroom") || other.CompareTag("LightPickUp") || other.CompareTag("Pebble"))
         {
             other.GetComponent<Outline>().enabled = true;
             canPickUp = true;
             objectToPickUp = other.gameObject;
+        }
+
+        if (other.CompareTag("Rock"))
+        {
+            canBreak = true;
         }
         
         if (other.CompareTag("LadderTop") || other.CompareTag("LadderBottom"))
@@ -131,11 +165,14 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("SmallRock") || other.CompareTag("Stick") || other.CompareTag("Mushroom"))
+        if (other.CompareTag("Rock") || other.CompareTag("Stick") || other.CompareTag("Mushroom") || other.CompareTag("LightPickUp") || other.CompareTag("Pebble"))
         {
-            other.GetComponent<Outline>().enabled = false;
-            canPickUp = false;
-            objectToPickUp = null;
+            StopPickUp();
+        }
+
+        if (other.CompareTag("Rock"))
+        {
+            canBreak = false;
         }
 
         if (other.CompareTag("Ladder"))
@@ -160,11 +197,16 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         }
     }
 
-    public void DisableOutline()
+    public void StopPickUp()
     {
         if (objectToPickUp == null)
             return;
         objectToPickUp.GetComponent<Outline>().enabled = false;
+        TogglePickUpBools();
+    }
+
+    public void TogglePickUpBools()
+    {
         objectToPickUp = null;
         canPickUp = false;
     }

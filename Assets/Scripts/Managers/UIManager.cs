@@ -13,6 +13,7 @@ public class UIManager : GameBehaviour<UIManager>
     public TMP_Text smallRocksCollected;
     public TMP_Text sticksCollected;
     public TMP_Text mushroomsCollected;
+    public TMP_Text pebblesCollected;
 
     public GameObject gameUI;
     public GameObject buildPanel;
@@ -50,13 +51,14 @@ public class UIManager : GameBehaviour<UIManager>
 
     public void UpdateMaterialsCollected()
     {
-        UpdatePebblesCollected();
+        UpdateRocksCollected();
         UpdateSticksCollected();
         UpdateMushroomsCollected();
+        UpdatePebblesCollected();
     }
-    public void UpdatePebblesCollected()
+    public void UpdateRocksCollected()
     {
-        smallRocksCollected.text = "Pebbles Collected: " + GM.pebblesCollected.ToString();
+        smallRocksCollected.text = "Rocks Collected: " + GM.rocksCollected.ToString();
     }
 
     public void UpdateSticksCollected()
@@ -67,6 +69,11 @@ public class UIManager : GameBehaviour<UIManager>
     public void UpdateMushroomsCollected()
     {
         mushroomsCollected.text = "Mushrooms Collected: " + GM.mushroomsCollected.ToString();
+    }
+
+    public void UpdatePebblesCollected()
+    {
+        pebblesCollected.text = "Pebbles Collected: " + GM.pebblesCollected.ToString();
     }
 
     public void UpdateCanBuildText(bool canBuild)

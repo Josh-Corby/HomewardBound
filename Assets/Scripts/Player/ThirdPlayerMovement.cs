@@ -4,45 +4,44 @@ using UnityEngine;
 
 public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 {
+    [Header("References")]
     public CharacterController controller;
     public Transform cam;
+    public Vector3 characterVelocityMomentum;
+    [SerializeField]
+    private Transform debugHitPointTransform;
+    [SerializeField]
+    private Transform hookshotTransform;
+    public GameObject grapplePoint;
+    public GameObject grappleHook;
+    public Transform groundCheck;
+    public LayerMask groundMask;
+
     ThirdPlayerMovement basicMovementScript;
 
+    //Character modifiers
     private float gravity = -9.81f;
     private float speed = 8f;
     private float speedBoost = 12f;
     public float jumpHeight = 3f;
-
     public float fallTimer;
     private float fallTimerMax = 2f;
-
     private float turnSmoothTime = 0.1f;
-    float turnSmoothVelocity;
+    private float glidingSpeed = 1f;
+    private float glideTimer;
+    private float glideTimerMax = 3f;
 
-    public Transform groundCheck;
+    float turnSmoothVelocity;
     private float groundDistance = 0.4f;
-    public LayerMask groundMask;
+    
+    //Bools
+    [HideInInspector]
     public bool isGrounded;
     private bool isGliding;
 
-    private float glidingSpeed = 1f;
+    
     Vector3 velocity;
-    public Vector3 characterVelocityMomentum;
-
-    public float glideTimer;
-    private float glideTimerMax = 3f;
-
-    public GameObject grapplePoint;
-
-    [SerializeField] 
-    private Transform debugHitPointTransform;
-    [SerializeField]
-    private Transform hookshotTransform;
-
-    public GameObject grappleHook;
-
     private Vector3 hookshotPosition;
-    [SerializeField]
     private float hookshotSize;
 
     private State state;

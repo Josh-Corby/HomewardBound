@@ -4,11 +4,14 @@ using UnityEngine;
 using TMPro;
 public class GameManager : GameBehaviour<GameManager>
 {
-    public int pebblesCollected;
+    public int rocksCollected;
     public int sticksCollected;
     public int mushroomsCollected;
+    public int pebblesCollected;
     public GameObject Player;
     public Transform spawnPoint;
+
+    public GameObject pebblePrefab;
 
     
     private void Start()

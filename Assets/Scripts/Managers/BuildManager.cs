@@ -134,7 +134,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         }
         
         IZ.Toggle(true);
-        IZ.DisableOutline();
+        IZ.StopPickUp();
     }
 
     IEnumerator BuildObject()
@@ -185,7 +185,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     private bool CompareChecks()
     {
-        pebbleCheck = GM.pebblesCollected >= pebbleCost ? pebbleCheck = true : pebbleCheck = false;
+        pebbleCheck = GM.rocksCollected >= pebbleCost ? pebbleCheck = true : pebbleCheck = false;
         stickCheck = GM.sticksCollected >= stickCost ? stickCheck = true : stickCheck = false;
         mushroomCheck = GM.mushroomsCollected >= mushroomCost ? mushroomCheck = true : mushroomCheck = false;
 
@@ -197,7 +197,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     private void SubtractCost()
     {
-        GM.pebblesCollected -= pebbleCost;
+        GM.rocksCollected -= pebbleCost;
         GM.sticksCollected -= stickCost;
         GM.mushroomsCollected -= mushroomCost;
         UI.UpdateMaterialsCollected();
@@ -205,7 +205,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     private void AddCost()
     {
-        GM.pebblesCollected += pebbleCost;
+        GM.rocksCollected += pebbleCost;
         GM.sticksCollected += stickCost;
         GM.mushroomsCollected += mushroomCost;
         UI.UpdateMaterialsCollected();
