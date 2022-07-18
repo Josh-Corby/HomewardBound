@@ -6,114 +6,60 @@ public class PlayerPickUpBig : MonoBehaviour
 {
     public Transform theDes;
 
-    private void OnTriggerEnter(Collider other)
+    void OnMouseDown()
     {
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("Pick Up Object");
-        }
+        GetComponent<Rigidbody>().useGravity = false;
+        this.transform.position = theDes.position;
+        GetComponent<Rigidbody>().freezeRotation = true;
+
+        this.transform.parent = GameObject.Find("Destination").transform;
     }
 
-    private void OnTriggerStay(Collider other)
+    void OnMouseUp()
     {
-        if (other.CompareTag("Player") && Input.GetKey(KeyCode.E))
-        {
-            GetComponent<Rigidbody>().useGravity = false;
-            this.transform.position = theDes.position;
-            GetComponent<Rigidbody>().freezeRotation = true;
-
-            this.transform.parent = GameObject.Find("Destination").transform;
-        }
-        else
-        {
-            this.transform.parent = null;
-            GetComponent<Rigidbody>().freezeRotation = false;
-            GetComponent<Rigidbody>().useGravity = true;
-        }
+        this.transform.parent = null;
+        GetComponent<Rigidbody>().freezeRotation = false;
+        GetComponent<Rigidbody>().useGravity = true;
     }
 
-    //void OnMouseDown()
+    //void Update()
     //{
-    //    GetComponent<BoxCollider>().enabled = false;
-    //    GetComponent<Rigidbody>().useGravity = false;
-    //    GetComponent<Rigidbody>().freezeRotation = true;
-
-    //    this.transform.parent = GameObject.Find("Destination").transform;
-    //    this.transform.position = theDes.position;
-
-    //}
-
-    //void OnMouseUp()
-    //{
-    //    this.transform.parent = null;
-    //    GetComponent<Rigidbody>().freezeRotation = false;
-    //    GetComponent<Rigidbody>().useGravity = true;
-    //    GetComponent<BoxCollider>().enabled = true;
-    //}
-
-    //[Header("Pick Up Settings")]
-    //[SerializeField] Transform holdArea;
-    //private GameObject heldObject;
-    //private Rigidbody heldObjectRB;
-
-    //[Header("Physics Parameters")]
-    //[SerializeField] private float pickupRange = 5.0f;
-    //[SerializeField] private float pickupForce = 150.0f;
-
-    //private void Update()
-    //{
-    //    if (Input.GetMouseButton(0))
+    //    if (Input.GetKeyDown(KeyCode.E))
     //    {
-    //        if(heldObject == null)
-    //        {
-    //            RaycastHit hit;
-    //            if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, pickupRange))
-    //            {
-    //                PickUpObject(hit.transform.gameObject);
-    //            }
-    //        }
-    //        else
-    //        {
-    //            DropObject();
-    //        }
+    //        GetComponent<Rigidbody>().useGravity = false;
+    //        this.transform.position = theDes.position;
+    //        this.transform.parent = GameObject.Find("Destination").transform;
     //    }
 
-    //    if(heldObject != null)
+    //    if (Input.GetKeyUp(KeyCode.E))
     //    {
-    //        MoveObject();
+    //        this.transform.parent = null;
+    //        GetComponent<Rigidbody>().useGravity = true;
+    //    }
+
+
+    //}
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("BigObject") && (Input.GetKeyDown(KeyCode.E)))
+    //    {
+    //        Debug.Log("collide with big object");
+    //        other.GetComponent<Outline>().enabled = true;
+
+    //        GetComponent<Rigidbody>().useGravity = false;
+    //        this.transform.position = theDes.position;
+    //        this.transform.parent = GameObject.Find("Destination").transform;
     //    }
     //}
 
-    //void MoveObject()
+    //private void OnTriggerExit(Collider other)
     //{
-    //    if(Vector3.Distance(heldObject.transform.position, holdArea.position) > 0.1f)
+    //    if (other.CompareTag("BigObject") && (Input.GetKeyUp(KeyCode.E)))
     //    {
-    //        Vector3 moveDirection = (holdArea.position - heldObject.transform.position);
-    //        heldObjectRB.AddForce(moveDirection * pickupForce);
+    //        other.GetComponent<Outline>().enabled = false;
+
+    //        this.transform.parent = null;
+    //        GetComponent<Rigidbody>().useGravity = true;
     //    }
-    //}
-
-    //void PickUpObject(GameObject pickObject)
-    //{
-    //    if (pickObject.GetComponent<Rigidbody>())
-    //    {
-    //        heldObjectRB = pickObject.GetComponent<Rigidbody>();
-    //        heldObjectRB.useGravity = false;
-    //        heldObjectRB.drag = 10;
-    //        heldObjectRB.constraints = RigidbodyConstraints.FreezeRotation;
-
-    //        heldObjectRB.transform.parent = holdArea;
-    //        heldObject = pickObject;
-    //    }
-    //}
-
-    //void DropObject()
-    //{
-    //      heldObjectRB.useGravity = true;
-    //      heldObjectRB.drag = 1;
-    //      heldObjectRB.constraints = RigidbodyConstraints.None;
-
-    //    heldObject.transform.parent = null;
-    //    heldObject = null;
     //}
 }
