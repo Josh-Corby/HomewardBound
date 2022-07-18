@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseController : GameBehaviour
+public class PauseController : GameBehaviour<PauseController>
 {
     public GameObject pausePanel;
     public bool paused;
@@ -21,14 +21,7 @@ public class PauseController : GameBehaviour
             Pause();
 
 
-        //if (paused && !UI.buildPanelStatus)
-        //{
-        //    Cursor.lockState = CursorLockMode.None;
-        //}
-        //if (!paused && !UI.buildPanelStatus)
-        //{
-        //    Cursor.lockState = CursorLockMode.Locked;
-        //}
+
     }
 
      public void Pause()
@@ -36,5 +29,18 @@ public class PauseController : GameBehaviour
         paused = !paused;
         Time.timeScale = paused ? 0 : 1;
         pausePanel.SetActive(paused);
+
+        if (paused)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        if (!paused)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else if (!paused && UI.buildPanelStatus)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 }
