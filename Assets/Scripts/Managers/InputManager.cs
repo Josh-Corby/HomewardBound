@@ -15,6 +15,9 @@ public class InputManager : GameBehaviour<InputManager>
     public bool interact_Input;
     public bool glide_Input;
     public bool buildMenu_Input;
+    public bool destroy_Input;
+    public bool cancel_Input;
+    public bool rClick_Input;
 
     private void OnEnable()
     {
@@ -29,6 +32,7 @@ public class InputManager : GameBehaviour<InputManager>
             playerControls.PlayerActions.Sprint.canceled += i => sprint_Input = false;
 
             playerControls.PlayerActions.Jump.performed += i => jump_Input = true;
+            playerControls.PlayerActions.Jump.canceled += i => jump_Input = false;
 
             playerControls.PlayerActions.Interact.performed += i => interact_Input = true;
 
@@ -36,6 +40,12 @@ public class InputManager : GameBehaviour<InputManager>
             playerControls.PlayerActions.Glide.canceled += i => glide_Input = false;
 
             playerControls.PlayerActions.OpenBuildMenu.performed += i => buildMenu_Input = true;
+
+            playerControls.PlayerActions.Destroy.performed += i => destroy_Input = true;
+
+            playerControls.PlayerActions.Cancel.performed += i => cancel_Input = true;
+
+            playerControls.PlayerActions.RightClick.performed += i => rClick_Input = true;
         }
 
         playerControls.Enable();

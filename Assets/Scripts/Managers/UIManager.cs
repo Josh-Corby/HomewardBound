@@ -21,6 +21,7 @@ public class UIManager : GameBehaviour<UIManager>
     public Button buildLadderButton;
     public Button buildBridgeButton;
     public Button buildGliderButton;
+    public Button buildGrappleHookButton;
 
 
     
@@ -29,6 +30,7 @@ public class UIManager : GameBehaviour<UIManager>
 
     private void Start()
     {
+        UpdateMaterialsCollected();
         gameUI.SetActive(true);
         buildPanelStatus = false;
         UpdateCanBuildText(false);
@@ -36,10 +38,10 @@ public class UIManager : GameBehaviour<UIManager>
     }
     private void Update()
     {
-        flashLightIntensity.text = "Light Power: " + 
-            FL.myLight.intensity.ToString("F2") + " /10";
+        //flashLightIntensity.text = "Light Power: " + 
+            //FL.myLight.intensity.ToString("F2") + " /10";
 
-        fallTimer.text = "Fall timer: " +  PL.fallTimer.ToString("F2");
+        //fallTimer.text = "Fall timer: " +  PL.fallTimer.ToString("F2");
 
         ToggleBuildMenu();
     }
@@ -92,6 +94,7 @@ public class UIManager : GameBehaviour<UIManager>
         buildLadderButton.interactable = BM.LadderCheck();
         buildBridgeButton.interactable = BM.BridgeCheck();
         buildGliderButton.interactable = BM.GliderCheck();
+        buildGrappleHookButton.interactable = BM.GrappleHookCheck();
     }
     #endregion
     public void ToggleBuildMenu()
@@ -101,6 +104,12 @@ public class UIManager : GameBehaviour<UIManager>
         {
             buildGliderButton.interactable = false;
         }
+        if (BM.haveGrappleHook)
+        {
+            buildGrappleHookButton.interactable = false;
+        }
+
+
 
         if (IM.buildMenu_Input)
         {
@@ -115,20 +124,20 @@ public class UIManager : GameBehaviour<UIManager>
 
     public void BuildMenuToggle()
     {
+        if (PC.paused)
+            return;
         buildPanelStatus = !buildPanelStatus;
         buildPanel.SetActive(buildPanelStatus);
 
         if (buildPanelStatus)
         {
             Cursor.lockState = CursorLockMode.None;
-            Time.timeScale = 0f;
 
         }
 
         if (!buildPanelStatus)
         {
             Cursor.lockState = CursorLockMode.Locked;
-            Time.timeScale = 1;
 
         }
     }

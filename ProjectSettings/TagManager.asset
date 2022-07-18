@@ -14,6 +14,9 @@ TagManager:
   - LadderBottom
   - Stick
   - Mushroom
+  - Bridge
+  - Floor
+  - LadderBody
   layers:
   - Default
   - TransparentFX

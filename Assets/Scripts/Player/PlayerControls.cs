@@ -44,6 +44,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Button"",
+                    ""id"": ""1cf43347-5c2e-4c59-a1f2-d7efa187d880"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -222,6 +231,28 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Camera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d698ca91-7e3b-472b-8bfa-6a082b2d880e"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""baf6d2ad-940a-4b7a-881a-06b1d02c1e96"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -269,6 +300,33 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""name"": ""OpenBuildMenu"",
                     ""type"": ""Button"",
                     ""id"": ""f212506e-006d-4bfd-85a8-50ba3dd117bf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Destroy"",
+                    ""type"": ""Button"",
+                    ""id"": ""98788d3b-931d-414c-9365-1c6c69c608d4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""80199764-aed0-44d7-8e98-f7db4b91f266"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Right Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""a5611142-b369-4627-9626-e76756630c3d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -363,6 +421,39 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""OpenBuildMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a1cbec7b-e876-4a89-a066-22cad325235b"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Destroy"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""21088b37-464b-401f-938e-ed4c2d8a3aec"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8f619c31-f1c7-4a93-b077-1ba5774d4b01"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -373,6 +464,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_PlayerMovement = asset.FindActionMap("Player Movement", throwIfNotFound: true);
         m_PlayerMovement_Movement = m_PlayerMovement.FindAction("Movement", throwIfNotFound: true);
         m_PlayerMovement_Camera = m_PlayerMovement.FindAction("Camera", throwIfNotFound: true);
+        m_PlayerMovement_Rotate = m_PlayerMovement.FindAction("Rotate", throwIfNotFound: true);
         // Player Actions
         m_PlayerActions = asset.FindActionMap("Player Actions", throwIfNotFound: true);
         m_PlayerActions_Sprint = m_PlayerActions.FindAction("Sprint", throwIfNotFound: true);
@@ -380,6 +472,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_PlayerActions_Interact = m_PlayerActions.FindAction("Interact", throwIfNotFound: true);
         m_PlayerActions_Glide = m_PlayerActions.FindAction("Glide", throwIfNotFound: true);
         m_PlayerActions_OpenBuildMenu = m_PlayerActions.FindAction("OpenBuildMenu", throwIfNotFound: true);
+        m_PlayerActions_Destroy = m_PlayerActions.FindAction("Destroy", throwIfNotFound: true);
+        m_PlayerActions_Cancel = m_PlayerActions.FindAction("Cancel", throwIfNotFound: true);
+        m_PlayerActions_RightClick = m_PlayerActions.FindAction("Right Click", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -441,12 +536,14 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private IPlayerMovementActions m_PlayerMovementActionsCallbackInterface;
     private readonly InputAction m_PlayerMovement_Movement;
     private readonly InputAction m_PlayerMovement_Camera;
+    private readonly InputAction m_PlayerMovement_Rotate;
     public struct PlayerMovementActions
     {
         private @PlayerControls m_Wrapper;
         public PlayerMovementActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_PlayerMovement_Movement;
         public InputAction @Camera => m_Wrapper.m_PlayerMovement_Camera;
+        public InputAction @Rotate => m_Wrapper.m_PlayerMovement_Rotate;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -462,6 +559,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Camera.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnCamera;
                 @Camera.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnCamera;
                 @Camera.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnCamera;
+                @Rotate.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnRotate;
+                @Rotate.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnRotate;
+                @Rotate.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnRotate;
             }
             m_Wrapper.m_PlayerMovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -472,6 +572,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Camera.started += instance.OnCamera;
                 @Camera.performed += instance.OnCamera;
                 @Camera.canceled += instance.OnCamera;
+                @Rotate.started += instance.OnRotate;
+                @Rotate.performed += instance.OnRotate;
+                @Rotate.canceled += instance.OnRotate;
             }
         }
     }
@@ -485,6 +588,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_Interact;
     private readonly InputAction m_PlayerActions_Glide;
     private readonly InputAction m_PlayerActions_OpenBuildMenu;
+    private readonly InputAction m_PlayerActions_Destroy;
+    private readonly InputAction m_PlayerActions_Cancel;
+    private readonly InputAction m_PlayerActions_RightClick;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
@@ -494,6 +600,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_PlayerActions_Interact;
         public InputAction @Glide => m_Wrapper.m_PlayerActions_Glide;
         public InputAction @OpenBuildMenu => m_Wrapper.m_PlayerActions_OpenBuildMenu;
+        public InputAction @Destroy => m_Wrapper.m_PlayerActions_Destroy;
+        public InputAction @Cancel => m_Wrapper.m_PlayerActions_Cancel;
+        public InputAction @RightClick => m_Wrapper.m_PlayerActions_RightClick;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -518,6 +627,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @OpenBuildMenu.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnOpenBuildMenu;
                 @OpenBuildMenu.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnOpenBuildMenu;
                 @OpenBuildMenu.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnOpenBuildMenu;
+                @Destroy.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnDestroy;
+                @Destroy.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnDestroy;
+                @Destroy.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnDestroy;
+                @Cancel.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnCancel;
+                @Cancel.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnCancel;
+                @Cancel.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnCancel;
+                @RightClick.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRightClick;
+                @RightClick.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRightClick;
+                @RightClick.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRightClick;
             }
             m_Wrapper.m_PlayerActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -537,6 +655,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @OpenBuildMenu.started += instance.OnOpenBuildMenu;
                 @OpenBuildMenu.performed += instance.OnOpenBuildMenu;
                 @OpenBuildMenu.canceled += instance.OnOpenBuildMenu;
+                @Destroy.started += instance.OnDestroy;
+                @Destroy.performed += instance.OnDestroy;
+                @Destroy.canceled += instance.OnDestroy;
+                @Cancel.started += instance.OnCancel;
+                @Cancel.performed += instance.OnCancel;
+                @Cancel.canceled += instance.OnCancel;
+                @RightClick.started += instance.OnRightClick;
+                @RightClick.performed += instance.OnRightClick;
+                @RightClick.canceled += instance.OnRightClick;
             }
         }
     }
@@ -545,6 +672,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnCamera(InputAction.CallbackContext context);
+        void OnRotate(InputAction.CallbackContext context);
     }
     public interface IPlayerActionsActions
     {
@@ -553,5 +681,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnGlide(InputAction.CallbackContext context);
         void OnOpenBuildMenu(InputAction.CallbackContext context);
+        void OnDestroy(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
+        void OnRightClick(InputAction.CallbackContext context);
     }
 }
