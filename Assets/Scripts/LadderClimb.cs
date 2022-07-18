@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LadderClimb : MonoBehaviour
+public class LadderClimb : GameBehaviour
 {
     //public float open = 100f;
     //public float range = 0.5f;

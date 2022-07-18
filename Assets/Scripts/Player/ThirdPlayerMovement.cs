@@ -188,6 +188,10 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     }
     private void StartGrapple()
     {
+        if(!isGrounded)
+        {
+            return;
+        }
         if (IM.rClick_Input)
         {
             if (Physics.Raycast(grapplePoint.transform.position, grapplePoint.transform.forward, out RaycastHit raycastHit, 100))

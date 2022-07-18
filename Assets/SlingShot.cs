@@ -17,7 +17,7 @@ public class SlingShot : MonoBehaviour
     int bulletsLeft, bulletsShot;
 
     //Recoil
-    public Rigidbody playerRb;
+    //public Rigidbody playerRb;
     public float recoilForce;
 
     //bools
@@ -118,7 +118,7 @@ public class SlingShot : MonoBehaviour
             allowInvoke = false;
 
             //Add recoil to player (should only be called once)
-            playerRb.AddForce(-directionWithSpread.normalized * recoilForce, ForceMode.Impulse);
+            //playerRb.AddForce(-directionWithSpread.normalized * recoilForce, ForceMode.Impulse);
         }
 
         //if more than one bulletsPerTap make sure to repeat shoot function
