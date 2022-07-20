@@ -120,7 +120,7 @@ public class SnakeDetection : GameBehaviour
         {
             transform.LookAt(other.gameObject.transform);
             RaycastHit hit;
-            Ray snakeRay = new Ray(transform.position, Vector3.forward);
+            Ray snakeRay = new Ray(transform.position, player.transform.position);
 
             if (rayCasting)
             {

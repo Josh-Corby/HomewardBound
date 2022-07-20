@@ -120,14 +120,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             {
                 if (canDestroy)
                 {
-                    GM.rocksCollected += 1;
-                    GM.sticksCollected += 1;
-                    GM.mushroomsCollected += 1;
-                    Destroy(objectToDestroy);
-                    objectToDestroy = null;
-                    canDestroy = false;
-                    canClimb = false;
-                    UI.UpdateMaterialsCollected();
+                    DestroyObject();
                 }
                 if (!canDestroy)
                     IM.destroy_Input = false;
@@ -181,7 +174,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Rock") || other.CompareTag("Stick") || other.CompareTag("Mushroom") || other.CompareTag("LightPickUp") || other.CompareTag("Pebble"))
+        if (other.CompareTag("Stick") || other.CompareTag("Mushroom") || other.CompareTag("LightPickUp") || other.CompareTag("Pebble"))
         {
             DisableInteractions();
         }
@@ -189,6 +182,8 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         if (other.CompareTag("Rock") || other.CompareTag("BreakableWall"))
         {
             canBreak = false;
+            objectToInteract.GetComponent<Outline>().enabled = false;
+
         }
 
         if (other.CompareTag("Ladder"))
@@ -232,5 +227,14 @@ public class InteractionZone : GameBehaviour<InteractionZone>
     {
         
         this.gameObject.SetActive(isEnabled);
+    }
+
+    public void DestroyObject()
+    {
+        Destroy(objectToDestroy);
+        objectToDestroy = null;
+        canDestroy = false;
+        canClimb = false;
+        UI.UpdateMaterialsCollected();
     }
 }

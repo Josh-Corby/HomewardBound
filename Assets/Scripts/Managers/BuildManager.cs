@@ -56,16 +56,16 @@ public class BuildManager : GameBehaviour<BuildManager>
 
         if (isBuilding)
         {
-            
+            if(OM.outfits != Outfits.Builder)
+            {
+                CancelBuilding();
+            }
+
             if (IM.cancel_Input)
             {
                 if(prefabToSpawn != null)
                 {
-                    Destroy(buildingObject);
-                    AddCost();
-                    prefabToSpawn = null;
-                    canBuild = false;
-                    isBuilding = false;
+                    CancelBuilding();
                 }
             }
         }
@@ -149,6 +149,14 @@ public class BuildManager : GameBehaviour<BuildManager>
         UI.BuildMenuToggle();
     }
 
+    private void CancelBuilding()
+    {
+        Destroy(buildingObject);
+        AddCost();
+        prefabToSpawn = null;
+        canBuild = false;
+        isBuilding = false;
+    }
 
     #region Materials Comparisons
 

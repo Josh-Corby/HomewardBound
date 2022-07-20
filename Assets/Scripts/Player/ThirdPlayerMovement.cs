@@ -66,6 +66,14 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     void Update()
     {
+        if (OM.outfits != Outfits.Grapple || !isGrounded)
+        {
+            DisableGrappleInput();
+
+        }
+        
+
+
         switch (state)
         {
             default:
@@ -79,10 +87,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                         StartGrapple();
                     }
                 }
-                else
-                {
-                    return;
-                }
+                
                     break;
             case State.HookshotThrown:
                 HandleHookShotThrow();
@@ -92,6 +97,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 HandleHookshotMovement();
                 break;
         }
+
+        
     }
     private void LateUpdate()
     {
@@ -272,5 +279,10 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     {
         state = State.Normal;
         hookshotTransform.gameObject.SetActive(false);
+    }
+
+    private void DisableGrappleInput()
+    {
+        IM.rClick_Input = false;
     }
 }

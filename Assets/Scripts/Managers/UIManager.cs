@@ -130,6 +130,10 @@ public class UIManager : GameBehaviour<UIManager>
 
             }
         }
+        else
+        {
+            IM.buildMenu_Input = false;
+        }
 
        
     }
