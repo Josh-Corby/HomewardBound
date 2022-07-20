@@ -9368,7 +9368,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.8132428, y: 1}
+    m_SensorSize: {x: 1.8613707, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -9558,7 +9558,7 @@ Transform:
   - {fileID: 1623498957}
   - {fileID: 1861962551}
   - {fileID: 22130577}
-  - {fileID: 1777861865}
+  - {fileID: 1106173122}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18019,7 +18019,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1087510330}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 127.96421}
+  m_LocalPosition: {x: 0, y: 0, z: 114.36466}
   m_LocalScale: {x: 0.22211002, y: 0.22211002, z: 0.22211002}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18028,7 +18028,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000037029706, y: -13.689247}
+  m_AnchoredPosition: {x: -0.000037029706, y: 0.000022888184}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1087510332
@@ -18655,6 +18655,66 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5051183792195292908, guid: bb4174822699a4243bdb9f363fff7891,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5051183792195292908, guid: bb4174822699a4243bdb9f363fff7891,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5051183792195292908, guid: bb4174822699a4243bdb9f363fff7891,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5051183792195292908, guid: bb4174822699a4243bdb9f363fff7891,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5051183792195292908, guid: bb4174822699a4243bdb9f363fff7891,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5051183792195292908, guid: bb4174822699a4243bdb9f363fff7891,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5269278172220463409, guid: bb4174822699a4243bdb9f363fff7891,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5269278172220463409, guid: bb4174822699a4243bdb9f363fff7891,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5269278172220463409, guid: bb4174822699a4243bdb9f363fff7891,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5269278172220463409, guid: bb4174822699a4243bdb9f363fff7891,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5269278172220463409, guid: bb4174822699a4243bdb9f363fff7891,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5269278172220463409, guid: bb4174822699a4243bdb9f363fff7891,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6308876226213204492, guid: bb4174822699a4243bdb9f363fff7891,
         type: 3}
       propertyPath: m_RootOrder
@@ -18735,8 +18795,44 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1623498956}
+    - target: {fileID: 8539751903666882425, guid: bb4174822699a4243bdb9f363fff7891,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539751903666882425, guid: bb4174822699a4243bdb9f363fff7891,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539751903666882425, guid: bb4174822699a4243bdb9f363fff7891,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539751903666882425, guid: bb4174822699a4243bdb9f363fff7891,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539751903666882425, guid: bb4174822699a4243bdb9f363fff7891,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539751903666882425, guid: bb4174822699a4243bdb9f363fff7891,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb4174822699a4243bdb9f363fff7891, type: 3}
+--- !u!4 &1106173122 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1001534814094713371, guid: bb4174822699a4243bdb9f363fff7891,
+    type: 3}
+  m_PrefabInstance: {fileID: 1106173121}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1106294485
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31343,12 +31439,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!4 &1777861865 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6308876226213204492, guid: bb4174822699a4243bdb9f363fff7891,
-    type: 3}
-  m_PrefabInstance: {fileID: 1106173121}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1789888981
 GameObject:
   m_ObjectHideFlags: 0
@@ -33262,11 +33352,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9c8658a5c882634f986f5be24f2fdd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pebblesCollected: 0
+  rocksCollected: 0
   sticksCollected: 0
   mushroomsCollected: 0
+  pebblesCollected: 0
   Player: {fileID: 3796254960522185500}
   spawnPoint: {fileID: 835295640}
+  pebblePrefab: {fileID: 0}
 --- !u!43 &1864747259
 Mesh:
   m_ObjectHideFlags: 0
@@ -36801,6 +36893,7 @@ MonoBehaviour:
   smallRocksCollected: {fileID: 243002638}
   sticksCollected: {fileID: 1041125422}
   mushroomsCollected: {fileID: 316867675}
+  pebblesCollected: {fileID: 0}
   gameUI: {fileID: 1362794721}
   buildPanel: {fileID: 896384906}
   buildPanelStatus: 0

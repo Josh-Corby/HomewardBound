@@ -72,9 +72,12 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             case State.Normal:
                 
                 HandleMovement();
-                if (BM.haveGrappleHook)
+                if(OM.outfits == Outfits.Grapple)
                 {
-                    StartGrapple();
+                    if (BM.haveGrappleHook)
+                    {
+                        StartGrapple();
+                    }
                 }
                 else
                 {
@@ -157,18 +160,22 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         //    characterVelocityMomentum = Vector3.zero;
         //}
 
-        if (glideTimer > 0 && BM.haveGlider && IM.glide_Input && velocity.y <= 0)
+        if(OM.outfits == Outfits.Glider)
         {
-            isGliding = true;
-            if (glideTimer <= 0)
+            if (glideTimer > 0 && BM.haveGlider && IM.glide_Input && velocity.y <= 0)
             {
-                isGliding = false;
-                return;
+                isGliding = true;
+                if (glideTimer <= 0)
+                {
+                    isGliding = false;
+                    return;
+                }
+                gravity = 0;
+                velocity = new Vector3(velocity.z, -glidingSpeed);
+                //velocity.y = Mathf.Sqrt(gravity * -0.1f / jumpHeight);
+                glideTimer -= Time.deltaTime;
             }
-            gravity = 0;
-            velocity = new Vector3(velocity.z, -glidingSpeed);
-            //velocity.y = Mathf.Sqrt(gravity * -0.1f / jumpHeight);
-            glideTimer -= Time.deltaTime;
+        
         }
         else
         {

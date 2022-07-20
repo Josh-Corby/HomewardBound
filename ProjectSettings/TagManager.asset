@@ -18,6 +18,7 @@ TagManager:
   - LadderBody
   - Pebble
   - Rock
+  - BreakableWall
   layers:
   - Default
   - TransparentFX

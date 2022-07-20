@@ -48,11 +48,15 @@ public class SlingShot : GameBehaviour<SlingShot>
 
     private void Update()
     {
-        MyInput();
+        if(OM.outfits == Outfits.Slingshot)
+        {
+            MyInput();
 
-        //Set ammo display, if it exists :D
-        if (ammunitionDisplay != null)
-            ammunitionDisplay.SetText(bulletsLeft / bulletsPerTap + " / " + magazineSize / bulletsPerTap);
+            //Set ammo display, if it exists :D
+            if (ammunitionDisplay != null)
+                ammunitionDisplay.SetText(bulletsLeft / bulletsPerTap + " / " + magazineSize / bulletsPerTap);
+        }
+       
     }
     private void MyInput()
     {

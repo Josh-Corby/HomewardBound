@@ -134,7 +134,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         }
         
         IZ.Toggle(true);
-        IZ.StopPickUp();
+        IZ.DisableInteractions();
     }
 
     IEnumerator BuildObject()

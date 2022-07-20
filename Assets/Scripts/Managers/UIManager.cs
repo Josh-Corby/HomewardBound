@@ -14,6 +14,7 @@ public class UIManager : GameBehaviour<UIManager>
     public TMP_Text sticksCollected;
     public TMP_Text mushroomsCollected;
     public TMP_Text pebblesCollected;
+    public TMP_Text currentOutfit;
 
     public GameObject gameUI;
     public GameObject buildPanel;
@@ -45,6 +46,7 @@ public class UIManager : GameBehaviour<UIManager>
         //fallTimer.text = "Fall timer: " +  PL.fallTimer.ToString("F2");
 
         ToggleBuildMenu();
+        currentOutfit.text = OM.outfits.ToString();
     }
 
     #region Text Updaters
@@ -116,17 +118,20 @@ public class UIManager : GameBehaviour<UIManager>
             buildGrappleHookButton.interactable = false;
         }
 
-
-
-        if (IM.buildMenu_Input)
+        if(OM.outfits == Outfits.Builder)
         {
-            IsButtonClickable();
-            BuildMenuToggle();
-            
-            
-            IM.buildMenu_Input = false;
-        
+            if (IM.buildMenu_Input)
+            {
+                IsButtonClickable();
+                BuildMenuToggle();
+
+
+                IM.buildMenu_Input = false;
+
+            }
         }
+
+       
     }
 
     public void BuildMenuToggle()
