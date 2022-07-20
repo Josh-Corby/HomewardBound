@@ -33,11 +33,15 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     float turnSmoothVelocity;
     private float groundDistance = 0.4f;
+
+    private float moveSpeed = 8f;
+    private float sprintSpeed = 20f;
     
     //Bools
-    [HideInInspector]
+    
     public bool isGrounded;
     private bool isGliding;
+    public bool isSprinting;
 
     
     Vector3 velocity;
@@ -189,15 +193,29 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             gravity = -9.81f;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (state == State.HookshotThrown)
+            return;
+        else
         {
-            Debug.Log("Sprinitng");
-            basicMovementScript.speed += speedBoost;
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                isSprinting = true;
+            }
+            else if (Input.GetKeyUp(KeyCode.LeftShift))
+                isSprinting = false;
+
+
+            if (!isSprinting)
+            {
+                basicMovementScript.speed = moveSpeed;
+            }
+
+            if (isSprinting)
+            {
+                basicMovementScript.speed = sprintSpeed;
+            }
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
-            basicMovementScript.speed -= speedBoost;
-
-
+        
     }
     private void StartGrapple()
     {

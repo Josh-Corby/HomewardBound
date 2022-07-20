@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LadderClimb : GameBehaviour
+public class LadderClimb : GameBehaviour<LadderClimb>
 {
     //public float open = 100f;
     //public float range = 0.5f;
@@ -57,14 +57,12 @@ public class LadderClimb : GameBehaviour
 
 
     public Transform PlayerController;
-    bool inside = false;
+    public bool inside = false;
     public float speedUpDown = 3.2f;
     public ThirdPlayerMovement TPMMovement;
 
-    // Start is called before the first frame update
     void Start()
     {
-        TPMMovement = GetComponent<ThirdPlayerMovement>();
         inside = false;
     }
 
@@ -72,7 +70,8 @@ public class LadderClimb : GameBehaviour
     {
         if (col.gameObject.tag == "Ladder")
         {
-            TPMMovement.enabled = false;
+            TPM.isGrounded = false;
+            TPM.enabled = false;
             inside = !inside;
         }
     }
@@ -80,8 +79,9 @@ public class LadderClimb : GameBehaviour
     void OnTriggerExit(Collider col)
     {
         if (col.gameObject.tag == "Ladder")
-        {
-            TPMMovement.enabled = true;
+        { 
+            TPM.enabled = true;
+            TPM.isGrounded = true;
             inside = !inside;
         }
     }

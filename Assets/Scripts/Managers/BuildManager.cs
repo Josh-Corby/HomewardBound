@@ -86,6 +86,7 @@ public class BuildManager : GameBehaviour<BuildManager>
                 IZ.Toggle(true);
                 isBuilding = false;
                 SubtractCost();
+                buildingObject.gameObject.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePositionY;
                 buildingObject = null;
                 
             }

@@ -120,6 +120,13 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             {
                 if (canDestroy)
                 {
+                    if (objectToDestroy.CompareTag("Ladder"))
+                    {
+                        DestroyObject();
+                        LC.inside = false;
+                        TPM.enabled = true;
+                        
+                    }
                     DestroyObject();
                 }
                 if (!canDestroy)
@@ -147,18 +154,23 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             other.GetComponent<Outline>().enabled = true;
             canBreak = true;
         }
-        
-        if (other.CompareTag("LadderTop") || other.CompareTag("LadderBottom"))
-        {
-            Debug.Log("Can Climb");
-            canClimb = true;
-            LadderEntry = other.gameObject;
-        }
 
-        if (other.CompareTag("LadderBody"))
-        {
+        //if (other.CompareTag("LadderTop") || other.CompareTag("LadderBottom"))
+        //{
+        //    Debug.Log("Can Climb");
+        //    canClimb = true;
+        //    LadderEntry = other.gameObject;
+        //}
 
-            Debug.Log("Can Destroy Ladder");
+        //if (other.CompareTag("LadderBody"))
+        //{
+
+        //    Debug.Log("Can Destroy Ladder");
+        //    objectToDestroy = other.gameObject;
+        //    canDestroy = true;
+        //}
+        if (other.CompareTag("Ladder"))
+        {
             objectToDestroy = other.gameObject;
             canDestroy = true;
         }
@@ -192,14 +204,14 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             canClimb = false;
             objectToDestroy = null;
         }
-        if (other.CompareTag("LadderTop") || other.CompareTag("LadderBottom"))
-        {
-            Debug.Log("Can't Climb");
-            canClimb = false;
-            LadderEntry = null;
+        //if (other.CompareTag("LadderTop") || other.CompareTag("LadderBottom"))
+        //{
+        //    Debug.Log("Can't Climb");
+        //    canClimb = false;
+        //    LadderEntry = null;
 
-            objectToDestroy = null;
-        }
+        //    objectToDestroy = null;
+        //}
 
         if (other.CompareTag("Bridge"))
         {
