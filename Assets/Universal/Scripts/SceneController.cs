@@ -30,7 +30,16 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadScene("Main_Menu");
     }
 
- 
+    public void ToPlaygroundScene()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void ToBoatScene()
+    {
+        SceneManager.LoadScene(1);
+    }
+
 
     public void QuitGame()
     {
