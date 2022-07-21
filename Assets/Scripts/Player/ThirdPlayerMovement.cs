@@ -4,45 +4,48 @@ using UnityEngine;
 
 public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 {
+    [Header("References")]
     public CharacterController controller;
     public Transform cam;
+    public Vector3 characterVelocityMomentum;
+    [SerializeField]
+    private Transform debugHitPointTransform;
+    [SerializeField]
+    private Transform hookshotTransform;
+    public GameObject grapplePoint;
+    public GameObject grappleHook;
+    public Transform groundCheck;
+    public LayerMask groundMask;
+
     ThirdPlayerMovement basicMovementScript;
 
+    //Character modifiers
     private float gravity = -9.81f;
     private float speed = 8f;
     private float speedBoost = 12f;
     public float jumpHeight = 3f;
-
     public float fallTimer;
     private float fallTimerMax = 2f;
-
     private float turnSmoothTime = 0.1f;
-    float turnSmoothVelocity;
-
-    public Transform groundCheck;
-    private float groundDistance = 0.4f;
-    public LayerMask groundMask;
-    public bool isGrounded;
-    private bool isGliding;
-
     private float glidingSpeed = 1f;
-    Vector3 velocity;
-    public Vector3 characterVelocityMomentum;
-
-    public float glideTimer;
+    private float glideTimer;
     private float glideTimerMax = 3f;
 
-    public GameObject grapplePoint;
+    float turnSmoothVelocity;
+    private float groundDistance = 0.4f;
 
-    [SerializeField] 
-    private Transform debugHitPointTransform;
-    [SerializeField]
-    private Transform hookshotTransform;
+    private float moveSpeed = 8f;
+    private float sprintSpeed = 20f;
+    
+    //Bools
+    
+    public bool isGrounded;
+    private bool isGliding;
+    public bool isSprinting;
 
-    public GameObject grappleHook;
-
+    
+    Vector3 velocity;
     private Vector3 hookshotPosition;
-    [SerializeField]
     private float hookshotSize;
 
     private State state;
@@ -67,20 +70,28 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     void Update()
     {
+        if (OM.outfits != Outfits.Grapple || !isGrounded)
+        {
+            DisableGrappleInput();
+
+        }
+        
+
+
         switch (state)
         {
             default:
             case State.Normal:
                 
                 HandleMovement();
-                if (BM.haveGrappleHook)
+                if(OM.outfits == Outfits.Grapple)
                 {
-                    StartGrapple();
+                    if (BM.haveGrappleHook)
+                    {
+                        StartGrapple();
+                    }
                 }
-                else
-                {
-                    return;
-                }
+                
                     break;
             case State.HookshotThrown:
                 HandleHookShotThrow();
@@ -90,6 +101,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 HandleHookshotMovement();
                 break;
         }
+
+        
     }
     private void LateUpdate()
     {
@@ -158,33 +171,51 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         //    characterVelocityMomentum = Vector3.zero;
         //}
 
-        if (glideTimer > 0 && BM.haveGlider && IM.glide_Input && velocity.y <= 0)
+        if(OM.outfits == Outfits.Glider)
         {
-            isGliding = true;
-            if (glideTimer <= 0)
+            if (glideTimer > 0 && BM.haveGlider && IM.glide_Input && velocity.y <= 0)
             {
-                isGliding = false;
-                return;
+                isGliding = true;
+                if (glideTimer <= 0)
+                {
+                    isGliding = false;
+                    return;
+                }
+                gravity = 0;
+                velocity = new Vector3(velocity.z, -glidingSpeed);
+                //velocity.y = Mathf.Sqrt(gravity * -0.1f / jumpHeight);
+                glideTimer -= Time.deltaTime;
             }
-            gravity = 0;
-            velocity = new Vector3(velocity.z, -glidingSpeed);
-            //velocity.y = Mathf.Sqrt(gravity * -0.1f / jumpHeight);
-            glideTimer -= Time.deltaTime;
+        
         }
         else
         {
             gravity = -9.81f;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (state == State.HookshotThrown)
+            return;
+        else
         {
-            Debug.Log("Sprinitng");
-            basicMovementScript.speed += speedBoost;
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                isSprinting = true;
+            }
+            else if (Input.GetKeyUp(KeyCode.LeftShift))
+                isSprinting = false;
+
+
+            if (!isSprinting)
+            {
+                basicMovementScript.speed = moveSpeed;
+            }
+
+            if (isSprinting)
+            {
+                basicMovementScript.speed = sprintSpeed;
+            }
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
-            basicMovementScript.speed -= speedBoost;
-
-
+        
     }
     private void StartGrapple()
     {
@@ -266,5 +297,10 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     {
         state = State.Normal;
         hookshotTransform.gameObject.SetActive(false);
+    }
+
+    private void DisableGrappleInput()
+    {
+        IM.rClick_Input = false;
     }
 }

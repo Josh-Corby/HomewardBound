@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 2168111885606242623}
   - component: {fileID: 8507452567597144105}
   m_Layer: 8
-  m_Name: SmallRock
-  m_TagString: SmallRock
+  m_Name: Pebble
+  m_TagString: Pebble
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

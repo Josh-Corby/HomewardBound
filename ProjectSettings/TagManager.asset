@@ -7,7 +7,6 @@ TagManager:
   - SmallObject
   - Mud
   - LightPickUp
-  - SmallRock
   - BuildZone
   - Ladder
   - LadderTop
@@ -17,6 +16,9 @@ TagManager:
   - Bridge
   - Floor
   - LadderBody
+  - Pebble
+  - Rock
+  - BreakableWall
   layers:
   - Default
   - TransparentFX
@@ -27,8 +29,8 @@ TagManager:
   - Ground
   - Player
   - SmallObjects
-  - 
-  - 
+  - Ladder
+  - Projecitles
   - 
   - 
   - 

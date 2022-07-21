@@ -13,6 +13,8 @@ public class UIManager : GameBehaviour<UIManager>
     public TMP_Text smallRocksCollected;
     public TMP_Text sticksCollected;
     public TMP_Text mushroomsCollected;
+    public TMP_Text pebblesCollected;
+    public TMP_Text currentOutfit;
 
     public GameObject gameUI;
     public GameObject buildPanel;
@@ -44,19 +46,21 @@ public class UIManager : GameBehaviour<UIManager>
         //fallTimer.text = "Fall timer: " +  PL.fallTimer.ToString("F2");
 
         ToggleBuildMenu();
+        currentOutfit.text = OM.outfits.ToString();
     }
 
     #region Text Updaters
 
     public void UpdateMaterialsCollected()
     {
-        UpdatePebblesCollected();
+        UpdateRocksCollected();
         UpdateSticksCollected();
         UpdateMushroomsCollected();
+        UpdatePebblesCollected();
     }
-    public void UpdatePebblesCollected()
+    public void UpdateRocksCollected()
     {
-        smallRocksCollected.text = "Pebbles Collected: " + GM.pebblesCollected.ToString();
+        smallRocksCollected.text = "Rocks Collected: " + GM.rocksCollected.ToString();
     }
 
     public void UpdateSticksCollected()
@@ -67,6 +71,11 @@ public class UIManager : GameBehaviour<UIManager>
     public void UpdateMushroomsCollected()
     {
         mushroomsCollected.text = "Mushrooms Collected: " + GM.mushroomsCollected.ToString();
+    }
+
+    public void UpdatePebblesCollected()
+    {
+        pebblesCollected.text = "Pebbles Collected: " + GM.pebblesCollected.ToString();
     }
 
     public void UpdateCanBuildText(bool canBuild)
@@ -109,17 +118,24 @@ public class UIManager : GameBehaviour<UIManager>
             buildGrappleHookButton.interactable = false;
         }
 
-
-
-        if (IM.buildMenu_Input)
+        if(OM.outfits == Outfits.Builder)
         {
-            IsButtonClickable();
-            BuildMenuToggle();
-            
-            
-            IM.buildMenu_Input = false;
-        
+            if (IM.buildMenu_Input)
+            {
+                IsButtonClickable();
+                BuildMenuToggle();
+
+
+                IM.buildMenu_Input = false;
+
+            }
         }
+        else
+        {
+            IM.buildMenu_Input = false;
+        }
+
+       
     }
 
     public void BuildMenuToggle()

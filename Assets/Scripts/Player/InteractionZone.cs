@@ -7,15 +7,18 @@ public class InteractionZone : GameBehaviour<InteractionZone>
     public bool canPickUp;
     public bool canDestroy;
     public bool canClimb;
+    public bool canBreak;
     public GameObject player;
-    public GameObject objectToPickUp;
+    public GameObject objectToInteract;
     public GameObject objectToDestroy;
     private GameObject LadderEntry;
     public int lightPickUpValue = 8;
 
+    private int pebbleCounter = 0;
+
     private void Update()
     {
-        #region World Interactions
+        #region Item Pickups
         if (IM.interact_Input)
         {
             if (canClimb)
@@ -29,7 +32,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                 PM.isClimbing = true;
                 Debug.Log("ClimbingLadder");
             }
-            if (objectToPickUp == null && !BM.isBuilding)
+            if (objectToInteract == null && !BM.isBuilding)
             {
                 IM.interact_Input = false;
                 return;
@@ -37,85 +40,137 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             
             if (canPickUp)
             {
-                if (objectToPickUp.CompareTag("LightPickUp"))
+                if (objectToInteract.CompareTag("LightPickUp"))
                 {
                     FL.ChangeIntensity(lightPickUpValue);
                 }
 
-                if (objectToPickUp.CompareTag("SmallRock"))
+                if (objectToInteract.CompareTag("Rock"))
                 {
-                    GM.pebblesCollected +=1;
-                    UI.UpdatePebblesCollected();
-                    Debug.Log(GM.pebblesCollected);
+                    GM.rocksCollected +=1;
+                    UI.UpdateRocksCollected();
+                    Debug.Log(GM.rocksCollected);
                 }
 
-                if (objectToPickUp.CompareTag("Stick"))
+                if (objectToInteract.CompareTag("Stick"))
                 {
                     GM.sticksCollected += 1;
                     UI.UpdateSticksCollected();
                     Debug.Log(GM.sticksCollected);
                 }
-                if (objectToPickUp.CompareTag("Mushroom"))
+                if (objectToInteract.CompareTag("Mushroom"))
                 {
                     GM.mushroomsCollected += 1;
                     UI.UpdateMushroomsCollected();
                     Debug.Log(GM.mushroomsCollected);
                 }
+                if (objectToInteract.CompareTag("Pebble"))
+                {
+                    GM.pebblesCollected += 1;
+                    UI.UpdatePebblesCollected();
+                    Debug.Log(GM.pebblesCollected);
+                }
 
                 //Debug.Log("Picked up small object");
-                Destroy(objectToPickUp);
+                Destroy(objectToInteract);
                 canPickUp = false;
-                objectToPickUp = null;
+                objectToInteract = null;
                 IM.interact_Input = false;
                 
-            }
-
-            
+            }      
         }
         #endregion
 
-        //Destroy Items
-        if (IM.destroy_Input)
-        {
-            if (canDestroy)
-            {
-                GM.pebblesCollected += 1;
-                GM.sticksCollected += 1;
-                GM.mushroomsCollected += 1;
-                Destroy(objectToDestroy);
-                objectToDestroy = null;
-                canDestroy = false;
-                canClimb = false;
-                UI.UpdateMaterialsCollected();
-            }
-            if(!canDestroy)
-                IM.destroy_Input = false;
-        }
         
+        //Destroy Items
+        if(OM.outfits == Outfits.Miner)
+        {
+            //Break Items{
+            if (canBreak)
+            {
+                if (Input.GetKeyDown(KeyCode.Z))
+                {
+                    if (objectToInteract.CompareTag("Rock"))
+                    {
+                        for (int i = 1; i <= 3; i++)
+                        {
+                            GameObject pebble = Instantiate(GM.pebblePrefab);
+                            pebble.transform.parent = objectToInteract.transform;
+                            pebble.transform.localPosition = new Vector3(Random.Range(0.0f, 1.0f), 0, Random.Range(0f, 1f));
+                            pebbleCounter += 1;
+                            pebble.transform.parent = null;
+                            pebble.name = "Pebble_" + pebbleCounter;
+                        }
+                        Destroy(objectToInteract);
+                        TogglePickUpBools();
+                        canBreak = false;
+                        return;
+                    }
+
+                    if (objectToInteract.CompareTag("BreakableWall"))
+                    {
+                        Destroy(objectToInteract);
+
+                    }
+                    else return;
+
+                }
+            }
+            if (IM.destroy_Input)
+            {
+                if (canDestroy)
+                {
+                    if (objectToDestroy.CompareTag("Ladder"))
+                    {
+                        DestroyObject();
+                        LC.inside = false;
+                        TPM.enabled = true;
+                        
+                    }
+                    DestroyObject();
+                }
+                if (!canDestroy)
+                    IM.destroy_Input = false;
+            }
+        }
     }
+        
 
     private void OnTriggerEnter(Collider other)
     {
         //Pickups
-        if (other.CompareTag("SmallRock") || other.CompareTag("Stick") || 
-            other.CompareTag("Mushroom") || other.CompareTag("LightPickUp"))
+        if (other.CompareTag("Rock") || other.CompareTag("Stick") || 
+            other.CompareTag("Mushroom") || other.CompareTag("LightPickUp") || other.CompareTag("Pebble"))
         {
             other.GetComponent<Outline>().enabled = true;
             canPickUp = true;
-            objectToPickUp = other.gameObject;
-        }
-        
-        if (other.CompareTag("LadderTop") || other.CompareTag("LadderBottom"))
-        {
-            Debug.Log("Can Climb");
-            canClimb = true;
-            LadderEntry = other.gameObject;
+            objectToInteract = other.gameObject;
         }
 
-        if (other.CompareTag("LadderBody"))
+        //Breakable Objects
+        if (other.CompareTag("Rock") || other.CompareTag("BreakableWall"))
         {
+            objectToInteract = other.gameObject;
+            other.GetComponent<Outline>().enabled = true;
+            canBreak = true;
+        }
 
-            Debug.Log("Can Destroy Ladder");
+        //if (other.CompareTag("LadderTop") || other.CompareTag("LadderBottom"))
+        //{
+        //    Debug.Log("Can Climb");
+        //    canClimb = true;
+        //    LadderEntry = other.gameObject;
+        //}
+
+        //if (other.CompareTag("LadderBody"))
+        //{
+
+        //    Debug.Log("Can Destroy Ladder");
+        //    objectToDestroy = other.gameObject;
+        //    canDestroy = true;
+        //}
+        if (other.CompareTag("Ladder"))
+        {
             objectToDestroy = other.gameObject;
             canDestroy = true;
         }
@@ -131,11 +186,16 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("SmallRock") || other.CompareTag("Stick") || other.CompareTag("Mushroom"))
+        if (other.CompareTag("Stick") || other.CompareTag("Mushroom") || other.CompareTag("LightPickUp") || other.CompareTag("Pebble"))
         {
-            other.GetComponent<Outline>().enabled = false;
-            canPickUp = false;
-            objectToPickUp = null;
+            DisableInteractions();
+        }
+
+        if (other.CompareTag("Rock") || other.CompareTag("BreakableWall"))
+        {
+            canBreak = false;
+            objectToInteract.GetComponent<Outline>().enabled = false;
+
         }
 
         if (other.CompareTag("Ladder"))
@@ -144,14 +204,14 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             canClimb = false;
             objectToDestroy = null;
         }
-        if (other.CompareTag("LadderTop") || other.CompareTag("LadderBottom"))
-        {
-            Debug.Log("Can't Climb");
-            canClimb = false;
-            LadderEntry = null;
+        //if (other.CompareTag("LadderTop") || other.CompareTag("LadderBottom"))
+        //{
+        //    Debug.Log("Can't Climb");
+        //    canClimb = false;
+        //    LadderEntry = null;
 
-            objectToDestroy = null;
-        }
+        //    objectToDestroy = null;
+        //}
 
         if (other.CompareTag("Bridge"))
         {
@@ -160,17 +220,33 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         }
     }
 
-    public void DisableOutline()
+    public void DisableInteractions()
     {
-        if (objectToPickUp == null)
+        if (objectToInteract == null)
             return;
-        objectToPickUp.GetComponent<Outline>().enabled = false;
-        objectToPickUp = null;
+        objectToInteract.GetComponent<Outline>().enabled = false;
+        TogglePickUpBools();
+    }
+
+    public void TogglePickUpBools()
+    {
+        objectToInteract = null;
         canPickUp = false;
+        canDestroy = false;
+        canBreak = false;
     }
     public void Toggle(bool isEnabled)
     {
         
         this.gameObject.SetActive(isEnabled);
+    }
+
+    public void DestroyObject()
+    {
+        Destroy(objectToDestroy);
+        objectToDestroy = null;
+        canDestroy = false;
+        canClimb = false;
+        UI.UpdateMaterialsCollected();
     }
 }

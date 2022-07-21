@@ -16,6 +16,9 @@ public class GameBehaviour : JMC
     protected static InteractionZone IZ { get { return InteractionZone.INSTANCE; } }
     protected static PauseController PC { get { return PauseController.INSTANCE; } }
     protected static ThirdPlayerMovement TPM { get { return ThirdPlayerMovement.INSTANCE; } }
+    protected static SlingShot SS { get { return SlingShot.INSTANCE; } }
+    protected static OutfitManager OM { get { return OutfitManager.INSTANCE; } }
+    protected static LadderClimb LC { get { return LadderClimb.INSTANCE; } }
 }
 
 public class GameBehaviour<T> : GameBehaviour where T : GameBehaviour

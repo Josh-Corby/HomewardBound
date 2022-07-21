@@ -56,16 +56,16 @@ public class BuildManager : GameBehaviour<BuildManager>
 
         if (isBuilding)
         {
-            
+            if(OM.outfits != Outfits.Builder)
+            {
+                CancelBuilding();
+            }
+
             if (IM.cancel_Input)
             {
                 if(prefabToSpawn != null)
                 {
-                    Destroy(buildingObject);
-                    AddCost();
-                    prefabToSpawn = null;
-                    canBuild = false;
-                    isBuilding = false;
+                    CancelBuilding();
                 }
             }
         }
@@ -86,6 +86,7 @@ public class BuildManager : GameBehaviour<BuildManager>
                 IZ.Toggle(true);
                 isBuilding = false;
                 SubtractCost();
+                buildingObject.gameObject.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePositionY;
                 buildingObject = null;
                 
             }
@@ -134,7 +135,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         }
         
         IZ.Toggle(true);
-        IZ.DisableOutline();
+        IZ.DisableInteractions();
     }
 
     IEnumerator BuildObject()
@@ -149,6 +150,14 @@ public class BuildManager : GameBehaviour<BuildManager>
         UI.BuildMenuToggle();
     }
 
+    private void CancelBuilding()
+    {
+        Destroy(buildingObject);
+        AddCost();
+        prefabToSpawn = null;
+        canBuild = false;
+        isBuilding = false;
+    }
 
     #region Materials Comparisons
 
@@ -185,7 +194,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     private bool CompareChecks()
     {
-        pebbleCheck = GM.pebblesCollected >= pebbleCost ? pebbleCheck = true : pebbleCheck = false;
+        pebbleCheck = GM.rocksCollected >= pebbleCost ? pebbleCheck = true : pebbleCheck = false;
         stickCheck = GM.sticksCollected >= stickCost ? stickCheck = true : stickCheck = false;
         mushroomCheck = GM.mushroomsCollected >= mushroomCost ? mushroomCheck = true : mushroomCheck = false;
 
@@ -197,7 +206,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     private void SubtractCost()
     {
-        GM.pebblesCollected -= pebbleCost;
+        GM.rocksCollected -= pebbleCost;
         GM.sticksCollected -= stickCost;
         GM.mushroomsCollected -= mushroomCost;
         UI.UpdateMaterialsCollected();
@@ -205,7 +214,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     private void AddCost()
     {
-        GM.pebblesCollected += pebbleCost;
+        GM.rocksCollected += pebbleCost;
         GM.sticksCollected += stickCost;
         GM.mushroomsCollected += mushroomCost;
         UI.UpdateMaterialsCollected();
