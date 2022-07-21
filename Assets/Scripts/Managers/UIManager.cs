@@ -148,12 +148,14 @@ public class UIManager : GameBehaviour<UIManager>
         if (buildPanelStatus)
         {
             Cursor.lockState = CursorLockMode.None;
+            OM.canChangeOutfits = false;
 
         }
 
         if (!buildPanelStatus)
         {
             Cursor.lockState = CursorLockMode.Locked;
+            OM.canChangeOutfits = true;
 
         }
     }

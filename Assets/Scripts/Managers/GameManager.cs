@@ -22,7 +22,9 @@ public class GameManager : GameBehaviour<GameManager>
 
     public void RespawnPlayer()
     {
+        Player.GetComponent<CharacterController>().enabled = false;
         Player.transform.position = spawnPoint.transform.position;
+        Player.GetComponent<CharacterController>().enabled = true;
         Debug.Log("Player Respawned");
     }
 }

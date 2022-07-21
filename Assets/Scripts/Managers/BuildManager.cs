@@ -71,7 +71,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         }
         if (IM.interact_Input && isBuilding)
         {
-            if (!TPM.isGrounded)
+            if (TPM.groundState == GroundStates.Airborne)
             {
                 IM.interact_Input = false;
                 return;
