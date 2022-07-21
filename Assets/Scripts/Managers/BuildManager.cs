@@ -4,16 +4,19 @@ using UnityEngine;
 
 public enum BuildObjects
 {
-    Bridge, 
-    Ladder
-    //Glider,
-    //GrappleHook
+    Pickaxe, 
+    Ladder,
+    Bridge,
+    Slingshot,
+    Ammo,
+    GrappleHook,
+    Glider
+    
 }
 
 public class BuildManager : GameBehaviour<BuildManager>
 {
-    //public bool haveGlider;
-    //public bool haveGrappleHook;
+    
     public bool isBuilding;
     public bool canBuild;
 
@@ -38,10 +41,6 @@ public class BuildManager : GameBehaviour<BuildManager>
     [SerializeField] private GameObject bridgePrefab;
     #endregion
 
-    void Start()
-    {
-        //haveGlider = false;
-    }
 
     private void Update()
     {
@@ -103,6 +102,13 @@ public class BuildManager : GameBehaviour<BuildManager>
     {
         switch ((BuildObjects)value)
         {
+            case BuildObjects.Pickaxe:
+                PickaxeCheck();
+                GM.havePickaxe = GliderCheck();
+                SubtractCost();
+                UI.BuildMenuToggle();
+                break;
+
             case BuildObjects.Ladder:
                 LadderCheck();
                 prefabToSpawn = LadderCheck() ? ladderPrefab : null;
@@ -119,20 +125,32 @@ public class BuildManager : GameBehaviour<BuildManager>
                 canBuild = true;
                 break;
 
-                /*
+            case BuildObjects.Slingshot:
+                SlingshotCheck();
+                GM.haveSlingshot = SlingshotCheck();
+                SubtractCost();
+                UI.BuildMenuToggle();
+                break;
+
+            case BuildObjects.Ammo:
+                AmmoCheck();
+                SS.ammo += 5;
+                SubtractCost();
+                break;
+
             case BuildObjects.Glider:
                 GliderCheck();   
-                haveGlider = GliderCheck();
+                GM.haveGlider = GliderCheck();
                 SubtractCost();
                 UI.BuildMenuToggle();
                 break;
             case BuildObjects.GrappleHook:
                 GrappleHookCheck();
-                haveGrappleHook = GrappleHookCheck();
+                GM.haveGrappleHook = GrappleHookCheck();
                 SubtractCost();
                 UI.BuildMenuToggle();
                 break;
-                */
+                
 
         }
         
@@ -163,6 +181,14 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     #region Materials Comparisons
 
+    public bool PickaxeCheck()
+    {
+        pebbleCost = 3;
+        stickCost = 3;
+        mushroomCost = 0;
+        return CompareChecks();
+    }
+
     public bool LadderCheck()
     {
         pebbleCost = 3;
@@ -179,7 +205,22 @@ public class BuildManager : GameBehaviour<BuildManager>
         return CompareChecks();
     }
 
-    /*
+    public bool SlingshotCheck()
+    {
+        pebbleCost = 1;
+        stickCost = 2;
+        mushroomCost = 3;
+        return CompareChecks();
+    }
+
+    public bool AmmoCheck()
+    {
+        pebbleCost = 2;
+        stickCost = 0;
+        mushroomCost = 0;
+        return CompareChecks();
+    }
+    
     public bool GliderCheck()
     {
         pebbleCost = 1;
@@ -194,7 +235,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         mushroomCost = 2;
         return CompareChecks();
     }
-    */
+    
 
     private bool CompareChecks()
     {

@@ -83,7 +83,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
         
         //Destroy Items
-        if(OM.outfits == Outfits.Miner)
+        if(OM.outfits == Outfits.Miner && GM.havePickaxe)
         {
             //Break Items{
             if (canBreak)

@@ -14,8 +14,9 @@ public class SlingShot : GameBehaviour<SlingShot>
     public int magazineSize, bulletsPerTap;
     public bool allowButtonHold;
 
-    int bulletsLeft, bulletsShot, ammo;
-
+    int bulletsLeft, bulletsShot ;
+    [HideInInspector]
+    public int ammo;
     //Recoil
     //public Rigidbody playerRb;
     public float recoilForce;
@@ -48,14 +49,18 @@ public class SlingShot : GameBehaviour<SlingShot>
 
     private void Update()
     {
-        if(OM.outfits == Outfits.Slingshot)
+        if (!UI.buildPanelStatus)
         {
-            MyInput();
+            if (OM.outfits == Outfits.Slingshot && GM.haveSlingshot)
+            {
+                MyInput();
 
-            //Set ammo display, if it exists :D
-            if (ammunitionDisplay != null)
-                ammunitionDisplay.SetText(bulletsLeft / bulletsPerTap + " / " + magazineSize / bulletsPerTap);
+                //Set ammo display, if it exists :D
+                if (ammunitionDisplay != null)
+                    ammunitionDisplay.SetText(bulletsLeft / bulletsPerTap + " / " + magazineSize / bulletsPerTap);
+            }
         }
+        
        
     }
     private void MyInput()
