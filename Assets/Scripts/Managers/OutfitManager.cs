@@ -15,7 +15,7 @@ public enum Outfits {
 public class OutfitManager : GameBehaviour<OutfitManager>
 {
     public Outfits outfits;
-
+    public bool canChangeOutfits;
     /*
      * if 1 miner
      * if 2 builder
@@ -31,16 +31,22 @@ public class OutfitManager : GameBehaviour<OutfitManager>
     // Start is called before the first frame update
 
     // Update is called once per frame
+
+    private void Start()
+    {
+        canChangeOutfits = true;
+    }
     void Update()
     {
-
         ChangeOutfits();
-        
-
     }
 
     private void ChangeOutfits()
     {
+        if (!canChangeOutfits)
+        {
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             outfits = Outfits.Miner;

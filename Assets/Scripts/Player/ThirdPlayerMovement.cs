@@ -2,6 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+enum State
+    {
+        Normal,
+        HookshotThrown,
+        HookshotFlyingPlayer
+    }
+
+enum MovementSpeeds
+    {
+        Walking,
+        Sprinting
+    }
+
+public enum GroundStates
+{
+    Grounded,
+    Airborne,
+    Gliding
+}
+
 public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 {
     [Header("References")]
@@ -39,23 +60,18 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     
     //Bools
     
-    public bool isGrounded;
+
     private bool isGliding;
-    public bool isSprinting;
 
     
     Vector3 velocity;
     private Vector3 hookshotPosition;
     private float hookshotSize;
-
+    [SerializeField]
     private State state;
-    private enum State
-    {
-        Normal,
-        HookshotThrown,
-        HookshotFlyingPlayer
-    }
-
+    [SerializeField]
+    private MovementSpeeds moveSpeeds;
+    public GroundStates groundState;
     private void Awake()
     {
         state = State.Normal;
@@ -70,14 +86,13 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     void Update()
     {
-        if (OM.outfits != Outfits.Grapple || !isGrounded)
+
+        if (OM.outfits != Outfits.Grapple || groundState == GroundStates.Airborne)
         {
             DisableGrappleInput();
 
         }
         
-
-
         switch (state)
         {
             default:
@@ -111,24 +126,26 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     }
     private void HandleMovement()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        groundState = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) ? GroundStates.Grounded : GroundStates.Airborne;
+  
 
-        if (isGrounded)
+        if (groundState == GroundStates.Grounded)
         {
             if (fallTimer <= 0)
             {
                 GM.RespawnPlayer();
                 fallTimer = fallTimerMax;
             }
+            
             fallTimer = fallTimerMax;
             glideTimer = glideTimerMax;
         }
-        if (isGrounded && velocity.y < 0)
+        if (groundState == GroundStates.Grounded && velocity.y < 0)
         {
             velocity.y = -2f;
         }
 
-        if(!isGrounded && !isGliding)
+        if(groundState == GroundStates.Airborne)
         {
             fallTimer -= Time.deltaTime;
             
@@ -149,7 +166,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
         }
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && groundState == GroundStates.Grounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
@@ -164,21 +181,21 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         //{
         //    float momentumDrag = 3f;
         //    characterVelocityMomentum -= momentumDrag * Time.deltaTime * characterVelocityMomentum;
-            
+
         //}
         //if (characterVelocityMomentum.magnitude < 0f)
         //{
         //    characterVelocityMomentum = Vector3.zero;
         //}
-
-        if(OM.outfits == Outfits.Glider)
+        gravity = -9.81f;
+        if (OM.outfits == Outfits.Glider)
         {
             if (glideTimer > 0 && BM.haveGlider && IM.glide_Input && velocity.y <= 0)
             {
-                isGliding = true;
+                groundState = GroundStates.Gliding;
                 if (glideTimer <= 0)
                 {
-                    isGliding = false;
+                    groundState = GroundStates.Airborne;
                     return;
                 }
                 gravity = 0;
@@ -188,38 +205,47 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             }
         
         }
-        else
-        {
-            gravity = -9.81f;
-        }
 
-        if (state == State.HookshotThrown)
-            return;
-        else
+        HandleSprinting();
+        
+    }
+
+    private void HandleSprinting()
+    {
+        if (state == State.HookshotThrown || groundState == GroundStates.Gliding)
+        {
+            moveSpeeds = MovementSpeeds.Walking;
+            
+        }
+            
+
+        if(groundState == GroundStates.Grounded || groundState == GroundStates.Airborne)
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                isSprinting = true;
-            }
-            else if (Input.GetKeyUp(KeyCode.LeftShift))
-                isSprinting = false;
-
-
-            if (!isSprinting)
-            {
-                basicMovementScript.speed = moveSpeed;
+                moveSpeeds = MovementSpeeds.Sprinting;
             }
 
-            if (isSprinting)
+            if (Input.GetKeyUp(KeyCode.LeftShift))
             {
-                basicMovementScript.speed = sprintSpeed;
+                moveSpeeds = MovementSpeeds.Walking;
             }
         }
-        
+       
+
+        switch (moveSpeeds)
+        {
+            case MovementSpeeds.Walking:
+                basicMovementScript.speed = moveSpeed;
+                break;
+            case MovementSpeeds.Sprinting:
+                basicMovementScript.speed = sprintSpeed;
+                break;
+        }
     }
     private void StartGrapple()
     {
-        if(!isGrounded)
+        if(groundState == GroundStates.Airborne)
         {
             return;
         }
@@ -292,6 +318,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             StopHookshot();           
         }
     }
+
+   
 
     private void StopHookshot()
     {
