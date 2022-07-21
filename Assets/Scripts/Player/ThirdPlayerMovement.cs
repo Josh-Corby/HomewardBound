@@ -46,22 +46,18 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private float speedBoost = 12f;
     public float jumpHeight = 3f;
     public float fallTimer;
-    private float fallTimerMax = 2f;
+    private float fallTimerMax = 5f;
     private float turnSmoothTime = 0.1f;
     private float glidingSpeed = 1f;
     private float glideTimer;
-    private float glideTimerMax = 3f;
+    private float glideTimerMax = 5f;
 
     float turnSmoothVelocity;
     private float groundDistance = 0.4f;
 
     private float moveSpeed = 8f;
     private float sprintSpeed = 20f;
-    
-    //Bools
-    
-
-    private bool isGliding;
+  
 
     
     Vector3 velocity;
@@ -101,10 +97,9 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 HandleMovement();
                 if(OM.outfits == Outfits.Grapple)
                 {
-                    if (BM.haveGrappleHook)
-                    {
+                    
                         StartGrapple();
-                    }
+                    
                 }
                 
                     break;
@@ -127,29 +122,39 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private void HandleMovement()
     {
         groundState = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) ? GroundStates.Grounded : GroundStates.Airborne;
-  
 
-        if (groundState == GroundStates.Grounded)
+        switch (groundState) 
         {
-            if (fallTimer <= 0)
-            {
-                GM.RespawnPlayer();
+            case GroundStates.Grounded:
+                if (fallTimer <= 0)
+                {
+                    GM.RespawnPlayer();
+                    fallTimer = fallTimerMax;
+                    glideTimer = glideTimerMax;
+                }
                 fallTimer = fallTimerMax;
-            }
-            
-            fallTimer = fallTimerMax;
-            glideTimer = glideTimerMax;
-        }
-        if (groundState == GroundStates.Grounded && velocity.y < 0)
-        {
-            velocity.y = -2f;
+                glideTimer = glideTimerMax;
+
+                if (velocity.y < 0)
+                {
+                   velocity.y = -2f;
+                }
+                break;
+
+            case GroundStates.Airborne:
+                {
+                    
+                    fallTimer -= Time.deltaTime;
+                }
+                break;
+            case GroundStates.Gliding:
+                Debug.Log("is gliding");
+                
+                break;
         }
 
-        if(groundState == GroundStates.Airborne)
-        {
-            fallTimer -= Time.deltaTime;
-            
-        }
+
+
 
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
@@ -190,7 +195,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         gravity = -9.81f;
         if (OM.outfits == Outfits.Glider)
         {
-            if (glideTimer > 0 && BM.haveGlider && IM.glide_Input && velocity.y <= 0)
+            if (glideTimer > 0 && IM.glide_Input && velocity.y <= 0)
             {
                 groundState = GroundStates.Gliding;
                 if (glideTimer <= 0)
@@ -202,6 +207,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 velocity = new Vector3(velocity.z, -glidingSpeed);
                 //velocity.y = Mathf.Sqrt(gravity * -0.1f / jumpHeight);
                 glideTimer -= Time.deltaTime;
+                fallTimer = fallTimerMax;
             }
         
         }

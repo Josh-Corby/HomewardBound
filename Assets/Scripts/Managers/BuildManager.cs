@@ -5,15 +5,15 @@ using UnityEngine;
 public enum BuildObjects
 {
     Bridge, 
-    Ladder,
-    Glider,
-    GrappleHook
+    Ladder
+    //Glider,
+    //GrappleHook
 }
 
 public class BuildManager : GameBehaviour<BuildManager>
 {
-    public bool haveGlider;
-    public bool haveGrappleHook;
+    //public bool haveGlider;
+    //public bool haveGrappleHook;
     public bool isBuilding;
     public bool canBuild;
 
@@ -40,7 +40,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     void Start()
     {
-        haveGlider = false;
+        //haveGlider = false;
     }
 
     private void Update()
@@ -119,6 +119,7 @@ public class BuildManager : GameBehaviour<BuildManager>
                 canBuild = true;
                 break;
 
+                /*
             case BuildObjects.Glider:
                 GliderCheck();   
                 haveGlider = GliderCheck();
@@ -131,6 +132,7 @@ public class BuildManager : GameBehaviour<BuildManager>
                 SubtractCost();
                 UI.BuildMenuToggle();
                 break;
+                */
 
         }
         
@@ -177,6 +179,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         return CompareChecks();
     }
 
+    /*
     public bool GliderCheck()
     {
         pebbleCost = 1;
@@ -191,6 +194,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         mushroomCost = 2;
         return CompareChecks();
     }
+    */
 
     private bool CompareChecks()
     {

@@ -20,13 +20,17 @@ public class UIManager : GameBehaviour<UIManager>
     public GameObject buildPanel;
     public bool buildPanelStatus;
 
+    public GameObject[] BuildPanels;
+
+    private GameObject currentBuildPanel;
+    public Button buildPickaxeButton;
     public Button buildLadderButton;
     public Button buildBridgeButton;
+    public Button buildSlingshotButton;
+    public Button buildAmmoButton;
     public Button buildGliderButton;
     public Button buildGrappleHookButton;
 
-
-    
 
     public float timeScale;
 
@@ -43,7 +47,7 @@ public class UIManager : GameBehaviour<UIManager>
         //flashLightIntensity.text = "Light Power: " + 
             //FL.myLight.intensity.ToString("F2") + " /10";
 
-        //fallTimer.text = "Fall timer: " +  PL.fallTimer.ToString("F2");
+        fallTimer.text = "Fall timer: " +  TPM.fallTimer.ToString("F2");
 
         ToggleBuildMenu();
         currentOutfit.text = OM.outfits.ToString();
@@ -102,44 +106,61 @@ public class UIManager : GameBehaviour<UIManager>
     {
         buildLadderButton.interactable = BM.LadderCheck();
         buildBridgeButton.interactable = BM.BridgeCheck();
-        buildGliderButton.interactable = BM.GliderCheck();
-        buildGrappleHookButton.interactable = BM.GrappleHookCheck();
+        //buildGliderButton.interactable = BM.GliderCheck();
+        //buildGrappleHookButton.interactable = BM.GrappleHookCheck();
     }
     #endregion
     public void ToggleBuildMenu()
     {
-        
-        if (BM.haveGlider)
+        currentBuildPanel.SetActive(false);
+        currentBuildPanel = null;
+
+        switch (OM.outfits)
         {
-            buildGliderButton.interactable = false;
+            case Outfits.Miner:
+                currentBuildPanel = BuildPanels[0];
+                break;
+            case Outfits.Builder:
+                currentBuildPanel = BuildPanels[1];
+                break;
+            case Outfits.Slingshot:
+                currentBuildPanel = BuildPanels[2];
+                break;
+            case Outfits.Grapple:
+                currentBuildPanel = BuildPanels[3];
+                break;
+            case Outfits.Glider:
+                currentBuildPanel = BuildPanels[4];
+                break;
+            case Outfits.Sailor:
+                currentBuildPanel = BuildPanels[5];
+                break;
         }
-        if (BM.haveGrappleHook)
+        currentBuildPanel.SetActive(true);
+
+        if (IM.buildMenu_Input)
         {
-            buildGrappleHookButton.interactable = false;
-        }
 
-        if(OM.outfits == Outfits.Builder)
-        {
-            if (IM.buildMenu_Input)
-            {
-                IsButtonClickable();
-                BuildMenuToggle();
+            IsButtonClickable();
+            BuildMenuToggle();
 
 
-                IM.buildMenu_Input = false;
+            IM.buildMenu_Input = false;
 
-            }
         }
         else
         {
             IM.buildMenu_Input = false;
+            return;
         }
-
-       
     }
+        
+
 
     public void BuildMenuToggle()
     {
+
+
         if (PC.paused)
             return;
         buildPanelStatus = !buildPanelStatus;

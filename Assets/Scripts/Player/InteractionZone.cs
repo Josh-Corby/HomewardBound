@@ -88,8 +88,9 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             //Break Items{
             if (canBreak)
             {
-                if (Input.GetKeyDown(KeyCode.Z))
+                if (IM.interact_Input)
                 {
+                    IM.interact_Input = false;
                     if (objectToInteract.CompareTag("Rock"))
                     {
                         for (int i = 1; i <= 3; i++)
@@ -112,7 +113,11 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                         Destroy(objectToInteract);
 
                     }
-                    else return;
+                    
+                    else 
+                    {
+                        return;
+                    }
 
                 }
             }

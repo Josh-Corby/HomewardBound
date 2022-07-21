@@ -5,9 +5,11 @@ using UnityEngine;
 public class PauseController : GameBehaviour<PauseController>
 {
     public GameObject pausePanel;
+
     public bool paused;
     void Start()
     {
+        gameObject.SetActive(true);
     
         paused = false;
         pausePanel.SetActive(false);
@@ -19,9 +21,6 @@ public class PauseController : GameBehaviour<PauseController>
     {
         if (Input.GetKeyDown(KeyCode.Escape))
             Pause();
-
-
-
     }
 
      public void Pause()
