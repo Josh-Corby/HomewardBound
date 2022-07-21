@@ -36,6 +36,7 @@ public class UIManager : GameBehaviour<UIManager>
 
     private void Start()
     {
+        currentBuildPanel = null;
         UpdateMaterialsCollected();
         gameUI.SetActive(true);
         buildPanelStatus = false;
@@ -49,8 +50,9 @@ public class UIManager : GameBehaviour<UIManager>
 
         fallTimer.text = "Fall timer: " +  TPM.fallTimer.ToString("F2");
 
-        ToggleBuildMenu();
         currentOutfit.text = OM.outfits.ToString();
+
+        ToggleBuildMenu();
     }
 
     #region Text Updaters
@@ -104,46 +106,83 @@ public class UIManager : GameBehaviour<UIManager>
 
     public void IsButtonClickable()
     {
+        if (!GM.havePickaxe)
+        {
+            if (BM.PickaxeCheck())
+            {
+                buildPickaxeButton.interactable = true;
+            }
+        }
+        else
+            buildPickaxeButton.interactable = false;
+
+        if (!GM.haveSlingshot)
+        {
+            if (BM.SlingshotCheck())
+            {
+                buildSlingshotButton.interactable = true;
+            }
+        }
+        else
+            buildSlingshotButton.interactable = false;
+
         buildLadderButton.interactable = BM.LadderCheck();
         buildBridgeButton.interactable = BM.BridgeCheck();
-        //buildGliderButton.interactable = BM.GliderCheck();
-        //buildGrappleHookButton.interactable = BM.GrappleHookCheck();
+
+        if (!GM.haveGrappleHook)
+        {
+            if (BM.GrappleHookCheck())
+            {
+                buildGrappleHookButton.interactable = true;
+            }
+        }
+        else
+            buildGrappleHookButton.interactable = false;
+
+        if (!GM.haveGlider)
+        {
+            if (BM.GliderCheck())
+            {
+                buildGliderButton.interactable = true;
+            }
+        }
+        else
+            buildGliderButton.interactable = false;
     }
     #endregion
     public void ToggleBuildMenu()
     {
-        currentBuildPanel.SetActive(false);
-        currentBuildPanel = null;
-
-        switch (OM.outfits)
-        {
-            case Outfits.Miner:
-                currentBuildPanel = BuildPanels[0];
-                break;
-            case Outfits.Builder:
-                currentBuildPanel = BuildPanels[1];
-                break;
-            case Outfits.Slingshot:
-                currentBuildPanel = BuildPanels[2];
-                break;
-            case Outfits.Grapple:
-                currentBuildPanel = BuildPanels[3];
-                break;
-            case Outfits.Glider:
-                currentBuildPanel = BuildPanels[4];
-                break;
-            case Outfits.Sailor:
-                currentBuildPanel = BuildPanels[5];
-                break;
-        }
-        currentBuildPanel.SetActive(true);
-
         if (IM.buildMenu_Input)
         {
+            if(currentBuildPanel != null)
+            {
+                currentBuildPanel.SetActive(false);
+            }
+            
 
+            switch (OM.outfits)
+            {
+                case Outfits.Miner:
+                    currentBuildPanel = BuildPanels[0];
+                    break;
+                case Outfits.Builder:
+                    currentBuildPanel = BuildPanels[1];
+                    break;
+                case Outfits.Slingshot:
+                    currentBuildPanel = BuildPanels[2];
+                    break;
+                case Outfits.Grapple:
+                    currentBuildPanel = BuildPanels[3];
+                    break;
+                case Outfits.Glider:
+                    currentBuildPanel = BuildPanels[4];
+                    break;
+                case Outfits.Sailor:
+                    currentBuildPanel = BuildPanels[5];
+                    break;
+            }
             IsButtonClickable();
             BuildMenuToggle();
-
 
             IM.buildMenu_Input = false;
 
@@ -163,11 +202,12 @@ public class UIManager : GameBehaviour<UIManager>
 
         if (PC.paused)
             return;
+
         buildPanelStatus = !buildPanelStatus;
         buildPanel.SetActive(buildPanelStatus);
-
         if (buildPanelStatus)
         {
+            currentBuildPanel.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
             OM.canChangeOutfits = false;
 

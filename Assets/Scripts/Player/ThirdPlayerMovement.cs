@@ -93,16 +93,9 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         {
             default:
             case State.Normal:
-                
                 HandleMovement();
-                if(OM.outfits == Outfits.Grapple)
-                {
-                    
-                        StartGrapple();
-                    
-                }
-                
-                    break;
+                StartGrapple();
+                break;
             case State.HookshotThrown:
                 HandleHookShotThrow();
                 HandleMovement();
@@ -193,7 +186,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         //    characterVelocityMomentum = Vector3.zero;
         //}
         gravity = -9.81f;
-        if (OM.outfits == Outfits.Glider)
+        if (OM.outfits == Outfits.Glider && GM.haveGlider)
         {
             if (glideTimer > 0 && IM.glide_Input && velocity.y <= 0)
             {
@@ -251,25 +244,30 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     }
     private void StartGrapple()
     {
-        if(groundState == GroundStates.Airborne)
+        if (!UI.buildPanelStatus)
         {
-            return;
-        }
-        if (IM.rClick_Input)
-        {
-            if (Physics.Raycast(grapplePoint.transform.position, grapplePoint.transform.forward, out RaycastHit raycastHit, 100))
+            if (OM.outfits == Outfits.Grapple && GM.haveGrappleHook)
             {
-                debugHitPointTransform.position = raycastHit.point;
-                
-                hookshotPosition = raycastHit.point;
-                hookshotSize = 0f;
-                hookshotTransform.gameObject.SetActive(true);
-                hookshotTransform.localScale = Vector3.zero;
-                state = State.HookshotThrown;
+                if (groundState == GroundStates.Airborne)
+                {
+                    return;
+                }
+                if (IM.rClick_Input)
+                {
+                    if (Physics.Raycast(grapplePoint.transform.position, grapplePoint.transform.forward, out RaycastHit raycastHit, 100))
+                    {
+                        debugHitPointTransform.position = raycastHit.point;
+
+                        hookshotPosition = raycastHit.point;
+                        hookshotSize = 0f;
+                        hookshotTransform.gameObject.SetActive(true);
+                        hookshotTransform.localScale = Vector3.zero;
+                        state = State.HookshotThrown;
+                    }
+                    IM.rClick_Input = false;
+                }
             }
-            IM.rClick_Input = false;
-        }
-       
+        } 
     }
 
     private void HandleHookShotThrow()
