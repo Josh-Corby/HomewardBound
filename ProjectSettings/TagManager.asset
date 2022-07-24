@@ -19,6 +19,7 @@ TagManager:
   - Pebble
   - Rock
   - BreakableWall
+  - BerryBomb
   layers:
   - Default
   - TransparentFX

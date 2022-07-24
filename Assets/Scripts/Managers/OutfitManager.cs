@@ -39,6 +39,7 @@ public class OutfitManager : GameBehaviour<OutfitManager>
     void Update()
     {
         ChangeOutfits();
+       
     }
 
     private void ChangeOutfits()
