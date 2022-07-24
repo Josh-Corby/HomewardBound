@@ -4,8 +4,9 @@ using TMPro;
 public class SlingShot : GameBehaviour<SlingShot>
 {
     //bullet 
-    public GameObject bullet;
-
+    public GameObject[] bullets;
+    private GameObject currentBullet;
+    private int bulletValue = 0;
     //bullet force
     public float shootForce, upwardForce;
 
@@ -44,14 +45,16 @@ public class SlingShot : GameBehaviour<SlingShot>
 
     private void Start()
     {
+        bulletValue = 0;
+        CycleBullets(bulletValue);
         UpdateAmmo();
     }
 
     private void Update()
     {
-        if (!UI.buildPanelStatus)
+        if (OM.outfits == Outfits.Slingshot && GM.haveSlingshot)        
         {
-            if (OM.outfits == Outfits.Slingshot && GM.haveSlingshot)
+            if(!UI.buildPanelStatus)
             {
                 MyInput();
 
@@ -59,10 +62,30 @@ public class SlingShot : GameBehaviour<SlingShot>
                 if (ammunitionDisplay != null)
                     ammunitionDisplay.SetText(bulletsLeft / bulletsPerTap + " / " + magazineSize / bulletsPerTap);
             }
+     
+            if (IM.mouseScrollY < 0)
+            {
+                CycleBullets(1);
+
+            }
+            if (IM.mouseScrollY > 0)
+            {
+                CycleBullets(-1);
+            }
         }
-        
-       
     }
+
+    private void CycleBullets(int val)
+    {
+        bulletValue += val;
+        if (bulletValue < 0) bulletValue = (bullets.Length - 1);
+        if (bulletValue > (bullets.Length - 1)) bulletValue = 0;
+
+        currentBullet = bullets[bulletValue];
+        Debug.Log(currentBullet.name);
+        
+    }
+
     private void MyInput()
     {
         //Check if allowed to hold down button and take corresponding input
@@ -112,13 +135,13 @@ public class SlingShot : GameBehaviour<SlingShot>
             Vector3 directionWithSpread = directionWithoutSpread + new Vector3(x, y, 0); //Just add spread to last direction
 
             //Instantiate bullet/projectile
-            GameObject currentBullet = Instantiate(bullet, attackPoint.position, Quaternion.identity); //store instantiated bullet in currentBullet
+            GameObject currentBul = Instantiate(currentBullet, attackPoint.position, Quaternion.identity); //store instantiated bullet in currentBullet
                                                                                                        //Rotate bullet to shoot direction
-            currentBullet.transform.forward = directionWithSpread.normalized;
+            currentBul.transform.forward = directionWithSpread.normalized;
 
             //Add forces to bullet
-            currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
-            currentBullet.GetComponent<Rigidbody>().AddForce(fpsCam.transform.up * upwardForce, ForceMode.Impulse);
+            currentBul.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
+            currentBul.GetComponent<Rigidbody>().AddForce(fpsCam.transform.up * upwardForce, ForceMode.Impulse);
 
             //Instantiate muzzle flash, if you have one
             if (muzzleFlash != null)

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5629521595924133312}
   - component: {fileID: -7056495100439177356}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: Berry Bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9ddd5dfc20cefb14fa9d80d6635da639, type: 2}
+  - {fileID: 2100000, guid: 1042233703c620f46a2bd151b87700b2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

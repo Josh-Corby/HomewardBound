@@ -331,6 +331,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Scroll"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""ca8ab9d8-5fc0-4b50-b2b0-011452a15c92"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": ""Normalize(min=-1,max=1)"",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -454,6 +463,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Right Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ddfd5f7d-dca4-4048-8e9f-1337f49761d9"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -475,6 +495,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_PlayerActions_Destroy = m_PlayerActions.FindAction("Destroy", throwIfNotFound: true);
         m_PlayerActions_Cancel = m_PlayerActions.FindAction("Cancel", throwIfNotFound: true);
         m_PlayerActions_RightClick = m_PlayerActions.FindAction("Right Click", throwIfNotFound: true);
+        m_PlayerActions_Scroll = m_PlayerActions.FindAction("Scroll", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -591,6 +612,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_Destroy;
     private readonly InputAction m_PlayerActions_Cancel;
     private readonly InputAction m_PlayerActions_RightClick;
+    private readonly InputAction m_PlayerActions_Scroll;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
@@ -603,6 +625,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Destroy => m_Wrapper.m_PlayerActions_Destroy;
         public InputAction @Cancel => m_Wrapper.m_PlayerActions_Cancel;
         public InputAction @RightClick => m_Wrapper.m_PlayerActions_RightClick;
+        public InputAction @Scroll => m_Wrapper.m_PlayerActions_Scroll;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -636,6 +659,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @RightClick.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRightClick;
                 @RightClick.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRightClick;
                 @RightClick.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRightClick;
+                @Scroll.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnScroll;
+                @Scroll.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnScroll;
+                @Scroll.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnScroll;
             }
             m_Wrapper.m_PlayerActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -664,6 +690,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @RightClick.started += instance.OnRightClick;
                 @RightClick.performed += instance.OnRightClick;
                 @RightClick.canceled += instance.OnRightClick;
+                @Scroll.started += instance.OnScroll;
+                @Scroll.performed += instance.OnScroll;
+                @Scroll.canceled += instance.OnScroll;
             }
         }
     }
@@ -684,5 +713,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnDestroy(InputAction.CallbackContext context);
         void OnCancel(InputAction.CallbackContext context);
         void OnRightClick(InputAction.CallbackContext context);
+        void OnScroll(InputAction.CallbackContext context);
     }
 }

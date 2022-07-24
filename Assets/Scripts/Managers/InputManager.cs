@@ -10,6 +10,7 @@ public class InputManager : GameBehaviour<InputManager>
     public float cameraInputX, cameraInputY;
     public float moveAmount;
     public float verticalInput, horizontalInput;
+    public float mouseScrollY;
     public bool sprint_Input;
     public bool jump_Input;
     public bool interact_Input;
@@ -18,6 +19,18 @@ public class InputManager : GameBehaviour<InputManager>
     public bool destroy_Input;
     public bool cancel_Input;
     public bool rClick_Input;
+
+    //private void Update()
+    //{
+    //    if (mouseScrollY > 0)
+    //    {
+    //        Debug.Log("Scrolled up");
+    //    }
+    //    if(mouseScrollY < 0)
+    //    {
+    //        Debug.Log("Scrolled down");
+    //    }
+    //}
 
     private void OnEnable()
     {
@@ -46,6 +59,8 @@ public class InputManager : GameBehaviour<InputManager>
             playerControls.PlayerActions.Cancel.performed += i => cancel_Input = true;
 
             playerControls.PlayerActions.RightClick.performed += i => rClick_Input = true;
+
+            playerControls.PlayerActions.Scroll.performed += i => mouseScrollY = i.ReadValue<float>();
         }
 
         playerControls.Enable();
