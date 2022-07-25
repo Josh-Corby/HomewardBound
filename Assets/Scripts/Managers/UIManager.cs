@@ -9,15 +9,16 @@ public class UIManager : GameBehaviour<UIManager>
     public TMP_Text flashLightIntensity;
     public TMP_Text canBuild;
     public TMP_Text fallTimer;
-
     public TMP_Text smallRocksCollected;
     public TMP_Text sticksCollected;
     public TMP_Text mushroomsCollected;
     public TMP_Text pebblesCollected;
     public TMP_Text currentOutfit;
+    public TMP_Text currentAmmoType;
 
     public GameObject gameUI;
     public GameObject buildPanel;
+    public GameObject SlingShotPanel;
     public bool buildPanelStatus;
 
     public GameObject[] BuildPanels;
@@ -220,4 +221,16 @@ public class UIManager : GameBehaviour<UIManager>
 
         }
     }
+
+    public void Toggle(GameObject objectToToggle)
+    {
+        objectToToggle.SetActive(!objectToToggle);
+    }
+    public void ChangeAmmoTypeText()
+    {
+
+        currentAmmoType.text = SS.currentBullet.name.ToString();
+    }
+
+
 }

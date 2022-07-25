@@ -59,6 +59,8 @@ public class OutfitManager : GameBehaviour<OutfitManager>
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             outfits = Outfits.Slingshot;
+            UI.ChangeAmmoTypeText();
+            UI.Toggle(UI.SlingShotPanel);
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {

@@ -5,7 +5,8 @@ public class SlingShot : GameBehaviour<SlingShot>
 {
     //bullet 
     public GameObject[] bullets;
-    private GameObject currentBullet;
+    [HideInInspector]
+    public GameObject currentBullet;
     private int bulletValue = 0;
     //bullet force
     public float shootForce, upwardForce;
@@ -83,6 +84,7 @@ public class SlingShot : GameBehaviour<SlingShot>
 
         currentBullet = bullets[bulletValue];
         Debug.Log(currentBullet.name);
+        UI.ChangeAmmoTypeText();
         
     }
 
