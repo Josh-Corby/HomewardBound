@@ -41,6 +41,7 @@ public class HawkDetection : GameBehaviour
                 GM.RespawnPlayer();
                 hawkBody.transform.localPosition = new Vector3(0, 0, 0);
                 detectionCircle.transform.localPosition = new Vector3(0, 0, 0);
+                isGrowing = false;
 
                 timer = maxTimer;
             }
