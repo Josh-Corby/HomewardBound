@@ -12,11 +12,12 @@ public class Bullet : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         bulletTimerMax = 3f;
         bulletTimer = bulletTimerMax;
-        Physics.IgnoreLayerCollision(10, 7);
+        
     }
 
     private void Update()
     {
+        Physics.IgnoreLayerCollision(10, 7);
         bulletTimer = Mathf.Clamp(bulletTimer, 0, bulletTimerMax);
         bulletTimer -= Time.deltaTime;
         if(bulletTimer <= 0)
@@ -27,6 +28,13 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Destroy(gameObject);
+        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        StartCoroutine(DestroyBullet());
+    }
+
+    IEnumerator DestroyBullet()
+    {
+        yield return new WaitForSeconds(3f);
+        Destroy(this);
     }
 }

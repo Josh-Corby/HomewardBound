@@ -15,7 +15,7 @@ public class SlingShot : GameBehaviour<SlingShot>
     public int magazineSize, bulletsPerTap;
     public bool allowButtonHold;
 
-    int bulletsLeft, bulletsShot ;
+    int bulletsLeft, bulletsShot;
     [HideInInspector]
     public int ammo;
     //Recoil

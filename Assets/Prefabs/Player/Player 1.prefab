@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3899532030383930953}
   m_Layer: 7
   m_Name: CameraLook
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 6937766529126768813}
   m_Layer: 7
   m_Name: Flashlight
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -193,7 +193,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4825211454238176102}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: GrapplePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 4422293069510565279}
   m_Layer: 7
   m_Name: InteractionZone
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -277,8 +277,9 @@ MonoBehaviour:
   canPickUp: 0
   canDestroy: 0
   canClimb: 0
+  canBreak: 0
   player: {fileID: 7476977097164577176}
-  objectToPickUp: {fileID: 0}
+  objectToInteract: {fileID: 0}
   objectToDestroy: {fileID: 0}
   lightPickUpValue: 8
 --- !u!54 &4422293069510565279
@@ -306,7 +307,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3029036000094737876}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: GrappleHookTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -340,7 +341,7 @@ GameObject:
   - component: {fileID: 2542110957659053057}
   m_Layer: 7
   m_Name: Mechanics (1)
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -379,7 +380,7 @@ GameObject:
   - component: {fileID: 3899532030913001410}
   m_Layer: 7
   m_Name: Slingshot
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -412,8 +413,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91aed03b1ddb28547aae14f33e52f310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 6494793122019285344, guid: acfc01b6be0faa4468d35e1018eaff98, type: 3}
-  shootForce: 300
+  bullets:
+  - {fileID: 6494793122019285344, guid: acfc01b6be0faa4468d35e1018eaff98, type: 3}
+  - {fileID: 6494793122019285344, guid: 25e4ca77c3ccb9747b596281b0f99917, type: 3}
+  shootForce: 50
   upwardForce: 0
   timeBetweenShooting: 0.1
   spread: 1
@@ -422,6 +425,7 @@ MonoBehaviour:
   magazineSize: 10
   bulletsPerTap: 1
   allowButtonHold: 0
+  ammo: 0
   recoilForce: 0
   fpsCam: {fileID: 0}
   attackPoint: {fileID: 3899532031379114685}
@@ -439,7 +443,7 @@ GameObject:
   - component: {fileID: 3899532031379114685}
   m_Layer: 7
   m_Name: FiringPoint
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -470,7 +474,7 @@ GameObject:
   - component: {fileID: 281627932112031957}
   m_Layer: 7
   m_Name: CameraLookPoint
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -502,7 +506,7 @@ GameObject:
   - component: {fileID: 8435559713627459000}
   - component: {fileID: 6505551434375542387}
   - component: {fileID: 1903460884853507936}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: GrappleHookObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -596,7 +600,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6011336608303536572}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: GrappleHook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -633,7 +637,7 @@ GameObject:
   - component: {fileID: 6811738743860995651}
   - component: {fileID: 2981982919505814973}
   - component: {fileID: 3694557099222051840}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -729,7 +733,7 @@ GameObject:
   - component: {fileID: 7284476420445584570}
   m_Layer: 7
   m_Name: BuildZone
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -760,7 +764,7 @@ GameObject:
   - component: {fileID: 7476977096895948086}
   m_Layer: 7
   m_Name: GroundCheck
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -808,7 +812,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7476977097164577176}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -519.9, y: 0, z: -15.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -850,20 +854,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 7476977097164577179}
   cam: {fileID: 0}
-  jumpHeight: 2
-  fallTimer: 0
+  characterVelocityMomentum: {x: 0, y: 0, z: 0}
+  debugHitPointTransform: {fileID: 0}
+  hookshotTransform: {fileID: 3029036000094737876}
+  grapplePoint: {fileID: 626201457634020520}
+  grappleHook: {fileID: 6011336608303536575}
   groundCheck: {fileID: 7476977096895948086}
   groundMask:
     serializedVersion: 2
     m_Bits: 64
-  isGrounded: 0
-  characterVelocityMomentum: {x: 0, y: 0, z: 0}
-  glideTimer: 0
-  grapplePoint: {fileID: 626201457634020520}
-  debugHitPointTransform: {fileID: 0}
-  hookshotTransform: {fileID: 3029036000094737876}
-  grappleHook: {fileID: 6011336608303536575}
-  hookshotSize: 0
+  jumpHeight: 2
+  fallTimer: 0
+  state: 0
+  moveSpeeds: 0
+  groundState: 0
 --- !u!114 &6011336608679049040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -877,8 +881,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerController: {fileID: 7476977097164577177}
+  inside: 0
   speedUpDown: 18.74
-  TPMMovement: {fileID: 0}
+  TPMMovement: {fileID: 7476977097164577178}
 --- !u!114 &6011336608679049041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -898,6 +903,7 @@ MonoBehaviour:
   moveAmount: 0
   verticalInput: 0
   horizontalInput: 0
+  mouseScrollY: 0
   sprint_Input: 0
   jump_Input: 0
   interact_Input: 0
@@ -919,7 +925,7 @@ GameObject:
   - component: {fileID: 7476977097199016273}
   m_Layer: 7
   m_Name: Graphics
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1084,7 +1090,7 @@ GameObject:
   - component: {fileID: 3071242415680573324}
   m_Layer: 7
   m_Name: Destination
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1115,7 +1121,7 @@ GameObject:
   - component: {fileID: 9334850834275097}
   m_Layer: 7
   m_Name: Player 1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1127,7 +1133,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8802924364987506441}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -19.8, y: 1.334, z: 2.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
