@@ -70,7 +70,7 @@ public class LadderClimb : GameBehaviour<LadderClimb>
     {
         if (col.gameObject.tag == "Ladder")
         {
-            TPM.groundState = GroundStates.Airborne;
+            TPM.groundState = GroundStates.Grounded;
             TPM.enabled = false;
             inside = !inside;
         }

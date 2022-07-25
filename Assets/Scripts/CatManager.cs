@@ -108,6 +108,11 @@ namespace Cat
                         break;
                     }
                 case AIStates.Distracted:
+                    if(distractionTransform == null)
+                    {
+                        aiState = AIStates.Walk;
+                        return;
+                    }
                     Distract(distractionTransform);
                     break;
 
@@ -116,10 +121,6 @@ namespace Cat
 
         private void Distract(Transform distraction)
         {
-            if (distraction == null)
-            {
-                aiState = AIStates.Walk;
-            }
             agent.SetDestination(distraction.position);
 
         }
