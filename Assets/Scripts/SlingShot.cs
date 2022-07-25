@@ -53,7 +53,7 @@ public class SlingShot : GameBehaviour<SlingShot>
 
     private void Update()
     {
-        if (OM.outfits == Outfits.Slingshot && GM.haveSlingshot)        
+        if (OM.outfit == Outfits.Slingshot && GM.haveSlingshot)        
         {
             if(!UI.buildPanelStatus)
             {

@@ -51,7 +51,7 @@ public class UIManager : GameBehaviour<UIManager>
 
         fallTimer.text = "Fall timer: " +  TPM.fallTimer.ToString("F2");
 
-        currentOutfit.text = OM.outfits.ToString();
+        currentOutfit.text = OM.outfit.ToString();
 
         ToggleBuildMenu();
     }
@@ -161,7 +161,7 @@ public class UIManager : GameBehaviour<UIManager>
             }
             
 
-            switch (OM.outfits)
+            switch (OM.outfit)
             {
                 case Outfits.Miner:
                     currentBuildPanel = BuildPanels[0];
@@ -172,15 +172,11 @@ public class UIManager : GameBehaviour<UIManager>
                 case Outfits.Slingshot:
                     currentBuildPanel = BuildPanels[2];
                     break;
-                case Outfits.Grapple:
+                case Outfits.Utility:
                     currentBuildPanel = BuildPanels[3];
                     break;
-                case Outfits.Glider:
-                    currentBuildPanel = BuildPanels[4];
-                    break;
-                case Outfits.Sailor:
-                    currentBuildPanel = BuildPanels[5];
-                    break;
+
+
             }
             IsButtonClickable();
             BuildMenuToggle();

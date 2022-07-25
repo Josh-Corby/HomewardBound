@@ -55,7 +55,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
         if (isBuilding)
         {
-            if(OM.outfits != Outfits.Builder)
+            if(OM.outfit != Outfits.Builder)
             {
                 CancelBuilding();
             }

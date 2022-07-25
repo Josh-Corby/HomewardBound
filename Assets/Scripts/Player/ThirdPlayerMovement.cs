@@ -83,7 +83,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     void Update()
     {
 
-        if (OM.outfits != Outfits.Grapple || groundState == GroundStates.Airborne)
+        if (OM.outfit != Outfits.Utility|| groundState == GroundStates.Airborne)
         {
             DisableGrappleInput();
 
@@ -186,7 +186,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         //    characterVelocityMomentum = Vector3.zero;
         //}
         gravity = -9.81f;
-        if (OM.outfits == Outfits.Glider && GM.haveGlider)
+        if (OM.outfit == Outfits.Utility && GM.haveGlider)
         {
             if (glideTimer > 0 && IM.glide_Input && velocity.y <= 0)
             {
@@ -246,7 +246,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     {
         if (!UI.buildPanelStatus)
         {
-            if (OM.outfits == Outfits.Grapple && GM.haveGrappleHook)
+            if (OM.outfit == Outfits.Utility && GM.haveGrappleHook)
             {
                 if (groundState == GroundStates.Airborne)
                 {

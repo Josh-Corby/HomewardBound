@@ -7,15 +7,14 @@ public enum Outfits {
     Miner,
     Builder,
     Slingshot,
-    Grapple,
-    Glider,
-    Sailor
+    Utility
 }
+
 
 public class OutfitManager : GameBehaviour<OutfitManager>
 {
-    public Outfits outfits;
-    public bool canChangeOutfits;
+    public Outfits outfit;
+    public bool canChangeOutfits; 
     /*
      * if 1 miner
      * if 2 builder
@@ -38,41 +37,36 @@ public class OutfitManager : GameBehaviour<OutfitManager>
     }
     void Update()
     {
-        ChangeOutfits();
-       
+      
     }
 
-    private void ChangeOutfits()
+    public void ChangeOutfits (int outfitValue)
     {
         if (!canChangeOutfits)
         {
             return;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        Outfits CurrentOutfit = (Outfits)outfitValue;
+
+
+        switch (CurrentOutfit)
         {
-            outfits = Outfits.Miner;
+            case Outfits.Miner:
+                outfit = Outfits.Miner;
+                break;
+
+            case Outfits.Builder:
+                outfit = Outfits.Builder;
+                break;
+
+            case Outfits.Slingshot:
+                outfit = Outfits.Slingshot;
+                break;
+
+            case Outfits.Utility:
+                outfit = Outfits.Utility;
+                break;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            outfits = Outfits.Builder;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            outfits = Outfits.Slingshot;
-            UI.ChangeAmmoTypeText();
-            UI.Toggle(UI.SlingShotPanel);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            outfits = Outfits.Grapple;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            outfits = Outfits.Glider;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            outfits = Outfits.Sailor;
-        }
+
     }
 }
