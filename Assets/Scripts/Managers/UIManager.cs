@@ -4,8 +4,17 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+public enum Menus { 
+    Paused,
+    Build,
+    Radial
+}
+
+
 public class UIManager : GameBehaviour<UIManager>
 {
+    public Menus menu;
+
     public TMP_Text flashLightIntensity;
     public TMP_Text canBuild;
     public TMP_Text fallTimer;
@@ -19,7 +28,11 @@ public class UIManager : GameBehaviour<UIManager>
     public GameObject gameUI;
     public GameObject buildPanel;
     public GameObject SlingShotPanel;
+    public GameObject RadialMenuPanel;
+
     public bool buildPanelStatus;
+    public bool radialMenuStatus;
+
 
     public GameObject[] BuildPanels;
 
@@ -43,6 +56,7 @@ public class UIManager : GameBehaviour<UIManager>
         buildPanelStatus = false;
         UpdateCanBuildText(false);
         buildPanel.SetActive(false);
+        RadialMenuPanel.SetActive(false);
     }
     private void Update()
     {
@@ -54,6 +68,9 @@ public class UIManager : GameBehaviour<UIManager>
         currentOutfit.text = OM.outfit.ToString();
 
         ToggleBuildMenu();
+
+        ToggleRadialMenu();
+        
     }
 
     #region Text Updaters
@@ -105,8 +122,25 @@ public class UIManager : GameBehaviour<UIManager>
 
     #region Button Updaters
 
+
+    public void ToggleMenus()
+    {
+        switch (menu) 
+        {
+            case Menus.Paused:
+
+                break;
+            case Menus.Build:
+                break;
+            case Menus.Radial:
+                break;
+        }
+
+
+    }
     public void IsButtonClickable()
     {
+        /*
         if (!GM.havePickaxe)
         {
             if (BM.PickaxeCheck())
@@ -127,9 +161,11 @@ public class UIManager : GameBehaviour<UIManager>
         else
             buildSlingshotButton.interactable = false;
 
+        */
         buildLadderButton.interactable = BM.LadderCheck();
         buildBridgeButton.interactable = BM.BridgeCheck();
-
+        
+        /*
         if (!GM.haveGrappleHook)
         {
             if (BM.GrappleHookCheck())
@@ -149,6 +185,7 @@ public class UIManager : GameBehaviour<UIManager>
         }
         else
             buildGliderButton.interactable = false;
+        */
     }
     #endregion
     public void ToggleBuildMenu()
@@ -191,8 +228,6 @@ public class UIManager : GameBehaviour<UIManager>
         }
     }
         
-
-
     public void BuildMenuToggle()
     {
 
@@ -226,6 +261,23 @@ public class UIManager : GameBehaviour<UIManager>
     {
 
         currentAmmoType.text = SS.currentBullet.name.ToString();
+    }
+
+    private void ToggleRadialMenu() 
+    {
+        if (Input.GetKey(KeyCode.Tab))
+        {
+            radialMenuStatus = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            radialMenuStatus = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        RadialMenuPanel.SetActive(radialMenuStatus);
+
     }
 
 

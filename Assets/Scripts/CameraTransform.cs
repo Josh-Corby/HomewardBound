@@ -17,6 +17,8 @@ public class CameraTransform : GameBehaviour
 
     private void Update()
     {
+        if (UI.buildPanelStatus || UI.radialMenuStatus || PC.paused)
+            return;
         transform.position = thirdPersonPlayer.transform.position + yOffset;
         RotateCamera();
     }

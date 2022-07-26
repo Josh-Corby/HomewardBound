@@ -102,13 +102,14 @@ public class BuildManager : GameBehaviour<BuildManager>
     {
         switch ((BuildObjects)value)
         {
+            /*
             case BuildObjects.Pickaxe:
                 PickaxeCheck();
                 GM.havePickaxe = GliderCheck();
                 SubtractCost();
                 UI.BuildMenuToggle();
                 break;
-
+            */
             case BuildObjects.Ladder:
                 LadderCheck();
                 prefabToSpawn = LadderCheck() ? ladderPrefab : null;
@@ -124,7 +125,7 @@ public class BuildManager : GameBehaviour<BuildManager>
                 StartCoroutine(BuildObject());
                 canBuild = true;
                 break;
-
+                /*
             case BuildObjects.Slingshot:
                 SlingshotCheck();
                 GM.haveSlingshot = SlingshotCheck();
@@ -151,7 +152,7 @@ public class BuildManager : GameBehaviour<BuildManager>
                 UI.BuildMenuToggle();
                 break;
                 
-
+                */
         }
         
         IZ.Toggle(true);
@@ -181,6 +182,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     #region Materials Comparisons
 
+    /*
     public bool PickaxeCheck()
     {
         pebbleCost = 3;
@@ -188,7 +190,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         mushroomCost = 0;
         return CompareChecks();
     }
-
+    */
     public bool LadderCheck()
     {
         pebbleCost = 3;
@@ -204,7 +206,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         mushroomCost = 1;
         return CompareChecks();
     }
-
+    /*
     public bool SlingshotCheck()
     {
         pebbleCost = 1;
@@ -235,7 +237,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         mushroomCost = 2;
         return CompareChecks();
     }
-    
+    */
 
     private bool CompareChecks()
     {

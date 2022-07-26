@@ -83,7 +83,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
         
         //Destroy Items
-        if(OM.outfit == Outfits.Miner && GM.havePickaxe)
+        if(OM.outfit == Outfits.Miner)
         {
             //Break Items{
             if (canBreak)
@@ -121,22 +121,27 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
                 }
             }
-            if (IM.destroy_Input)
+
+            if(OM.outfit == Outfits.Builder)
             {
-                if (canDestroy)
+                if (IM.destroy_Input)
                 {
-                    if (objectToDestroy.CompareTag("Ladder"))
+                    if (canDestroy)
                     {
+                        if (objectToDestroy.CompareTag("Ladder"))
+                        {
+                            DestroyObject();
+                            LC.inside = false;
+                            TPM.enabled = true;
+
+                        }
                         DestroyObject();
-                        LC.inside = false;
-                        TPM.enabled = true;
-                        
                     }
-                    DestroyObject();
+                    if (!canDestroy)
+                        IM.destroy_Input = false;
                 }
-                if (!canDestroy)
-                    IM.destroy_Input = false;
             }
+           
         }
     }
         

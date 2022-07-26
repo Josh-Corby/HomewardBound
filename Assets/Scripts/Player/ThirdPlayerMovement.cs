@@ -88,7 +88,9 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             DisableGrappleInput();
 
         }
-        
+        if (UI.buildPanelStatus || UI.radialMenuStatus || PC.paused)
+            return;
+
         switch (state)
         {
             default:
@@ -186,7 +188,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         //    characterVelocityMomentum = Vector3.zero;
         //}
         gravity = -9.81f;
-        if (OM.outfit == Outfits.Utility && GM.haveGlider)
+        if (OM.outfit == Outfits.Utility)
         {
             if (glideTimer > 0 && IM.glide_Input && velocity.y <= 0)
             {
@@ -246,7 +248,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     {
         if (!UI.buildPanelStatus)
         {
-            if (OM.outfit == Outfits.Utility && GM.haveGrappleHook)
+            if (OM.outfit == Outfits.Utility)
             {
                 if (groundState == GroundStates.Airborne)
                 {
