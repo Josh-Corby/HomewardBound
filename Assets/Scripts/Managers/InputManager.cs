@@ -18,6 +18,7 @@ public class InputManager : GameBehaviour<InputManager>
     public bool buildMenu_Input;
     public bool destroy_Input;
     public bool cancel_Input;
+    public bool lClick_Input;
     public bool rClick_Input;
 
     //private void Update()
@@ -58,7 +59,11 @@ public class InputManager : GameBehaviour<InputManager>
 
             playerControls.PlayerActions.Cancel.performed += i => cancel_Input = true;
 
+            playerControls.PlayerActions.LeftClick.performed += i => lClick_Input = true;
+            playerControls.PlayerActions.LeftClick.canceled += i => lClick_Input = false;
+
             playerControls.PlayerActions.RightClick.performed += i => rClick_Input = true;
+            playerControls.PlayerActions.RightClick.canceled += i => rClick_Input = false;
 
             playerControls.PlayerActions.Scroll.performed += i => mouseScrollY = i.ReadValue<float>();
         }

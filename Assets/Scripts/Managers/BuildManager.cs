@@ -68,11 +68,11 @@ public class BuildManager : GameBehaviour<BuildManager>
                 }
             }
         }
-        if (IM.interact_Input && isBuilding)
+        if (IM.rClick_Input && isBuilding)
         {
             if (TPM.groundState == GroundStates.Airborne)
             {
-                IM.interact_Input = false;
+                IM.rClick_Input = false;
                 return;
             }
             if (canBuild)
@@ -92,7 +92,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
             if (!canBuild)
             {
-                IM.interact_Input = false;
+                IM.rClick_Input = false;
                 return;
             }
             

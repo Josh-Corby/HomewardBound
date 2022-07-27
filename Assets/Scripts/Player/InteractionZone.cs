@@ -18,6 +18,68 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
     private void Update()
     {
+
+        //Destroy Items
+        if (OM.outfit == Outfits.Miner)
+        {
+            //Break Items{
+            if (canBreak)
+            {
+                if (IM.lClick_Input)
+                {
+                    IM.lClick_Input = false;
+                    if (objectToInteract.CompareTag("Rock"))
+                    {
+                        for (int i = 1; i <= 3; i++)
+                        {
+                            GameObject pebble = Instantiate(GM.pebblePrefab);
+                            pebble.transform.parent = objectToInteract.transform;
+                            pebble.transform.localPosition = new Vector3(Random.Range(0.0f, 1.0f), 0, Random.Range(0f, 1f));
+                            pebbleCounter += 1;
+                            pebble.transform.parent = null;
+                            pebble.name = "Pebble_" + pebbleCounter;
+                        }
+                        Destroy(objectToInteract);
+                        TogglePickUpBools();
+                        canBreak = false;
+                        return;
+                    }
+
+                    if (objectToInteract.CompareTag("BreakableWall"))
+                    {
+                        Destroy(objectToInteract);
+
+                    }
+
+                    else
+                    {
+                        return;
+                    }
+
+                }
+            }
+
+
+        }
+        if (OM.outfit == Outfits.Builder)
+        {
+            if (IM.interact_Input)
+            {
+                if (canDestroy)
+                {
+                    if (objectToDestroy.CompareTag("Ladder"))
+                    {
+                        DestroyObject();
+                        LC.inside = false;
+                        TPM.enabled = true;
+
+                    }
+                    DestroyObject();
+                }
+                if (!canDestroy)
+                    IM.interact_Input = false;
+            }
+        }
         #region Item Pickups
         if (IM.interact_Input)
         {
@@ -82,67 +144,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         #endregion
 
         
-        //Destroy Items
-        if(OM.outfit == Outfits.Miner)
-        {
-            //Break Items{
-            if (canBreak)
-            {
-                if (IM.interact_Input)
-                {
-                    IM.interact_Input = false;
-                    if (objectToInteract.CompareTag("Rock"))
-                    {
-                        for (int i = 1; i <= 3; i++)
-                        {
-                            GameObject pebble = Instantiate(GM.pebblePrefab);
-                            pebble.transform.parent = objectToInteract.transform;
-                            pebble.transform.localPosition = new Vector3(Random.Range(0.0f, 1.0f), 0, Random.Range(0f, 1f));
-                            pebbleCounter += 1;
-                            pebble.transform.parent = null;
-                            pebble.name = "Pebble_" + pebbleCounter;
-                        }
-                        Destroy(objectToInteract);
-                        TogglePickUpBools();
-                        canBreak = false;
-                        return;
-                    }
-
-                    if (objectToInteract.CompareTag("BreakableWall"))
-                    {
-                        Destroy(objectToInteract);
-
-                    }
-                    
-                    else 
-                    {
-                        return;
-                    }
-
-                }
-            }
-
-            if(OM.outfit == Outfits.Builder)
-            {
-                if (IM.destroy_Input)
-                {
-                    if (canDestroy)
-                    {
-                        if (objectToDestroy.CompareTag("Ladder"))
-                        {
-                            DestroyObject();
-                            LC.inside = false;
-                            TPM.enabled = true;
-
-                        }
-                        DestroyObject();
-                    }
-                    if (!canDestroy)
-                        IM.destroy_Input = false;
-                }
-            }
-           
-        }
+      
     }
         
 
@@ -165,6 +167,19 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             canBreak = true;
         }
 
+        
+        if (other.CompareTag("Ladder"))
+        {
+            objectToDestroy = other.gameObject;
+            canDestroy = true;
+        }
+
+        if (other.CompareTag("Bridge"))
+        {
+            Debug.Log("Can Destroy Bridge");
+            objectToDestroy = other.gameObject;
+            canDestroy = true;
+        }
         //if (other.CompareTag("LadderTop") || other.CompareTag("LadderBottom"))
         //{
         //    Debug.Log("Can Climb");
@@ -179,18 +194,6 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         //    objectToDestroy = other.gameObject;
         //    canDestroy = true;
         //}
-        if (other.CompareTag("Ladder"))
-        {
-            objectToDestroy = other.gameObject;
-            canDestroy = true;
-        }
-
-        if (other.CompareTag("Bridge"))
-        {
-            Debug.Log("Can Destroy Bridge");
-            objectToDestroy = other.gameObject;
-            canDestroy = true;
-        }
 
     }
 
@@ -213,6 +216,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             PM.isClimbing = false;
             canClimb = false;
             objectToDestroy = null;
+            canDestroy = false;
         }
         //if (other.CompareTag("LadderTop") || other.CompareTag("LadderBottom"))
         //{

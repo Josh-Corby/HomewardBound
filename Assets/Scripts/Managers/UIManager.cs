@@ -16,6 +16,7 @@ public class UIManager : GameBehaviour<UIManager>
 {
     public Menus menu;
 
+    [Header("Text")]
     public TMP_Text flashLightIntensity;
     public TMP_Text canBuild;
     public TMP_Text fallTimer;
@@ -26,6 +27,15 @@ public class UIManager : GameBehaviour<UIManager>
     public TMP_Text currentOutfit;
     public TMP_Text currentAmmoType;
 
+
+    [Header("Control Text")]
+    public TMP_Text outfitControlText1;
+    public TMP_Text outfitControlText2;
+    public TMP_Text outfitControlText3;
+    public TMP_Text outfitControlText4;
+
+
+    [Header("Panels")]
     public GameObject gameUI;
     public GameObject buildPanel;
     public GameObject SlingShotPanel;
@@ -41,6 +51,7 @@ public class UIManager : GameBehaviour<UIManager>
 
     public GameObject[] BuildPanels;
 
+    [SerializeField]
     private GameObject currentBuildPanel;
     public Button buildPickaxeButton;
     public Button buildLadderButton;
@@ -63,12 +74,15 @@ public class UIManager : GameBehaviour<UIManager>
         buildPanel.SetActive(false);
         RadialMenuPanel.SetActive(false);
         CurrentPanel = null;
+        currentBuildPanel = BuildPanels[0];
 
         gameObject.SetActive(true);
 
         paused = false;
         pausePanel.SetActive(false);
         Time.timeScale = 1;
+
+        UpdateControlText();
 
     }
     private void Update()
@@ -80,14 +94,8 @@ public class UIManager : GameBehaviour<UIManager>
 
         currentOutfit.text = OM.outfit.ToString();
 
-        ToggleRadialMenu();
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-            Pause();
-
-        BuildMenuInput();
-
-        ToggleMenus();
+        Inputs();
+        
     }
 
     #region Text Updaters
@@ -135,12 +143,49 @@ public class UIManager : GameBehaviour<UIManager>
     {
         canBuild.text = text;
     }
+
+    private void ResetControlText()
+    {
+        outfitControlText1.text = "";
+        outfitControlText2.text = "";
+        outfitControlText3.text = "";
+        outfitControlText4.text = "";
+    }
+
+    public void UpdateControlText()
+    {
+        ResetControlText();
+        switch (OM.outfit) 
+        {
+            case Outfits.Miner:
+                outfitControlText1.text = "Mine: Left Click";
+                break;
+            case Outfits.Builder:
+                outfitControlText1.text = "Open Build Menu: B";
+                outfitControlText2.text = "Build object: Right Click";
+                outfitControlText3.text = "Cancel Build: C";
+                outfitControlText4.text = "Destroy Object: E";
+                break;
+            case Outfits.Slingshot:
+                outfitControlText1.text = "Fire: Left Click";
+                outfitControlText2.text = "Change Ammo Type: Scroll Wheel";
+
+                break;
+            case Outfits.Utility:
+                outfitControlText1.text = "Glide: Hold Space";
+                outfitControlText2.text = "Grapple Hook: Right Click";
+                break;
+
+        }
+    }
+    
+
     #endregion
 
     #region Button Updaters
 
 
-   
+
     public void IsButtonClickable()
     {
         /*
@@ -191,37 +236,100 @@ public class UIManager : GameBehaviour<UIManager>
         */
     }
 
-    public void BuildMenuInput()
-    {
-        if (IM.buildMenu_Input)
-        {
-            menu = Menus.Build;
-        }
-    }
+
     #endregion
 
+    public void Inputs()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause();
+        }
+
+        if (paused)
+            return;
+
+        if (IM.buildMenu_Input)
+        {
+            if (menu != Menus.None)
+            {
+                if(menu != Menus.Build)
+                {
+                    {
+                        IM.buildMenu_Input = false;
+                        return;
+                    }
+                }
+            }   
+            menu = Menus.Build;
+        }
+        if (Input.GetKey(KeyCode.Tab))
+        {
+            if (menu != Menus.None)
+            {
+                if(menu != Menus.Radial)
+                {
+                    return;
+                }
+            }
+
+            menu = Menus.Radial;
+        }
+
+        ToggleRadialMenu();
+        ToggleMenus();
+
+    }
     public void ToggleMenus()
     {
         switch (menu)
         {
-            case Menus.None:
-                CurrentPanel.SetActive(false);
-                CurrentPanel = null;
+            default:
+                //if (paused == true)
+                //    Pause();
+
+                Cursor.lockState = CursorLockMode.Locked;
+                if(CurrentPanel != null)
+                    CurrentPanel.SetActive(false);
+        
                 break;
+
             case Menus.Paused:
+                ChangeMenu(pausePanel);
+                Pause();
                 break;
+
             case Menus.Build:
-                ToggleBuildMenu();
-                buildPanel.SetActive(true);
-                CurrentPanel = currentBuildPanel;
-                CurrentPanel.SetActive(true);
+                if (IM.buildMenu_Input)
+                {
+                    ToggleBuildMenu();
+                    ChangeMenu(currentBuildPanel);
+                    
+                }       
                 break;
+
             case Menus.Radial:
+                ChangeMenu(RadialMenuPanel);
+                radialMenuStatus = true;
+                if (Input.GetKey(KeyCode.Tab) == false)
+                {
+                    radialMenuStatus = false;
+                    menu = Menus.None;
+                }       
                 break;
         }
-
-
     }
+
+    private void ChangeMenu(GameObject menuToChangeTo)
+    {
+        if (menuToChangeTo == null)
+            return;
+ 
+        CurrentPanel = menuToChangeTo;
+        CurrentPanel.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+    }
+
     public void ToggleBuildMenu()
     {
         if (currentBuildPanel != null)
@@ -231,49 +339,61 @@ public class UIManager : GameBehaviour<UIManager>
 
 
         switch (OM.outfit)
-            {
-                case Outfits.Miner:
-                    currentBuildPanel = BuildPanels[0];
-                    break;
-                case Outfits.Builder:
-                    currentBuildPanel = BuildPanels[1];
-                    break;
-                case Outfits.Slingshot:
-                    currentBuildPanel = BuildPanels[2];
-                    break;
-                case Outfits.Utility:
-                    currentBuildPanel = BuildPanels[3];
-                    break;
+        {
+            case Outfits.Miner:
+                currentBuildPanel = null;
+                
+                break;
+            case Outfits.Builder:
+                currentBuildPanel = BuildPanels[0];
+                break;
+            case Outfits.Slingshot:
+                currentBuildPanel = BuildPanels[1];
+                break;
+            case Outfits.Utility:
+                currentBuildPanel = null;
+                ResetControlText();
+                break;
 
 
-            }
-            IsButtonClickable();
-            //BuildMenuToggle();
+        }
+        IM.buildMenu_Input = false;
+        if (currentBuildPanel == null)
+        {
+            menu = Menus.None;
+            return;
+        }
+            
 
-            IM.buildMenu_Input = false;
+        IsButtonClickable();
+        BuildMenuToggle();
+
+        
     }
         
+    
     public void BuildMenuToggle()
     {
 
-        
+        Debug.Log("Build Menu Toggled");
 
-        //buildPanelStatus = !buildPanelStatus;
-        //buildPanel.SetActive(buildPanelStatus);
-        //if (buildPanelStatus)
-        //{
-        //    currentBuildPanel.SetActive(true);
-        //    Cursor.lockState = CursorLockMode.None;
-        //    OM.canChangeOutfits = false;
+        buildPanelStatus = !buildPanelStatus;
+        buildPanel.SetActive(buildPanelStatus);
+        if (buildPanelStatus)
+        {
+            currentBuildPanel.SetActive(true);
+            OM.canChangeOutfits = false;
 
-        //}
+        }
 
-        //if (!buildPanelStatus)
-        //{
-        //    Cursor.lockState = CursorLockMode.Locked;
-        //    OM.canChangeOutfits = true;
+        if (!buildPanelStatus)
+        {
+            OM.canChangeOutfits = true;
+            menu = Menus.None;
 
-        //}
+        }
+
+        IM.buildMenu_Input = false;
     }
 
     public void Toggle(GameObject objectToToggle)
@@ -288,23 +408,12 @@ public class UIManager : GameBehaviour<UIManager>
 
     private void ToggleRadialMenu() 
     {
-        if (Input.GetKey(KeyCode.Tab))
-        {
-            radialMenuStatus = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
-        else
-        {
-            radialMenuStatus = false;
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-
         RadialMenuPanel.SetActive(radialMenuStatus);
-
     }
 
     public void Pause()
     {
+        Debug.Log("Paused");
         paused = !paused;
         Time.timeScale = paused ? 0 : 1;
         pausePanel.SetActive(paused);
@@ -314,10 +423,6 @@ public class UIManager : GameBehaviour<UIManager>
             Cursor.lockState = CursorLockMode.None;
         }
         if (!paused)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-        else if (!paused && UI.buildPanelStatus)
         {
             Cursor.lockState = CursorLockMode.Locked;
         }

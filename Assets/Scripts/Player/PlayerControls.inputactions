@@ -302,6 +302,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Left Click",
+                    "type": "Button",
+                    "id": "a38af3d3-b3cc-4cb0-a7aa-43d760305b85",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Right Click",
                     "type": "Button",
                     "id": "a5611142-b369-4627-9626-e76756630c3d",
@@ -450,6 +459,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "758bce08-e15d-4b0e-8102-f03e33fd127f",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Left Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

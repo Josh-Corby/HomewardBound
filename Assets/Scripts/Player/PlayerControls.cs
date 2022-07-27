@@ -324,6 +324,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Left Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""a38af3d3-b3cc-4cb0-a7aa-43d760305b85"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Right Click"",
                     ""type"": ""Button"",
                     ""id"": ""a5611142-b369-4627-9626-e76756630c3d"",
@@ -474,6 +483,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Scroll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""758bce08-e15d-4b0e-8102-f03e33fd127f"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -494,6 +514,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_PlayerActions_OpenBuildMenu = m_PlayerActions.FindAction("OpenBuildMenu", throwIfNotFound: true);
         m_PlayerActions_Destroy = m_PlayerActions.FindAction("Destroy", throwIfNotFound: true);
         m_PlayerActions_Cancel = m_PlayerActions.FindAction("Cancel", throwIfNotFound: true);
+        m_PlayerActions_LeftClick = m_PlayerActions.FindAction("Left Click", throwIfNotFound: true);
         m_PlayerActions_RightClick = m_PlayerActions.FindAction("Right Click", throwIfNotFound: true);
         m_PlayerActions_Scroll = m_PlayerActions.FindAction("Scroll", throwIfNotFound: true);
     }
@@ -611,6 +632,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_OpenBuildMenu;
     private readonly InputAction m_PlayerActions_Destroy;
     private readonly InputAction m_PlayerActions_Cancel;
+    private readonly InputAction m_PlayerActions_LeftClick;
     private readonly InputAction m_PlayerActions_RightClick;
     private readonly InputAction m_PlayerActions_Scroll;
     public struct PlayerActionsActions
@@ -624,6 +646,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @OpenBuildMenu => m_Wrapper.m_PlayerActions_OpenBuildMenu;
         public InputAction @Destroy => m_Wrapper.m_PlayerActions_Destroy;
         public InputAction @Cancel => m_Wrapper.m_PlayerActions_Cancel;
+        public InputAction @LeftClick => m_Wrapper.m_PlayerActions_LeftClick;
         public InputAction @RightClick => m_Wrapper.m_PlayerActions_RightClick;
         public InputAction @Scroll => m_Wrapper.m_PlayerActions_Scroll;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
@@ -656,6 +679,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Cancel.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnCancel;
                 @Cancel.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnCancel;
                 @Cancel.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnCancel;
+                @LeftClick.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnLeftClick;
+                @LeftClick.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnLeftClick;
+                @LeftClick.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnLeftClick;
                 @RightClick.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRightClick;
                 @RightClick.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRightClick;
                 @RightClick.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRightClick;
@@ -687,6 +713,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Cancel.started += instance.OnCancel;
                 @Cancel.performed += instance.OnCancel;
                 @Cancel.canceled += instance.OnCancel;
+                @LeftClick.started += instance.OnLeftClick;
+                @LeftClick.performed += instance.OnLeftClick;
+                @LeftClick.canceled += instance.OnLeftClick;
                 @RightClick.started += instance.OnRightClick;
                 @RightClick.performed += instance.OnRightClick;
                 @RightClick.canceled += instance.OnRightClick;
@@ -712,6 +741,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnOpenBuildMenu(InputAction.CallbackContext context);
         void OnDestroy(InputAction.CallbackContext context);
         void OnCancel(InputAction.CallbackContext context);
+        void OnLeftClick(InputAction.CallbackContext context);
         void OnRightClick(InputAction.CallbackContext context);
         void OnScroll(InputAction.CallbackContext context);
     }

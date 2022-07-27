@@ -68,5 +68,6 @@ public class OutfitManager : GameBehaviour<OutfitManager>
                 break;
         }
 
+        UI.UpdateControlText();
     }
 }

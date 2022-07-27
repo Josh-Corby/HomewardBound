@@ -83,12 +83,12 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     void Update()
     {
 
-        if (OM.outfit != Outfits.Utility|| groundState == GroundStates.Airborne)
+        if (OM.outfit == Outfits.Utility && groundState == GroundStates.Airborne)
         {
             DisableGrappleInput();
 
         }
-        if (UI.buildPanelStatus || UI.radialMenuStatus || PC.paused)
+        if (UI.buildPanelStatus || UI.radialMenuStatus || UI.menu == Menus.Paused)
             return;
 
         switch (state)

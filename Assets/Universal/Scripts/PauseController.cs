@@ -4,42 +4,42 @@ using UnityEngine;
 
 public class PauseController : GameBehaviour<PauseController>
 {
-    public GameObject pausePanel;
+    //    public GameObject pausePanel;
 
-    public bool paused;
-    void Start()
-    {
-        gameObject.SetActive(true);
-    
-        paused = false;
-        pausePanel.SetActive(false);
-        Time.timeScale = 1;
-    }
+    //    public bool paused;
+    //    void Start()
+    //    {
+    //        gameObject.SetActive(true);
+
+    //        paused = false;
+    //        pausePanel.SetActive(false);
+    //        Time.timeScale = 1;
+    //    }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            Pause();
-    }
+    //void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Escape))
+    //        Pause();
+    //}
 
-     public void Pause()
-    {
-        paused = !paused;
-        Time.timeScale = paused ? 0 : 1;
-        pausePanel.SetActive(paused);
+    // public void Pause()
+    ////{
+    //paused = !paused;
+    //    Time.timeScale = paused? 0 : 1;
+    //    pausePanel.SetActive(paused);
 
-        if (paused)
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
-        if (!paused)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-        else if (!paused && UI.buildPanelStatus)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-    }
+    //    if (paused)
+    //    {
+    //        Cursor.lockState = CursorLockMode.None;
+    //    }
+    //    if (!paused)
+    //    {
+    //        Cursor.lockState = CursorLockMode.Locked;
+    //    }
+    //    else if (!paused && UI.buildPanelStatus)
+    //    {
+    //        Cursor.lockState = CursorLockMode.Locked;
+    //    }
+    //}
 }
