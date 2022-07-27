@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 
 public enum Menus { 
+    None,
     Paused,
     Build,
     Radial
@@ -29,9 +30,13 @@ public class UIManager : GameBehaviour<UIManager>
     public GameObject buildPanel;
     public GameObject SlingShotPanel;
     public GameObject RadialMenuPanel;
+    public GameObject pausePanel;
+    public GameObject CurrentPanel;
+    
 
     public bool buildPanelStatus;
     public bool radialMenuStatus;
+    public bool paused;
 
 
     public GameObject[] BuildPanels;
@@ -45,7 +50,7 @@ public class UIManager : GameBehaviour<UIManager>
     public Button buildGliderButton;
     public Button buildGrappleHookButton;
 
-
+    
     public float timeScale;
 
     private void Start()
@@ -57,6 +62,14 @@ public class UIManager : GameBehaviour<UIManager>
         UpdateCanBuildText(false);
         buildPanel.SetActive(false);
         RadialMenuPanel.SetActive(false);
+        CurrentPanel = null;
+
+        gameObject.SetActive(true);
+
+        paused = false;
+        pausePanel.SetActive(false);
+        Time.timeScale = 1;
+
     }
     private void Update()
     {
@@ -67,10 +80,14 @@ public class UIManager : GameBehaviour<UIManager>
 
         currentOutfit.text = OM.outfit.ToString();
 
-        ToggleBuildMenu();
-
         ToggleRadialMenu();
-        
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Pause();
+
+        BuildMenuInput();
+
+        ToggleMenus();
     }
 
     #region Text Updaters
@@ -123,21 +140,7 @@ public class UIManager : GameBehaviour<UIManager>
     #region Button Updaters
 
 
-    public void ToggleMenus()
-    {
-        switch (menu) 
-        {
-            case Menus.Paused:
-
-                break;
-            case Menus.Build:
-                break;
-            case Menus.Radial:
-                break;
-        }
-
-
-    }
+   
     public void IsButtonClickable()
     {
         /*
@@ -187,18 +190,47 @@ public class UIManager : GameBehaviour<UIManager>
             buildGliderButton.interactable = false;
         */
     }
-    #endregion
-    public void ToggleBuildMenu()
+
+    public void BuildMenuInput()
     {
         if (IM.buildMenu_Input)
         {
-            if(currentBuildPanel != null)
+            menu = Menus.Build;
+        }
+    }
+    #endregion
+
+    public void ToggleMenus()
+    {
+        switch (menu)
+        {
+            case Menus.None:
+                CurrentPanel.SetActive(false);
+                CurrentPanel = null;
+                break;
+            case Menus.Paused:
+                break;
+            case Menus.Build:
+                ToggleBuildMenu();
+                buildPanel.SetActive(true);
+                CurrentPanel = currentBuildPanel;
+                CurrentPanel.SetActive(true);
+                break;
+            case Menus.Radial:
+                break;
+        }
+
+
+    }
+    public void ToggleBuildMenu()
+    {
+        if (currentBuildPanel != null)
             {
                 currentBuildPanel.SetActive(false);
             }
-            
 
-            switch (OM.outfit)
+
+        switch (OM.outfit)
             {
                 case Outfits.Miner:
                     currentBuildPanel = BuildPanels[0];
@@ -216,41 +248,32 @@ public class UIManager : GameBehaviour<UIManager>
 
             }
             IsButtonClickable();
-            BuildMenuToggle();
+            //BuildMenuToggle();
 
             IM.buildMenu_Input = false;
-
-        }
-        else
-        {
-            IM.buildMenu_Input = false;
-            return;
-        }
     }
         
     public void BuildMenuToggle()
     {
 
+        
 
-        if (PC.paused)
-            return;
+        //buildPanelStatus = !buildPanelStatus;
+        //buildPanel.SetActive(buildPanelStatus);
+        //if (buildPanelStatus)
+        //{
+        //    currentBuildPanel.SetActive(true);
+        //    Cursor.lockState = CursorLockMode.None;
+        //    OM.canChangeOutfits = false;
 
-        buildPanelStatus = !buildPanelStatus;
-        buildPanel.SetActive(buildPanelStatus);
-        if (buildPanelStatus)
-        {
-            currentBuildPanel.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
-            OM.canChangeOutfits = false;
+        //}
 
-        }
+        //if (!buildPanelStatus)
+        //{
+        //    Cursor.lockState = CursorLockMode.Locked;
+        //    OM.canChangeOutfits = true;
 
-        if (!buildPanelStatus)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            OM.canChangeOutfits = true;
-
-        }
+        //}
     }
 
     public void Toggle(GameObject objectToToggle)
@@ -280,5 +303,23 @@ public class UIManager : GameBehaviour<UIManager>
 
     }
 
+    public void Pause()
+    {
+        paused = !paused;
+        Time.timeScale = paused ? 0 : 1;
+        pausePanel.SetActive(paused);
 
+        if (paused)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        if (!paused)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else if (!paused && UI.buildPanelStatus)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
 }
