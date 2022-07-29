@@ -244,6 +244,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 break;
         }
     }
+
     private void StartGrapple()
     {
         if (!UI.buildPanelStatus)
@@ -327,7 +328,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
    
 
-    private void StopHookshot()
+    public void StopHookshot()
     {
         state = State.Normal;
         hookshotTransform.gameObject.SetActive(false);

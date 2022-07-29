@@ -16,8 +16,17 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
     private int pebbleCounter = 0;
 
+    public List<GameObject> outlineObjectsList = new List<GameObject>();
+
     private void Update()
     {
+        if (outlineObjectsList.Count > 0)
+            OutlineCheck();
+
+        if (outlineObjectsList.Count> 0)
+            canPickUp = true;
+        if (outlineObjectsList.Count < 0)
+            canPickUp = false;
 
         //Destroy Items
         if (OM.outfit == Outfits.Miner)
@@ -102,6 +111,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             
             if (canPickUp)
             {
+                outlineObjectsList.Remove(objectToInteract);
                 if (objectToInteract.CompareTag("LightPickUp"))
                 {
                     FL.ChangeIntensity(lightPickUpValue);
@@ -141,12 +151,39 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                 
             }      
         }
-        #endregion
+        #endregion    
+    }
 
-        
-      
+    private void OutlineObjects()
+    {
+        float closestDistanceSqr = 4f;
+        Vector3 playerPosition = player.transform.position;
+
+        foreach (GameObject objectToOutline in outlineObjectsList)
+        {
+            Vector3 directionToTarget = objectToOutline.transform.position - playerPosition;
+            float dSqrToTarget = directionToTarget.sqrMagnitude;
+            if(dSqrToTarget < closestDistanceSqr)
+            {
+                objectToInteract = objectToOutline;
+                closestDistanceSqr = dSqrToTarget;
+                objectToOutline.GetComponent<Outline>().enabled = true;
+            }
+            if (dSqrToTarget > closestDistanceSqr)
+            {
+
+                Debug.Log("Object not highlighted");
+                objectToOutline.GetComponent<Outline>().enabled = false;
+                //outlineObjectsList.Remove(objectToOutline);
+                
+            }
+        }
     }
         
+    private void OutlineCheck()
+    {  
+        OutlineObjects();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -154,20 +191,24 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         if (other.CompareTag("Rock") || other.CompareTag("Stick") || 
             other.CompareTag("Mushroom") || other.CompareTag("LightPickUp") || other.CompareTag("Pebble"))
         {
-            other.GetComponent<Outline>().enabled = true;
+            //other.GetComponent<Outline>().enabled = true;
             canPickUp = true;
-            objectToInteract = other.gameObject;
+            
+
+            outlineObjectsList.Add(other.gameObject);
+            OutlineCheck();
         }
 
         //Breakable Objects
         if (other.CompareTag("Rock") || other.CompareTag("BreakableWall"))
         {
             objectToInteract = other.gameObject;
-            other.GetComponent<Outline>().enabled = true;
+            //other.GetComponent<Outline>().enabled = true;
             canBreak = true;
-        }
 
-        
+            //outlineObjectsList.Add(objectToInteract);
+
+        }       
         if (other.CompareTag("Ladder"))
         {
             objectToDestroy = other.gameObject;
@@ -199,15 +240,19 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Stick") || other.CompareTag("Mushroom") || other.CompareTag("LightPickUp") || other.CompareTag("Pebble"))
+        if (other.CompareTag("Rock") || other.CompareTag("Stick") || other.CompareTag("Mushroom") || other.CompareTag("LightPickUp") || other.CompareTag("Pebble"))
         {
             DisableInteractions();
+            other.GetComponent<Outline>().enabled = false;
+            outlineObjectsList.Remove(other.gameObject);
+            OutlineCheck();
         }
 
         if (other.CompareTag("Rock") || other.CompareTag("BreakableWall"))
         {
+            //outlineObjectsList.Remove(other.gameObject);
             canBreak = false;
-            objectToInteract.GetComponent<Outline>().enabled = false;
+            //objectToInteract.GetComponent<Outline>().enabled = false;
 
         }
 
@@ -236,16 +281,13 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
     public void DisableInteractions()
     {
-        if (objectToInteract == null)
-            return;
-        objectToInteract.GetComponent<Outline>().enabled = false;
+        
         TogglePickUpBools();
     }
 
     public void TogglePickUpBools()
     {
         objectToInteract = null;
-        canPickUp = false;
         canDestroy = false;
         canBreak = false;
     }

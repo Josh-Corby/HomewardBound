@@ -32,5 +32,6 @@ public class GameManager : GameBehaviour<GameManager>
         Player.transform.position = spawnPoint.transform.position;
         Player.GetComponent<CharacterController>().enabled = true;
         Debug.Log("Player Respawned");
+        TPM.StopHookshot();
     }
 }
