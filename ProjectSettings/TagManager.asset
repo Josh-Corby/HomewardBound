@@ -20,6 +20,8 @@ TagManager:
   - Rock
   - BreakableWall
   - BerryBomb
+  - Non-Grappleable-Surface
+  - Bullet
   layers:
   - Default
   - TransparentFX

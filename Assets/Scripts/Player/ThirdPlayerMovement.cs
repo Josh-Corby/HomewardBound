@@ -55,8 +55,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     float turnSmoothVelocity;
     private float groundDistance = 0.4f;
 
-    private float moveSpeed = 8f;
-    private float sprintSpeed = 20f;
+    private float moveSpeed = 6f;
+    private float sprintSpeed = 9f;
   
 
     
@@ -207,6 +207,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         
         }
 
+        if (groundState == GroundStates.Airborne) return;
         HandleSprinting();
         
     }

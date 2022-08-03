@@ -13,7 +13,7 @@ public class HawkDetection : GameBehaviour
     float lerpTime = 0.3f;
 
     public float timer;
-    readonly float maxTimer = 4f;
+    readonly float maxTimer = 8f;
     public LayerMask mask;
 
     private void Start()
@@ -77,7 +77,7 @@ public class HawkDetection : GameBehaviour
                     {
                         detectionCircle.GetComponent<MeshRenderer>().enabled = true;
                         Debug.DrawLine(hawkRay.origin, hit.point, Color.red);
-                        detectionCircle.transform.position = new Vector3(other.transform.position.x, TPM.groundCheck.transform.position.y -0.1f, other.transform.position.z);
+                        detectionCircle.transform.position = new Vector3(other.transform.position.x, TPM.groundCheck.transform.position.y -0.01f, other.transform.position.z);
                         isGrowing = true;
                     }
                     else

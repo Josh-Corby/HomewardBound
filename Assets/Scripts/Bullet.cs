@@ -2,10 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum BulletTypes
+{
+    Basic,
+    BerryBomb
+}
 public class Bullet : MonoBehaviour
 {
     private float bulletTimerMax, bulletTimer;
     Rigidbody rb;
+
 
     private void Start()
     {

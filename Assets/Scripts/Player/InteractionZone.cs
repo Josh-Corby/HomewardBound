@@ -39,6 +39,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                     IM.lClick_Input = false;
                     if (objectToInteract.CompareTag("Rock"))
                     {
+                        outlineObjectsList.Remove(objectToInteract);
                         for (int i = 1; i <= 3; i++)
                         {
                             GameObject pebble = Instantiate(GM.pebblePrefab);
@@ -156,6 +157,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
     private void OutlineObjects()
     {
+        if (outlineObjectsList.Count <= 0) return;
         float closestDistanceSqr = 4f;
         Vector3 playerPosition = player.transform.position;
 
