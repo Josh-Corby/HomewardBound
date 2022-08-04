@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DestructableObject : GameBehaviour
 {
-    public GameObject childObject;
+    public GameObject childObject = null;
     private Rigidbody childRB;
 
     private void Start()
@@ -16,9 +16,12 @@ public class DestructableObject : GameBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            childRB.useGravity = true;
-            childRB.constraints = ~RigidbodyConstraints.FreezePosition;
-            
+            if(childObject != null)
+            {
+                childRB.useGravity = true;
+                childRB.constraints = ~RigidbodyConstraints.FreezePosition;
+            }
+        
             Destroy(this.gameObject);
         }
     }
