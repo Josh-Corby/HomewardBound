@@ -260,6 +260,12 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 {
                     if (Physics.Raycast(grapplePoint.transform.position, grapplePoint.transform.forward, out RaycastHit raycastHit, 100))
                     {
+                        if (raycastHit.collider.gameObject.CompareTag("Non-Grappleable-Surface"))
+                        {
+                            StopHookshot();
+                            IM.rClick_Input = false;
+                            return;
+                        }
                         debugHitPointTransform.position = raycastHit.point;
 
                         hookshotPosition = raycastHit.point;
@@ -308,6 +314,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         if(Vector3.Distance(transform.position, hookshotPosition) < reachedHookshotPositionDistance)
         {
             //Reached hookshot position
+            glideTimer = glideTimerMax;
             StopHookshot();
         }
 
