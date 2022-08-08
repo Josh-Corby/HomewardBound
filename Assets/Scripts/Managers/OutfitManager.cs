@@ -14,7 +14,8 @@ public enum Outfits {
 public class OutfitManager : GameBehaviour<OutfitManager>
 {
     public Outfits outfit;
-    public bool canChangeOutfits; 
+    public bool canChangeOutfits;
+    public bool haveSlingshot = true;
     /*
      * if 1 miner
      * if 2 builder

@@ -31,7 +31,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     [SerializeField] private GameObject buildZone;
 
-    private GameObject prefabToSpawn;
+    public GameObject prefabToSpawn;
 
     public GameObject buildingObject;
     private Color objectColor;
@@ -55,10 +55,10 @@ public class BuildManager : GameBehaviour<BuildManager>
 
         if (isBuilding)
         {
-            if(OM.outfit != Outfits.Builder)
-            {
-                CancelBuilding();
-            }
+            //if(OM.outfit != Outfits.Builder)
+            //{
+            //    CancelBuilding();
+            //}
 
             if (IM.cancel_Input)
             {
@@ -68,6 +68,7 @@ public class BuildManager : GameBehaviour<BuildManager>
                 }
             }
         }
+
         if (IM.rClick_Input && isBuilding)
         {
             if (TPM.groundState == GroundStates.Airborne)
@@ -116,6 +117,7 @@ public class BuildManager : GameBehaviour<BuildManager>
                 isBuilding = LadderCheck();
                 StartCoroutine(BuildObject());
                 canBuild = true;
+                OM.ChangeOutfits(1);
                 break;
 
             case BuildObjects.Bridge:
@@ -124,6 +126,7 @@ public class BuildManager : GameBehaviour<BuildManager>
                 isBuilding = BridgeCheck();
                 StartCoroutine(BuildObject());
                 canBuild = true;
+                OM.ChangeOutfits(1);
                 break;
                 /*
             case BuildObjects.Slingshot:
@@ -168,7 +171,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         Instantiate(prefabToSpawn, buildZone.transform);
         buildingObject = buildZone.transform.GetChild(0).gameObject;
         objectColor = buildingObject.GetComponent<MeshRenderer>().material.color;
-        UI.BuildMenuToggle();
+        //UI.BuildMenuToggle();
     }
 
     private void CancelBuilding()

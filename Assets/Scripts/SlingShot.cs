@@ -53,9 +53,14 @@ public class SlingShot : GameBehaviour<SlingShot>
 
     private void Update()
     {
-        if (OM.outfit == Outfits.Slingshot)        
+        if (OM.haveSlingshot)        
         {
-            if(!UI.buildPanelStatus)
+            if (/*UI.buildPanelStatus ||*/ UI.radialMenuStatus || BM.isBuilding)
+            {
+                return;
+            }
+
+            if(/*!UI.buildPanelStatus ||*/ !UI.radialMenuStatus)
             {
                 MyInput();
 
