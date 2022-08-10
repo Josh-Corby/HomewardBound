@@ -71,31 +71,30 @@ public class BuildManager : GameBehaviour<BuildManager>
 
         if (IM.rClick_Input && isBuilding)
         {
-            if (TPM.groundState == GroundStates.Airborne)
+            if (TPM.groundState == GroundStates.Airborne || canBuild == false)
             {
                 IM.rClick_Input = false;
                 return;
             }
-            if (canBuild)
+            
+            else if (canBuild)
             {
                 objectColor.a = 1f;
                 buildingObject.GetComponent<MeshRenderer>().material.color = objectColor;
                 Debug.Log("Object Built");
                 buildZone.transform.DetachChildren();
-                canBuild = false;
+               
                 IZ.Toggle(true);
-                isBuilding = false;
+                
                 SubtractCost();
                 buildingObject.gameObject.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePositionY;
                 buildingObject = null;
-                
+                prefabToSpawn = null;
+                canBuild = false;
+                isBuilding = false;
             }
 
-            if (!canBuild)
-            {
-                IM.rClick_Input = false;
-                return;
-            }
+            
             
         }
     }
@@ -116,8 +115,6 @@ public class BuildManager : GameBehaviour<BuildManager>
                 prefabToSpawn = LadderCheck() ? ladderPrefab : null;
                 isBuilding = LadderCheck();
                 StartCoroutine(BuildObject());
-                canBuild = true;
-                OM.ChangeOutfits(1);
                 break;
 
             case BuildObjects.Bridge:
@@ -125,8 +122,6 @@ public class BuildManager : GameBehaviour<BuildManager>
                 prefabToSpawn = BridgeCheck() ? bridgePrefab : null;
                 isBuilding = BridgeCheck();
                 StartCoroutine(BuildObject());
-                canBuild = true;
-                OM.ChangeOutfits(1);
                 break;
                 /*
             case BuildObjects.Slingshot:

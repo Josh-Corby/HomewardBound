@@ -56,7 +56,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private float groundDistance = 0.4f;
 
     private float moveSpeed = 6f;
-    private float sprintSpeed = 9f;
+    private float sprintSpeed = 12f;
   
 
     
@@ -248,10 +248,12 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     private void StartGrapple()
     {
-        if (!UI.buildPanelStatus)
+        
+            if (!UI.buildPanelStatus)
         {
             if (OM.outfit == Outfits.Utility)
             {
+
                 if (groundState == GroundStates.Airborne)
                 {
                     return;

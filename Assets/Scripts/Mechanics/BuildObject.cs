@@ -9,11 +9,12 @@ public class BuildObject : GameBehaviour
 
     private void Update()
     {
-        BM.canBuild = collisionObjects.Count <= 0 ? true : false; 
+
+        BM.canBuild = collisionObjects.Count == 0;
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Ladder") || other.CompareTag("Hawk"))
+        if(other.CompareTag("Hawk"))
         {
             return;
         }

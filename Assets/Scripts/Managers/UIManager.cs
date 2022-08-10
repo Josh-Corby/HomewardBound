@@ -249,20 +249,20 @@ public class UIManager : GameBehaviour<UIManager>
         if (paused)
             return;
 
-        if (IM.buildMenu_Input)
-        {
-            if (menu != Menus.None)
-            {
-                if(menu != Menus.Build)
-                {
-                    {
-                        IM.buildMenu_Input = false;
-                        return;
-                    }
-                }
-            }   
-            menu = Menus.Build;
-        }
+        //if (IM.buildMenu_Input)
+        //{
+        //    if (menu != Menus.None)
+        //    {
+        //        if(menu != Menus.Build)
+        //        {
+        //            {
+        //                IM.buildMenu_Input = false;
+        //                return;
+        //            }
+        //        }
+        //    }   
+        //    menu = Menus.Build;
+        //}
         if (Input.GetKey(KeyCode.Tab))
         {
             if (menu != Menus.None)
