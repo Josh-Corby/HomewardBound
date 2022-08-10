@@ -360,24 +360,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 3796254960099099125}
   cam: {fileID: 0}
-  gravity: -9.81
-  speed: 6
-  speedBoost: 12
-  jumpHeight: 3
-  turnSmoothTime: 0.1
+  characterVelocityMomentum: {x: 0, y: 0, z: 0}
+  debugHitPointTransform: {fileID: 0}
+  hookshotTransform: {fileID: 8747612231412747706}
+  grapplePoint: {fileID: 6619227278451135686}
+  grappleHook: {fileID: 1887928785}
   groundCheck: {fileID: 3796254959831006552}
-  groundDistance: 0.4
   groundMask:
     serializedVersion: 2
     m_Bits: 64
-  isGrounded: 0
-  glidingSpeed: 2
-  characterVelocityMomentum: {x: 0, y: 0, z: 0}
-  grapplePoint: {fileID: 6619227278451135686}
-  debugHitPointTransform: {fileID: 0}
-  hookshotTransform: {fileID: 8747612231412747706}
-  grappleHook: {fileID: 1887928785}
-  hookshotSize: 0
+  jumpHeight: 3
+  fallTimer: 0
+  state: 0
+  moveSpeeds: 0
+  groundState: 0
 --- !u!114 &438431550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -391,6 +387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerController: {fileID: 3796254960099099127}
+  inside: 0
   speedUpDown: 18.74
   TPMMovement: {fileID: 0}
 --- !u!114 &438431551
@@ -412,6 +409,7 @@ MonoBehaviour:
   moveAmount: 0
   verticalInput: 0
   horizontalInput: 0
+  mouseScrollY: 0
   sprint_Input: 0
   jump_Input: 0
   interact_Input: 0
@@ -419,6 +417,7 @@ MonoBehaviour:
   buildMenu_Input: 0
   destroy_Input: 0
   cancel_Input: 0
+  lClick_Input: 0
   rClick_Input: 0
 --- !u!1 &3796254960475898161
 GameObject:
@@ -881,10 +880,12 @@ MonoBehaviour:
   canPickUp: 0
   canDestroy: 0
   canClimb: 0
+  canBreak: 0
   player: {fileID: 3796254960099099126}
-  objectToPickUp: {fileID: 0}
+  objectToInteract: {fileID: 0}
   objectToDestroy: {fileID: 0}
   lightPickUpValue: 8
+  outlineObjectsList: []
 --- !u!54 &7940878404208100849
 Rigidbody:
   m_ObjectHideFlags: 0

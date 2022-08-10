@@ -282,6 +282,7 @@ MonoBehaviour:
   objectToInteract: {fileID: 0}
   objectToDestroy: {fileID: 0}
   lightPickUpValue: 8
+  outlineObjectsList: []
 --- !u!54 &4422293069510565279
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -392,8 +393,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3899532030913001408}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -519.9, y: 0, z: -15.200001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -912,6 +913,7 @@ MonoBehaviour:
   buildMenu_Input: 0
   destroy_Input: 0
   cancel_Input: 0
+  lClick_Input: 0
   rClick_Input: 0
 --- !u!1 &7476977097199016287
 GameObject:
