@@ -5,8 +5,6 @@ using UnityEngine;
 public class EntryTrigger : MonoBehaviour
 {
     public HubManager hM;
-
-
     private void Awake()
     {
         hM = gameObject.GetComponentInParent<HubManager>();
@@ -27,14 +25,20 @@ public class EntryTrigger : MonoBehaviour
                 hM.ExitTriggers[i].GetComponent<BoxCollider>().enabled = true;
             }
 
-            for (int i = 0; i < hM.ObjectsToSpawn.Length; i++)
+            for (int i = 0; i < 15; i++)
             {
-                GameObject pickup = Instantiate(hM.ObjectsToSpawn[i]);
-                
-                pickup.transform.parent = hM.transform;
-                pickup.transform.localPosition = new Vector3(Random.Range(-4f, 4f), 0, Random.Range(-4f, 4f));
-                hM.spawnedObjectsList.Add(pickup);
+                for (int a = 0; a < hM.ObjectsToSpawn.Length; a++)
+                {
+
+                    GameObject pickup = Instantiate(hM.ObjectsToSpawn[a]);
+
+                    pickup.transform.parent = hM.transform;
+                    pickup.transform.localPosition = new Vector3(Random.Range(-3f, 3f), 0.01f, Random.Range(-3f, 3f));
+                    hM.spawnedObjectsList.Add(pickup);
+                }
             }
+
+           
         }
     }
 }

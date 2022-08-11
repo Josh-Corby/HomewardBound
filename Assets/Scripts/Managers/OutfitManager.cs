@@ -4,10 +4,12 @@ using UnityEngine;
 
 
 public enum Outfits { 
+
     Miner,
     Builder,
     Slingshot,
-    Utility
+    Utility,
+    None
 }
 
 
@@ -16,21 +18,14 @@ public class OutfitManager : GameBehaviour<OutfitManager>
     public Outfits outfit;
     public bool canChangeOutfits;
     public bool haveSlingshot = true;
-    /*
-     * if 1 miner
-     * if 2 builder
-     * if 3 slingshot
-     * if 4 grapple
-     * if 5 glider
-     * if 6 sailor
-     * 
-     * if button is pressed 
-     *  disable outfit
-     *  set new outfit
-    */
-    // Start is called before the first frame update
 
-    // Update is called once per frame
+    /// <summary>
+    /// if 0 miner
+    /// if 1 builder
+    /// if 2 slingshot
+    /// if 3 Utility
+    /// if 4 None
+    /// </summary>
 
     private void Start()
     {
@@ -66,6 +61,9 @@ public class OutfitManager : GameBehaviour<OutfitManager>
 
             case Outfits.Utility:
                 outfit = Outfits.Utility;
+                break;
+            case Outfits.None:
+                outfit = Outfits.None;
                 break;
         }
 

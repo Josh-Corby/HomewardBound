@@ -55,7 +55,7 @@ public class SlingShot : GameBehaviour<SlingShot>
     {
         if (OM.haveSlingshot)        
         {
-            if (/*UI.buildPanelStatus ||*/ UI.radialMenuStatus || BM.isBuilding)
+            if (/*UI.buildPanelStatus ||*/ UI.radialMenuStatus || BM.isBuilding || UI.paused == true)
             {
                 return;
             }

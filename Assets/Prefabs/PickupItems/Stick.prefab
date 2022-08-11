@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8242813932310850656}
   m_Layer: 8
   m_Name: Stick
-  m_TagString: Untagged
+  m_TagString: Stick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

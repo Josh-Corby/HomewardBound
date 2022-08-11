@@ -43,7 +43,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     //Character modifiers
     private float gravity = -9.81f;
     private float speed = 8f;
-    private float speedBoost = 12f;
+    private float speedBoost = 14f;
     public float jumpHeight = 3f;
     public float fallTimer;
     private float fallTimerMax = 5f;

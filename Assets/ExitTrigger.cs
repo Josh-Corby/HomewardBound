@@ -29,9 +29,9 @@ public class ExitTrigger : MonoBehaviour
             for (int i = 0; i < hM.spawnedObjectsList.Count; i++)
             {
                 curentObject = hM.spawnedObjectsList[i];
-                hM.spawnedObjectsList.Remove(hM.spawnedObjectsList[i]);
-                Destroy(curentObject);
+                curentObject.SetActive(false);
             }
+            hM.spawnedObjectsList.Clear();
         }
     }
 }

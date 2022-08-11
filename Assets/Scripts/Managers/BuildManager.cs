@@ -111,14 +111,34 @@ public class BuildManager : GameBehaviour<BuildManager>
                 break;
             */
             case BuildObjects.Ladder:
-                LadderCheck();
-                prefabToSpawn = LadderCheck() ? ladderPrefab : null;
+                //prefabToSpawn = LadderCheck() ? ladderPrefab : null;
+                if (LadderCheck())
+                {
+                    OM.ChangeOutfits(1);
+                    prefabToSpawn = ladderPrefab;
+                }
+                else
+                {
+                    OM.ChangeOutfits(4);
+                    return;
+                }
+
                 isBuilding = LadderCheck();
                 StartCoroutine(BuildObject());
                 break;
 
             case BuildObjects.Bridge:
-                BridgeCheck();
+                if (BridgeCheck())
+                {
+                    prefabToSpawn = bridgePrefab;
+                    OM.ChangeOutfits(1);
+                }
+                else
+                {
+                    OM.ChangeOutfits(4);
+                    return;
+                }
+
                 prefabToSpawn = BridgeCheck() ? bridgePrefab : null;
                 isBuilding = BridgeCheck();
                 StartCoroutine(BuildObject());
