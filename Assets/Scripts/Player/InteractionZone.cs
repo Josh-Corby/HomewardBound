@@ -154,7 +154,8 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                 }
 
                 //Debug.Log("Picked up small object");
-                Destroy(objectToInteract);
+                //Destroy(objectToInteract);
+                objectToInteract.SetActive(false);
                 canPickUp = false;
                 objectToInteract = null;
                 IM.interact_Input = false;

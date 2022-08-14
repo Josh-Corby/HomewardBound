@@ -25,18 +25,19 @@ public class EntryTrigger : MonoBehaviour
                 hM.ExitTriggers[i].GetComponent<BoxCollider>().enabled = true;
             }
 
-            for (int i = 0; i < 15; i++)
-            {
-                for (int a = 0; a < hM.ObjectsToSpawn.Length; a++)
-                {
+            hM.EnableAllObjects();
+            //for (int i = 0; i < 15; i++)
+            //{
+            //    for (int a = 0; a < hM.ObjectsToSpawn.Length; a++)
+            //    {
 
-                    GameObject pickup = Instantiate(hM.ObjectsToSpawn[a]);
+            //        GameObject pickup = Instantiate(hM.ObjectsToSpawn[a]);
 
-                    pickup.transform.parent = hM.transform;
-                    pickup.transform.localPosition = new Vector3(Random.Range(-3f, 3f), 0.01f, Random.Range(-3f, 3f));
-                    hM.spawnedObjectsList.Add(pickup);
-                }
-            }
+            //        pickup.transform.parent = hM.transform;
+            //        pickup.transform.localPosition = new Vector3(Random.Range(-3f, 3f), 0.01f, Random.Range(-3f, 3f));
+            //        hM.spawnedObjectsList.Add(pickup);
+            //    }
+            //}
 
            
         }

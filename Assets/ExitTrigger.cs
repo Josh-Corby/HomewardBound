@@ -26,12 +26,14 @@ public class ExitTrigger : MonoBehaviour
                 hM.ExitTriggers[i].GetComponent<BoxCollider>().enabled = false;
             }
 
-            for (int i = 0; i < hM.spawnedObjectsList.Count; i++)
-            {
-                curentObject = hM.spawnedObjectsList[i];
-                curentObject.SetActive(false);
-            }
-            hM.spawnedObjectsList.Clear();
+            hM.DisableAllObjects();
+
+            //for (int i = 0; i < hM.spawnedObjectsList.Count; i++)
+            //{
+            //    curentObject = hM.spawnedObjectsList[i];
+            //    curentObject.SetActive(false);
+            //}
+            //hM.spawnedObjectsList.Clear();
         }
     }
 }
