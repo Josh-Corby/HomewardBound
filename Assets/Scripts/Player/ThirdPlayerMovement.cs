@@ -33,10 +33,16 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private Transform debugHitPointTransform;
     [SerializeField]
     private Transform hookshotTransform;
-    public GameObject grapplePoint;
+    public GameObject swingPoint;
     public GameObject grappleHook;
     public Transform groundCheck;
     public LayerMask groundMask;
+
+    private LineRenderer lr;
+    public LayerMask whatIsGrappleable;
+    public Transform gunTip, camera, player;
+    private float maxDistance = 100f;
+    private SpringJoint joint;
 
     ThirdPlayerMovement basicMovementScript;
 
@@ -62,6 +68,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     
     Vector3 velocity;
     private Vector3 hookshotPosition;
+    private Vector3 swingingPoint;
+
     private float hookshotSize;
     [SerializeField]
     private State state;
@@ -72,6 +80,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     {
         state = State.Normal;
         hookshotTransform.gameObject.SetActive(false);
+        lr = GetComponent<LineRenderer>();
+
     }
 
     private void Start()
@@ -97,6 +107,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             case State.Normal:
                 HandleMovement();
                 StartGrapple();
+                StartSwinging();
                 break;
             case State.HookshotThrown:
                 HandleHookShotThrow();
@@ -106,13 +117,14 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 HandleHookshotMovement();
                 break;
         }
-
-        
     }
     private void LateUpdate()
     {
         grappleHook.transform.rotation = Camera.main.transform.rotation;
-  
+
+        DrawRope();
+
+
     }
     private void HandleMovement()
     {
@@ -257,7 +269,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 }
                 if (IM.rClick_Input)
                 {
-                    if (Physics.Raycast(grapplePoint.transform.position, grapplePoint.transform.forward, out RaycastHit raycastHit, 100))
+                    if (Physics.Raycast(swingPoint.transform.position, swingPoint.transform.forward, out RaycastHit raycastHit, 100))
                     {
                         debugHitPointTransform.position = raycastHit.point;
 
@@ -326,7 +338,61 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         }
     }
 
-   
+    void StartSwinging()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(origin: cam.position, direction: cam.forward, out hit, maxDistance, whatIsGrappleable))
+        {
+            swingingPoint = hit.point;
+            joint = player.gameObject.AddComponent<SpringJoint>();
+            joint.autoConfigureConnectedAnchor = false;
+            joint.connectedAnchor = swingingPoint;
+
+            float distanceFromPoint = Vector3.Distance(player.position, swingingPoint);
+
+            joint.maxDistance = distanceFromPoint * 0.8f;
+            joint.minDistance = distanceFromPoint * 0.25f;
+
+            joint.spring = 4.5f;
+            joint.damper = 7f;
+            joint.massScale = 4.5f;
+
+            lr.positionCount = 2;
+            currentGrapplePosition = gunTip.position;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            StopSwinging();
+        }
+    }
+
+    private Vector3 currentGrapplePosition;
+
+    void DrawRope()
+    {
+        if (!joint) return;
+
+        currentGrapplePosition = Vector3.Lerp(currentGrapplePosition, swingingPoint, Time.deltaTime * 8f);
+
+        lr.SetPosition(0, gunTip.position);
+        lr.SetPosition(1, currentGrapplePosition);
+    }
+
+    public bool IsGrappling()
+    {
+        return joint != null;
+    }
+
+    public Vector3 GetGrapplePoint()
+    {
+        return swingingPoint;
+    }
+
+    void StopSwinging()
+    {
+        lr.positionCount = 0;
+        Destroy(joint);
+    }
 
     public void StopHookshot()
     {
