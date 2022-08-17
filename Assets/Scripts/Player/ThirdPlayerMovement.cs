@@ -39,8 +39,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     public LayerMask groundMask;
 
     private LineRenderer lr;
-    public LayerMask whatIsGrappleable;
-    public Transform gunTip, camera, player;
     private float maxDistance = 100f;
     private SpringJoint joint;
 
@@ -107,7 +105,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             case State.Normal:
                 HandleMovement();
                 StartGrapple();
-                StartSwinging();
                 break;
             case State.HookshotThrown:
                 HandleHookShotThrow();
@@ -121,11 +118,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private void LateUpdate()
     {
         grappleHook.transform.rotation = Camera.main.transform.rotation;
-
-        DrawRope();
-
-
     }
+
     private void HandleMovement()
     {
         groundState = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) ? GroundStates.Grounded : GroundStates.Airborne;
@@ -337,63 +331,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             StopHookshot();           
         }
     }
-
-    void StartSwinging()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(origin: cam.position, direction: cam.forward, out hit, maxDistance, whatIsGrappleable))
-        {
-            swingingPoint = hit.point;
-            joint = player.gameObject.AddComponent<SpringJoint>();
-            joint.autoConfigureConnectedAnchor = false;
-            joint.connectedAnchor = swingingPoint;
-
-            float distanceFromPoint = Vector3.Distance(player.position, swingingPoint);
-
-            joint.maxDistance = distanceFromPoint * 0.8f;
-            joint.minDistance = distanceFromPoint * 0.25f;
-
-            joint.spring = 4.5f;
-            joint.damper = 7f;
-            joint.massScale = 4.5f;
-
-            lr.positionCount = 2;
-            currentGrapplePosition = gunTip.position;
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            StopSwinging();
-        }
-    }
-
-    private Vector3 currentGrapplePosition;
-
-    void DrawRope()
-    {
-        if (!joint) return;
-
-        currentGrapplePosition = Vector3.Lerp(currentGrapplePosition, swingingPoint, Time.deltaTime * 8f);
-
-        lr.SetPosition(0, gunTip.position);
-        lr.SetPosition(1, currentGrapplePosition);
-    }
-
-    public bool IsGrappling()
-    {
-        return joint != null;
-    }
-
-    public Vector3 GetGrapplePoint()
-    {
-        return swingingPoint;
-    }
-
-    void StopSwinging()
-    {
-        lr.positionCount = 0;
-        Destroy(joint);
-    }
-
+    
     public void StopHookshot()
     {
         state = State.Normal;
