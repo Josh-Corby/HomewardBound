@@ -23,6 +23,7 @@ TagManager:
   - Non-Grappleable-Surface
   - Bullet
   - Hawk
+  - Grappleable-Surface
   layers:
   - Default
   - TransparentFX
