@@ -7,7 +7,8 @@ enum State
     {
         Normal,
         HookshotThrown,
-        HookshotFlyingPlayer
+        HookshotFlyingPlayer,
+        NewGrapple
     }
 
 enum MovementSpeeds
@@ -58,7 +59,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private float moveSpeed = 6f;
     private float sprintSpeed = 12f;
   
-
     
     Vector3 velocity;
     private Vector3 hookshotPosition;
@@ -68,6 +68,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     [SerializeField]
     private MovementSpeeds moveSpeeds;
     public GroundStates groundState;
+
     private void Awake()
     {
         state = State.Normal;
@@ -97,6 +98,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             case State.Normal:
                 HandleMovement();
                 StartGrapple();
+
                 break;
             case State.HookshotThrown:
                 HandleHookShotThrow();
@@ -112,10 +114,11 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private void LateUpdate()
     {
         grappleHook.transform.rotation = Camera.main.transform.rotation;
-  
     }
     private void HandleMovement()
     {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+            state = State.NewGrapple;
         groundState = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) ? GroundStates.Grounded : GroundStates.Airborne;
 
         switch (groundState) 
@@ -336,8 +339,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         }
     }
 
-   
-
     public void StopHookshot()
     {
         state = State.Normal;
@@ -348,4 +349,5 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     {
         IM.rClick_Input = false;
     }
+
 }
