@@ -69,6 +69,11 @@
                 "value": "{\"m_Value\":true}"
             },
             {
+                "type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                "key": "FillHole.selectEntirePath",
+                "value": "{\"m_Value\":false}"
+            },
+            {
                 "type": "UnityEngine.ProBuilder.LogLevel, Unity.ProBuilder, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "key": "log.level",
                 "value": "{\"m_Value\":3}"
@@ -141,7 +146,7 @@
             {
                 "type": "UnityEngine.ProBuilder.SelectMode, Unity.ProBuilder, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "key": "editor.lastMeshSelectMode",
-                "value": "{\"m_Value\":4}"
+                "value": "{\"m_Value\":2}"
             },
             {
                 "type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
@@ -156,12 +161,12 @@
             {
                 "type": "UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "key": "ShapeBuilder.LastPivotPosition",
-                "value": "{\"m_Value\":{\"x\":-8.87164306640625,\"y\":-8.226409912109375,\"z\":7.7579345703125}}"
+                "value": "{\"m_Value\":{\"x\":-6.8834228515625,\"y\":-7.257965087890625,\"z\":2.8734130859375}}"
             },
             {
                 "type": "UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "key": "ShapeBuilder.LastSize",
-                "value": "{\"m_Value\":{\"x\":17.74334716796875,\"y\":16.452835083007814,\"z\":-15.5159912109375}}"
+                "value": "{\"m_Value\":{\"x\":13.766845703125,\"y\":14.51593017578125,\"z\":-5.746826171875}}"
             },
             {
                 "type": "UnityEngine.Quaternion, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -217,6 +222,11 @@
                 "type": "System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                 "key": "uv.uvEditorGridSnapIncrement",
                 "value": "{\"m_Value\":0.125}"
+            },
+            {
+                "type": "System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                "key": "BevelEdges.size",
+                "value": "{\"m_Value\":60.900001525878909}"
             }
         ]
     }
