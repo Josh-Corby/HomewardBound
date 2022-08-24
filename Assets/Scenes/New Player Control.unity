@@ -1419,7 +1419,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 76175984}
-  m_LocalRotation: {x: 0.12218325, y: 0.000000017077465, z: -0.0000000021023316, w: 0.9925076}
+  m_LocalRotation: {x: 0.12218327, y: -0.000000017077465, z: 0.0000000021023319, w: 0.9925076}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -38530,7 +38530,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1106615820}
-  m_LocalRotation: {x: 0.10410984, y: -0.000000017646425, z: 0.0000000018457478, w: 0.99456584}
+  m_LocalRotation: {x: 0.10410984, y: 0.000000017646416, z: -0.0000000018457461, w: 0.99456584}
   m_LocalPosition: {x: -0.8685808, y: 5.2818985, z: -25.256964}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -58056,7 +58056,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428813846}
-  m_LocalRotation: {x: 0.104109846, y: -0.000000017639556, z: 0.0000000018464856,
+  m_LocalRotation: {x: 0.104109846, y: 0.000000017639545, z: -0.0000000018464845,
     w: 0.99456584}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -70908,7 +70908,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1965392721}
-  m_LocalRotation: {x: 0.08604984, y: -0.0000000042856407, z: 3.701516e-10, w: 0.99629086}
+  m_LocalRotation: {x: 0.08604984, y: 0.0000000042856403, z: -3.7015158e-10, w: 0.99629086}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -71089,7 +71089,7 @@ PrefabInstance:
     - target: {fileID: 2875435399319152227, guid: 0973e2535d5a92b40a3e27be7ebb7081,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2875435399319152225, guid: 0973e2535d5a92b40a3e27be7ebb7081, type: 3}
@@ -75412,7 +75412,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &4993757669155944303
 MonoBehaviour:
   m_ObjectHideFlags: 0
