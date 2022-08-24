@@ -8,7 +8,6 @@ enum State
         Normal,
         HookshotThrown,
         HookshotFlyingPlayer,
-        NewGrapple
     }
 
 enum MovementSpeeds
@@ -42,7 +41,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     ThirdPlayerMovement basicMovementScript;
 
     //Character modifiers
-    private float gravity = -9.81f;
+    private float gravity = -14f;
     private float speed = 8f;
     private float speedBoost = 14f;
     public float jumpHeight = 3f;
@@ -107,6 +106,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             case State.HookshotFlyingPlayer:
                 HandleHookshotMovement();
                 break;
+
         }
 
         
@@ -114,6 +114,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private void LateUpdate()
     {
         grappleHook.transform.rotation = Camera.main.transform.rotation;
+
     }
     private void HandleMovement()
     {
@@ -248,7 +249,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 break;
         }
     }
-
+    #region GrappleHook
     private void StartGrapple()
     {
         
@@ -271,6 +272,15 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                             IM.rClick_Input = false;
                             return;
                         }
+                        if (raycastHit.collider.gameObject.CompareTag("Grappleable-Surface"))
+                        {
+
+                        }
+                        if (raycastHit.collider.gameObject.CompareTag("Lilypad"))
+                        {
+
+                        }
+
                         debugHitPointTransform.position = raycastHit.point;
 
                         hookshotPosition = raycastHit.point;
@@ -297,22 +307,36 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         {
             state = State.HookshotFlyingPlayer;
         }
+
+
     }
 
     private void HandleHookshotMovement()
     {
+
+
         hookshotTransform.LookAt(hookshotPosition);
+
+
 
         Vector3 hookshotDir = (hookshotPosition - transform.position).normalized;
 
-
+        
         float hookshotSpeedMin = 20f;
         float hookshotSpeedMax = 40f;
         float hookshotSpeed = Mathf.Clamp(Vector3.Distance(transform.position, hookshotPosition), hookshotSpeedMin, hookshotSpeedMax);
         float hookshotSpeedMultiplier = 2f;
-        //Move character controller
-        controller.Move(hookshotDir * hookshotSpeed * hookshotSpeedMultiplier * Time.deltaTime);
 
+        
+            //Move character controller
+            controller.Move(hookshotDir * hookshotSpeed * hookshotSpeedMultiplier * Time.deltaTime);
+            //Move lily pad towards player
+            /*
+            * grapple hits lilypad
+            * store reference to lily pad
+            * move lily towards player on the x,z
+
+    */
         hookshotSize = Vector3.Distance(transform.position, hookshotPosition);
         hookshotTransform.localScale = new Vector3(1, 1, hookshotSize);
         float reachedHookshotPositionDistance = 2f;
@@ -339,12 +363,17 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         }
     }
 
+    private void LilyPadPull()
+    {
+
+    }
+
     public void StopHookshot()
     {
         state = State.Normal;
         hookshotTransform.gameObject.SetActive(false);
     }
-
+    #endregion
     private void DisableGrappleInput()
     {
         IM.rClick_Input = false;
