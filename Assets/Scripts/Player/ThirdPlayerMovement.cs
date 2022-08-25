@@ -118,8 +118,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     }
     private void HandleMovement()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-            state = State.NewGrapple;
         groundState = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) ? GroundStates.Grounded : GroundStates.Airborne;
 
         switch (groundState) 

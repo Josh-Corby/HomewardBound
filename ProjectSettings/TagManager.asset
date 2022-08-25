@@ -24,6 +24,7 @@ TagManager:
   - Bullet
   - Hawk
   - Grappleable-Surface
+  - Lilypad
   layers:
   - Default
   - TransparentFX

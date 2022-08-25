@@ -104,20 +104,20 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
-    - _BendDelta: 0.15
-    - _BladeBendCurve: 4
+    - _BendDelta: 0
+    - _BladeBendCurve: 1
     - _BladeBendDistance: 0.39
     - _BladeCurve: 2
     - _BladeForward: 0.38
     - _BladeHeight: 0.25
     - _BladeHeightDelta: 0.05
-    - _BladeHeightMax: 1.25
-    - _BladeHeightMin: 0.75
+    - _BladeHeightMax: 2
+    - _BladeHeightMin: 2
     - _BladeSegments: 3
     - _BladeWidth: 0.015
     - _BladeWidthDelta: 0.02
-    - _BladeWidthMax: 0.05
-    - _BladeWidthMin: 0.02
+    - _BladeWidthMax: 0.1
+    - _BladeWidthMin: 0.1
     - _Blend: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
@@ -131,7 +131,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _GrassFalloff: 0.5
+    - _GrassFalloff: 0
     - _GrassThreshold: 0.158
     - _Metallic: 0
     - _OcclusionStrength: 1
