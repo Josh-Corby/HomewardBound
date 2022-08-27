@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class DestructableObject : GameBehaviour
 {
-    public GameObject childObject = null;
+    public GameObject childObject;
     private Rigidbody childRB;
 
     private void Start()
     {
-        if(childRB != null)
-            childRB = childObject.GetComponent<Rigidbody>();
+        childRB = childObject.GetComponent<Rigidbody>();
     }
 
     private void OnCollisionEnter(Collision collision)

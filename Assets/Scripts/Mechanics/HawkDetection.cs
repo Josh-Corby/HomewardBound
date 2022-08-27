@@ -57,6 +57,7 @@ public class HawkDetection : GameBehaviour
         if (other.CompareTag("Player"))
         {
             rayCasting = true;
+            Debug.Log("israycasting");
             //isGrowing = true;
         }
         
@@ -71,7 +72,7 @@ public class HawkDetection : GameBehaviour
 
             if (rayCasting)
             {
-                if (Physics.Raycast(hawkRay, out hit, 100, mask))
+                if (Physics.Raycast(hawkRay, out hit, 200, mask))
                 {
                     if(hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
                     {
