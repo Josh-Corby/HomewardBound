@@ -53,12 +53,20 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private float glideTimerMax = 5f;
 
     float turnSmoothVelocity;
-    private float groundDistance = 0.4f;
+    private float groundDistance = 0.2f;
 
     private float moveSpeed = 6f;
     private float sprintSpeed = 12f;
-  
-    
+
+    [SerializeField]
+    private float coyoteTimer;
+
+    [SerializeField]
+    private float coyoteTime = 0.4f;
+    [SerializeField]
+    private float coyoteTimerOffset = 0.1f;
+
+
     Vector3 velocity;
     private Vector3 hookshotPosition;
     private float hookshotSize;
@@ -82,7 +90,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     void Update()
     {
-
         if (OM.outfit == Outfits.Utility && groundState == GroundStates.Airborne)
         {
             DisableGrappleInput();
@@ -107,14 +114,11 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 HandleHookshotMovement();
                 break;
 
-        }
-
-        
+        }     
     }
     private void LateUpdate()
     {
         grappleHook.transform.rotation = Camera.main.transform.rotation;
-
     }
     private void HandleMovement()
     {
@@ -123,6 +127,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         switch (groundState) 
         {
             case GroundStates.Grounded:
+                ResetCoyoteTimer();
                 if (fallTimer <= 0)
                 {
                     GM.RespawnPlayer();
@@ -140,8 +145,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
             case GroundStates.Airborne:
                 {
-                    
                     fallTimer -= Time.deltaTime;
+                    CoyoteTimer();
                 }
                 break;
             case GroundStates.Gliding:
@@ -149,9 +154,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 
                 break;
         }
-
-
-
 
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
@@ -168,27 +170,16 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
         }
 
-        if (Input.GetButtonDown("Jump") && groundState == GroundStates.Grounded)
+
+
+        if(Input.GetButtonDown("Jump") && coyoteTimer >= 0)
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            StartCoroutine(Jump());
         }
-
         velocity.y += gravity * Time.deltaTime;
-
         velocity += characterVelocityMomentum;
-
         controller.Move(velocity * Time.deltaTime);
 
-        //if (characterVelocityMomentum.magnitude >= 0f)
-        //{
-        //    float momentumDrag = 3f;
-        //    characterVelocityMomentum -= momentumDrag * Time.deltaTime * characterVelocityMomentum;
-
-        //}
-        //if (characterVelocityMomentum.magnitude < 0f)
-        //{
-        //    characterVelocityMomentum = Vector3.zero;
-        //}
         gravity = -9.81f;
         if (OM.outfit == Outfits.Utility)
         {
@@ -205,15 +196,34 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 //velocity.y = Mathf.Sqrt(gravity * -0.1f / jumpHeight);
                 glideTimer -= Time.deltaTime;
                 fallTimer = fallTimerMax;
-            }
-        
+            }      
         }
-
         if (groundState == GroundStates.Airborne) return;
-        HandleSprinting();
-        
+        HandleSprinting();       
     }
 
+    private void ResetCoyoteTimer()
+    {
+        coyoteTimer = coyoteTime;
+    }
+
+    private IEnumerator Jump()
+    {
+        velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+
+        yield return new WaitForSeconds(coyoteTimerOffset);
+        coyoteTimer = 0f;
+    }
+
+
+    private void CoyoteTimer()
+    {
+        coyoteTimer -= Time.deltaTime;
+        if(Input.GetKeyDown(KeyCode.Space) && groundState == GroundStates.Airborne && coyoteTimer > 0)
+        {
+            Jump();
+        }
+    }
     private void HandleSprinting()
     {
         if (state == State.HookshotThrown || groundState == GroundStates.Gliding)
@@ -222,7 +232,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             
         }
             
-
         if(groundState == GroundStates.Grounded || groundState == GroundStates.Airborne)
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -236,7 +245,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             }
         }
        
-
         switch (moveSpeeds)
         {
             case MovementSpeeds.Walking:
@@ -264,23 +272,23 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 {
                     if (Physics.Raycast(grapplePoint.transform.position, grapplePoint.transform.forward, out RaycastHit raycastHit, 100))
                     {
-                        if (raycastHit.collider.gameObject.CompareTag("Non-Grappleable-Surface"))
+                        GameObject grappleHit = raycastHit.collider.gameObject;
+                        if (grappleHit.CompareTag("Non-Grappleable-Surface"))
                         {
                             StopHookshot();
                             IM.rClick_Input = false;
                             return;
                         }
-                        if (raycastHit.collider.gameObject.CompareTag("Grappleable-Surface"))
+                        if (grappleHit.CompareTag("Grappleable-Surface"))
                         {
-
+                            HandleHookshotMovement();
                         }
-                        if (raycastHit.collider.gameObject.CompareTag("Lilypad"))
+                        if (grappleHit.CompareTag("Lilypad"))
                         {
-
+                            LilyPadPull(raycastHit.collider.gameObject);
                         }
 
                         debugHitPointTransform.position = raycastHit.point;
-
                         hookshotPosition = raycastHit.point;
                         hookshotSize = 0f;
                         hookshotTransform.gameObject.SetActive(true);
@@ -296,7 +304,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private void HandleHookShotThrow()
     {
         hookshotTransform.LookAt(hookshotPosition);
-
         float hookshotThrowSpeed = 150f;
         hookshotSize += hookshotThrowSpeed * Time.deltaTime;
         hookshotTransform.localScale = new Vector3(1, 1, hookshotSize);
@@ -305,36 +312,20 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         {
             state = State.HookshotFlyingPlayer;
         }
-
-
     }
 
     private void HandleHookshotMovement()
     {
-
-
         hookshotTransform.LookAt(hookshotPosition);
 
-
-
         Vector3 hookshotDir = (hookshotPosition - transform.position).normalized;
-
-        
+    
         float hookshotSpeedMin = 20f;
         float hookshotSpeedMax = 40f;
         float hookshotSpeed = Mathf.Clamp(Vector3.Distance(transform.position, hookshotPosition), hookshotSpeedMin, hookshotSpeedMax);
         float hookshotSpeedMultiplier = 2f;
+        controller.Move(hookshotDir * hookshotSpeed * hookshotSpeedMultiplier * Time.deltaTime);
 
-        
-            //Move character controller
-            controller.Move(hookshotDir * hookshotSpeed * hookshotSpeedMultiplier * Time.deltaTime);
-            //Move lily pad towards player
-            /*
-            * grapple hits lilypad
-            * store reference to lily pad
-            * move lily towards player on the x,z
-
-    */
         hookshotSize = Vector3.Distance(transform.position, hookshotPosition);
         hookshotTransform.localScale = new Vector3(1, 1, hookshotSize);
         float reachedHookshotPositionDistance = 2f;
@@ -361,8 +352,13 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         }
     }
 
-    private void LilyPadPull()
+    private void LilyPadPull(GameObject lilyPad)
     {
+        lilyPad.transform.position = Vector3.MoveTowards(lilyPad.transform.position, gameObject.transform.position, 1 * Time.deltaTime);
+        //Move lily pad towards player
+        /*
+        * move lily towards player on the x,z
+        */
 
     }
 

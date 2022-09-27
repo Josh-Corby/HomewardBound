@@ -25,6 +25,7 @@ TagManager:
   - Hawk
   - Grappleable-Surface
   - Lilypad
+  - FallingLilyPad
   layers:
   - Default
   - TransparentFX
