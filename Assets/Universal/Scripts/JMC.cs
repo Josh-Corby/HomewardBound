@@ -255,6 +255,19 @@ public class JMC : MonoBehaviour
             return "";
     }
 
+    public GameObject FindChildGameObjectByName(string gameObjectName)
+    {
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            if (gameObject.transform.GetChild(i).name == gameObjectName)
+            {
+                return gameObject.transform.GetChild(i).gameObject;
+            }
+        }
+        return null;
+
+    }
+
     /// <summary>
     /// Shuffles a list using Unity's Random
     /// </summary>
