@@ -205,7 +205,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         }
 
         //Breakable Objects
-        if (other.CompareTag("Rock") || other.CompareTag("BreakableWall"))
+        if (other.CompareTag("Rock") || other.CompareTag("BreakableWall") || other.CompareTag("MinableObject"))
         {
             objectToInteract = other.gameObject;
             //other.GetComponent<Outline>().enabled = true;

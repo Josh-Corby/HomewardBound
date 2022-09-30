@@ -13,21 +13,17 @@ public class GameManager : GameBehaviour<GameManager>
     public Transform spawnPoint;
     public GameObject pebblePrefab;
 
-
-
-    /*
+    
     public bool havePickaxe = false;
     public bool haveSlingshot = false;
+    public bool haveBuilding = false;
     public bool haveGlider = false;
     public bool haveGrappleHook = false;
-    */
-
-
+    
 
     private void Start()
     {
-        RespawnPlayer();
-        
+        RespawnPlayer();      
     }
 
     private void Update()

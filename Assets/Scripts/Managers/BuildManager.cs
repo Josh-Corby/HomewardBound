@@ -16,34 +16,41 @@ public enum BuildObjects
 
 public class BuildManager : GameBehaviour<BuildManager>
 {
-    
+ 
+    [Header("Build Checks")]
     public bool isBuilding;
     public bool canBuild;
 
+    [Header("Crafting Checks")]
     private bool pebbleCheck;
     private bool stickCheck;
     private bool mushroomCheck;
 
+
+    [Header("Craft Costs")]
     private int pebbleCost;
     private int stickCost;
     private int mushroomCost;
 
-
-    [SerializeField] private GameObject buildZone;
-
-    public GameObject prefabToSpawn;
-
-    public GameObject buildingObject;
-    private Color objectColor;
-
+    [Header("Build Prefabs")]
     #region Build Prefabs
     [SerializeField] private GameObject ladderPrefab;
     [SerializeField] private GameObject bridgePrefab;
     #endregion
 
+    [SerializeField] 
+    private GameObject buildZone;
+    [HideInInspector]
+    public GameObject prefabToSpawn;
+    [HideInInspector]
+    public GameObject buildingObject;
+    private Color objectColor;
+
+    
 
     private void Update()
     {
+        // If the player isn't building cancel the build input
         if (!isBuilding)
         {
             if (IM.cancel_Input)
@@ -55,11 +62,13 @@ public class BuildManager : GameBehaviour<BuildManager>
 
         if (isBuilding)
         {
-            //if(OM.outfit != Outfits.Builder)
-            //{
-            //    CancelBuilding();
-            //}
-
+            /*
+            * if(OM.outfit != Outfits.Builder)
+            * {
+            *    CancelBuilding();
+            * }
+            */
+            // If the player cancels building
             if (IM.cancel_Input)
             {
                 if(prefabToSpawn != null)
@@ -69,6 +78,7 @@ public class BuildManager : GameBehaviour<BuildManager>
             }
         }
 
+        // Checks for if player can build
         if (IM.rClick_Input && isBuilding)
         {
             if (TPM.groundState == GroundStates.Airborne || canBuild == false)
@@ -77,41 +87,40 @@ public class BuildManager : GameBehaviour<BuildManager>
                 return;
             }
             
+            // If material comparisons return true
             else if (canBuild)
             {
+                // Set alpha to 1
                 objectColor.a = 1f;
                 buildingObject.GetComponent<MeshRenderer>().material.color = objectColor;
                 Debug.Log("Object Built");
+
+                // Detach object from buildzone
                 buildZone.transform.DetachChildren();
                
+                // Reactivate Interaction Zone
                 IZ.Toggle(true);
                 
+                // Subtract cost of built item
                 SubtractCost();
+
                 buildingObject.gameObject.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePositionY;
+
+                // Reset manager bools
                 buildingObject = null;
                 prefabToSpawn = null;
                 canBuild = false;
                 isBuilding = false;
-            }
-
-            
-            
+            }         
         }
     }
+
+
     public void BuildItem(int value)
     {
         switch ((BuildObjects)value)
         {
-            /*
-            case BuildObjects.Pickaxe:
-                PickaxeCheck();
-                GM.havePickaxe = GliderCheck();
-                SubtractCost();
-                UI.BuildMenuToggle();
-                break;
-            */
             case BuildObjects.Ladder:
-                //prefabToSpawn = LadderCheck() ? ladderPrefab : null;
                 if (LadderCheck())
                 {
                     OM.ChangeOutfits(1);
@@ -122,11 +131,9 @@ public class BuildManager : GameBehaviour<BuildManager>
                     OM.ChangeOutfits(4);
                     return;
                 }
-
                 isBuilding = LadderCheck();
                 StartCoroutine(BuildObject());
                 break;
-
             case BuildObjects.Bridge:
                 if (BridgeCheck())
                 {
@@ -138,38 +145,18 @@ public class BuildManager : GameBehaviour<BuildManager>
                     OM.ChangeOutfits(4);
                     return;
                 }
-
                 prefabToSpawn = BridgeCheck() ? bridgePrefab : null;
                 isBuilding = BridgeCheck();
                 StartCoroutine(BuildObject());
                 break;
+
+
                 /*
-            case BuildObjects.Slingshot:
-                SlingshotCheck();
-                GM.haveSlingshot = SlingshotCheck();
-                SubtractCost();
-                UI.BuildMenuToggle();
-                break;
-
-            case BuildObjects.Ammo:
-                AmmoCheck();
-                SS.ammo += 5;
-                SubtractCost();
-                break;
-
-            case BuildObjects.Glider:
-                GliderCheck();   
-                GM.haveGlider = GliderCheck();
-                SubtractCost();
-                UI.BuildMenuToggle();
-                break;
-            case BuildObjects.GrappleHook:
-                GrappleHookCheck();
-                GM.haveGrappleHook = GrappleHookCheck();
-                SubtractCost();
-                UI.BuildMenuToggle();
-                break;
-                
+                 * case BuildObjects.Ammo:
+                 * AmmoCheck();
+                 * SS.ammo += 5;
+                 * SubtractCost();
+                 * break;
                 */
         }
         
@@ -179,10 +166,14 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     IEnumerator BuildObject()
     {
+        // Destroy any objects that shouldnt be there and make buildingobject null for function
         Destroy(buildingObject);
         buildingObject = null;
         
+        // Wait a frame for other functions and updates to process that object has been destroyed
         yield return new WaitForEndOfFrame();
+
+        // Instantiate object as a child of buildZone
         Instantiate(prefabToSpawn, buildZone.transform);
         buildingObject = buildZone.transform.GetChild(0).gameObject;
         objectColor = buildingObject.GetComponent<MeshRenderer>().material.color;
@@ -199,6 +190,11 @@ public class BuildManager : GameBehaviour<BuildManager>
     }
 
     #region Materials Comparisons
+    /*
+     * These functions define the costs of objects that can be built
+     * After defining the cost it takes to build an object it runs a check to see if the object can be built
+     * A bool is then returned telling the manager if the player can build or not
+    */
 
     /*
     public bool PickaxeCheck()
@@ -257,6 +253,7 @@ public class BuildManager : GameBehaviour<BuildManager>
     }
     */
 
+    //Compare the price it takes to build an object with the resources the player has available and return a bool with the result
     private bool CompareChecks()
     {
         pebbleCheck = GM.rocksCollected >= pebbleCost ? pebbleCheck = true : pebbleCheck = false;
@@ -269,6 +266,7 @@ public class BuildManager : GameBehaviour<BuildManager>
             return false;  
     }
 
+    // Subtract the cost of a build object from the player when building is completed
     private void SubtractCost()
     {
         GM.rocksCollected -= pebbleCost;
@@ -277,6 +275,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         UI.UpdateMaterialsCollected();
     }
 
+    // Add the cost of a build object back to the player when building is cancelled
     private void AddCost()
     {
         GM.rocksCollected += pebbleCost;
