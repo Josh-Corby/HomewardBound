@@ -35,7 +35,7 @@ public class BuildDetectionZone : GameBehaviour
                 }
                 if(GM.rocksCollected < buildCost)
                 {
-                    UI.UpdateCanBuildText("Not enough rocks!");
+                    UI.UpdateBuildStatus("Not enough rocks!");
                 }
             }
 

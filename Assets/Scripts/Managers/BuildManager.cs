@@ -115,7 +115,10 @@ public class BuildManager : GameBehaviour<BuildManager>
         }
     }
 
-
+    /// <summary>
+    /// Assigns objects to be spawned with switch statements
+    /// </summary>
+    /// <param name="value"> Defines what case of the BuildObjects enum is run</param>
     public void BuildItem(int value)
     {
         switch ((BuildObjects)value)
@@ -164,6 +167,10 @@ public class BuildManager : GameBehaviour<BuildManager>
         IZ.DisableInteractions();
     }
 
+
+    /// <summary>
+    /// Assigns object to be built and instantiates it as a parent of the buildZone
+    /// </summary>
     IEnumerator BuildObject()
     {
         // Destroy any objects that shouldnt be there and make buildingobject null for function
@@ -205,6 +212,12 @@ public class BuildManager : GameBehaviour<BuildManager>
         return CompareChecks();
     }
     */
+
+    /// <summary>
+    /// Define the cost of the ladder, then runs a comparison function
+    /// 
+    /// </summary>
+    /// <returns>Returns a bool that tells the manager if the object can be built </returns>
     public bool LadderCheck()
     {
         pebbleCost = 3;
@@ -213,6 +226,10 @@ public class BuildManager : GameBehaviour<BuildManager>
         return CompareChecks();
     }
 
+    /// <summary>
+    /// Define the cost of the bridge, then runs a comparison function
+    /// </summary>
+    /// <returns>Returns a bool that tells the manager if the object can be built</returns>
     public bool BridgeCheck()
     {
         pebbleCost = 2;
@@ -253,7 +270,11 @@ public class BuildManager : GameBehaviour<BuildManager>
     }
     */
 
-    //Compare the price it takes to build an object with the resources the player has available and return a bool with the result
+
+    /// <summary>
+    /// Compare object price with materials player has
+    /// </summary>
+    /// <returns>Returns a bool that says if an object can be built or not</returns>
     private bool CompareChecks()
     {
         pebbleCheck = GM.rocksCollected >= pebbleCost ? pebbleCheck = true : pebbleCheck = false;
@@ -266,7 +287,9 @@ public class BuildManager : GameBehaviour<BuildManager>
             return false;  
     }
 
-    // Subtract the cost of a build object from the player when building is completed
+    /// <summary>
+    /// Subtract the cost of a build object from the player when building is completed
+    /// </summary>
     private void SubtractCost()
     {
         GM.rocksCollected -= pebbleCost;
@@ -274,8 +297,9 @@ public class BuildManager : GameBehaviour<BuildManager>
         GM.mushroomsCollected -= mushroomCost;
         UI.UpdateMaterialsCollected();
     }
-
-    // Add the cost of a build object back to the player when building is cancelled
+    /// <summary>
+    /// Add the cost of a build object back to the player when building is cancelled
+    /// </summary>
     private void AddCost()
     {
         GM.rocksCollected += pebbleCost;

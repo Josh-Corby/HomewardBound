@@ -4,16 +4,18 @@ using UnityEngine;
 using TMPro;
 public class GameManager : GameBehaviour<GameManager>
 {
+    [Header("Resources Collected")]
     public int rocksCollected;
     public int sticksCollected;
     public int mushroomsCollected;
     public int pebblesCollected;
-    public GameObject Player;
 
+
+    public GameObject Player;
     public Transform spawnPoint;
     public GameObject pebblePrefab;
 
-    
+    [Header("Bools for what tools the player has available")]
     public bool havePickaxe = false;
     public bool haveSlingshot = false;
     public bool haveBuilding = false;
@@ -31,6 +33,10 @@ public class GameManager : GameBehaviour<GameManager>
         if (Input.GetKeyDown(KeyCode.R))
             RespawnPlayer();
     }
+
+    /// <summary>
+    /// Respawn the player at current spawn point position and rotation
+    /// </summary>
     public void RespawnPlayer()
     {
         Player.GetComponent<CharacterController>().enabled = false;
@@ -41,8 +47,12 @@ public class GameManager : GameBehaviour<GameManager>
         TPM.StopHookshot();
     }
 
-    public void SetSpawnPoint(GameObject SP)
+    /// <summary>
+    /// Set spawn point of player
+    /// </summary>
+    /// <param name="SP"> Transform of spawn point to be changed to</param>
+    public void SetSpawnPoint(Transform SP)
     {
-        spawnPoint = SP.transform;
+        spawnPoint = SP;
     }
 }

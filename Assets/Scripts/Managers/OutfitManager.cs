@@ -19,23 +19,24 @@ public class OutfitManager : GameBehaviour<OutfitManager>
     public bool canChangeOutfits;
     public bool haveSlingshot = true;
 
-    /// <summary>
-    /// if 0 miner
-    /// if 1 builder
-    /// if 2 slingshot
-    /// if 3 Utility
-    /// if 4 None
-    /// </summary>
+    /*
+     * if 0 miner
+     * if 1 builder
+     * if 2 slingshot
+     * if 3 Utility
+     * if 4 None
+     */
+
 
     private void Start()
     {
         canChangeOutfits = true;
     }
-    void Update()
-    {
-      
-    }
 
+    /// <summary>
+    /// Change outfits to outfit that matches the value passed in
+    /// </summary>
+    /// <param name="outfitValue"> Index value of outfit enum case to be changed to</param>
     public void ChangeOutfits (int outfitValue)
     {
         if (!canChangeOutfits)
@@ -67,6 +68,7 @@ public class OutfitManager : GameBehaviour<OutfitManager>
                 break;
         }
 
+        //Update controls UI to match current outfit controls
         UI.UpdateControlText();
     }
 }
