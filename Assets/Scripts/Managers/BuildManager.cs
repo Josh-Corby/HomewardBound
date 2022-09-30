@@ -121,6 +121,8 @@ public class BuildManager : GameBehaviour<BuildManager>
     /// <param name="value"> Defines what case of the BuildObjects enum is run</param>
     public void BuildItem(int value)
     {
+
+
         switch ((BuildObjects)value)
         {
             case BuildObjects.Ladder:

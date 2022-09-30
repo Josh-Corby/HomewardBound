@@ -49,6 +49,7 @@ public class OutfitManager : GameBehaviour<OutfitManager>
         switch (CurrentOutfit)
         {
             case Outfits.Miner:
+
                 outfit = Outfits.Miner;
                 break;
 

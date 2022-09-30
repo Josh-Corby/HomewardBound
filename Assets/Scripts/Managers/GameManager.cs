@@ -15,18 +15,22 @@ public class GameManager : GameBehaviour<GameManager>
     public Transform spawnPoint;
     public GameObject pebblePrefab;
 
-    [Header("Bools for what tools the player has available")]
-    public bool havePickaxe = false;
-    public bool haveSlingshot = false;
-    public bool haveBuilding = false;
-    public bool haveGlider = false;
-    public bool haveGrappleHook = false;
-    
+    [Header("Tools bools")]
+    public bool havePickaxe;
+    public bool haveSlingshot;
+    public bool haveBuilding;
+    public bool haveGlider;
+    public bool haveGrappleHook;
 
     private void Start()
     {
-        RespawnPlayer();      
-    }
+        RespawnPlayer();
+        haveGrappleHook = false;
+        haveGlider = false;
+        haveBuilding = false;
+        haveSlingshot = false;
+        havePickaxe = false;
+}
 
     private void Update()
     {
@@ -55,4 +59,5 @@ public class GameManager : GameBehaviour<GameManager>
     {
         spawnPoint = SP;
     }
+
 }

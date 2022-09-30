@@ -4,18 +4,18 @@ using UnityEngine;
 
 
 enum HookshotStates
-    {
-        Normal,
-        HookshotThrown,
-        HookshotFlyingPlayer,
-        HookshotPullingObject
-    }
+{
+    Normal,
+    HookshotThrown,
+    HookshotFlyingPlayer,
+    HookshotPullingObject
+}
 
 enum MovementSpeeds
-    {
-        Walking,
-        Sprinting
-    }
+{
+    Walking,
+    Sprinting
+}
 
 public enum GroundStates
 {
@@ -117,10 +117,10 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 HandleHookshotMovement();
                 break;
             case HookshotStates.HookshotPullingObject:
-                
+
                 break;
 
-        }     
+        }
     }
     private void LateUpdate()
     {
@@ -130,7 +130,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     {
         groundState = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) ? GroundStates.Grounded : GroundStates.Airborne;
 
-        switch (groundState) 
+        switch (groundState)
         {
             case GroundStates.Grounded:
                 ResetCoyoteTimer();
@@ -145,7 +145,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
                 if (velocity.y < 0)
                 {
-                   velocity.y = -2f;
+                    velocity.y = -2f;
                 }
                 break;
 
@@ -157,7 +157,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 break;
             case GroundStates.Gliding:
                 Debug.Log("is gliding");
-                
+
                 break;
         }
 
@@ -178,7 +178,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
 
 
-        if(Input.GetButtonDown("Jump") && coyoteTimer >= 0)
+        if (Input.GetButtonDown("Jump") && coyoteTimer >= 0)
         {
             StartCoroutine(Jump());
         }
@@ -202,10 +202,10 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 //velocity.y = Mathf.Sqrt(gravity * -0.1f / jumpHeight);
                 glideTimer -= Time.deltaTime;
                 fallTimer = fallTimerMax;
-            }      
+            }
         }
         if (groundState == GroundStates.Airborne) return;
-        HandleSprinting();       
+        HandleSprinting();
     }
 
     private void ResetCoyoteTimer()
@@ -229,16 +229,16 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         coyoteTimer = 0f;
     }
 
-    
+
     private void HandleSprinting()
     {
         if (hookshotState == HookshotStates.HookshotThrown || groundState == GroundStates.Gliding)
         {
             moveSpeeds = MovementSpeeds.Walking;
-            
+
         }
-            
-        if(groundState == GroundStates.Grounded || groundState == GroundStates.Airborne)
+
+        if (groundState == GroundStates.Grounded || groundState == GroundStates.Airborne)
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
@@ -250,7 +250,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 moveSpeeds = MovementSpeeds.Walking;
             }
         }
-       
+
         switch (moveSpeeds)
         {
             case MovementSpeeds.Walking:
@@ -264,8 +264,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     #region GrappleHook
     private void StartGrapple()
     {
-        
-            if (!UI.buildPanelStatus)
+
+        if (!UI.buildPanelStatus)
         {
             if (OM.outfit == Outfits.Utility)
             {
@@ -297,7 +297,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                     IM.rClick_Input = false;
                 }
             }
-        } 
+        }
     }
 
     private void HandleHookShotThrow()
@@ -316,9 +316,9 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         }
 
         if (hookshotSize >= Vector3.Distance(transform.position, hookshotPosition))
-            {
-                hookshotState = HookshotStates.HookshotFlyingPlayer;
-            }
+        {
+            hookshotState = HookshotStates.HookshotFlyingPlayer;
+        }
 
 
 
@@ -329,7 +329,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         hookshotTransform.LookAt(hookshotPosition);
 
         Vector3 hookshotDir = (hookshotPosition - transform.position).normalized;
-    
+
         float hookshotSpeedMin = 20f;
         float hookshotSpeedMax = 40f;
         float hookshotSpeed = Mathf.Clamp(Vector3.Distance(transform.position, hookshotPosition), hookshotSpeedMin, hookshotSpeedMax);
@@ -339,7 +339,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         hookshotSize = Vector3.Distance(transform.position, hookshotPosition);
         hookshotTransform.localScale = new Vector3(1, 1, hookshotSize);
         float reachedHookshotPositionDistance = 2f;
-        if(Vector3.Distance(transform.position, hookshotPosition) < reachedHookshotPositionDistance)
+        if (Vector3.Distance(transform.position, hookshotPosition) < reachedHookshotPositionDistance)
         {
             //Reached hookshot position
             glideTimer = glideTimerMax;
@@ -347,8 +347,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         }
 
         if (IM.rClick_Input)
-        {        
-           IM.rClick_Input = false;
+        {
+            IM.rClick_Input = false;
             StopHookshot();
         }
 
@@ -358,7 +358,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             //float jumpSpeed = 40f;
             //characterVelocityMomentum = hookshotDir / 10;
             //characterVelocityMomentum += Vector3.up * jumpSpeed;
-            StopHookshot();           
+            StopHookshot();
         }
     }
 

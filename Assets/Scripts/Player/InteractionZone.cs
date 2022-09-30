@@ -41,8 +41,11 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
             if (IM.lClick_Input)
             {
-                IM.lClick_Input = false;
-
+                if (objectToInteract == null)
+                {              
+                    IM.lClick_Input = false;               
+                    return;
+                }
 
                 if (objectToInteract.CompareTag("Rock"))
                 {

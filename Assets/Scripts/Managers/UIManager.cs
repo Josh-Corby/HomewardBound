@@ -33,6 +33,12 @@ public class UIManager : GameBehaviour<UIManager>
     public TMP_Text outfitControlText3;
     public TMP_Text outfitControlText4;
 
+    [Header("Radial Menu Text")]
+    public TMP_Text minerText;
+    public TMP_Text ladderText;
+    public TMP_Text bridgeText;
+    public TMP_Text utilityText;
+
     [Header("Panels")]
     public GameObject gameUI;
     public GameObject buildPanel;
@@ -50,33 +56,44 @@ public class UIManager : GameBehaviour<UIManager>
     public bool paused;
 
     [Header("Buttons")]
-    public Button buildPickaxeButton;
+    public Button pickaxeButton;
     public Button buildLadderButton;
     public Button buildBridgeButton;
-    public Button buildSlingshotButton;
+    //public Button buildSlingshotButton;
+    public Button utilityButton;
     public Button buildAmmoButton;
-    public Button buildGliderButton;
-    public Button buildGrappleHookButton;
+    //public Button buildGliderButton;
+    //public Button buildGrappleHookButton;
 
-    
+
     public float timeScale;
 
     private void Start()
     {
         // Set UI values for start of game
         currentBuildPanel = null;
-        UpdateMaterialsCollected();
+        CurrentPanel = null;
+
+        gameObject.SetActive(true);
         gameUI.SetActive(true);
-        buildPanelStatus = false;
-        UpdateCanBuildText(false);
+
+        buildPanelStatus = false;    
         buildPanel.SetActive(false);
         RadialMenuPanel.SetActive(false);
-        CurrentPanel = null;
-        currentBuildPanel = BuildPanels[0];
-        gameObject.SetActive(true);
-        paused = false;
         pausePanel.SetActive(false);
+        paused = false;
+
+        minerText.text = "";
+        ladderText.text = "";
+        bridgeText.text = "";
+        utilityText.text = "";
+
+
+        currentBuildPanel = BuildPanels[0];
         Time.timeScale = 1;
+
+        UpdateCanBuildText(false);
+        UpdateMaterialsCollected();
         UpdateControlText();
 
     }
@@ -87,13 +104,33 @@ public class UIManager : GameBehaviour<UIManager>
 
         fallTimer.text = "Fall timer: " +  TPM.fallTimer.ToString("F2");
 
-        currentOutfit.text = OM.outfit.ToString();
+        //currentOutfit.text = OM.outfit.ToString();
 
         Inputs();
         
     }
 
     #region Text Updaters
+
+    public void UpdateToolsUnlockedUI(string tool)
+    {
+        if(tool == "Pickaxe")
+        {
+            minerText.text = "Pickaxe";
+        }
+
+        if(tool == "Builder")
+        {
+            ladderText.text = "Ladder";
+            bridgeText.text = "Bridge";
+        }
+
+        if(tool == "GrappleHook" || tool == "Glider")
+        {
+            utilityText.text = "Utility";
+        }
+
+    }
 
     /// <summary>
     /// Update UI of materials player has collected
@@ -215,50 +252,17 @@ public class UIManager : GameBehaviour<UIManager>
     /// </summary>
     public void IsButtonClickable()
     {
-        buildLadderButton.interactable = BM.LadderCheck();
-        buildBridgeButton.interactable = BM.BridgeCheck();
+        pickaxeButton.interactable = GM.havePickaxe;
 
-        /*
-        * if (!GM.havePickaxe)
-        
-        * {
-        *     if (BM.PickaxeCheck())
-        *     {
-        *         buildPickaxeButton.interactable = true;
-        *     }
-        * }
-        * else
-        *     buildPickaxeButton.interactable = false;
-        *
-        * if (!GM.haveSlingshot)
-        * {
-        *    if (BM.SlingshotCheck())
-        *    {
-        *        buildSlingshotButton.interactable = true;
-        *    }
-        * }
-        * else
-        *    buildSlingshotButton.interactable = false;
-        * if (!GM.haveGrappleHook)
-        * {
-        *    if (BM.GrappleHookCheck())
-        *    {
-        *        buildGrappleHookButton.interactable = true;
-        *    }
-        * }
-        * else
-        *    buildGrappleHookButton.interactable = false;
-        *
-        * if (!GM.haveGlider)
-        * {
-        *    if (BM.GliderCheck())
-        *    {
-        *        buildGliderButton.interactable = true;
-        *    }
-        * }
-        * else
-        *    buildGliderButton.interactable = false;
-        */
+        buildLadderButton.interactable = BM.LadderCheck() && GM.haveBuilding;
+        buildBridgeButton.interactable = BM.BridgeCheck() && GM.haveBuilding;
+
+        if (GM.haveGlider || GM.haveGrappleHook)
+            utilityButton.interactable = true;
+
+        if (!GM.haveGlider && !GM.haveGrappleHook)
+            utilityButton.interactable = false;
+
     }
 
 
@@ -404,7 +408,7 @@ public class UIManager : GameBehaviour<UIManager>
         }
             
 
-        IsButtonClickable();
+        
         BuildMenuToggle();
 
         
@@ -455,6 +459,7 @@ public class UIManager : GameBehaviour<UIManager>
     private void ToggleRadialMenu(bool status) 
     {
         RadialMenuPanel.SetActive(status);
+        IsButtonClickable();
     }
 
     /// <summary>
