@@ -26,6 +26,7 @@ TagManager:
   - Grappleable-Surface
   - Lilypad
   - FallingLilyPad
+  - MinableObject
   layers:
   - Default
   - TransparentFX

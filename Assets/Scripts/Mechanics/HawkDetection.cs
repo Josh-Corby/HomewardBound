@@ -81,12 +81,21 @@ public class HawkDetection : GameBehaviour
                         detectionCircle.transform.position = new Vector3(other.transform.position.x, TPM.groundCheck.transform.position.y -0.01f, other.transform.position.z);
                         isGrowing = true;
                     }
+
                     else
                     {
                         detectionCircle.GetComponent<MeshRenderer>().enabled = false;
                         Debug.DrawLine(hawkRay.origin, hawkRay.origin * 100, Color.green);
                         isGrowing = false;
                     }
+
+
+                    //if (hit.transform.gameObject.layer != LayerMask.NameToLayer("Player") && hit.collider.isTrigger)
+                    //{
+                    //    detectionCircle.GetComponent<MeshRenderer>().enabled = false;
+                    //    Debug.DrawLine(hawkRay.origin, hawkRay.origin * 100, Color.green);
+                    //    isGrowing = false;
+                    //}
                 }
                 
             }

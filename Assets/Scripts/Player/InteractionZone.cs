@@ -63,22 +63,15 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                     return;
                 }
 
-                if (objectToInteract.CompareTag("BreakableWall"))
-                {
-                    
+                if (objectToInteract.CompareTag("MinableObject"))
+                {                  
                     Destroy(objectToInteract);
-
                 }
-
                 else
                 {
                     return;
                 }
-
             }
-
-
-
         }
         if (OM.outfit == Outfits.Builder)
         {

@@ -307,19 +307,20 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         hookshotSize += hookshotThrowSpeed * Time.deltaTime;
         hookshotTransform.localScale = new Vector3(1, 1, hookshotSize);
 
-        if (grappleHit.CompareTag("Grappleable-Surface"))
-            {
-            if (hookshotSize >= Vector3.Distance(transform.position, hookshotPosition))
-            {
-                hookshotState = HookshotStates.HookshotFlyingPlayer;
-            }
-        }
+
 
         if (grappleHit.CompareTag("Lilypad"))
         {
             hookshotState = HookshotStates.HookshotPullingObject;
             LilyPadPull(grappleHit);
         }
+
+        if (hookshotSize >= Vector3.Distance(transform.position, hookshotPosition))
+            {
+                hookshotState = HookshotStates.HookshotFlyingPlayer;
+            }
+
+
 
     }
 
