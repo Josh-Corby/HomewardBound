@@ -37,6 +37,7 @@ public class Dialouge : MonoBehaviour
             }
             else
             {
+                contButton.SetActive(true);
                 dialoguePanel.SetActive(true);
                 StartCoroutine(Typing());
             }
@@ -50,9 +51,12 @@ public class Dialouge : MonoBehaviour
 
     public void zeroText()
     {
+        StopAllCoroutines();
         dialogueText.text = " ";
         index = 0;
         dialoguePanel.SetActive(false);
+        contButton.SetActive(false);
+
     }
 
     IEnumerator Typing()
@@ -66,8 +70,6 @@ public class Dialouge : MonoBehaviour
 
     public void NextLine()
     {
-        contButton.SetActive(false);
-
         if(index < dialogue.Length - 1)
         {
             index++;
