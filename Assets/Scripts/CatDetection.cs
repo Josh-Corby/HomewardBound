@@ -13,7 +13,13 @@ namespace Cat
         public CatManager catManager;
 
         public float detectionTimer;
-        private float detectionTimerMax = 2f;
+        private readonly float detectionTimerMax = 2f;
+        private float detectionRange;
+
+        private void Awake()
+        {
+            detectionRange = catManager.GetComponent<SphereCollider>().radius;
+        }
 
         private void Start()
         {
@@ -22,16 +28,16 @@ namespace Cat
 
         private void Update()
         {
-
-
             detectionTimer = Mathf.Clamp(detectionTimer, 0, detectionTimerMax);
 
             if (raycasting)
             {
-                transform.LookAt(player.transform);
+                catManager.LookAtPlayer();
+                catManager.aiState = AIStates.Detecting;
+                //transform.LookAt(player.transform);
                 //Ray catRay = new Ray(transform.position, player.transform.position);
 
-                if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 15f, mask))
+                if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, detectionRange, mask))
                 {
                     if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
                     {
@@ -39,10 +45,8 @@ namespace Cat
                         {
                             return;
                         }
-
                         if (detectionTimer >= 0)
                         {
-                            catManager.aiState = AIStates.Detecting;
                             Debug.DrawLine(transform.position, hit.point, Color.green);
                             detectionTimer -= Time.deltaTime;
                         }
@@ -58,7 +62,6 @@ namespace Cat
                         catManager.aiState = AIStates.Walk;
                         detectionTimer = detectionTimerMax;
                     }
-
                 }
             }
             if (!raycasting)
@@ -67,15 +70,13 @@ namespace Cat
             }
         }
 
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag("Player"))
-            {
-                GM.RespawnPlayer();
-            }
-
-            
-        }
+        //private void OnTriggerEnter(Collider other)
+        //{
+        //    if (other.CompareTag("Player"))
+        //    {
+        //        GM.RespawnPlayer();
+        //        catManager.RestartPath();
+        //    }           
+        //}
     }
 }

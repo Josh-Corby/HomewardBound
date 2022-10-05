@@ -88,7 +88,7 @@ public class SlingShot : GameBehaviour<SlingShot>
         if (bulletValue > (bullets.Length - 1)) bulletValue = 0;
 
         currentBullet = bullets[bulletValue];
-        Debug.Log(currentBullet.name);
+        //Debug.Log(currentBullet.name);
         UI.ChangeAmmoTypeText();
         
     }

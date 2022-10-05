@@ -114,6 +114,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 HandleMovement();
                 break;
             case HookshotStates.HookshotFlyingPlayer:
+                EndCoyoteTimer();
                 HandleHookshotMovement();
                 break;
             case HookshotStates.HookshotPullingObject:
@@ -211,6 +212,10 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private void ResetCoyoteTimer()
     {
         coyoteTimer = coyoteTime;
+    }
+    private void EndCoyoteTimer()
+    {
+        coyoteTimer = 0f;
     }
     private void CoyoteTimer()
     {

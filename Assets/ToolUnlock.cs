@@ -8,7 +8,7 @@ enum Pickups {
     Pickaxe,
     Builder,
     Slingshot,
-    Grapple,
+    GrappleHook,
     Glider
 }
 
@@ -26,7 +26,6 @@ public class ToolUnlock : GameBehaviour
     {
         outline = gameObject.GetComponent<Outline>();
         outline.enabled = false;  
-
     }
 
 
@@ -53,11 +52,9 @@ public class ToolUnlock : GameBehaviour
     {
         switch (pickups) 
         {
-
             case Pickups.Pickaxe:
                 GM.havePickaxe = !GM.havePickaxe;
                 break;
-
             case Pickups.Builder:
                 GM.haveBuilding = !GM.haveBuilding;
                 break;
@@ -65,12 +62,13 @@ public class ToolUnlock : GameBehaviour
             case Pickups.Slingshot:
                 GM.haveSlingshot = !GM.haveSlingshot;
                 break;
-            case Pickups.Grapple:
+            case Pickups.GrappleHook:
                 break;
             case Pickups.Glider:
                 GM.haveGlider = !GM.haveGlider;
                 break;
         }
+        UI.UpdateToolsUnlockedUI(pickups.ToString());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -79,8 +77,7 @@ public class ToolUnlock : GameBehaviour
         {
             canPickUp = true;
             outline.enabled = true;
-        }
-            
+        }          
     }
 
     private void OnTriggerExit(Collider other)
@@ -89,7 +86,6 @@ public class ToolUnlock : GameBehaviour
         {
             canPickUp = false;
             outline.enabled = false;
-        }
-            
+        }           
     }
 }

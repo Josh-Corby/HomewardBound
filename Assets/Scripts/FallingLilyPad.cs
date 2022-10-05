@@ -63,23 +63,20 @@ public class FallingLilyPad : GameBehaviour
 
     private void ResetLilyPad()
     {
-
         if (!hasRespawned)
         {
-            Debug.Log("Lilypad reset");
+            //Debug.Log("Lilypad reset");
             lilyPadObject.SetActive(true);
             isFalling = false;
             fallTimer = fallTime;
             isRespawning = false;
             hasRespawned = true;
-
-        }
-        
+        }       
     }
 
     private void LilyPadFalling()
     {
-        Debug.Log("lily pad falling");
+        //Debug.Log("lily pad falling");
         fallTimer -= Time.deltaTime;
         if (fallTimer <= 0)
         {
