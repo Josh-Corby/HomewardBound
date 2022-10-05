@@ -12,13 +12,22 @@ namespace Cat
         public bool raycasting;
         public CatManager catManager;
 
-        public float detectionTimer;
-        private readonly float detectionTimerMax = 2f;
+        private float detectionTimer;
+        [SerializeField]
+        private float detectionTimerMax;
         private float detectionRange;
+
+        static readonly string playerLayerMaskName = "Player";
+        static readonly string tallGrassLayerMaskName = "TallGrass";
 
         private void Awake()
         {
+            mask = LayerMask.GetMask(playerLayerMaskName);
+
             detectionRange = catManager.GetComponent<SphereCollider>().radius;
+
+            PlayerTrigger.OnPlayerStealth += AddTallGrassLayer;
+            PlayerTrigger.OnPlayerUnstealth += RemoveTallGrassLayer;
         }
 
         private void Start()
@@ -70,6 +79,20 @@ namespace Cat
         {
             raycasting = false;
             detectionTimer = detectionTimerMax;
+        }
+
+        public void AddTallGrassLayer()
+        {
+            Debug.Log("Grass is being detected");
+            mask |= (1 << LayerMask.NameToLayer(tallGrassLayerMaskName));
+            //mask += LayerMask.NameToLayer(tallGrassLayerMaskName);
+        }
+
+        public void RemoveTallGrassLayer()
+        {
+            Debug.Log("Grass is no longer being detected");
+            mask &= ~(1 << LayerMask.NameToLayer(tallGrassLayerMaskName));
+            //mask -= LayerMask.NameToLayer(tallGrassLayerMaskName);
         }
 
         private void OnTriggerEnter(Collider other)

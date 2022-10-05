@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9205328142677424756}
   - component: {fileID: 9205328142677424755}
-  m_Layer: 6
+  m_Layer: 12
   m_Name: Grass_HideZone
-  m_TagString: Untagged
+  m_TagString: TallGrass
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43,8 +43,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 9.731598, y: 4.8109283, z: 10.240234}
-  m_Center: {x: 0.38230896, y: -1.9054642, z: -1.7081299}
+  m_Size: {x: 10.692566, y: 8.279249, z: 10.69257}
+  m_Center: {x: 0.5539856, y: -0.17130375, z: -1.927702}
 --- !u!1 &9205328143045781674
 GameObject:
   m_ObjectHideFlags: 0
@@ -54,9 +54,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9205328143045781673}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: TallGrass
-  m_TagString: Untagged
+  m_TagString: TallGrass
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -155,6 +155,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GrassPlane
+      objectReference: {fileID: 0}
+    - target: {fileID: 7996612775225966379, guid: 00d4731db203334428ba31517980d80f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7996612775225966379, guid: 00d4731db203334428ba31517980d80f,
+        type: 3}
+      propertyPath: m_TagString
+      value: TallGrass
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00d4731db203334428ba31517980d80f, type: 3}

@@ -27,11 +27,16 @@ namespace Cat
         public GameObject player;
         private bool resuming;
 
-
         private int rotationX;
         private int rotationZ;
         private readonly float rotationSpeed = 1f;
-  
+
+
+
+
+
+
+
         private void Start()
         {
             agent = GetComponent<NavMeshAgent>();
@@ -144,6 +149,9 @@ namespace Cat
         {
             agent.SetDestination(distraction.position);
         }
+
+ 
+
 
         private void OnTriggerEnter(Collider other)
         {
