@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1359014907259081345}
   - component: {fileID: 1359014907259081347}
   - component: {fileID: 9205362293074027792}
-  m_Layer: 6
+  m_Layer: 1
   m_Name: HawkDetection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,10 +47,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44daa5b1354de68439bc627ff9c6884c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hawkBody: {fileID: 0}
+  hawkBody: {fileID: 1496672790090273679}
   detectionCircle: {fileID: 1359014908895536549}
-  minScale: {x: 1, y: 1, z: 1}
-  maxScale: {x: 3, y: 3, z: 3}
+  isGrowing: 0
+  minScale: {x: 3, y: 3, z: 3}
+  maxScale: {x: 5, y: 5, z: 5}
+  timer: 0
+  mask:
+    serializedVersion: 2
+    m_Bits: 192
 --- !u!54 &1359014907259081347
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -78,7 +83,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10, y: 10, z: 10}
+  m_Size: {x: 100, y: 40, z: 100}
   m_Center: {x: 0, y: 0.09, z: 0}
 --- !u!1 &1359014908895536549
 GameObject:
@@ -93,7 +98,7 @@ GameObject:
   - component: {fileID: 1359014908895536602}
   - component: {fileID: 1359014908895536603}
   - component: {fileID: 1359014908895536600}
-  m_Layer: 6
+  m_Layer: 1
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +179,7 @@ MeshCollider:
   m_GameObject: {fileID: 1359014908895536549}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -207,7 +212,7 @@ GameObject:
   - component: {fileID: 5066969269393621082}
   - component: {fileID: 6874967091738199735}
   - component: {fileID: 6665087682934012906}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: HawkBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}

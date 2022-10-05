@@ -53,9 +53,14 @@ public class SlingShot : GameBehaviour<SlingShot>
 
     private void Update()
     {
-        if (OM.outfit == Outfits.Slingshot)        
+        if (OM.haveSlingshot)        
         {
-            if(!UI.buildPanelStatus)
+            if (/*UI.buildPanelStatus ||*/ UI.radialMenuStatus || BM.isBuilding || UI.paused == true)
+            {
+                return;
+            }
+
+            if(/*!UI.buildPanelStatus ||*/ !UI.radialMenuStatus)
             {
                 MyInput();
 
@@ -83,7 +88,7 @@ public class SlingShot : GameBehaviour<SlingShot>
         if (bulletValue > (bullets.Length - 1)) bulletValue = 0;
 
         currentBullet = bullets[bulletValue];
-        Debug.Log(currentBullet.name);
+        //Debug.Log(currentBullet.name);
         UI.ChangeAmmoTypeText();
         
     }

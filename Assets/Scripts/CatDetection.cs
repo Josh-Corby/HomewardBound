@@ -12,8 +12,23 @@ namespace Cat
         public bool raycasting;
         public CatManager catManager;
 
-        public float detectionTimer;
-        private float detectionTimerMax = 2f;
+        private float detectionTimer;
+        [SerializeField]
+        private float detectionTimerMax;
+        private float detectionRange;
+
+        static readonly string playerLayerMaskName = "Player";
+        static readonly string tallGrassLayerMaskName = "TallGrass";
+
+        private void Awake()
+        {
+            mask = LayerMask.GetMask(playerLayerMaskName);
+
+            detectionRange = catManager.GetComponent<SphereCollider>().radius;
+
+            PlayerTrigger.OnPlayerStealth += AddTallGrassLayer;
+            PlayerTrigger.OnPlayerUnstealth += RemoveTallGrassLayer;
+        }
 
         private void Start()
         {
@@ -22,16 +37,12 @@ namespace Cat
 
         private void Update()
         {
-
-
             detectionTimer = Mathf.Clamp(detectionTimer, 0, detectionTimerMax);
 
             if (raycasting)
             {
-                transform.LookAt(player.transform);
-                //Ray catRay = new Ray(transform.position, player.transform.position);
-
-                if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 15f, mask))
+                catManager.aiState = AIStates.Detecting;
+                if (Physics.Raycast(transform.position, (player.transform.position - transform.position), out RaycastHit hit, detectionRange, mask))
                 {
                     if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
                     {
@@ -39,10 +50,8 @@ namespace Cat
                         {
                             return;
                         }
-
                         if (detectionTimer >= 0)
                         {
-                            catManager.aiState = AIStates.Detecting;
                             Debug.DrawLine(transform.position, hit.point, Color.green);
                             detectionTimer -= Time.deltaTime;
                         }
@@ -58,7 +67,6 @@ namespace Cat
                         catManager.aiState = AIStates.Walk;
                         detectionTimer = detectionTimerMax;
                     }
-
                 }
             }
             if (!raycasting)
@@ -67,15 +75,34 @@ namespace Cat
             }
         }
 
+        private void ResetCatDetection()
+        {
+            raycasting = false;
+            detectionTimer = detectionTimerMax;
+        }
+
+        public void AddTallGrassLayer()
+        {
+            Debug.Log("Grass is being detected");
+            mask |= (1 << LayerMask.NameToLayer(tallGrassLayerMaskName));
+            //mask += LayerMask.NameToLayer(tallGrassLayerMaskName);
+        }
+
+        public void RemoveTallGrassLayer()
+        {
+            Debug.Log("Grass is no longer being detected");
+            mask &= ~(1 << LayerMask.NameToLayer(tallGrassLayerMaskName));
+            //mask -= LayerMask.NameToLayer(tallGrassLayerMaskName);
+        }
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
             {
+                ResetCatDetection();
                 GM.RespawnPlayer();
+                catManager.RestartPath();
             }
-
-            
         }
     }
 }

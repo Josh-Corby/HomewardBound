@@ -13,7 +13,7 @@ public class HawkDetection : GameBehaviour
     float lerpTime = 0.3f;
 
     public float timer;
-    readonly float maxTimer = 4f;
+    readonly float maxTimer = 8f;
     public LayerMask mask;
 
     private void Start()
@@ -57,6 +57,7 @@ public class HawkDetection : GameBehaviour
         if (other.CompareTag("Player"))
         {
             rayCasting = true;
+            Debug.Log("israycasting");
             //isGrowing = true;
         }
         
@@ -71,21 +72,30 @@ public class HawkDetection : GameBehaviour
 
             if (rayCasting)
             {
-                if (Physics.Raycast(hawkRay, out hit, 100, mask))
+                if (Physics.Raycast(hawkRay, out hit, 200, mask))
                 {
                     if(hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
                     {
                         detectionCircle.GetComponent<MeshRenderer>().enabled = true;
                         Debug.DrawLine(hawkRay.origin, hit.point, Color.red);
-                        detectionCircle.transform.position = new Vector3(other.transform.position.x, TPM.groundCheck.transform.position.y -0.1f, other.transform.position.z);
+                        detectionCircle.transform.position = new Vector3(other.transform.position.x, TPM.groundCheck.transform.position.y -0.01f, other.transform.position.z);
                         isGrowing = true;
                     }
+
                     else
                     {
                         detectionCircle.GetComponent<MeshRenderer>().enabled = false;
                         Debug.DrawLine(hawkRay.origin, hawkRay.origin * 100, Color.green);
                         isGrowing = false;
                     }
+
+
+                    //if (hit.transform.gameObject.layer != LayerMask.NameToLayer("Player") && hit.collider.isTrigger)
+                    //{
+                    //    detectionCircle.GetComponent<MeshRenderer>().enabled = false;
+                    //    Debug.DrawLine(hawkRay.origin, hawkRay.origin * 100, Color.green);
+                    //    isGrowing = false;
+                    //}
                 }
                 
             }

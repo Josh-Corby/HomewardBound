@@ -2,10 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum BulletTypes
+{
+    Basic,
+    BerryBomb
+}
 public class Bullet : MonoBehaviour
 {
     private float bulletTimerMax, bulletTimer;
     Rigidbody rb;
+
 
     private void Start()
     {
@@ -29,7 +35,8 @@ public class Bullet : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        StartCoroutine(DestroyBullet());
+        Destroy(gameObject);
+        //StartCoroutine(DestroyBullet());
     }
 
     IEnumerator DestroyBullet()

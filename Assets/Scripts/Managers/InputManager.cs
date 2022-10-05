@@ -6,6 +6,7 @@ public class InputManager : GameBehaviour<InputManager>
 {
     PlayerControls playerControls;
 
+    [Header("Definitions of all inputs and what type they are")]
     public Vector2 movementInput, cameraInput;
     public float cameraInputX, cameraInputY;
     public float moveAmount;
@@ -33,6 +34,9 @@ public class InputManager : GameBehaviour<InputManager>
     //    }
     //}
 
+        /// <summary>
+        /// Define all inputs and how the player performs them
+        /// </summary>
     private void OnEnable()
     {
         if (playerControls == null)
@@ -72,11 +76,16 @@ public class InputManager : GameBehaviour<InputManager>
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    /// <summary>
+    /// Disable Player Inputs
+    /// </summary>
     private void OnDisable()
     {
         playerControls.Disable();
     }
-
+    /// <summary>
+    /// Handle all movement related inputs
+    /// </summary>
     public void HandleAllInputs()
     {
         HandleMovementInput();
@@ -84,6 +93,9 @@ public class InputManager : GameBehaviour<InputManager>
         HandleJumpingInput();
     }
 
+    /// <summary>
+    /// Handle player movement inputs
+    /// </summary>
     private void HandleMovementInput()
     {
         verticalInput = movementInput.y;
@@ -96,6 +108,9 @@ public class InputManager : GameBehaviour<InputManager>
         //AM.UpdateAnimatorValues(0, moveAmount, PL.isSprinting);
     }
 
+    /// <summary>
+    /// Handle sprint input
+    /// </summary>
     private void HandleSprintingInput()
     {
         if (sprint_Input && moveAmount > 0.5f)
@@ -108,6 +123,9 @@ public class InputManager : GameBehaviour<InputManager>
         }
     }
 
+    /// <summary>
+    /// Handle jump input
+    /// </summary>
     private void HandleJumpingInput()
     {
         if (jump_Input)

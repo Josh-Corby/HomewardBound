@@ -20,6 +20,13 @@ TagManager:
   - Rock
   - BreakableWall
   - BerryBomb
+  - Non-Grappleable-Surface
+  - Bullet
+  - Hawk
+  - Grappleable-Surface
+  - Lilypad
+  - FallingLilyPad
+  - MinableObject
   layers:
   - Default
   - TransparentFX
@@ -33,7 +40,7 @@ TagManager:
   - Ladder
   - Projectiles
   - Non-Grappleable-Wall
-  - 
+  - TallGrass
   - 
   - 
   - 

@@ -1,36 +1,32 @@
 using UnityEngine;
+using System;
 
 public class PlayerManager : GameBehaviour<PlayerManager>
 {
     CameraManager cameraManager;
-    //Animator animator;
 
     public bool isInteracting;
     public bool isClimbing;
 
+    public bool playerIsStealthed;
+
     private void Awake()
     {
+        PlayerTrigger.OnPlayerStealth += PlayerStealth;
+        PlayerTrigger.OnPlayerUnstealth += PlayerUnstealth;
+
         cameraManager = FindObjectOfType<CameraManager>();
-        //animator = GetComponent<Animator>();
         isClimbing = false;
     }
 
-    //private void Update()
-    //{
-    //    IM.HandleAllInputs();
-    //}
-
-    private void FixedUpdate()
+    private void PlayerStealth()
     {
-        //PL.HandleAllMovement();
+        playerIsStealthed = true;
+        Debug.Log(playerIsStealthed);
     }
-
-    private void LateUpdate()
+    private void PlayerUnstealth()
     {
-        //cameraManager.HandleAllCameraMovement();
-
-        //isInteracting = animator.GetBool("isInteracting");
-        //PL.isJumping = animator.GetBool("isJumping");
-        //animator.SetBool("isGrounded", PL.isGrounded);
+        playerIsStealthed = false;
+        Debug.Log(playerIsStealthed);
     }
 }

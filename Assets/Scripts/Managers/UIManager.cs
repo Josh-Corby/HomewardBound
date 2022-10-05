@@ -27,13 +27,17 @@ public class UIManager : GameBehaviour<UIManager>
     public TMP_Text currentOutfit;
     public TMP_Text currentAmmoType;
 
-
     [Header("Control Text")]
     public TMP_Text outfitControlText1;
     public TMP_Text outfitControlText2;
     public TMP_Text outfitControlText3;
     public TMP_Text outfitControlText4;
 
+    [Header("Radial Menu Text")]
+    public TMP_Text minerText;
+    public TMP_Text ladderText;
+    public TMP_Text bridgeText;
+    public TMP_Text utilityText;
 
     [Header("Panels")]
     public GameObject gameUI;
@@ -42,46 +46,54 @@ public class UIManager : GameBehaviour<UIManager>
     public GameObject RadialMenuPanel;
     public GameObject pausePanel;
     public GameObject CurrentPanel;
-    
+    public GameObject[] BuildPanels;
+    [SerializeField]
+    private GameObject currentBuildPanel;
 
+    [Header("Bools")]
     public bool buildPanelStatus;
     public bool radialMenuStatus;
     public bool paused;
 
-
-    public GameObject[] BuildPanels;
-
-    [SerializeField]
-    private GameObject currentBuildPanel;
-    public Button buildPickaxeButton;
+    [Header("Buttons")]
+    public Button pickaxeButton;
     public Button buildLadderButton;
     public Button buildBridgeButton;
-    public Button buildSlingshotButton;
+    //public Button buildSlingshotButton;
+    public Button utilityButton;
     public Button buildAmmoButton;
-    public Button buildGliderButton;
-    public Button buildGrappleHookButton;
+    //public Button buildGliderButton;
+    //public Button buildGrappleHookButton;
 
-    
+
     public float timeScale;
 
     private void Start()
     {
+        // Set UI values for start of game
         currentBuildPanel = null;
-        UpdateMaterialsCollected();
-        gameUI.SetActive(true);
-        buildPanelStatus = false;
-        UpdateCanBuildText(false);
-        buildPanel.SetActive(false);
-        RadialMenuPanel.SetActive(false);
         CurrentPanel = null;
-        currentBuildPanel = BuildPanels[0];
 
         gameObject.SetActive(true);
+        gameUI.SetActive(true);
 
-        paused = false;
+        buildPanelStatus = false;    
+        buildPanel.SetActive(false);
+        RadialMenuPanel.SetActive(false);
         pausePanel.SetActive(false);
+        paused = false;
+
+        minerText.text = "";
+        ladderText.text = "";
+        bridgeText.text = "";
+        utilityText.text = "";
+
+
+        currentBuildPanel = BuildPanels[0];
         Time.timeScale = 1;
 
+        UpdateCanBuildText(false);
+        UpdateMaterialsCollected();
         UpdateControlText();
 
     }
@@ -92,7 +104,7 @@ public class UIManager : GameBehaviour<UIManager>
 
         fallTimer.text = "Fall timer: " +  TPM.fallTimer.ToString("F2");
 
-        currentOutfit.text = OM.outfit.ToString();
+        //currentOutfit.text = OM.outfit.ToString();
 
         Inputs();
         
@@ -100,6 +112,29 @@ public class UIManager : GameBehaviour<UIManager>
 
     #region Text Updaters
 
+    public void UpdateToolsUnlockedUI(string tool)
+    {
+        if(tool == "Pickaxe")
+        {
+            minerText.text = "Pickaxe";
+        }
+
+        if(tool == "Builder")
+        {
+            ladderText.text = "Ladder";
+            bridgeText.text = "Bridge";
+        }
+
+        if(tool == "GrappleHook" || tool == "Glider")
+        {
+            utilityText.text = "Utility";
+        }
+
+    }
+
+    /// <summary>
+    /// Update UI of materials player has collected
+    /// </summary>
     public void UpdateMaterialsCollected()
     {
         UpdateRocksCollected();
@@ -107,26 +142,43 @@ public class UIManager : GameBehaviour<UIManager>
         UpdateMushroomsCollected();
         UpdatePebblesCollected();
     }
+
+    /// <summary>
+    /// Update UI of how many rocks the player has collected
+    /// </summary>
     public void UpdateRocksCollected()
     {
         smallRocksCollected.text = "Rocks Collected: " + GM.rocksCollected.ToString();
     }
 
+    /// <summary>
+    /// Update the UI of how many sticks the player has collected
+    /// </summary>
     public void UpdateSticksCollected()
     {
         sticksCollected.text = "Sticks Collected: " + GM.sticksCollected.ToString();
     }
 
+    /// <summary>
+    /// Update the UI of how many mushrooms the player has collected
+    /// </summary>
     public void UpdateMushroomsCollected()
     {
         mushroomsCollected.text = "Mushrooms Collected: " + GM.mushroomsCollected.ToString();
     }
 
+    /// <summary>
+    /// Update the UI of how many Pebbles the player has collected
+    /// </summary>
     public void UpdatePebblesCollected()
     {
         pebblesCollected.text = "Pebbles Collected: " + GM.pebblesCollected.ToString();
     }
 
+    /// <summary>
+    /// Update UI prompt for when the player can build
+    /// </summary>
+    /// <param name="canBuild">The bool that defines if the player can build </param>
     public void UpdateCanBuildText(bool canBuild)
     {
         if (!canBuild)
@@ -139,11 +191,18 @@ public class UIManager : GameBehaviour<UIManager>
         }
     }
 
-    public void UpdateCanBuildText(string text)
+    /// <summary>
+    /// Tell the player if they can build, if not, tell the player what materials the player doesn't have enough of
+    /// </summary>
+    /// <param name="text">The string that defines the text to be displayed</param>
+    public void UpdateBuildStatus(string text)
     {
         canBuild.text = text;
     }
 
+    /// <summary>
+    /// Reset the text for what controls the player has available to them
+    /// </summary>
     private void ResetControlText()
     {
         outfitControlText1.text = "";
@@ -152,6 +211,9 @@ public class UIManager : GameBehaviour<UIManager>
         outfitControlText4.text = "";
     }
 
+    /// <summary>
+    /// Update the text for what controls the player has avialable ot them according to what outfit the player currently is wearing
+    /// </summary>
     public void UpdateControlText()
     {
         ResetControlText();
@@ -185,62 +247,33 @@ public class UIManager : GameBehaviour<UIManager>
     #region Button Updaters
 
 
-
+    /// <summary>
+    /// Check if UI buttons are clickable by running material checks
+    /// </summary>
     public void IsButtonClickable()
     {
-        /*
-        if (!GM.havePickaxe)
-        {
-            if (BM.PickaxeCheck())
-            {
-                buildPickaxeButton.interactable = true;
-            }
-        }
-        else
-            buildPickaxeButton.interactable = false;
+        pickaxeButton.interactable = GM.havePickaxe;
 
-        if (!GM.haveSlingshot)
-        {
-            if (BM.SlingshotCheck())
-            {
-                buildSlingshotButton.interactable = true;
-            }
-        }
-        else
-            buildSlingshotButton.interactable = false;
+        buildLadderButton.interactable = BM.LadderCheck() && GM.haveBuilding;
+        buildBridgeButton.interactable = BM.BridgeCheck() && GM.haveBuilding;
 
-        */
-        buildLadderButton.interactable = BM.LadderCheck();
-        buildBridgeButton.interactable = BM.BridgeCheck();
-        
-        /*
-        if (!GM.haveGrappleHook)
-        {
-            if (BM.GrappleHookCheck())
-            {
-                buildGrappleHookButton.interactable = true;
-            }
-        }
-        else
-            buildGrappleHookButton.interactable = false;
+        if (GM.haveGlider || GM.haveGrappleHook)
+            utilityButton.interactable = true;
 
-        if (!GM.haveGlider)
-        {
-            if (BM.GliderCheck())
-            {
-                buildGliderButton.interactable = true;
-            }
-        }
-        else
-            buildGliderButton.interactable = false;
-        */
+        if (!GM.haveGlider && !GM.haveGrappleHook)
+            utilityButton.interactable = false;
+
     }
 
 
     #endregion
 
+    /// <summary>
+    /// Manage UI inputs
+    /// </summary>
     public void Inputs()
     {
+        //Pause menu input
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Pause();
@@ -249,20 +282,22 @@ public class UIManager : GameBehaviour<UIManager>
         if (paused)
             return;
 
-        if (IM.buildMenu_Input)
-        {
-            if (menu != Menus.None)
-            {
-                if(menu != Menus.Build)
-                {
-                    {
-                        IM.buildMenu_Input = false;
-                        return;
-                    }
-                }
-            }   
-            menu = Menus.Build;
-        }
+        //if (IM.buildMenu_Input)
+        //{
+        //    if (menu != Menus.None)
+        //    {
+        //        if(menu != Menus.Build)
+        //        {
+        //            {
+        //                IM.buildMenu_Input = false;
+        //                return;
+        //            }
+        //        }
+        //    }   
+        //    menu = Menus.Build;
+        //}
+
+        //Radial menu input
         if (Input.GetKey(KeyCode.Tab))
         {
             if (menu != Menus.None)
@@ -276,10 +311,14 @@ public class UIManager : GameBehaviour<UIManager>
             menu = Menus.Radial;
         }
 
-        ToggleRadialMenu();
+        ToggleRadialMenu(radialMenuStatus);
         ToggleMenus();
 
     }
+
+    /// <summary>
+    /// Toggle UI depending on enum case
+    /// </summary>
     public void ToggleMenus()
     {
         switch (menu)
@@ -320,6 +359,10 @@ public class UIManager : GameBehaviour<UIManager>
         }
     }
 
+    /// <summary>
+    /// Change which UI panel will be activated when this function is called
+    /// </summary>
+    /// <param name="menuToChangeTo">Panel to change to</param>
     private void ChangeMenu(GameObject menuToChangeTo)
     {
         if (menuToChangeTo == null)
@@ -365,7 +408,7 @@ public class UIManager : GameBehaviour<UIManager>
         }
             
 
-        IsButtonClickable();
+        
         BuildMenuToggle();
 
         
@@ -400,20 +443,31 @@ public class UIManager : GameBehaviour<UIManager>
     {
         objectToToggle.SetActive(!objectToToggle);
     }
+
+    /// <summary>
+    /// Change the UI of current bullet type to the current bullet type that is active
+    /// </summary>
     public void ChangeAmmoTypeText()
     {
-
         currentAmmoType.text = SS.currentBullet.name.ToString();
     }
 
-    private void ToggleRadialMenu() 
+    /// <summary>
+    /// Change the active state of the radial menu depending on the bool passed in
+    /// </summary>
+    /// <param name="status"> bool that defines Radial menu active state</param>
+    private void ToggleRadialMenu(bool status) 
     {
-        RadialMenuPanel.SetActive(radialMenuStatus);
+        RadialMenuPanel.SetActive(status);
+        IsButtonClickable();
     }
 
+    /// <summary>
+    /// Pause the game and active the pause panel, manage cursor states
+    /// </summary>
     public void Pause()
     {
-        Debug.Log("Paused");
+        //Debug.Log("Paused");
         paused = !paused;
         Time.timeScale = paused ? 0 : 1;
         pausePanel.SetActive(paused);
