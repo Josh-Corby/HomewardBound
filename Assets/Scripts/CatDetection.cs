@@ -32,12 +32,8 @@ namespace Cat
 
             if (raycasting)
             {
-                catManager.LookAtPlayer();
                 catManager.aiState = AIStates.Detecting;
-                //transform.LookAt(player.transform);
-                //Ray catRay = new Ray(transform.position, player.transform.position);
-
-                if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, detectionRange, mask))
+                if (Physics.Raycast(transform.position, (player.transform.position - transform.position), out RaycastHit hit, detectionRange, mask))
                 {
                     if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
                     {
@@ -70,13 +66,20 @@ namespace Cat
             }
         }
 
-        //private void OnTriggerEnter(Collider other)
-        //{
-        //    if (other.CompareTag("Player"))
-        //    {
-        //        GM.RespawnPlayer();
-        //        catManager.RestartPath();
-        //    }           
-        //}
+        private void ResetCatDetection()
+        {
+            raycasting = false;
+            detectionTimer = detectionTimerMax;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                ResetCatDetection();
+                GM.RespawnPlayer();
+                catManager.RestartPath();
+            }
+        }
     }
 }

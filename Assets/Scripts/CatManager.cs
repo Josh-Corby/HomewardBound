@@ -73,6 +73,9 @@ namespace Cat
 
         public void RestartPath()
         {
+            transform.position = points[0].position;
+            transform.LookAt(points[1].position);
+
             destinationIndex = 0;
             aiState = AIStates.Walk;
             
@@ -107,15 +110,14 @@ namespace Cat
                 case AIStates.Detecting:
                     {
                         agent.SetDestination(transform.position);
-                        //agent.ResetPath();
                         resuming = true;
                         break;
                     }
                 case AIStates.Aggro:
                     {
                         agent.SetDestination(player.transform.position);
+                        LookAtPlayer();
                         agent.speed = 15;
-                        //transform.position =  Vector3.MoveTowards(transform.position, player.transform.position, moveSpeed * Time.deltaTime);
                         break;
                     }
                 case AIStates.Distracted:
@@ -158,7 +160,6 @@ namespace Cat
             }
         }
 
-
         private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag("Player"))
@@ -176,3 +177,4 @@ namespace Cat
         }
     }
 }
+
