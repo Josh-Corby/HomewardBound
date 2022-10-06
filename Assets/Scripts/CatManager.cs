@@ -31,12 +31,6 @@ namespace Cat
         private int rotationZ;
         private readonly float rotationSpeed = 1f;
 
-
-
-
-
-
-
         private void Start()
         {
             agent = GetComponent<NavMeshAgent>();

@@ -29,6 +29,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     [Header("References")]
     public CharacterController controller;
     public Transform cam;
+    [SerializeField]
+    private Transform cameraLook;
     public Vector3 characterVelocityMomentum;
     [SerializeField]
     private Transform debugHitPointTransform;
@@ -79,6 +81,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
 
     private GameObject grappleHit;
+    private readonly float hookshotSpeedMin = 20f;
+    private readonly float hookshotSpeedMax = 40f;
     private void Awake()
     {
         hookshotState = HookshotStates.Normal;
@@ -115,7 +119,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 break;
             case HookshotStates.HookshotFlyingPlayer:
                 EndCoyoteTimer();
-                HandleHookshotMovement();
+                HandleHookshotPlayerMovement();
                 break;
             case HookshotStates.HookshotPullingObject:
 
@@ -127,8 +131,18 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     {
         grappleHook.transform.rotation = Camera.main.transform.rotation;
     }
+
+    private void LookFoward()
+    {
+        var lookPos = cam.position - cameraLook.position;
+        lookPos.y = 0;
+        var rotation = Quaternion.LookRotation(lookPos);
+        transform.rotation = rotation;
+    }
     private void HandleMovement()
     {
+        LookFoward();
+
         groundState = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) ? GroundStates.Grounded : GroundStates.Airborne;
 
         switch (groundState)
@@ -171,7 +185,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            //transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
@@ -324,21 +338,19 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         {
             hookshotState = HookshotStates.HookshotFlyingPlayer;
         }
-
-
-
     }
 
-    private void HandleHookshotMovement()
+    private void HandleHookshotPlayerMovement()
     {
+        //hookshot looks at position of target hit
         hookshotTransform.LookAt(hookshotPosition);
-
         Vector3 hookshotDir = (hookshotPosition - transform.position).normalized;
 
-        float hookshotSpeedMin = 20f;
-        float hookshotSpeedMax = 40f;
+        //the speed the hookshot pulls the player
         float hookshotSpeed = Mathf.Clamp(Vector3.Distance(transform.position, hookshotPosition), hookshotSpeedMin, hookshotSpeedMax);
         float hookshotSpeedMultiplier = 2f;
+
+        //move the player in direction of hookshot at hookshot speed
         controller.Move(hookshotDir * hookshotSpeed * hookshotSpeedMultiplier * Time.deltaTime);
 
         hookshotSize = Vector3.Distance(transform.position, hookshotPosition);
@@ -375,7 +387,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         /*
         * move lily towards player on the x,z
         */
-
     }
 
     public void StopHookshot()
