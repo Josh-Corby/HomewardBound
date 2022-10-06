@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Testing Mechanics.meta
 guid: 96fbafe857ee2454da50743454d74ee7
 folderAsset: yes
 DefaultImporter:
+========
+guid: 63fe4827c7000cc478764cf27b978990
+PrefabImporter:
+>>>>>>>> Josh:Assets/Prefabs/PlayerFollowCamera.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
