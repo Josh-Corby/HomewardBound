@@ -10,9 +10,6 @@ public class CameraTransform : GameBehaviour
 
     private const float _threshold = 0.01f;
 
-    public Vector2 turn;
-
-
     [Tooltip("For locking the camera position on all axis")]
     public bool LockCameraPosition = false;
 
@@ -43,26 +40,30 @@ public class CameraTransform : GameBehaviour
         if (UI.menu != Menus.None || UI.paused)
             return;
         transform.position = thirdPersonPlayer.transform.position + yOffset;
-        RotateCamera();
+        //RotateCamera();
     }
 
-    public void RotateCamera()
+    //public void RotateCamera()
+    //{
+    //    turn.x += Input.GetAxis("Mouse X");
+    //    turn.y += Input.GetAxis("Mouse Y");
+    //    transform.localRotation = Quaternion.Euler(-turn.y, turn.x, 0);
+    //}
+
+    private void LateUpdate()
     {
-        turn.x += Input.GetAxis("Mouse X");
-        turn.y += Input.GetAxis("Mouse Y");
-        transform.localRotation = Quaternion.Euler(-turn.y, turn.x, 0);
+        CameraRotation();
     }
-
     private void CameraRotation()
     {
         // if there is an input and camera position is not fixed
         if (IM.cameraInput.sqrMagnitude >= _threshold && !LockCameraPosition)
         {
             //Don't multiply mouse input by Time.deltaTime;
-            float deltaTimeMultiplier = 1f;
+            float deltaTimeMultiplier = 0.1f;
 
             _cinemachineTargetYaw += IM.cameraInput.x * deltaTimeMultiplier;
-            _cinemachineTargetPitch += IM.cameraInput.y * deltaTimeMultiplier;
+            _cinemachineTargetPitch += -IM.cameraInput.y * deltaTimeMultiplier;
         }
 
         // clamp our rotations so our values are limited 360 degrees
