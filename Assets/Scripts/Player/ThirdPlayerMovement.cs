@@ -29,6 +29,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     [Header("References")]
     public CharacterController controller;
     public Transform cam;
+    [SerializeField]
+    private Transform cameraLook;
     public Vector3 characterVelocityMomentum;
     [SerializeField]
     private Transform debugHitPointTransform;
@@ -129,8 +131,18 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     {
         grappleHook.transform.rotation = Camera.main.transform.rotation;
     }
+
+    private void LookFoward()
+    {
+        var lookPos = cam.position - cameraLook.position;
+        lookPos.y = 0;
+        var rotation = Quaternion.LookRotation(lookPos);
+        transform.rotation = rotation;
+    }
     private void HandleMovement()
     {
+        LookFoward();
+
         groundState = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) ? GroundStates.Grounded : GroundStates.Airborne;
 
         switch (groundState)
@@ -173,7 +185,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            //transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
