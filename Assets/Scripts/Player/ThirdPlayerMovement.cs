@@ -79,6 +79,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
 
     private GameObject grappleHit;
+    private readonly float hookshotSpeedMin = 20f;
+    private readonly float hookshotSpeedMax = 40f;
     private void Awake()
     {
         hookshotState = HookshotStates.Normal;
@@ -115,7 +117,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 break;
             case HookshotStates.HookshotFlyingPlayer:
                 EndCoyoteTimer();
-                HandleHookshotMovement();
+                HandleHookshotPlayerMovement();
                 break;
             case HookshotStates.HookshotPullingObject:
 
@@ -324,21 +326,19 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         {
             hookshotState = HookshotStates.HookshotFlyingPlayer;
         }
-
-
-
     }
 
-    private void HandleHookshotMovement()
+    private void HandleHookshotPlayerMovement()
     {
+        //hookshot looks at position of target hit
         hookshotTransform.LookAt(hookshotPosition);
-
         Vector3 hookshotDir = (hookshotPosition - transform.position).normalized;
 
-        float hookshotSpeedMin = 20f;
-        float hookshotSpeedMax = 40f;
+        //the speed the hookshot pulls the player
         float hookshotSpeed = Mathf.Clamp(Vector3.Distance(transform.position, hookshotPosition), hookshotSpeedMin, hookshotSpeedMax);
         float hookshotSpeedMultiplier = 2f;
+
+        //move the player in direction of hookshot at hookshot speed
         controller.Move(hookshotDir * hookshotSpeed * hookshotSpeedMultiplier * Time.deltaTime);
 
         hookshotSize = Vector3.Distance(transform.position, hookshotPosition);
@@ -375,7 +375,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         /*
         * move lily towards player on the x,z
         */
-
     }
 
     public void StopHookshot()
