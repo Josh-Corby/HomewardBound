@@ -192,7 +192,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thirdPersonPlayer: {fileID: 8710679983595202227}
-  turn: {x: 0, y: 0}
   LockCameraPosition: 0
   TopClamp: 70
   BottomClamp: -30
@@ -864,6 +863,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 8710679983595202224}
   cam: {fileID: 0}
+  cameraLook: {fileID: 0}
   characterVelocityMomentum: {x: 0, y: 0, z: 0}
   debugHitPointTransform: {fileID: 0}
   hookshotTransform: {fileID: 3830397746120076031}
