@@ -285,7 +285,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2971507131035547031}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.476, z: 1.767}
+  m_LocalPosition: {x: -0, y: 0.476, z: -2.72}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -863,7 +863,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 8710679983595202224}
   cam: {fileID: 0}
-  cameraLook: {fileID: 0}
+  cameraLook: {fileID: 3621660246582591613}
   characterVelocityMomentum: {x: 0, y: 0, z: 0}
   debugHitPointTransform: {fileID: 0}
   hookshotTransform: {fileID: 3830397746120076031}
