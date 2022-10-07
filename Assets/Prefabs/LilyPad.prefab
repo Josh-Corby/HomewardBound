@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 4757882782537134768}
   - component: {fileID: 3602664739455107535}
   - component: {fileID: 690931880}
-  m_Layer: 6
+  - component: {fileID: 172533994}
+  m_Layer: 13
   m_Name: LilyPad
   m_TagString: Lilypad
   m_Icon: {fileID: 0}
@@ -1563,7 +1564,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3848
+  m_VersionIndex: 3860
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1677,5 +1678,17 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 116
-  m_CollisionDetection: 0
+  m_Constraints: 126
+  m_CollisionDetection: 3
+--- !u!114 &172533994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3316724838207194833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bd2237c602d0a34fafd0dd459749cad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

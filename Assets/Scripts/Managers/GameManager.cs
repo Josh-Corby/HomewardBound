@@ -36,6 +36,11 @@ public class GameManager : GameBehaviour<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.R))
             RespawnPlayer();
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            haveGrappleHook = true;
+        }
     }
 
     /// <summary>

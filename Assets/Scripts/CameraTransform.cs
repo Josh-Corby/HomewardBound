@@ -52,7 +52,8 @@ public class CameraTransform : GameBehaviour
 
     private void LateUpdate()
     {
-        CameraRotation();
+        if(!UI.paused)
+            CameraRotation();
     }
     private void CameraRotation()
     {

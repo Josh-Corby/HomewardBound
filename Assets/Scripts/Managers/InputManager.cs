@@ -22,17 +22,7 @@ public class InputManager : GameBehaviour<InputManager>
     public bool lClick_Input;
     public bool rClick_Input;
 
-    //private void Update()
-    //{
-    //    if (mouseScrollY > 0)
-    //    {
-    //        Debug.Log("Scrolled up");
-    //    }
-    //    if(mouseScrollY < 0)
-    //    {
-    //        Debug.Log("Scrolled down");
-    //    }
-    //}
+
 
         /// <summary>
         /// Define all inputs and how the player performs them
@@ -86,11 +76,14 @@ public class InputManager : GameBehaviour<InputManager>
     /// <summary>
     /// Handle all movement related inputs
     /// </summary>
+    /// 
+
     public void HandleAllInputs()
     {
         HandleMovementInput();
         HandleSprintingInput();
         HandleJumpingInput();
+        HandleCameraInput();
     }
 
     /// <summary>
@@ -101,13 +94,17 @@ public class InputManager : GameBehaviour<InputManager>
         verticalInput = movementInput.y;
         horizontalInput = movementInput.x;
 
-        cameraInputX = cameraInput.x;
-        cameraInputY = cameraInput.y;
+        
 
         moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
         //AM.UpdateAnimatorValues(0, moveAmount, PL.isSprinting);
     }
 
+    private void HandleCameraInput()
+    {
+        cameraInputX = cameraInput.x;
+        cameraInputY = cameraInput.y;
+    }
     /// <summary>
     /// Handle sprint input
     /// </summary>

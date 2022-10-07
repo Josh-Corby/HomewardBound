@@ -28,7 +28,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 {
     [Header("References")]
     public CharacterController controller;
-    public Transform cam;
+    public Camera cam;
     [SerializeField]
     private Transform cameraLook;
     public Vector3 characterVelocityMomentum;
@@ -83,6 +83,11 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private GameObject grappleHit;
     private readonly float hookshotSpeedMin = 20f;
     private readonly float hookshotSpeedMax = 40f;
+
+    [SerializeField]
+    private GameObject GrapplePullObject;
+    private readonly float pullSpeedMin = 1;
+    private readonly float pullSpeedMax = 2;
     private void Awake()
     {
         hookshotState = HookshotStates.Normal;
@@ -122,7 +127,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 HandleHookshotPlayerMovement();
                 break;
             case HookshotStates.HookshotPullingObject:
-
+                PullLilypadTowardsPlayer();
+                HandleMovement();
                 break;
 
         }
@@ -134,7 +140,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     private void LookFoward()
     {
-        var lookPos = cam.position - cameraLook.position;
+        var lookPos = cam.transform.position - cameraLook.position;
         lookPos.y = 0;
         var rotation = Quaternion.LookRotation(lookPos);
         transform.rotation = rotation;
@@ -183,8 +189,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
         if (direction.magnitude >= 0.1f)
         {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.transform.eulerAngles.y;
+            //float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
             //transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
@@ -295,7 +301,22 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 }
                 if (IM.rClick_Input)
                 {
-                    if (Physics.Raycast(grapplePoint.transform.position, grapplePoint.transform.forward, out RaycastHit raycastHit, 100))
+                    //Find the exact hit position using a raycast
+                    Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //Just a ray through the middle of your current view
+                    RaycastHit hit;
+
+                    //check if ray hits something
+                    Vector3 targetPoint;
+                    if (Physics.Raycast(ray, out hit))
+                        targetPoint = hit.point;
+                    else
+                        targetPoint = ray.GetPoint(75); //Just a point far away from the player
+
+                    //Calculate direction from attackPoint to targetPoint
+                    Vector3 directionWithoutSpread = targetPoint - grapplePoint.transform.position;
+
+
+                    if (Physics.Raycast(grapplePoint.transform.position, directionWithoutSpread, out RaycastHit raycastHit, 100))
                     {
                         grappleHit = raycastHit.collider.gameObject;
                         Debug.Log(grappleHit.name);
@@ -330,8 +351,9 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
         if (grappleHit.CompareTag("Lilypad"))
         {
+            GrapplePullObject = grappleHit;
             hookshotState = HookshotStates.HookshotPullingObject;
-            LilyPadPull(grappleHit);
+                     
         }
 
         if (hookshotSize >= Vector3.Distance(transform.position, hookshotPosition))
@@ -379,15 +401,22 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         }
     }
 
-    private void LilyPadPull(GameObject lilyPad)
+    private void PullLilypadTowardsPlayer()
     {
-        Debug.Log("Pulling lilypad");
-        lilyPad.transform.position = Vector3.MoveTowards(lilyPad.transform.position, gameObject.transform.position, 1 * Time.deltaTime);
+
+        float hookshotSpeed = Mathf.Clamp(Vector3.Distance(transform.position, GrapplePullObject.transform.position), pullSpeedMin, pullSpeedMax);
+        float hookshotSpeedMultiplier = 0.1f;
+
+        Vector3 pullDestination = new Vector3 (gameObject.transform.position.x, GrapplePullObject.transform.position.y, gameObject.transform.position.z);
+        GrapplePullObject.transform.position = Vector3.MoveTowards(GrapplePullObject.transform.position, pullDestination, hookshotSpeed * hookshotSpeedMultiplier);
+
         //Move lily pad towards player
         /*
         * move lily towards player on the x,z
         */
     }
+
+
 
     public void StopHookshot()
     {
