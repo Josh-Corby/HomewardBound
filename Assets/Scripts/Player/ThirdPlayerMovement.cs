@@ -69,6 +69,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     [SerializeField]
     private float coyoteTimerOffset = 0.1f;
 
+    [SerializeField]
+    Vector3 moveDir;
 
     Vector3 velocity;
     private Vector3 hookshotPosition;
@@ -88,6 +90,9 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private GameObject GrapplePullObject;
     private readonly float pullSpeedMin = 1;
     private readonly float pullSpeedMax = 2;
+
+
+    public GameObject LilypadOffset;
     private void Awake()
     {
         hookshotState = HookshotStates.Normal;
@@ -110,14 +115,19 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         if (UI.buildPanelStatus || UI.radialMenuStatus || UI.menu == Menus.Paused)
             return;
 
-        switch (hookshotState)
+
+    }
+    private void LateUpdate()
+    {
+        switch(hookshotState)
         {
-            default:
             case HookshotStates.Normal:
                 HandleMovement();
                 StartGrapple();
 
+               
                 break;
+
             case HookshotStates.HookshotThrown:
                 HandleHookShotThrow();
                 HandleMovement();
@@ -126,16 +136,44 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 EndCoyoteTimer();
                 HandleHookshotPlayerMovement();
                 break;
+
             case HookshotStates.HookshotPullingObject:
                 PullLilypadTowardsPlayer();
                 HandleMovement();
                 break;
-
         }
-    }
-    private void LateUpdate()
-    {
+
         grappleHook.transform.rotation = Camera.main.transform.rotation;
+
+
+        moveDir = Vector3.zero;
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+
+        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+
+        if (direction.magnitude >= 0.1f)
+        {
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.transform.eulerAngles.y;
+            //float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            //transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+            moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+        }
+
+        if (LilypadOffset != null)
+        {
+            Vector3 translation = LilypadOffset.transform.position - transform.position;
+
+            controller.Move(translation + (moveDir.normalized * speed * Time.deltaTime));
+
+            LilypadOffset.transform.position = transform.position;
+        }
+
+        if (LilypadOffset == null)
+        {
+            controller.Move(moveDir.normalized * speed * Time.deltaTime);
+        }
     }
 
     private void LookFoward()
@@ -182,20 +220,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 break;
         }
 
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
 
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-
-        if (direction.magnitude >= 0.1f)
-        {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.transform.eulerAngles.y;
-            //float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            //transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            controller.Move(moveDir.normalized * speed * Time.deltaTime);
-        }
+    
 
 
 
@@ -410,10 +436,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         Vector3 pullDestination = new Vector3 (gameObject.transform.position.x, GrapplePullObject.transform.position.y, gameObject.transform.position.z);
         GrapplePullObject.transform.position = Vector3.MoveTowards(GrapplePullObject.transform.position, pullDestination, hookshotSpeed * hookshotSpeedMultiplier);
 
-        //Move lily pad towards player
-        /*
-        * move lily towards player on the x,z
-        */
     }
 
 
