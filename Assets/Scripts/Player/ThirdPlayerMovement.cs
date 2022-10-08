@@ -107,6 +107,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     void Update()
     {
+        LookFoward();
         if (OM.outfit == Outfits.Utility && groundState == GroundStates.Airborne)
         {
             DisableGrappleInput();
@@ -185,7 +186,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     }
     private void HandleMovement()
     {
-        LookFoward();
 
         groundState = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) ? GroundStates.Grounded : GroundStates.Airborne;
 
