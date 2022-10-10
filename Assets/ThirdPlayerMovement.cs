@@ -25,11 +25,18 @@ public class ThirdPlayerMovement : GameBehaviour
 
     public float glidingSpeed = 2f;
 
+    public GameObject playerGraphics;
+    public float playerRotateClamp = 1;
+    public float maxHorizontalRotation = 160;
+    private Quaternion playerRotate;
+
     Vector3 velocity;
 
     private void Start()
     {
         basicMovementScript = GetComponent<ThirdPlayerMovement>();
+
+        //playerRotate = transform.localRotation;
     }
 
     void Update()
@@ -43,6 +50,19 @@ public class ThirdPlayerMovement : GameBehaviour
 
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
+
+        if ((Input.GetKey(KeyCode.A)) && ((transform.rotation.eulerAngles.y < 50) || (transform.rotation.eulerAngles.y > 70))) 
+        {
+            GetComponent<Rigidbody>().angularVelocity = Vector3.left;
+        }
+        else if ((Input.GetKey(KeyCode.D)) && ((transform.rotation.eulerAngles.y < -50) || (transform.rotation.eulerAngles.y > -70)))
+        {
+            GetComponent<Rigidbody>().angularVelocity = Vector3.right;
+        }
+        else
+        {
+            GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
+        }
 
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
@@ -78,11 +98,17 @@ public class ThirdPlayerMovement : GameBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            Debug.Log("Sprinitng");
+            Debug.Log("Sprinting");
             basicMovementScript.speed += speedBoost;
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift))
             basicMovementScript.speed -= speedBoost;
-        
+
+        //playerRotate.z += Input.GetAxis("Horizontal") * playerRotateClamp * (-1);
+        //playerRotate.z += Input.GetAxis("Horizontal") * playerRotateClamp;
+
+        //playerRotate.z = Mathf.Clamp(playerRotate.z, playerRotate.x, maxHorizontalRotation);
+
+        //transform.localRotation = Quaternion.Euler(playerRotate.z, playerRotate.x, playerRotate.y);
     }
 }
