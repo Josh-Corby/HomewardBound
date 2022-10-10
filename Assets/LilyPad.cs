@@ -74,6 +74,7 @@ public class LilyPad : GameBehaviour
         if (!other.gameObject.CompareTag("Player"))
         {
             Debug.Log(other.gameObject.name);
+
             ResetLilyPad();
             return;         
         }
@@ -88,5 +89,6 @@ public class LilyPad : GameBehaviour
         TPM.StopHookshot();
         waitTime = waitTimeMax;
         MoveBackToStartPosition();
+        
     }
 }

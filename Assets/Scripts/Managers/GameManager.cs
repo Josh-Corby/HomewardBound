@@ -55,6 +55,7 @@ public class GameManager : GameBehaviour<GameManager>
         Player.GetComponent<CharacterController>().enabled = false;
         Player.transform.position = spawnPoint.transform.position;
         Player.transform.rotation = spawnPoint.transform.rotation;
+        TPM.LilypadOffset = null;
         Player.GetComponent<CharacterController>().enabled = true;
         //Debug.Log("Player Respawned");
         TPM.StopHookshot();

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-
 enum HookshotStates
 {
     Normal,
@@ -11,23 +10,19 @@ enum HookshotStates
     HookshotFlyingPlayer,
     HookshotPullingObject
 }
-
 enum MovementSpeeds
 {
     Walking,
     Sprinting
 }
-
 public enum GroundStates
 {
     Grounded,
     Airborne,
     Gliding
 }
-
 public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 {
-
     [Header("References")]
     public CharacterController controller;
     public Camera cam;
@@ -83,16 +78,17 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private MovementSpeeds moveSpeeds;
     public GroundStates groundState;
 
-
-    private GameObject grappleHit;
+    [SerializeField]
+    private GameObject grappleHitObject;
+    private Vector3 grappleHitObjectPosition;
     private readonly float hookshotSpeedMin = 20f;
     private readonly float hookshotSpeedMax = 40f;
 
-    [SerializeField]
-    private GameObject GrapplePullObject;
     private readonly float pullSpeedMin = 1;
     private readonly float pullSpeedMax = 2;
 
+    [SerializeField]
+    LayerMask mask;
 
     public GameObject LilypadOffset;
     private void Awake()
@@ -117,8 +113,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         }
         if (UI.buildPanelStatus || UI.radialMenuStatus || UI.menu == Menus.Paused)
             return;
-
-
     }
     private void LateUpdate()
     {
@@ -147,7 +141,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         }
 
         grappleHook.transform.rotation = Camera.main.transform.rotation;
-
 
         moveDir = Vector3.zero;
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -178,7 +171,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
         }
     }
-
     private void LookFoward()
     {
         var lookPos = cam.transform.position - cameraLook.position;
@@ -188,7 +180,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     }
     private void HandleMovement()
     {
-
         groundState = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) ? GroundStates.Grounded : GroundStates.Airborne;
 
         switch (groundState)
@@ -221,12 +212,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
                 break;
         }
-
-
-    
-
-
-
         if (Input.GetButtonDown("Jump") && coyoteTimer >= 0)
         {
             StartCoroutine(Jump());
@@ -256,7 +241,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         if (groundState == GroundStates.Airborne) return;
         HandleSprinting();
     }
-
     private void ResetCoyoteTimer()
     {
         coyoteTimer = coyoteTime;
@@ -273,7 +257,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             Jump();
         }
     }
-
     private IEnumerator Jump()
     {
         LilypadOffset = null;
@@ -282,8 +265,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         yield return new WaitForSeconds(coyoteTimerOffset);
         coyoteTimer = 0f;
     }
-
-
     private void HandleSprinting()
     {
         if (hookshotState == HookshotStates.HookshotThrown || groundState == GroundStates.Gliding)
@@ -336,7 +317,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
                     //check if ray hits something
                     Vector3 targetPoint;
-                    if (Physics.Raycast(ray, out hit))
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
                         targetPoint = hit.point;
                     else
                         targetPoint = ray.GetPoint(75); //Just a point far away from the player
@@ -344,12 +325,12 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                     //Calculate direction from attackPoint to targetPoint
                     Vector3 directionWithoutSpread = targetPoint - grapplePoint.transform.position;
 
-
                     if (Physics.Raycast(grapplePoint.transform.position, directionWithoutSpread, out RaycastHit raycastHit, 100))
                     {
-                        grappleHit = raycastHit.collider.gameObject;
-                        Debug.Log(grappleHit.name);
-                        if (grappleHit.CompareTag("Non-Grappleable-Surface"))
+                        grappleHitObject = raycastHit.collider.gameObject;
+                        grappleHitObjectPosition = grappleHitObject.transform.position;
+                        Debug.Log(grappleHitObject.name);
+                        if (grappleHitObject.CompareTag("Non-Grappleable-Surface"))
                         {
                             StopHookshot();
                             IM.rClick_Input = false;
@@ -377,12 +358,14 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         hookshotTransform.localScale = new Vector3(1, 1, hookshotSize);
 
 
-
-        if (grappleHit.CompareTag("Lilypad"))
+        if (grappleHitObject.CompareTag("Lilypad"))
         {
-            GrapplePullObject = grappleHit;
-            hookshotState = HookshotStates.HookshotPullingObject;
-                     
+            if(hookshotSize >= Vector3.Distance(transform.position,hookshotPosition))
+            {
+                grapplePoint.transform.parent = grappleHitObject.transform;
+                hookshotState = HookshotStates.HookshotPullingObject;
+                return;
+            }
         }
 
         if (hookshotSize >= Vector3.Distance(transform.position, hookshotPosition))
@@ -404,8 +387,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         //move the player in direction of hookshot at hookshot speed
         controller.Move(hookshotDir * hookshotSpeed * hookshotSpeedMultiplier * Time.deltaTime);
 
-        hookshotSize = Vector3.Distance(transform.position, hookshotPosition);
-        hookshotTransform.localScale = new Vector3(1, 1, hookshotSize);
+        ManageHookshotSize();
         float reachedHookshotPositionDistance = 2f;
         if (Vector3.Distance(transform.position, hookshotPosition) < reachedHookshotPositionDistance)
         {
@@ -433,25 +415,36 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private void PullLilypadTowardsPlayer()
     {
 
-        float hookshotSpeed = Mathf.Clamp(Vector3.Distance(transform.position, GrapplePullObject.transform.position), pullSpeedMin, pullSpeedMax);
+        float hookshotSpeed = Mathf.Clamp(Vector3.Distance(transform.position, grappleHitObjectPosition), pullSpeedMin, pullSpeedMax);
         float hookshotSpeedMultiplier = 0.1f;
 
-        Vector3 pullDestination = new Vector3 (gameObject.transform.position.x, GrapplePullObject.transform.position.y, gameObject.transform.position.z);
-        GrapplePullObject.transform.position = Vector3.MoveTowards(GrapplePullObject.transform.position, pullDestination, hookshotSpeed * hookshotSpeedMultiplier);
+        Vector3 pullDestination = new Vector3 (gameObject.transform.position.x, grappleHitObjectPosition.y, gameObject.transform.position.z);
+        grappleHitObjectPosition = Vector3.MoveTowards(grappleHitObjectPosition, pullDestination, hookshotSpeed * hookshotSpeedMultiplier);
+        ManageHookshotSize();
+    }
 
+    private void ManageHookshotSize()
+    {
+        hookshotSize = Vector3.Distance(transform.position,grappleHitObjectPosition);
+        hookshotTransform.localScale = new Vector3(1, 1, hookshotSize);
     }
 
 
+    private void ManageHookshotDirection()
+    {
+        
 
+    }
     public void StopHookshot()
     {
         hookshotState = HookshotStates.Normal;
         hookshotTransform.gameObject.SetActive(false);
+        grapplePoint.transform.parent = gameObject.transform;
+        grapplePoint.transform.position = transform.position;
     }
     #endregion
     private void DisableGrappleInput()
     {
         IM.rClick_Input = false;
     }
-
 }
