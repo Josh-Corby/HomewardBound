@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 
 enum HookshotStates
@@ -26,6 +27,7 @@ public enum GroundStates
 
 public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 {
+
     [Header("References")]
     public CharacterController controller;
     public Camera cam;
@@ -274,6 +276,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     private IEnumerator Jump()
     {
+        LilypadOffset = null;
         velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
 
         yield return new WaitForSeconds(coyoteTimerOffset);

@@ -76,7 +76,8 @@ public class LilyPad : GameBehaviour
             Debug.Log(other.gameObject.name);
             ResetLilyPad();
             return;         
-        }   
+        }
+
     }
 
 

@@ -285,7 +285,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2971507131035547031}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.28, z: 13.9}
+  m_LocalPosition: {x: -0, y: 0.28, z: 1.7}
   m_LocalScale: {x: 15.504913, y: 34.96311, z: 7.392649}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -304,8 +304,8 @@ GameObject:
   - component: {fileID: 7164813073689689954}
   - component: {fileID: 964678512}
   m_Layer: 7
-  m_Name: TriggerZone
-  m_TagString: Untagged
+  m_Name: PlayerTriggerZone
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -434,7 +434,7 @@ GameObject:
   - component: {fileID: 3198882151490835243}
   m_Layer: 2
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
