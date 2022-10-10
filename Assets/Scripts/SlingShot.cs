@@ -124,6 +124,7 @@ public class SlingShot : GameBehaviour<SlingShot>
             Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //Just a ray through the middle of your current view
             RaycastHit hit;
 
+            
             //check if ray hits something
             Vector3 targetPoint;
             if (Physics.Raycast(ray, out hit))

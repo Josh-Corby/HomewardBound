@@ -1598,7 +1598,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3878
+  m_VersionIndex: 3881
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1788,8 +1788,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 7.872374, y: 1.1973879, z: 7.9812546}
-  m_Center: {x: -0.007989165, y: 0.90868604, z: -0.16655493}
+  m_Size: {x: 7.872374, y: 1.4154413, z: 7.9812546}
+  m_Center: {x: -0.007989165, y: 1.0177127, z: -0.16655493}
 --- !u!114 &151754077
 MonoBehaviour:
   m_ObjectHideFlags: 0

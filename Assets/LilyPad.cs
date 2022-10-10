@@ -67,10 +67,10 @@ public class LilyPad : GameBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Lilypad"))
-        {
-            return;
-        }
+        //if (other.gameObject.CompareTag("Lilypad"))
+        //{
+        //    return;
+        //}
         if (!other.gameObject.CompareTag("Player"))
         {
             Debug.Log(other.gameObject.name);
