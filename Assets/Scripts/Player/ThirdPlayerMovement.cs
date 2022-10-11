@@ -80,7 +80,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     [SerializeField]
     private GameObject grappleHitObject;
-    private Vector3 grappleHitObjectPosition;
     private readonly float hookshotSpeedMin = 20f;
     private readonly float hookshotSpeedMax = 40f;
 
@@ -120,9 +119,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         {
             case HookshotStates.Normal:
                 HandleMovement();
-                StartGrapple();
-
-               
+                StartGrapple();      
                 break;
 
             case HookshotStates.HookshotThrown:
@@ -328,7 +325,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                     if (Physics.Raycast(grapplePoint.transform.position, directionWithoutSpread, out RaycastHit raycastHit, 100))
                     {
                         grappleHitObject = raycastHit.collider.gameObject;
-                        grappleHitObjectPosition = grappleHitObject.transform.position;
                         Debug.Log(grappleHitObject.name);
                         if (grappleHitObject.CompareTag("Non-Grappleable-Surface"))
                         {
@@ -415,17 +411,17 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private void PullLilypadTowardsPlayer()
     {
 
-        float hookshotSpeed = Mathf.Clamp(Vector3.Distance(transform.position, grappleHitObjectPosition), pullSpeedMin, pullSpeedMax);
+        float hookshotSpeed = Mathf.Clamp(Vector3.Distance(transform.position, grappleHitObject.transform.position), pullSpeedMin, pullSpeedMax);
         float hookshotSpeedMultiplier = 0.1f;
 
-        Vector3 pullDestination = new Vector3 (gameObject.transform.position.x, grappleHitObjectPosition.y, gameObject.transform.position.z);
-        grappleHitObjectPosition = Vector3.MoveTowards(grappleHitObjectPosition, pullDestination, hookshotSpeed * hookshotSpeedMultiplier);
-        ManageHookshotSize();
+        Vector3 pullDestination = new Vector3 (gameObject.transform.position.x, grappleHitObject.transform.position.y, gameObject.transform.position.z);
+        grappleHitObject.transform.position = Vector3.MoveTowards(grappleHitObject.transform.position, pullDestination, hookshotSpeed * hookshotSpeedMultiplier);
+        //ManageHookshotSize();
     }
 
     private void ManageHookshotSize()
     {
-        hookshotSize = Vector3.Distance(transform.position,grappleHitObjectPosition);
+        hookshotSize = Vector3.Distance(transform.position,grappleHitObject.transform.position);
         hookshotTransform.localScale = new Vector3(1, 1, hookshotSize);
     }
 
