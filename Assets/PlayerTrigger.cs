@@ -4,8 +4,6 @@ using UnityEngine;
 using System;
 public class PlayerTrigger : GameBehaviour
 {
-    [SerializeField]
-    private GameObject Player;
 
     public static event Action OnPlayerStealth;
     public static event Action OnPlayerUnstealth;

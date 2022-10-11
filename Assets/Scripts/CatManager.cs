@@ -73,7 +73,11 @@ namespace Cat
         public void RestartPath()
         {
             transform.position = points[0].position;
-            transform.LookAt(points[1].position);
+
+            if(points.Length >= 2)
+            {
+                transform.LookAt(points[1].position);
+            }
 
             destinationIndex = 0;
             aiState = AIStates.Walk;
