@@ -38,7 +38,7 @@ public class SnakeDetection : GameBehaviour
     {
         timer = maxTimer;
         canSeePlayer = false;
-        player = GameObject.Find("ThirdPersonPlayer");
+        player = TPM.gameObject;
         //viewAngle = spotlight.spotAngle;
         //originalSpotlightColor = spotlight.color;
         rayCasting = false;

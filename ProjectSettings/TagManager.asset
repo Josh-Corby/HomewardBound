@@ -28,6 +28,8 @@ TagManager:
   - FallingLilyPad
   - MinableObject
   - TallGrass
+  - PlayerInteraction
+  - Ground
   layers:
   - Default
   - TransparentFX

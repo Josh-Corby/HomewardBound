@@ -7,10 +7,15 @@ public class MovingLilypadTrigger : GameBehaviour
     
     public GameObject playerFollowObject;
 
+
     [SerializeField]
     private GameObject Player;
 
 
+    private void Awake()
+    {
+        Player = TPM.gameObject;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -22,13 +27,13 @@ public class MovingLilypadTrigger : GameBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject == Player)
-        {
-            TPM.LilypadOffset = null;
-        }
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.gameObject == Player)
+    //    {
+    //        TPM.LilypadOffset = null;
+    //    }
+    //}
 
 
 

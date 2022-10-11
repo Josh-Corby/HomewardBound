@@ -10,22 +10,17 @@ public class LilyPad : GameBehaviour
     [SerializeField]
     private float waitTime;
 
+    [SerializeField]
+    private float moveSpeed = 0.05f;
+    [SerializeField]
+    private GameObject Player;
     private Rigidbody rb;
-
-    [HideInInspector]
-    public GameObject Player;
-
-
     public bool moveBack;
-
     public Vector3 moveDirection;
-
-
-
     private void Awake()
     {
         rb = gameObject.GetComponent<Rigidbody>();
-
+        Player = TPM.gameObject;
     }
 
     // Start is called before the first frame update
@@ -36,9 +31,14 @@ public class LilyPad : GameBehaviour
     }
 
 
+    private void Update()
+    {
+        waitTime = Mathf.Clamp(waitTime, 0f, waitTimeMax);
+    }
 
     private void LateUpdate()
     {
+        if (UI.paused) return;
         if (moveBack == true)
         {
             MoveBackToStartPosition();
@@ -48,10 +48,10 @@ public class LilyPad : GameBehaviour
     private void MoveBackToStartPosition()
     {
         moveBack = true;
-        waitTime -= Time.deltaTime;
+        
         if (waitTime <= 0)
         {
-            transform.position = Vector3.MoveTowards(transform.position, startPosition, 0.01f);
+            transform.position = Vector3.MoveTowards(transform.position, startPosition, moveSpeed);
 
 
             if (Vector3.Distance(transform.position, startPosition) <= 0.1f)
@@ -61,10 +61,10 @@ public class LilyPad : GameBehaviour
                 moveBack = false;
             }
         }
+        if (waitTime <= 0) return;
+        waitTime -= Time.deltaTime;
+
     }
-
-
-
     private void OnTriggerEnter(Collider other)
     {
         //if (other.gameObject.CompareTag("Lilypad"))
@@ -73,22 +73,22 @@ public class LilyPad : GameBehaviour
         //}
         if (!other.gameObject.CompareTag("Player"))
         {
-            Debug.Log(other.gameObject.name);
 
-            ResetLilyPad();
-            return;         
+            //if (!other.gameObject.CompareTag("PlayerInteraction"))
+            //{
+                Debug.Log(other.gameObject.name);
+
+                ResetLilyPad();
+                return;
+            //}         
         }
-
     }
 
-
-
-    private void ResetLilyPad()
+    public void ResetLilyPad()
     {
         Debug.Log("stop");
         TPM.StopHookshot();
         waitTime = waitTimeMax;
-        MoveBackToStartPosition();
-        
+        MoveBackToStartPosition();    
     }
 }

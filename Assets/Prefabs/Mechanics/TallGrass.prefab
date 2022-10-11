@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 9205328143045781673}
   m_Layer: 12
   m_Name: TallGrass
-  m_TagString: TallGrass
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -70,7 +70,7 @@ Transform:
   m_GameObject: {fileID: 9205328143045781674}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.2647407, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1244763569724749938}
@@ -104,7 +104,7 @@ PrefabInstance:
     - target: {fileID: 7996612775225966359, guid: 00d4731db203334428ba31517980d80f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.72
       objectReference: {fileID: 0}
     - target: {fileID: 7996612775225966359, guid: 00d4731db203334428ba31517980d80f,
         type: 3}
@@ -164,7 +164,7 @@ PrefabInstance:
     - target: {fileID: 7996612775225966379, guid: 00d4731db203334428ba31517980d80f,
         type: 3}
       propertyPath: m_TagString
-      value: TallGrass
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00d4731db203334428ba31517980d80f, type: 3}

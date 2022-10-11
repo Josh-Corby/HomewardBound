@@ -7,7 +7,7 @@ namespace Cat
 
     public class CatDetection : GameBehaviour
     {
-        public GameObject player;
+        private GameObject Player;
         public LayerMask mask;
         public bool raycasting;
         public CatManager catManager;
@@ -22,6 +22,7 @@ namespace Cat
 
         private void Awake()
         {
+            Player = TPM.gameObject;
             mask = LayerMask.GetMask(playerLayerMaskName);
 
             detectionRange = catManager.GetComponent<SphereCollider>().radius;
@@ -42,7 +43,7 @@ namespace Cat
             if (raycasting)
             {
                 catManager.aiState = AIStates.Detecting;
-                if (Physics.Raycast(transform.position, (player.transform.position - transform.position), out RaycastHit hit, detectionRange, mask))
+                if (Physics.Raycast(transform.position, (Player.transform.position - transform.position), out RaycastHit hit, detectionRange, mask))
                 {
                     if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
                     {

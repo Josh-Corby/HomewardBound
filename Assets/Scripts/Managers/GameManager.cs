@@ -52,6 +52,7 @@ public class GameManager : GameBehaviour<GameManager>
     /// </summary>
     public void RespawnPlayer()
     {
+        Player = TPM.gameObject;
         Player.GetComponent<CharacterController>().enabled = false;
         Player.transform.position = spawnPoint.transform.position;
         Player.transform.rotation = spawnPoint.transform.rotation;
