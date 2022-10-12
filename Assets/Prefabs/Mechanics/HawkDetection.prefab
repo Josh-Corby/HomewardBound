@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9205362293074027792}
   m_Layer: 1
   m_Name: HawkDetection
-  m_TagString: Untagged
+  m_TagString: Hawk
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55,7 +55,7 @@ MonoBehaviour:
   timer: 0
   mask:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 4288
 --- !u!54 &1359014907259081347
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 1359014908895536600}
   m_Layer: 1
   m_Name: Quad
-  m_TagString: Untagged
+  m_TagString: Hawk
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 6665087682934012906}
   m_Layer: 1
   m_Name: HawkBody
-  m_TagString: Untagged
+  m_TagString: Hawk
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

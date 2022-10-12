@@ -46,8 +46,6 @@ public class BuildManager : GameBehaviour<BuildManager>
     public GameObject buildingObject;
     private Color objectColor;
 
-    
-
     private void Update()
     {
         // If the player isn't building cancel the build input
@@ -59,7 +57,6 @@ public class BuildManager : GameBehaviour<BuildManager>
                 return;
             }
         }
-
         if (isBuilding)
         {
             /*
