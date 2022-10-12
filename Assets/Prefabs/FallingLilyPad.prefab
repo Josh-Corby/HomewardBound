@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1183101375139749581}
   - component: {fileID: 8581874219393408772}
   m_Layer: 6
-  m_Name: GameObject
+  m_Name: LilyPadObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1623,7 +1623,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3971
+  m_VersionIndex: 3992
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1735,7 +1735,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9f06ae9a4cd9064c8c4aa2434cac65b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lilypadState: 0
   fallTimer: 0
+  hasRespawned: 0
   isFalling: 0
-  hasFallen: 0
+  isRespawning: 0
   respawnTimer: 0

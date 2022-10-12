@@ -179,9 +179,10 @@ GameObject:
   - component: {fileID: 295153433516097664}
   - component: {fileID: 1540773045294937968}
   - component: {fileID: 3151305456585715}
+  - component: {fileID: 1645693418}
   m_Layer: 0
   m_Name: wall
-  m_TagString: Untagged
+  m_TagString: MinableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -253,6 +254,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a078ef5a6ce568a489c5744823cbf8f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &1645693418
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104306423976073786}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.92, y: 0.38, z: 0.1}
+  m_Center: {x: 0, y: 0, z: -0.003}
 --- !u!1 &1803604033980821406
 GameObject:
   m_ObjectHideFlags: 0
