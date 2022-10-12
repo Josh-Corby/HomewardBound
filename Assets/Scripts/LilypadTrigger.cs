@@ -14,8 +14,9 @@ public class LilypadTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            
+
             lilypad.StartFalling();
+
         }
     }
 }

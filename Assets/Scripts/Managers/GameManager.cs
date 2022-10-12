@@ -36,6 +36,15 @@ public class GameManager : GameBehaviour<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.R))
             RespawnPlayer();
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            haveGrappleHook = true;
+            haveGlider = true;
+            haveBuilding = true;
+            haveSlingshot = true;
+            havePickaxe = true;
+        }
     }
 
     /// <summary>
@@ -43,9 +52,11 @@ public class GameManager : GameBehaviour<GameManager>
     /// </summary>
     public void RespawnPlayer()
     {
+        Player = TPM.gameObject;
         Player.GetComponent<CharacterController>().enabled = false;
         Player.transform.position = spawnPoint.transform.position;
         Player.transform.rotation = spawnPoint.transform.rotation;
+        TPM.LilypadOffset = null;
         Player.GetComponent<CharacterController>().enabled = true;
         //Debug.Log("Player Respawned");
         TPM.StopHookshot();

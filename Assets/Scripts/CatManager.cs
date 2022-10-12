@@ -24,12 +24,17 @@ namespace Cat
         private readonly float agentWalkSpeed = 5f;
 
         public AIStates aiState;
-        public GameObject player;
+        private GameObject Player;
         private bool resuming;
 
         private int rotationX;
         private int rotationZ;
         private readonly float rotationSpeed = 1f;
+
+        private void Awake()
+        {
+            Player = TPM.gameObject;
+        }
 
         private void Start()
         {
@@ -73,7 +78,11 @@ namespace Cat
         public void RestartPath()
         {
             transform.position = points[0].position;
-            transform.LookAt(points[1].position);
+
+            if(points.Length >= 2)
+            {
+                transform.LookAt(points[1].position);
+            }
 
             destinationIndex = 0;
             aiState = AIStates.Walk;
@@ -114,7 +123,7 @@ namespace Cat
                     }
                 case AIStates.Aggro:
                     {
-                        agent.SetDestination(player.transform.position);
+                        agent.SetDestination(Player.transform.position);
                         LookAtPlayer();
                         agent.speed = 15;
                         break;
@@ -134,7 +143,7 @@ namespace Cat
 
         public void LookAtPlayer()
         {
-            var lookPos = player.transform.position - transform.position;
+            var lookPos = Player.transform.position - transform.position;
             lookPos.y = 0;
             var rotation = Quaternion.LookRotation(lookPos);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);

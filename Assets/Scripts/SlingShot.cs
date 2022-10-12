@@ -37,6 +37,9 @@ public class SlingShot : GameBehaviour<SlingShot>
     //bug fixing :D
     public bool allowInvoke = true;
 
+    [SerializeField]
+    private LayerMask mask;
+
     private void Awake()
     {
         //make sure magazine is full
@@ -53,7 +56,7 @@ public class SlingShot : GameBehaviour<SlingShot>
 
     private void Update()
     {
-        if (OM.haveSlingshot)        
+        if (GM.haveSlingshot)        
         {
             if (/*UI.buildPanelStatus ||*/ UI.radialMenuStatus || BM.isBuilding || UI.paused == true)
             {
@@ -118,16 +121,23 @@ public class SlingShot : GameBehaviour<SlingShot>
     {
         if(ammo > 0)
         {
+            Debug.Log("bullet fired");
             readyToShoot = false;
 
             //Find the exact hit position using a raycast
             Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //Just a ray through the middle of your current view
             RaycastHit hit;
 
+            
             //check if ray hits something
             Vector3 targetPoint;
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
+            {
+                Debug.Log(hit.collider.gameObject);
                 targetPoint = hit.point;
+
+            }
+                
             else
                 targetPoint = ray.GetPoint(75); //Just a point far away from the player
 

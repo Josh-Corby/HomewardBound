@@ -8,7 +8,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
     public bool canDestroy;
     public bool canClimb;
     public bool canBreak;
-    public GameObject player;
+    public GameObject Player;
     public GameObject objectToInteract;
     public GameObject objectToDestroy;
     private GameObject LadderEntry;
@@ -18,6 +18,11 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
     public List<GameObject> outlineObjectsList = new List<GameObject>();
 
+
+    private void Awake()
+    {
+        Player = TPM.gameObject;
+    }
     private void Update()
     {
         if (outlineObjectsList.Count > 0)
@@ -102,8 +107,8 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             {
                 if (LadderEntry != null)
                 {
-                    player.transform.position = LadderEntry.transform.position;
-                    player.transform.rotation = LadderEntry.transform.rotation;
+                    Player.transform.position = LadderEntry.transform.position;
+                    Player.transform.rotation = LadderEntry.transform.rotation;
                     PM.isClimbing = true;
                 }
                 PM.isClimbing = true;
@@ -165,7 +170,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
     {
         if (outlineObjectsList.Count <= 0) return;
         float closestDistanceSqr = 4f;
-        Vector3 playerPosition = player.transform.position;
+        Vector3 playerPosition = Player.transform.position;
 
         foreach (GameObject objectToOutline in outlineObjectsList)
         {

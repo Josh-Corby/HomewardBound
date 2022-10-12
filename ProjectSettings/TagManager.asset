@@ -27,6 +27,9 @@ TagManager:
   - Lilypad
   - FallingLilyPad
   - MinableObject
+  - TallGrass
+  - PlayerInteraction
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -41,7 +44,7 @@ TagManager:
   - Projectiles
   - Non-Grappleable-Wall
   - TallGrass
-  - 
+  - Lilypad
   - 
   - 
   - 

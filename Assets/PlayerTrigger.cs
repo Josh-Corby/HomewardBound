@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 public class PlayerTrigger : GameBehaviour
-{ 
+{
+
     public static event Action OnPlayerStealth;
     public static event Action OnPlayerUnstealth;
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -16,6 +18,8 @@ public class PlayerTrigger : GameBehaviour
         }
     }
 
+
+
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("TallGrass"))
@@ -23,5 +27,6 @@ public class PlayerTrigger : GameBehaviour
             Debug.Log("Player is unstealthed");
             OnPlayerUnstealth();
         }
+
     }
 }

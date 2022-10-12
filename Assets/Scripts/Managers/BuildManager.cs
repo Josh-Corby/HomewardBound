@@ -79,7 +79,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         }
 
         // Checks for if player can build
-        if (IM.rClick_Input && isBuilding)
+        if (IM.rClick_Input && isBuilding && !UI.paused)
         {
             if (TPM.groundState == GroundStates.Airborne || canBuild == false)
             {
