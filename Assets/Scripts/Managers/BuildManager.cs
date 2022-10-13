@@ -40,9 +40,9 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     [SerializeField] 
     private GameObject buildZone;
-    [HideInInspector]
+
     public GameObject prefabToSpawn;
-    [HideInInspector]
+
     public GameObject buildingObject;
     private Color objectColor;
 
@@ -97,9 +97,6 @@ public class BuildManager : GameBehaviour<BuildManager>
                
                 // Reactivate Interaction Zone
                 IZ.Toggle(true);
-                
-                // Subtract cost of built item
-                SubtractCost();
 
                 buildingObject.gameObject.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePositionY;
 
@@ -108,7 +105,12 @@ public class BuildManager : GameBehaviour<BuildManager>
                 prefabToSpawn = null;
                 canBuild = false;
                 isBuilding = false;
-            }         
+            }
+
+            // Subtract cost of built item
+            SubtractCost();
+
+               
         }
     }
 

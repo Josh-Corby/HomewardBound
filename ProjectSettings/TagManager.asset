@@ -30,6 +30,7 @@ TagManager:
   - TallGrass
   - PlayerInteraction
   - Ground
+  - EnemyMechanics
   layers:
   - Default
   - TransparentFX

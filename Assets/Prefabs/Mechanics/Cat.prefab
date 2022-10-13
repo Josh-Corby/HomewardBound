@@ -129,7 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 129
   raycasting: 0
   catManager: {fileID: 1089815188081010613}
   detectionTimerMax: 4
@@ -290,7 +290,7 @@ GameObject:
   - component: {fileID: 7112589376474335024}
   m_Layer: 0
   m_Name: CatManager
-  m_TagString: Untagged
+  m_TagString: EnemyMechanics
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -361,7 +361,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 39.2
+  m_Radius: 74.4
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8844108086907902101
 GameObject:

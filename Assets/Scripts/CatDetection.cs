@@ -19,6 +19,7 @@ namespace Cat
 
         static readonly string playerLayerMaskName = "Player";
         static readonly string tallGrassLayerMaskName = "TallGrass";
+        static readonly string wallLayerMaskName = "Default";
 
         private void Awake()
         {
@@ -29,6 +30,8 @@ namespace Cat
 
             PlayerTrigger.OnPlayerStealth += AddTallGrassLayer;
             PlayerTrigger.OnPlayerUnstealth += RemoveTallGrassLayer;
+
+            mask |= (1 << LayerMask.NameToLayer(wallLayerMaskName));
         }
 
         private void Start()

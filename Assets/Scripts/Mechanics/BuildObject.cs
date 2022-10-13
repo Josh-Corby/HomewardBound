@@ -14,7 +14,7 @@ public class BuildObject : GameBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Hawk"))
+        if(other.CompareTag("Hawk") || other.CompareTag("EnemyMechanics"))
         {
             return;
         }
