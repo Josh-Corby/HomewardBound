@@ -3,8 +3,6 @@ using System;
 
 public class PlayerManager : GameBehaviour<PlayerManager>
 {
-    CameraManager cameraManager;
-
     public bool isInteracting;
     public bool isClimbing;
 
@@ -15,7 +13,6 @@ public class PlayerManager : GameBehaviour<PlayerManager>
         PlayerTrigger.OnPlayerStealth += PlayerStealth;
         PlayerTrigger.OnPlayerUnstealth += PlayerUnstealth;
 
-        cameraManager = FindObjectOfType<CameraManager>();
         isClimbing = false;
     }
 

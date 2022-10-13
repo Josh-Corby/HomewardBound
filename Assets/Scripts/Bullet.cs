@@ -34,6 +34,10 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.CompareTag("BreakableWall"))
+        {
+            Destroy(collision.gameObject);
+        }
         Debug.Log(collision.gameObject.name);
         gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         Destroy(gameObject);

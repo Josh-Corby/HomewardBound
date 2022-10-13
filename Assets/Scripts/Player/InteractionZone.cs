@@ -72,8 +72,8 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                 }
 
                 if (objectToInteract.CompareTag("MinableObject"))
-                {                  
-                    Destroy(objectToInteract);
+                {
+                    StartCoroutine(objectToInteract.GetComponent<MinableWall>().Break());
                 }
                 else
                 {
@@ -309,6 +309,12 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         this.gameObject.SetActive(isEnabled);
     }
 
+    public void ClearObject()
+    {
+
+        Destroy(objectToInteract);
+        objectToInteract = null;
+    }
     public void DestroyObject()
     {
         Destroy(objectToDestroy);

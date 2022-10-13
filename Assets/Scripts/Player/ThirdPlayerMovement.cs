@@ -41,7 +41,11 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     ThirdPlayerMovement basicMovementScript;
 
     //Character modifiers
-    private float gravity = -14f;
+    [SerializeField]
+    private float gravity;
+    [SerializeField]
+    private float defaultGravity = -19.6f;
+
     private float speed = 8f;
     private float speedBoost = 14f;
     public float jumpHeight = 3f;
@@ -58,9 +62,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private float moveSpeed = 6f;
     private float sprintSpeed = 12f;
 
-    [SerializeField]
     private float coyoteTimer;
-
     [SerializeField]
     private float coyoteTime = 0.4f;
     [SerializeField]
@@ -182,6 +184,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         switch (groundState)
         {
             case GroundStates.Grounded:
+
                 ResetCoyoteTimer();
                 if (fallTimer <= 0)
                 {
@@ -217,7 +220,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         velocity += characterVelocityMomentum;
         controller.Move(velocity * Time.deltaTime);
 
-        gravity = -9.81f;
+        gravity = defaultGravity;
         if (OM.outfit == Outfits.Utility)
         {
             if (glideTimer > 0 && IM.glide_Input && velocity.y <= 0)
@@ -270,9 +273,18 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
         }
 
+        if(groundState == GroundStates.Grounded)
+        {
+            if (!Input.GetKey(KeyCode.LeftShift))
+            {
+                moveSpeeds = MovementSpeeds.Walking;
+            }
+        }
+
         if (groundState == GroundStates.Grounded || groundState == GroundStates.Airborne)
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+
+            if (Input.GetKey(KeyCode.LeftShift))
             {
                 moveSpeeds = MovementSpeeds.Sprinting;
             }
@@ -365,7 +377,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 return;
             }
         }
-
         if (hookshotSize >= Vector3.Distance(transform.position, hookshotPosition))
         {
             hookshotState = HookshotStates.HookshotFlyingPlayer;

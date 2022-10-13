@@ -77,8 +77,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.25, y: 0.3148056, z: 2.07}
-  m_Center: {x: 0, y: 0.0074027926, z: 0}
+  m_Size: {x: 1.25, y: 0.3148056, z: 2.6814735}
+  m_Center: {x: 1.9801682e-16, y: 0.0074027926, z: -0.30573678}
 --- !u!114 &740928574251745381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -742,6 +742,7 @@ GameObject:
   - component: {fileID: 8710679983595202225}
   - component: {fileID: 5498205265661020283}
   - component: {fileID: 5498205265661020282}
+  - component: {fileID: 3012716498868361529}
   m_Layer: 7
   m_Name: ThirdPersonPlayer
   m_TagString: Player
@@ -810,9 +811,10 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 8256
-  jumpHeight: 1.61
+  gravity: 0
+  defaultGravity: -19.6
+  jumpHeight: 2.05
   fallTimer: 0
-  coyoteTimer: 0
   coyoteTime: 0.1
   coyoteTimerOffset: 0
   moveDir: {x: 0, y: 0, z: 0}
@@ -822,7 +824,7 @@ MonoBehaviour:
   grappleHitObject: {fileID: 0}
   mask:
     serializedVersion: 2
-    m_Bits: 15185
+    m_Bits: 2897
   LilypadOffset: {fileID: 0}
 --- !u!114 &5498205265661020283
 MonoBehaviour:
@@ -869,6 +871,19 @@ MonoBehaviour:
   cancel_Input: 0
   lClick_Input: 0
   rClick_Input: 0
+--- !u!114 &3012716498868361529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8710679983595202227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d571e982bbf30bc43ae2266df444ea76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forceMagnitude: 10
 --- !u!1001 &3257899975045143331
 PrefabInstance:
   m_ObjectHideFlags: 0

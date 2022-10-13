@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9205362293074027792}
   m_Layer: 1
   m_Name: HawkDetection
-  m_TagString: Untagged
+  m_TagString: Hawk
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55,7 +55,7 @@ MonoBehaviour:
   timer: 0
   mask:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 4288
 --- !u!54 &1359014907259081347
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -83,8 +83,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 100, y: 40, z: 100}
-  m_Center: {x: 0, y: 0.09, z: 0}
+  m_Size: {x: 172.0644, y: 100.3, z: 386.77768}
+  m_Center: {x: 4.3738394, y: 33.75, z: 24.472485}
 --- !u!1 &1359014908895536549
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 1359014908895536600}
   m_Layer: 1
   m_Name: Quad
-  m_TagString: Untagged
+  m_TagString: Hawk
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 6665087682934012906}
   m_Layer: 1
   m_Name: HawkBody
-  m_TagString: Untagged
+  m_TagString: Hawk
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -227,7 +227,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1496672790090273679}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 82.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
