@@ -153,9 +153,6 @@ namespace Cat
             agent.SetDestination(distraction.position);
         }
 
- 
-
-
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
@@ -184,6 +181,14 @@ namespace Cat
             {
                 distractionTransform = null;
                 aiState = AIStates.Walk;
+            }
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.CompareTag("Untagged"))
+            {
+
             }
         }
     }

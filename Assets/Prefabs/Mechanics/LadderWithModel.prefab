@@ -13,8 +13,7 @@ GameObject:
   - component: {fileID: 8158893405514409372}
   - component: {fileID: 5047988332745296096}
   - component: {fileID: 5803901013601560123}
-  - component: {fileID: 3250770967449743490}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LadderWithModel
   m_TagString: Ladder
   m_Icon: {fileID: 0}
@@ -116,19 +115,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &3250770967449743490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1012873502108591949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e552d296c916ec41a82d8c2aaca2422, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collisionObjects: []
 --- !u!1 &6563270710007697604
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,7 +125,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4952335861763524902}
   - component: {fileID: 6625541696201374490}
-  m_Layer: 0
+  - component: {fileID: 8314306305566849374}
+  m_Layer: 6
   m_Name: ClimbCollider
   m_TagString: Ladder
   m_Icon: {fileID: 0}
@@ -172,5 +159,20 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.2, y: 3.52, z: 0.83}
-  m_Center: {x: 0, y: 3.33, z: 0.21}
+  m_Size: {x: 2.2, y: 3.3172715, z: 0.83}
+  m_Center: {x: 5.5102597e-14, y: 3.4313645, z: 0.21000001}
+--- !u!114 &8314306305566849374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6563270710007697604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e552d296c916ec41a82d8c2aaca2422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionObjects: []
+  transparent: {r: 0, g: 0, b: 0, a: 0}
+  opaque: {r: 0, g: 0, b: 0, a: 0}
