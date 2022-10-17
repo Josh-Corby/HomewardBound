@@ -17,6 +17,7 @@ public class KeyPress : MonoBehaviour
     {
         if (Input.GetKeyDown(key))
         {
+            Debug.Log("Pressing Button");
             button.onClick.Invoke();
         }
 
