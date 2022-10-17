@@ -14,7 +14,7 @@ public class DialogueManager : MonoBehaviour
     public float wordSpeed;
 
     public GameObject NPC;
-    public bool playerIsClose;
+    public bool playerIsClose = false;
 
     public GameObject dialoguePanel;
 
