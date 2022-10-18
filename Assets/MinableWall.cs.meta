@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/MinableWall.cs.meta
 guid: a078ef5a6ce568a489c5744823cbf8f7
+========
+guid: d9271fa2f4bf1fd46aba1c7071519c93
+>>>>>>>> Josh:Assets/MovingLilypadTrigger.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

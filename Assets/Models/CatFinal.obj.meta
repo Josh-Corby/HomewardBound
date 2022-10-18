@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Models/CatFinal.obj.meta
 guid: 5141c07f08efd6043a2d08dcdf391a2c
+========
+guid: 0afd6a54a470bb8409173c51f374318e
+>>>>>>>> Josh:Assets/Models/Bridge.obj.meta
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []

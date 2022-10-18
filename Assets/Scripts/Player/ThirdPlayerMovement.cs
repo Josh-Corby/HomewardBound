@@ -50,7 +50,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private float speedBoost = 14f;
     public float jumpHeight = 3f;
     public float fallTimer;
-    private float fallTimerMax = 5f;
+    public float fallTimerMax = 5f;
     private float turnSmoothTime = 0.1f;
     private float glidingSpeed = 1f;
     private float glideTimer;

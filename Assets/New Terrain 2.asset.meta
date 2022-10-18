@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/New Terrain 2.asset.meta
 guid: 47b122afee3a36d469ef161bc5e5736c
+========
+guid: 3c7230b53e2697742922dea14093bcec
+>>>>>>>> Josh:Assets/Prefabs/Whitebox Terrain 1.asset.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 0

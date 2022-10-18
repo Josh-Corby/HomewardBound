@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Models/Ladder.fbx.meta
 guid: a12ec432e2b3e414aa473a746211490a
+========
+guid: 5141c07f08efd6043a2d08dcdf391a2c
+>>>>>>>> Josh:Assets/Models/CatFinal.obj.meta
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []

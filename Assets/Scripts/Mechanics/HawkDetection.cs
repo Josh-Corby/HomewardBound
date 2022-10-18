@@ -12,9 +12,16 @@ public class HawkDetection : GameBehaviour
     public Vector3 maxScale;
     float lerpTime = 0.3f;
 
+    [SerializeField]
+    Vector3 spawnLocation;
+
     public float timer;
     readonly float maxTimer = 8f;
     public LayerMask mask;
+
+
+    [SerializeField]
+    Transform HawkHeight;
 
     private void Start()
     {
@@ -24,6 +31,7 @@ public class HawkDetection : GameBehaviour
         isGrowing = false;
         timer = maxTimer;
         rayCasting = false;
+        spawnLocation = gameObject.transform.position;
     }
     private void Update()
     {
@@ -39,8 +47,8 @@ public class HawkDetection : GameBehaviour
                 rayCasting = false;
                 
                 GM.RespawnPlayer();
-                hawkBody.transform.localPosition = new Vector3(0, 0, 0);
-                detectionCircle.transform.localPosition = new Vector3(0, 0, 0);
+                hawkBody.transform.position = spawnLocation;
+                detectionCircle.transform.position = spawnLocation;
                 isGrowing = false;
 
                 timer = maxTimer;
@@ -66,7 +74,7 @@ public class HawkDetection : GameBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            hawkBody.transform.position = new Vector3(TPM.transform.position.x, hawkBody.transform.position.y, TPM.transform.position.z);
+            hawkBody.transform.position = new Vector3(TPM.transform.position.x, HawkHeight.position.y, TPM.transform.position.z);
             RaycastHit hit;
             Ray hawkRay = new Ray(hawkBody.transform.position, Vector3.down);
 
@@ -110,8 +118,8 @@ public class HawkDetection : GameBehaviour
         if (other.CompareTag("Player"))
         {
             isGrowing = false;
-            hawkBody.transform.localPosition = new Vector3(0, 0, 0);
-            detectionCircle.transform.localPosition = new Vector3(0, 0, 0);
+            hawkBody.transform.position = spawnLocation;
+            detectionCircle.transform.position = spawnLocation;
         }
     }
 }

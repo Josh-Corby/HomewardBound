@@ -58,6 +58,13 @@ public class GameManager : GameBehaviour<GameManager>
         Player.transform.rotation = spawnPoint.transform.rotation;
         TPM.LilypadOffset = null;
         Player.GetComponent<CharacterController>().enabled = true;
+
+        TPM.LilypadOffset = null;
+        TPM.fallTimer = TPM.fallTimerMax;
+        TPM.enabled = true;
+
+        PM.isClimbing = false;
+        LC.inside = false;  
         //Debug.Log("Player Respawned");
         TPM.StopHookshot();
     }

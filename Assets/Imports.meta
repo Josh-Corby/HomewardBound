@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Imports.meta
 guid: 8965f88ee91a3314894e3d55ff8e7f8c
+========
+guid: 89d0841e4263f0c4ebd0fadd83034078
+>>>>>>>> Josh:Assets/Models.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

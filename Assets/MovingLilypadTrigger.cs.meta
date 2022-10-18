@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/MovingLilypadTrigger.cs.meta
 guid: d9271fa2f4bf1fd46aba1c7071519c93
+========
+guid: d571e982bbf30bc43ae2266df444ea76
+>>>>>>>> Josh:Assets/PushObjects.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

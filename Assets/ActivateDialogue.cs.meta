@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/ActivateDialogue.cs.meta
 guid: c1b5f9e8865116a489aa9aaadf39fb1d
+========
+guid: 7bd2237c602d0a34fafd0dd459749cad
+>>>>>>>> Josh:Assets/LilyPad.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Models.meta
 guid: 89d0841e4263f0c4ebd0fadd83034078
+========
+guid: 0fe948d54a5245d4fa67f398fefee7cb
+>>>>>>>> Josh:Assets/Prefabs/Mechanics/Pickups.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

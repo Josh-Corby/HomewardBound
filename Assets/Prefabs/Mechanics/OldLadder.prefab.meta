@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Mechanics/OldLadder.prefab.meta
 guid: e8ac288efdb7631478658f37795d3cea
+========
+guid: 3daac42a81bbcc84f9221f0f18931e71
+>>>>>>>> Josh:Assets/Prefabs/Mechanics/LadderWithModel.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 
