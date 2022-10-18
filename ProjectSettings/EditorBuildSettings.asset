@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/PlaygroundTest.unity
-    guid: 9850e1dd564596543a00054f107105dc
+    guid: e136939f8febfd847b42a77157d98343
   m_configObjects: {}
