@@ -220,7 +220,7 @@ public class UIManager : GameBehaviour<UIManager>
         switch (OM.outfit) 
         {
             case Outfits.Miner:
-                outfitControlText1.text = "Mine: Left Click";
+                outfitControlText1.text = "Mine: Right Click";
                 break;
             case Outfits.Builder:
                 outfitControlText1.text = "Open Build Menu: B";

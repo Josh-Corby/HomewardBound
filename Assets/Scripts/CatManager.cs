@@ -164,7 +164,7 @@ namespace Cat
         {
             if (other.CompareTag("Player"))
             {
-                Debug.Log(other.name + " is no longer in range");
+                //Debug.Log(other.name + " is no longer in range");
                 catDetection.raycasting = false;
                 aiState = AIStates.Walk;
             }

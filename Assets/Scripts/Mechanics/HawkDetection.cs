@@ -32,6 +32,7 @@ public class HawkDetection : GameBehaviour
         timer = maxTimer;
         rayCasting = false;
         spawnLocation = gameObject.transform.position;
+        HawkHeight = transform;
     }
     private void Update()
     {

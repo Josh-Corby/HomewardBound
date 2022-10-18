@@ -44,7 +44,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             }
 
 
-            if (IM.lClick_Input)
+            if (IM.rClick_Input)
             {
                 if (objectToInteract == null)
                 {              

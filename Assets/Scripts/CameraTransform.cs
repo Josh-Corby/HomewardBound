@@ -1,12 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class CameraTransform : GameBehaviour
 {
+
+    [SerializeField]
+    private CinemachineVirtualCamera vcam;
+
+
+    private Cinemachine3rdPersonFollow camfollow;
+
     public GameObject thirdPersonPlayer;
+    [SerializeField]
+    private GameObject cameraLook;
+    [SerializeField]
+    private GameObject zoomLook;
+    [SerializeField]
     private GameObject CameraTarget;
-    Vector3 yOffset = new Vector3 (0, 0.58f, 0);
+    [SerializeField]
+    Vector3 Offset;
 
     private const float _threshold = 0.01f;
 
@@ -25,9 +39,11 @@ public class CameraTransform : GameBehaviour
 
     [Tooltip("Additional degress to override the camera. Useful for fine tuning camera position when locked")]
     public float CameraAngleOverride = 0.0f;
+
     private void Awake()
     {
-        CameraTarget = GameObject.Find("CameraLook");
+        CameraTarget = cameraLook;
+        camfollow = vcam.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
     }
 
     private void Start()
@@ -37,9 +53,24 @@ public class CameraTransform : GameBehaviour
 
     private void Update()
     {
+        vcam.Follow = CameraTarget.transform;
+        vcam.LookAt = CameraTarget.transform;
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            //CameraTarget = zoomLook;
+            camfollow.ShoulderOffset = new Vector3(1.37f, -0.4f, 0f);
+            
+        }
+
+        if (!Input.GetKey(KeyCode.Mouse1))
+        {
+            //CameraTarget = cameraLook;
+            camfollow.ShoulderOffset = new Vector3()
+        }
+
         if (UI.menu != Menus.None || UI.paused)
             return;
-        transform.position = thirdPersonPlayer.transform.position + yOffset;
+        transform.position = thirdPersonPlayer.transform.position + Offset;
         //RotateCamera();
     }
 
@@ -52,11 +83,14 @@ public class CameraTransform : GameBehaviour
 
     private void LateUpdate()
     {
-        if(!UI.paused)
+        if (!UI.paused)
             CameraRotation();
     }
     private void CameraRotation()
     {
+        //CameraTarget = UI.menu == Menus.Radial? null: cameraLook;
+
+        if (CameraTarget == null) return;
         // if there is an input and camera position is not fixed
         if (IM.cameraInput.sqrMagnitude >= _threshold && !LockCameraPosition)
         {

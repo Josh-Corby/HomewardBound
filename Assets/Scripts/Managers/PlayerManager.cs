@@ -19,11 +19,11 @@ public class PlayerManager : GameBehaviour<PlayerManager>
     private void PlayerStealth()
     {
         playerIsStealthed = true;
-        Debug.Log(playerIsStealthed);
+        //Debug.Log(playerIsStealthed);
     }
     private void PlayerUnstealth()
     {
         playerIsStealthed = false;
-        Debug.Log(playerIsStealthed);
+        //Debug.Log(playerIsStealthed);
     }
 }

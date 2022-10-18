@@ -106,11 +106,13 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             DisableGrappleInput();
 
         }
-        if (UI.buildPanelStatus || UI.radialMenuStatus || UI.menu == Menus.Paused)
+        if (UI.buildPanelStatus || UI.radialMenuStatus || UI.menu == Menus.Paused || UI.menu == Menus.Paused)
             return;
     }
     private void LateUpdate()
     {
+        if (UI.menu == Menus.Radial) return;
+
         switch (hookshotState)
         {
             case HookshotStates.Default:
