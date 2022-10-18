@@ -33,12 +33,10 @@ namespace Cat
 
             mask |= (1 << LayerMask.NameToLayer(wallLayerMaskName));
         }
-
         private void Start()
         {
             detectionTimer = detectionTimerMax;
         }
-
         private void Update()
         {
             detectionTimer = Mathf.Clamp(detectionTimer, 0, detectionTimerMax);
@@ -78,27 +76,21 @@ namespace Cat
                 detectionTimer = detectionTimerMax;
             }
         }
-
         private void ResetCatDetection()
         {
             raycasting = false;
             detectionTimer = detectionTimerMax;
         }
-
         public void AddTallGrassLayer()
         {
             Debug.Log("Grass is being detected");
             mask |= (1 << LayerMask.NameToLayer(tallGrassLayerMaskName));
-            //mask += LayerMask.NameToLayer(tallGrassLayerMaskName);
         }
-
         public void RemoveTallGrassLayer()
         {
             Debug.Log("Grass is no longer being detected");
             mask &= ~(1 << LayerMask.NameToLayer(tallGrassLayerMaskName));
-            //mask -= LayerMask.NameToLayer(tallGrassLayerMaskName);
         }
-
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
@@ -108,8 +100,5 @@ namespace Cat
                 catManager.RestartPath();
             }
         }
-
     }
-
-    
 }

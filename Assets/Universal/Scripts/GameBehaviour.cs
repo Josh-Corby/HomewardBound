@@ -9,7 +9,6 @@ public class GameBehaviour : JMC
     protected static CameraManager CM { get { return CameraManager.INSTANCE; } }
     protected static AnimatorManager AM { get { return AnimatorManager.INSTANCE; } }
     protected static InputManager IM { get { return InputManager.INSTANCE; } }
-    protected static FlashLight FL { get { return FlashLight.INSTANCE; } }
     protected static UIManager UI { get { return UIManager.INSTANCE; } }
     protected static BuildManager BM { get { return BuildManager.INSTANCE; } }
     protected static InteractionZone IZ { get { return InteractionZone.INSTANCE; } }
@@ -18,7 +17,6 @@ public class GameBehaviour : JMC
     protected static SlingShot SS { get { return SlingShot.INSTANCE; } }
     protected static OutfitManager OM { get { return OutfitManager.INSTANCE; } }
     protected static LadderClimb LC { get { return LadderClimb.INSTANCE; } }
-    protected static EventManager EM { get { return EventManager.INSTANCE; } }
 }
 
 public class GameBehaviour<T> : GameBehaviour where T : GameBehaviour

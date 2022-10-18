@@ -5,7 +5,6 @@ using UnityEngine;
 public class LilypadTrigger : MonoBehaviour
 {
     private FallingLilyPad lilypad;
-
     private void Awake()
     {
         lilypad = GetComponentInParent<FallingLilyPad>();
@@ -14,9 +13,7 @@ public class LilypadTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-
             lilypad.StartFalling();
-
         }
     }
 }

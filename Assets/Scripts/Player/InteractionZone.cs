@@ -123,11 +123,6 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             if (canPickUp)
             {
                 outlineObjectsList.Remove(objectToInteract);
-                if (objectToInteract.CompareTag("LightPickUp"))
-                {
-                    FL.ChangeIntensity(lightPickUpValue);
-                }
-
                 if (objectToInteract.CompareTag("Rock"))
                 {
                     GM.rocksCollected += 1;

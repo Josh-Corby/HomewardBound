@@ -87,12 +87,8 @@ namespace Cat
             destinationIndex = 0;
             aiState = AIStates.Walk;
             
-            //agent.destination = points[destinationIndex].position;
-            //transform.position = points[destinationIndex].position;
-            //GotoNextPoint();
+
         }
-
-
         private void Update()
         {
             switch (aiState)
@@ -137,8 +133,6 @@ namespace Cat
                     Distract(distractionTransform);
                     break;
             }
-
-            
         }
 
         public void LookAtPlayer()
@@ -152,7 +146,6 @@ namespace Cat
         {
             agent.SetDestination(distraction.position);
         }
-
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
@@ -167,7 +160,6 @@ namespace Cat
                 aiState = AIStates.Distracted;
             }
         }
-
         private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag("Player"))
@@ -181,14 +173,6 @@ namespace Cat
             {
                 distractionTransform = null;
                 aiState = AIStates.Walk;
-            }
-        }
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            if (collision.gameObject.CompareTag("Untagged"))
-            {
-
             }
         }
     }

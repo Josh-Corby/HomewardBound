@@ -14,7 +14,6 @@ public class LadderClimb : GameBehaviour<LadderClimb>
     {
         inside = false;
     }
-
     void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "Ladder")
@@ -24,17 +23,15 @@ public class LadderClimb : GameBehaviour<LadderClimb>
             inside = !inside;
         }
     }
-
     void OnTriggerExit(Collider col)
     {
         if (col.gameObject.tag == "Ladder")
-        { 
+        {
             TPM.enabled = true;
             TPM.groundState = GroundStates.Grounded;
             inside = !inside;
         }
     }
-
     void Update()
     {
         if (inside == true && Input.GetKey("w"))
@@ -49,5 +46,4 @@ public class LadderClimb : GameBehaviour<LadderClimb>
             Debug.Log("Climbing Down");
         }
     }
-
 }
