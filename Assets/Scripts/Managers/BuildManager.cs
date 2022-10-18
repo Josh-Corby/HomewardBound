@@ -49,6 +49,8 @@ public class BuildManager : GameBehaviour<BuildManager>
     private Color buildObjectColour;
     private MeshRenderer buildObjectRenderer;
 
+
+    private bool canRepeat;
     private void Update()
     {
         // If the player isn't building cancel the build input
@@ -89,7 +91,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         }
 
         // Checks for if player can build
-        if (IM.rClick_Input && isBuilding && !UI.paused)
+        if (Input.GetKeyDown(KeyCode.Mouse1) && isBuilding && !UI.paused)
         {
             if (TPM.groundState == GroundStates.Airborne || canBuild == false)
             {
@@ -114,6 +116,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
                 SubtractCost();
 
+                canRepeat = true;
                 RepeatBuild();
 
                 //ResetBuildObject();             
@@ -126,21 +129,27 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     private void RepeatBuild()
     {
-        if (buildingObject.tag == "Bridge")
+        if (canRepeat)
         {
-            Debug.Log("Repeat bridge");
-            ResetBuildObject();
-            BuildItem(2);
-            return;
-        }
+            if (buildingObject.CompareTag("Bridge"))
+            {
+                //Debug.Log("Repeat bridge");
+                ResetBuildObject();
+                BuildItem(2);
+                canRepeat = false;
+                return;
+            }
 
-        if (buildingObject.tag == "Ladder")
-        {
-            Debug.Log("Repeat bridge");
-            ResetBuildObject();
-            BuildItem(1);
-            return;
+            if (buildingObject.CompareTag("Ladder"))
+            {
+                //Debug.Log("Repeat bridge");
+                ResetBuildObject();
+                BuildItem(1);
+                canRepeat = false;
+                return;
+            }
         }
+      
     }
 
     private void ResetBuildObject()

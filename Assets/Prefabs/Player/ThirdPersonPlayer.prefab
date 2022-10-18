@@ -815,6 +815,7 @@ MonoBehaviour:
   defaultGravity: -19.6
   jumpHeight: 2.05
   fallTimer: 0
+  fallTimerMax: 5
   coyoteTime: 0.1
   coyoteTimerOffset: 0
   moveDir: {x: 0, y: 0, z: 0}
@@ -880,10 +881,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8710679983595202227}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d571e982bbf30bc43ae2266df444ea76, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e91f59baa2be2c438996f17c2ce95b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceMagnitude: 10
+  forceMagnitude: 1
 --- !u!1001 &3257899975045143331
 PrefabInstance:
   m_ObjectHideFlags: 0

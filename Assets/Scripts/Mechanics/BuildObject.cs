@@ -33,7 +33,7 @@ public class BuildObject : GameBehaviour
             return;
         }
 
-        Debug.Log(other.gameObject.name);
+        //Debug.Log(other.gameObject.name);
 
         collisionObjects.Add(other.gameObject);
     }

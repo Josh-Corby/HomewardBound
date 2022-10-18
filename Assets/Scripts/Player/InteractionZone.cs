@@ -224,7 +224,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
         if (other.CompareTag("Bridge"))
         {
-            Debug.Log("Can Destroy Bridge");
+            //Debug.Log("Can Destroy Bridge");
             objectToDestroy = other.gameObject;
             canDestroy = true;
         }

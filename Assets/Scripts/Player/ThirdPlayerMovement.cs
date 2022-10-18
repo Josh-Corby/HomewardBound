@@ -45,33 +45,25 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private float gravity;
     [SerializeField]
     private float defaultGravity = -19.6f;
-
     private float speed = 8f;
-    private float speedBoost = 14f;
     public float jumpHeight = 3f;
     public float fallTimer;
     public float fallTimerMax = 5f;
-    private float turnSmoothTime = 0.1f;
     private float glidingSpeed = 1f;
     private float glideTimer;
     private float glideTimerMax = 5f;
-
-    float turnSmoothVelocity;
     private float groundDistance = 0.2f;
-
     private float moveSpeed = 6f;
     private float sprintSpeed = 12f;
-
     private float coyoteTimer;
     [SerializeField]
     private float coyoteTime = 0.4f;
     [SerializeField]
     private float coyoteTimerOffset = 0.1f;
-
     [SerializeField]
     Vector3 moveDir;
-
     Vector3 velocity;
+
     private Vector3 hookshotPosition;
     private float hookshotSize;
     [SerializeField]
@@ -84,16 +76,16 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private GameObject grappleHitObject;
     private readonly float hookshotSpeedMin = 20f;
     private readonly float hookshotSpeedMax = 40f;
-
     private readonly float pullSpeedMin = 1;
     private readonly float pullSpeedMax = 2;
-
     private float grappleRange = 50f;
-
     [SerializeField]
     LayerMask mask;
 
+
     public GameObject LilypadOffset;
+
+
     private void Awake()
     {
         hookshotState = HookshotStates.Default;
