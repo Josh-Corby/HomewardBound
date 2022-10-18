@@ -4,19 +4,17 @@ using UnityEngine;
 
 public enum BuildObjects
 {
-    Pickaxe, 
+    Pickaxe,
     Ladder,
     Bridge,
     Slingshot,
     Ammo,
     GrappleHook,
     Glider
-    
 }
-
 public class BuildManager : GameBehaviour<BuildManager>
 {
- 
+
     [Header("Build Checks")]
     public bool isBuilding;
     public bool canBuild;
@@ -38,13 +36,18 @@ public class BuildManager : GameBehaviour<BuildManager>
     [SerializeField] private GameObject bridgePrefab;
     #endregion
 
-    [SerializeField] 
+    [SerializeField]
     private GameObject buildZone;
-    [HideInInspector]
+
     public GameObject prefabToSpawn;
-    [HideInInspector]
+
+    [SerializeField]
+    private BuildObject buildObject;
     public GameObject buildingObject;
-    private Color objectColor;
+    private Color buildObjectBaseColour;
+    [SerializeField]
+    private Color buildObjectColour;
+    private MeshRenderer buildObjectRenderer;
 
     private void Update()
     {
@@ -59,16 +62,26 @@ public class BuildManager : GameBehaviour<BuildManager>
         }
         if (isBuilding)
         {
-            /*
-            * if(OM.outfit != Outfits.Builder)
-            * {
-            *    CancelBuilding();
-            * }
-            */
-            // If the player cancels building
+            if (!canBuild)
+            {
+
+                buildObjectColour = Color.red;
+                buildObjectColour.a = 0.1f;
+                buildObjectRenderer.material.color = buildObjectColour;
+            }
+
+            if (canBuild)
+            {
+
+                buildObjectColour = Color.blue;
+                buildObjectColour.a = 0.1f;
+                buildObjectRenderer.material.color = buildObjectColour;
+
+            }
+
             if (IM.cancel_Input)
             {
-                if(prefabToSpawn != null)
+                if (prefabToSpawn != null)
                 {
                     CancelBuilding();
                 }
@@ -83,33 +96,63 @@ public class BuildManager : GameBehaviour<BuildManager>
                 IM.rClick_Input = false;
                 return;
             }
-            
+
             // If material comparisons return true
             else if (canBuild)
             {
-                // Set alpha to 1
-                objectColor.a = 1f;
-                buildingObject.GetComponent<MeshRenderer>().material.color = objectColor;
+                buildObjectRenderer.material.color = buildObjectBaseColour;
+                //StartCoroutine(buildObject.LerpAlpha());
                 Debug.Log("Object Built");
 
                 // Detach object from buildzone
                 buildZone.transform.DetachChildren();
-               
+
                 // Reactivate Interaction Zone
                 IZ.Toggle(true);
-                
-                // Subtract cost of built item
-                SubtractCost();
 
                 buildingObject.gameObject.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePositionY;
 
-                // Reset manager bools
-                buildingObject = null;
-                prefabToSpawn = null;
-                canBuild = false;
-                isBuilding = false;
-            }         
+                SubtractCost();
+
+                RepeatBuild();
+
+                //ResetBuildObject();             
+            }
+
+            return;
+
         }
+    }
+
+    private void RepeatBuild()
+    {
+        if (buildingObject.tag == "Bridge")
+        {
+            Debug.Log("Repeat bridge");
+            ResetBuildObject();
+            BuildItem(2);
+            return;
+        }
+
+        if (buildingObject.tag == "Ladder")
+        {
+            Debug.Log("Repeat bridge");
+            ResetBuildObject();
+            BuildItem(1);
+            return;
+        }
+    }
+
+    private void ResetBuildObject()
+    {
+        // Reset manager bools
+        buildingObject.GetComponent<BoxCollider>().enabled = true;
+        buildingObject = null;
+        buildObject = null;
+        prefabToSpawn = null;
+        canBuild = false;
+        isBuilding = false;
+
     }
 
     /// <summary>
@@ -118,8 +161,6 @@ public class BuildManager : GameBehaviour<BuildManager>
     /// <param name="value"> Defines what case of the BuildObjects enum is run</param>
     public void BuildItem(int value)
     {
-
-
         switch ((BuildObjects)value)
         {
             case BuildObjects.Ladder:
@@ -133,9 +174,9 @@ public class BuildManager : GameBehaviour<BuildManager>
                     OM.ChangeOutfits(4);
                     return;
                 }
-                isBuilding = LadderCheck();
                 StartCoroutine(BuildObject());
                 break;
+
             case BuildObjects.Bridge:
                 if (BridgeCheck())
                 {
@@ -147,12 +188,9 @@ public class BuildManager : GameBehaviour<BuildManager>
                     OM.ChangeOutfits(4);
                     return;
                 }
-                prefabToSpawn = BridgeCheck() ? bridgePrefab : null;
-                isBuilding = BridgeCheck();
+
                 StartCoroutine(BuildObject());
                 break;
-
-
                 /*
                  * case BuildObjects.Ammo:
                  * AmmoCheck();
@@ -161,7 +199,7 @@ public class BuildManager : GameBehaviour<BuildManager>
                  * break;
                 */
         }
-        
+
         IZ.Toggle(true);
         IZ.DisableInteractions();
     }
@@ -175,15 +213,21 @@ public class BuildManager : GameBehaviour<BuildManager>
         // Destroy any objects that shouldnt be there and make buildingobject null for function
         Destroy(buildingObject);
         buildingObject = null;
-        
+        buildObject = null;
+
+
         // Wait a frame for other functions and updates to process that object has been destroyed
         yield return new WaitForEndOfFrame();
 
         // Instantiate object as a child of buildZone
         Instantiate(prefabToSpawn, buildZone.transform);
         buildingObject = buildZone.transform.GetChild(0).gameObject;
-        objectColor = buildingObject.GetComponent<MeshRenderer>().material.color;
+        buildObjectRenderer = buildingObject.GetComponent<MeshRenderer>();
+        buildObjectBaseColour = buildObjectRenderer.material.color;
+        buildObject = buildingObject.GetComponentInChildren<BuildObject>();
+        buildingObject.GetComponent<BoxCollider>().enabled = false;
         //UI.BuildMenuToggle();
+        isBuilding = true;
     }
 
     private void CancelBuilding()
@@ -283,7 +327,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         if (pebbleCheck == true && stickCheck == true && mushroomCheck)
             return true;
         else
-            return false;  
+            return false;
     }
 
     /// <summary>
