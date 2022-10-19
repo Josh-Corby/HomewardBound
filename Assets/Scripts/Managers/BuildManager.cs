@@ -149,7 +149,7 @@ public class BuildManager : GameBehaviour<BuildManager>
                 return;
             }
         }
-      
+
     }
 
     private void ResetBuildObject()
@@ -239,10 +239,13 @@ public class BuildManager : GameBehaviour<BuildManager>
         isBuilding = true;
     }
 
-    private void CancelBuilding()
+    public void CancelBuilding()
     {
-        Destroy(buildingObject);
-        AddCost();
+        if(buildingObject != null)
+        {
+            Destroy(buildingObject);
+        }
+  
         prefabToSpawn = null;
         canBuild = false;
         isBuilding = false;

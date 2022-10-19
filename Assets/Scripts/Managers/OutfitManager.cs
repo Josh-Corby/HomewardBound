@@ -43,13 +43,19 @@ public class OutfitManager : GameBehaviour<OutfitManager>
         {
             return;
         }
+
+        
+
         Outfits CurrentOutfit = (Outfits)outfitValue;
 
+        if (CurrentOutfit!= Outfits.Builder)
+        {
+            BM.CancelBuilding();
+        }
 
         switch (CurrentOutfit)
         {
             case Outfits.Miner:
-
                 outfit = Outfits.Miner;
                 break;
 
