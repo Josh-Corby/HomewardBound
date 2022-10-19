@@ -59,7 +59,7 @@ namespace Cat
                         }
                         if (detectionTimer <= 0)
                         {
-                            Debug.Log("PlayerDetected");
+                            //Debug.Log("PlayerDetected");
                             Debug.DrawLine(transform.position, hit.point, Color.red);
                             catManager.aiState = AIStates.Aggro;
                         }

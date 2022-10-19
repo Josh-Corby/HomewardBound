@@ -13,7 +13,7 @@ public class PlayerTrigger : GameBehaviour
     {
         if (other.CompareTag("TallGrass"))
         {
-            //Debug.Log("Player is stealthed");
+            Debug.Log("Player is stealthed");
             OnPlayerStealth();
         }
     }
@@ -24,7 +24,7 @@ public class PlayerTrigger : GameBehaviour
     {
         if (other.CompareTag("TallGrass"))
         {
-            //Debug.Log("Player is unstealthed");
+            Debug.Log("Player is unstealthed");
             OnPlayerUnstealth();
         }
 
