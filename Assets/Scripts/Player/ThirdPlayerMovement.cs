@@ -72,6 +72,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private MovementSpeeds moveSpeeds;
     public GroundStates groundState;
 
+    bool buildState;
+
     [SerializeField]
     private GameObject grappleHitObject;
     private readonly float hookshotSpeedMin = 20f;
@@ -81,6 +83,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private float grappleRange = 50f;
     [SerializeField]
     LayerMask mask;
+
 
 
     public GameObject LilypadOffset;
@@ -176,6 +179,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private void HandleMovement()
     {
         groundState = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) ? GroundStates.Grounded : GroundStates.Airborne;
+
+        //buildState = Physics.CheckSphere(groundCheck.position, groundDistance, )
 
         switch (groundState)
         {
@@ -337,7 +342,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                         {
                             grappleHitObject = hit.collider.gameObject;
                             Debug.Log(grappleHitObject.name);
-                            if (grappleHitObject.CompareTag("Non-Grappleable-Surface"))
+                            if (grappleHitObject.CompareTag("Non-Grappleable-Surface") || grappleHitObject.CompareTag("FallingLilyPad"))
                             {
                                 StopHookshot();
                                 IM.rClick_Input = false;
@@ -383,6 +388,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     private void HandleHookshotPlayerMovement()
     {
+        LilypadOffset = null;
         //hookshot looks at position of target hit
         hookshotTransform.LookAt(hookshotPosition);
         Vector3 hookshotDir = (hookshotPosition - transform.position).normalized;
@@ -439,16 +445,10 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     private void ManageHookshotSize()
     {
-        hookshotSize = Vector3.Distance(transform.position, grappleHitObject.transform.position);
+        hookshotSize = Vector3.Distance(transform.position, hookshotPosition);
         hookshotTransform.localScale = new Vector3(1, 1, hookshotSize);
     }
 
-
-    private void ManageHookshotDirection()
-    {
-
-
-    }
     public void StopHookshot()
     {
         hookshotState = HookshotStates.Default;

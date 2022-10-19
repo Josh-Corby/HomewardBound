@@ -53,6 +53,10 @@ public class CameraTransform : GameBehaviour
 
     private void Update()
     {
+        if (vcam.Follow == null) return;
+        if (vcam.LookAt == null) return;
+
+
         vcam.Follow = CameraTarget.transform;
         vcam.LookAt = CameraTarget.transform;
         if (Input.GetKey(KeyCode.Mouse1))
@@ -89,6 +93,8 @@ public class CameraTransform : GameBehaviour
     private void CameraRotation()
     {
         //CameraTarget = UI.menu == Menus.Radial? null: cameraLook;
+        vcam.LookAt = UI.menu == Menus.Radial ? null : cameraLook.transform;
+        vcam.Follow = UI.menu == Menus.Radial ? null : cameraLook.transform;
 
         if (CameraTarget == null) return;
         // if there is an input and camera position is not fixed

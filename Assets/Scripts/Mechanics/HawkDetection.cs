@@ -57,7 +57,7 @@ public class HawkDetection : GameBehaviour
         }
         if (!isGrowing)
         {
-            timer += Time.deltaTime;
+            timer += Time.deltaTime *2f;
             detectionCircle.transform.localScale = minScale;
         }
     }

@@ -62,11 +62,13 @@ public class GameManager : GameBehaviour<GameManager>
         TPM.LilypadOffset = null;
         TPM.fallTimer = TPM.fallTimerMax;
         TPM.enabled = true;
+        TPM.StopHookshot();
 
         PM.isClimbing = false;
-        LC.inside = false;  
+        LC.inside = false;
         //Debug.Log("Player Respawned");
-        TPM.StopHookshot();
+        BM.CancelBuilding();
+        
     }
 
     /// <summary>
