@@ -62,11 +62,11 @@ public class CameraTransform : GameBehaviour
             
         }
 
-        if (!Input.GetKey(KeyCode.Mouse1))
-        {
-            //CameraTarget = cameraLook;
-            camfollow.ShoulderOffset = new Vector3()
-        }
+        //if (!Input.GetKey(KeyCode.Mouse1))
+        //{
+        //    //CameraTarget = cameraLook;
+        //    camfollow.ShoulderOffset = new Vector3();
+        //}
 
         if (UI.menu != Menus.None || UI.paused)
             return;
