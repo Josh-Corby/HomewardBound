@@ -43,7 +43,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     public GameObject buildObject;
     public GameObject buildingObject;
-    private Color buildObjectBaseColour;
+    //private Color buildObjectBaseColour;
     [SerializeField]
     private Color buildObjectColour;
     private MeshRenderer buildObjectRenderer;

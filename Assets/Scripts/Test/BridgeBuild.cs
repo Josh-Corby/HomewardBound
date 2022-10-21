@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 public class BridgeBuild : GameBehaviour
 {
+    
+
     [SerializeField]
     private GameObject currentExtension;
     [SerializeField]
@@ -12,14 +15,22 @@ public class BridgeBuild : GameBehaviour
 
 
     private MeshRenderer renderer;
+    [SerializeField]
     private Color baseColour;
 
+    [SerializeField]
     private bool currentBuildObject;
+
+    [SerializeField]
+    private bool canBuild;
+
+
+    private bool[] collisionCheck;
 
     private void Awake()
     {
         renderer = GetComponent<MeshRenderer>();
-
+        baseColour = renderer.material.color;
         extensionCount = 0;
         currentExtension = null;
 
@@ -28,17 +39,50 @@ public class BridgeBuild : GameBehaviour
             extension.SetActive(false);
         }
     }
+
+    private void Start()
+    {
+        BuildObjectTrigger.OnBridgeCollision += StartCollisionCheck;
+        canBuild = true;
+
+        for (int i = 0; i < BridgeSegments.Count; i++)
+        {
+
+        }
+    }
+
+    private void StartCollisionCheck()
+    {
+        StopCoroutine(CheckSegmentCollisions());
+
+        StartCoroutine(CheckSegmentCollisions());
+    }
+
+    private IEnumerator CheckSegmentCollisions()
+    {
+
+        yield return new WaitForEndOfFrame();
+
+        foreach (GameObject trigger in BridgeSegments)
+        {
+            
+            canBuild = trigger.GetComponentInChildren<BuildObjectTrigger>().canBuild;
+            Debug.Log(trigger.GetComponentInChildren<BuildObjectTrigger>().canBuild);
+        }
+    }
+
     void Update()
     {
-        currentBuildObject = gameObject == BM.buildingObject ? true : false;
+        if (UI.paused) return;
 
+        BM.canBuild = canBuild;
+
+        currentBuildObject = gameObject == BM.buildingObject ? true : false;
 
         if (currentBuildObject == false)
         {
             ChangeColourOfBridge(baseColour);
         }
-
-
 
         if (currentBuildObject == true)
         {
