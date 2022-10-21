@@ -5,6 +5,8 @@ using UnityEngine;
 public class ActivateDialogue : MonoBehaviour
 {
     public GameObject dialogueManager;
+    public GameObject dialogueStart;
+    public GameObject dialogueContinue;
     public bool playerFound;
 
     private void OnTriggerEnter(Collider other)
@@ -13,6 +15,17 @@ public class ActivateDialogue : MonoBehaviour
         {
             playerFound = true;
             dialogueManager.SetActive(true);
+
+            dialogueContinue.SetActive(false);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player") && Input.GetMouseButton(0))
+        {
+            dialogueStart.SetActive(false);
+            dialogueContinue.SetActive(true);
         }
     }
 
@@ -21,6 +34,8 @@ public class ActivateDialogue : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerFound = false;
+
+            dialogueStart.SetActive(true);
             dialogueManager.SetActive(false);
         }
     }
