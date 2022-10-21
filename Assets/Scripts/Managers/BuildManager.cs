@@ -56,6 +56,8 @@ public class BuildManager : GameBehaviour<BuildManager>
         // If the player isn't building cancel the build input
         if (!isBuilding)
         {
+
+
             if (IM.cancel_Input)
             {
                 IM.cancel_Input = false;
@@ -91,7 +93,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         }
 
         // Checks for if player can build
-        if (Input.GetKeyDown(KeyCode.Mouse1) && isBuilding && !UI.paused)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && isBuilding && !UI.paused)
         {
             if (TPM.groundState == GroundStates.Airborne || canBuild == false)
             {

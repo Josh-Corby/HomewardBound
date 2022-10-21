@@ -50,15 +50,20 @@ public class BuildObjectRB : MonoBehaviour
     public void FreezeConstraints()
     {
         rb.constraints = RigidbodyConstraints.FreezeAll;
-        if (objectType == ObjectType.Ladder)
-        {
-            rb.constraints &= ~RigidbodyConstraints.FreezePositionY;
-        }
-
     }
 
     public void UnFreezeConstraints()
     {
+
+        if(objectType == ObjectType.Bridge)
+        {
         rb.constraints = RigidbodyConstraints.None;
+
+        }
+
+        if(objectType == ObjectType.Ladder)
+        {
+            rb.constraints &= ~RigidbodyConstraints.FreezePositionY;
+        }
     }
 }
