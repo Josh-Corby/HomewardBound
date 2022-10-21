@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildObject : GameBehaviour
+public class BuildObjectTrigger : GameBehaviour
 {
     public List<GameObject> collisionObjects = new List<GameObject>();
 
-    GameObject buildObject;
+    private GameObject buildObject;
     //MeshRenderer renderer;
     //[SerializeField]
     //Color transparent;
@@ -25,10 +25,13 @@ public class BuildObject : GameBehaviour
     {
 
         BM.canBuild = collisionObjects.Count == 0;
+
+      
     }
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Hawk") || other.CompareTag("Mechanics") || other.CompareTag("Player"))
+        if (other.CompareTag("Hawk") || other.CompareTag("Mechanics") || other.CompareTag("Player"))
         {
             return;
         }

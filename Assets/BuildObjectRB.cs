@@ -21,6 +21,7 @@ public class BuildObjectRB : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        rb.constraints = RigidbodyConstraints.FreezeAll;
     }
     private void Start()
     {

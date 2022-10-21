@@ -41,8 +41,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     public GameObject prefabToSpawn;
 
-    [SerializeField]
-    private GameObject buildObject;
+    public GameObject buildObject;
     public GameObject buildingObject;
     private Color buildObjectBaseColour;
     [SerializeField]
@@ -51,6 +50,11 @@ public class BuildManager : GameBehaviour<BuildManager>
 
 
     private bool canRepeat;
+
+
+
+
+
     private void Update()
     {
         // If the player isn't building cancel the build input
@@ -66,22 +70,22 @@ public class BuildManager : GameBehaviour<BuildManager>
         }
         if (isBuilding)
         {
-            if (!canBuild)
-            {
+            //if (!canBuild)
+            //{
 
-                buildObjectColour = Color.red;
-                buildObjectColour.a = 0.1f;
-                buildObjectRenderer.material.color = buildObjectColour;
-            }
+            //    buildObjectColour = Color.red;
+            //    buildObjectColour.a = 0.1f;
+            //    buildObjectRenderer.material.color = buildObjectColour;
+            //}
 
-            if (canBuild)
-            {
+            //if (canBuild)
+            //{
 
-                buildObjectColour = Color.blue;
-                buildObjectColour.a = 0.1f;
-                buildObjectRenderer.material.color = buildObjectColour;
+            //    buildObjectColour = Color.blue;
+            //    buildObjectColour.a = 0.1f;
+            //    buildObjectRenderer.material.color = buildObjectColour;
 
-            }
+            //}
 
             if (IM.cancel_Input)
             {
@@ -90,6 +94,7 @@ public class BuildManager : GameBehaviour<BuildManager>
                     CancelBuilding();
                 }
             }
+
         }
 
         // Checks for if player can build
@@ -104,7 +109,9 @@ public class BuildManager : GameBehaviour<BuildManager>
             // If material comparisons return true
             else if (canBuild)
             {
-                buildObjectRenderer.material.color = buildObjectBaseColour;
+                //buildObjectRenderer.material.color = buildObjectBaseColour;
+
+
                 //StartCoroutine(buildObject.LerpAlpha());
                 Debug.Log("Object Built");
 
@@ -113,22 +120,15 @@ public class BuildManager : GameBehaviour<BuildManager>
 
                 // Reactivate Interaction Zone
                 IZ.Toggle(true);
-                buildObject.GetComponent<BoxCollider>().enabled = true;
-                buildObject.gameObject.GetComponent<BuildObjectRB>().UnFreezeConstraints();
-                buildObject.gameObject.GetComponent<BuildObjectRB>().frozen = false;
+                buildingObject.GetComponent<BoxCollider>().enabled = true;
+                buildingObject.gameObject.GetComponent<BuildObjectRB>().UnFreezeConstraints();
+                buildingObject.gameObject.GetComponent<BuildObjectRB>().frozen = false;
 
                 SubtractCost();
                 ResetBuildObject();
-                return;
-
-                canRepeat = true;
-                RepeatBuild();
-
-                //ResetBuildObject();             
+                return;      
             }
-
             return;
-
         }
     }
 
@@ -160,7 +160,7 @@ public class BuildManager : GameBehaviour<BuildManager>
     private void ResetBuildObject()
     {
         // Reset manager bools
-        buildObject.GetComponent<BoxCollider>().enabled = true;
+        //buildObject.GetComponent<BoxCollider>().enabled = true;
         buildingObject = null;
         buildObject = null;
         prefabToSpawn = null;
@@ -235,12 +235,14 @@ public class BuildManager : GameBehaviour<BuildManager>
 
         // Instantiate object as a child of buildZone
         Instantiate(prefabToSpawn, buildZone.transform);
+
         buildingObject = buildZone.transform.GetChild(0).gameObject;
-        buildObjectRenderer = buildingObject.GetComponentInChildren<MeshRenderer>();
-        buildObjectBaseColour = buildObjectRenderer.material.color;
-        buildObject = buildingObject.transform.GetChild(0).gameObject;
-        
-        buildObject.GetComponentInChildren<BoxCollider>().enabled = false;
+        //buildObjectRenderer = buildingObject.GetComponentInChildren<MeshRenderer>();
+        //buildObjectBaseColour = buildObjectRenderer.material.color;
+        //buildObject = buildingObject.transform.GetChild(0).gameObject;
+        //buildObject.GetComponentInChildren<BoxCollider>().enabled = false;
+
+
         //UI.BuildMenuToggle();
         isBuilding = true;
     }
