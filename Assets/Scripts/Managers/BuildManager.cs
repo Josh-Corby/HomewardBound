@@ -42,7 +42,7 @@ public class BuildManager : GameBehaviour<BuildManager>
     public GameObject prefabToSpawn;
 
     [SerializeField]
-    private BuildObject buildObject;
+    private GameObject buildObject;
     public GameObject buildingObject;
     private Color buildObjectBaseColour;
     [SerializeField]
@@ -111,10 +111,13 @@ public class BuildManager : GameBehaviour<BuildManager>
 
                 // Reactivate Interaction Zone
                 IZ.Toggle(true);
-
-                buildingObject.gameObject.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePositionY;
+                buildObject.GetComponent<BoxCollider>().enabled = true;
+                buildObject.gameObject.GetComponent<BuildObjectRB>().UnFreezeConstraints();
+                buildObject.gameObject.GetComponent<BuildObjectRB>().frozen = false;
 
                 SubtractCost();
+                ResetBuildObject();
+                return;
 
                 canRepeat = true;
                 RepeatBuild();
@@ -155,7 +158,7 @@ public class BuildManager : GameBehaviour<BuildManager>
     private void ResetBuildObject()
     {
         // Reset manager bools
-        buildingObject.GetComponent<BoxCollider>().enabled = true;
+        buildObject.GetComponent<BoxCollider>().enabled = true;
         buildingObject = null;
         buildObject = null;
         prefabToSpawn = null;
@@ -231,10 +234,11 @@ public class BuildManager : GameBehaviour<BuildManager>
         // Instantiate object as a child of buildZone
         Instantiate(prefabToSpawn, buildZone.transform);
         buildingObject = buildZone.transform.GetChild(0).gameObject;
-        buildObjectRenderer = buildingObject.GetComponent<MeshRenderer>();
+        buildObjectRenderer = buildingObject.GetComponentInChildren<MeshRenderer>();
         buildObjectBaseColour = buildObjectRenderer.material.color;
-        buildObject = buildingObject.GetComponentInChildren<BuildObject>();
-        buildingObject.GetComponent<BoxCollider>().enabled = false;
+        buildObject = buildingObject.transform.GetChild(0).gameObject;
+        
+        buildObject.GetComponentInChildren<BoxCollider>().enabled = false;
         //UI.BuildMenuToggle();
         isBuilding = true;
     }
