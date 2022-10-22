@@ -17,9 +17,13 @@ public class BuildObjectRB : MonoBehaviour
     [SerializeField]
     private Rigidbody rb;
 
+    [SerializeField]
+    private BoxCollider collider;
+
 
     private void Awake()
     {
+        collider = GetComponent<BoxCollider>();
         rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeAll;
     }
@@ -33,12 +37,13 @@ public class BuildObjectRB : MonoBehaviour
 
     private IEnumerator FreezeCheck()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.3f);
 
         if (!frozen)
         {
             if (rb.velocity == Vector3.zero)
             {
+                Debug.Log("Object frozen");
                 FreezeConstraints();
                 frozen = true;
                 yield return null;
@@ -50,6 +55,7 @@ public class BuildObjectRB : MonoBehaviour
 
     public void FreezeConstraints()
     {
+        
         rb.constraints = RigidbodyConstraints.FreezeAll;
     }
 
@@ -66,5 +72,14 @@ public class BuildObjectRB : MonoBehaviour
         {
             rb.constraints &= ~RigidbodyConstraints.FreezePositionY;
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject == gameObject) return;
+        if (collision.gameObject.CompareTag("Ground")) return;
+
+        Debug.Log(collision.gameObject.name);
+        FreezeConstraints();
     }
 }

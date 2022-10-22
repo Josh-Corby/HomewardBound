@@ -4,10 +4,13 @@ using UnityEngine;
 using System;
 public class ObjectBuild : GameBehaviour
 {
+
+    public static event Action OnObjectLengthChange;
+
     [SerializeField]
     private GameObject currentExtension;
     [SerializeField]
-    private int extensionCount;
+    public int extensionCount;
     [SerializeField]
     private List<BuildObjectTrigger> ObjectSegmentTriggers = new List<BuildObjectTrigger>();
     public bool[] collisionChecks;
@@ -19,16 +22,18 @@ public class ObjectBuild : GameBehaviour
     [SerializeField]
     private bool canBuild;
 
+    [SerializeField]
+    private BridgeMeshManager bridgeMeshManager;
+
     private void Awake()
     {
-        renderer = GetComponent<MeshRenderer>();
+        renderer = GetComponentInChildren<MeshRenderer>();
         baseColour = renderer.material.color;
         extensionCount = 0;
         currentExtension = null;
-
         for (int i = 1; i < ObjectSegmentTriggers.Count; i++)
         {
-            ObjectSegmentTriggers[i].transform.parent.gameObject.SetActive(false);
+            ObjectSegmentTriggers[i].transform.gameObject.SetActive(false);
         }
     }
     public void CheckSegmentCollisions(BuildObjectTrigger trigger)
@@ -68,19 +73,19 @@ public class ObjectBuild : GameBehaviour
 
         if (isBeingBuilt == false)
         {
-            ChangeColourOfBridge(baseColour);
+            ChangeColourOfObject(baseColour);
         }
 
         if (isBeingBuilt == true)
         {
             if (BM.canBuild)
             {
-                ChangeColourOfBridge(Color.blue);
+                ChangeColourOfObject(Color.blue);
             }
 
             if (!BM.canBuild)
             {
-                ChangeColourOfBridge(Color.red);
+                ChangeColourOfObject(Color.red);
             }
         }
         extensionCount = Mathf.Clamp(extensionCount, 1, ObjectSegmentTriggers.Count);
@@ -95,10 +100,11 @@ public class ObjectBuild : GameBehaviour
                     return;
                 }
                 extensionCount += 1;
+                OnObjectLengthChange();
 
                 BM.SetMaterialCosts(2, extensionCount);
 
-                currentExtension = ObjectSegmentTriggers[extensionCount - 1].transform.parent.gameObject;
+                currentExtension = ObjectSegmentTriggers[extensionCount - 1].transform.gameObject;
                 currentExtension.SetActive(true);
           
             }
@@ -109,6 +115,7 @@ public class ObjectBuild : GameBehaviour
 
                 currentExtension.SetActive(false);
                 extensionCount -= 1;
+                OnObjectLengthChange();
 
                 BM.SetMaterialCosts(2, extensionCount);
 
@@ -117,26 +124,27 @@ public class ObjectBuild : GameBehaviour
                     currentExtension = null;
                     return;
                 }
-                currentExtension = ObjectSegmentTriggers[extensionCount - 1].transform.parent.gameObject;
+                currentExtension = ObjectSegmentTriggers[extensionCount - 1].transform.gameObject;
             }
         }
 
     }
 
 
-    private void ChangeColourOfBridge(Color colour)
+    private void ChangeColourOfObject(Color colour)
     {
 
         renderer.material.color = colour;
 
         for (int i = 1; i < ObjectSegmentTriggers.Count; i++)
         {
-            ObjectSegmentTriggers[i].transform.parent.gameObject.GetComponent<MeshRenderer>().material.color = colour;
+            ObjectSegmentTriggers[i].transform.parent.gameObject.GetComponentInChildren<MeshRenderer>().material.color = colour;
         }
         //foreach (BuildObjectTrigger extension in BridgeSegmentTriggers)
         //{
         //    extension.transform.parent.gameObject.GetComponent<MeshRenderer>().material.color = colour;
         //}
     }
+
 }
 

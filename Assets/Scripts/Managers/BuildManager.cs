@@ -55,6 +55,17 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     private void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            BuildItem(1);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            BuildItem(2);
+        }
+
         // If the player isn't building cancel the build input
         if (!isBuilding)
         {
@@ -110,31 +121,6 @@ public class BuildManager : GameBehaviour<BuildManager>
             return;
         }
     }
-
-    //private void RepeatBuild()
-    //{
-    //    if (canRepeat)
-    //    {
-    //        if (buildingObject.CompareTag("Bridge"))
-    //        {
-    //            //Debug.Log("Repeat bridge");
-    //            ResetBuildObject();
-    //            BuildItem(2);
-    //            canRepeat = false;
-    //            return;
-    //        }
-
-    //        if (buildingObject.CompareTag("Ladder"))
-    //        {
-    //            //Debug.Log("Repeat bridge");
-    //            ResetBuildObject();
-    //            BuildItem(1);
-    //            canRepeat = false;
-    //            return;
-    //        }
-    //    }
-
-    //}
 
     private void ResetBuildObject()
     {

@@ -68,6 +68,11 @@ public class UIManager : GameBehaviour<UIManager>
 
     public float timeScale;
 
+
+    public Image LadderOutline;
+    public Image BridgeOutline;
+
+
     private void Start()
     {
         // Set UI values for start of game
