@@ -37,13 +37,13 @@ public class LadderClimb : GameBehaviour<LadderClimb>
         if (inside == true && Input.GetKey("w"))
         {
             PlayerController.transform.position += Vector3.up / speedUpDown;
-            Debug.Log("Climbing Up");
+            //Debug.Log("Climbing Up");
         }
 
         if (inside == true && Input.GetKey("s"))
         {
             PlayerController.transform.position += Vector3.down / speedUpDown;
-            Debug.Log("Climbing Down");
+            //Debug.Log("Climbing Down");
         }
     }
 }

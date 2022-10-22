@@ -189,7 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collisionObjects: []
   canBuild: 0
-  BridgeMain: {fileID: 693926061621972264}
+  ObjectMain: {fileID: 693926061621972264}
 --- !u!114 &276136619462600314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,6 +275,11 @@ PrefabInstance:
     - target: {fileID: 4106535069823339043, guid: c123736cc0116224a84fe7776ab2b875,
         type: 3}
       propertyPath: BridgeMain
+      value: 
+      objectReference: {fileID: 693926061621972264}
+    - target: {fileID: 4106535069823339043, guid: c123736cc0116224a84fe7776ab2b875,
+        type: 3}
+      propertyPath: ObjectMain
       value: 
       objectReference: {fileID: 693926061621972264}
     - target: {fileID: 4438857855638288924, guid: c123736cc0116224a84fe7776ab2b875,
@@ -385,6 +390,11 @@ PrefabInstance:
       propertyPath: BridgeMain
       value: 
       objectReference: {fileID: 693926061621972264}
+    - target: {fileID: 4106535069823339043, guid: c123736cc0116224a84fe7776ab2b875,
+        type: 3}
+      propertyPath: ObjectMain
+      value: 
+      objectReference: {fileID: 693926061621972264}
     - target: {fileID: 4438857855638288924, guid: c123736cc0116224a84fe7776ab2b875,
         type: 3}
       propertyPath: m_Name
@@ -491,6 +501,11 @@ PrefabInstance:
     - target: {fileID: 4106535069823339043, guid: c123736cc0116224a84fe7776ab2b875,
         type: 3}
       propertyPath: BridgeMain
+      value: 
+      objectReference: {fileID: 693926061621972264}
+    - target: {fileID: 4106535069823339043, guid: c123736cc0116224a84fe7776ab2b875,
+        type: 3}
+      propertyPath: ObjectMain
       value: 
       objectReference: {fileID: 693926061621972264}
     - target: {fileID: 4438857855638288924, guid: c123736cc0116224a84fe7776ab2b875,
