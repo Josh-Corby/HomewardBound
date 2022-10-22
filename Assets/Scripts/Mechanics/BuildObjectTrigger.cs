@@ -9,7 +9,7 @@ public class BuildObjectTrigger : GameBehaviour
     public bool canBuild;
 
     [SerializeField]
-    private BridgeBuild BridgeMain;
+    private ObjectBuild ObjectMain;
 
 
     private void Start()
@@ -47,7 +47,9 @@ public class BuildObjectTrigger : GameBehaviour
     private void UpdateCanBuild()
     {
         canBuild = collisionObjects.Count == 0;
-        BridgeMain.CheckSegmentCollisions(this);
+
+        if (ObjectMain == null) return;
+        ObjectMain.CheckSegmentCollisions(this);
     }
 
 

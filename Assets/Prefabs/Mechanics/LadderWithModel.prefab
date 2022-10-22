@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5047988332745296096}
   - component: {fileID: 5803901013601560123}
   - component: {fileID: 7792362158443995066}
+  - component: {fileID: 2708193910085613456}
   m_Layer: 6
   m_Name: LadderWithModel
   m_TagString: Ladder
@@ -34,6 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4952335861763524902}
+  - {fileID: 8756231197694832304}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
@@ -128,8 +130,90 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9017c28d879ffd94683118581cb524ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectType: 0
   frozen: 0
   rb: {fileID: 0}
+--- !u!114 &2708193910085613456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012873502108591949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc5c4b81729d21f41904b8426a859cf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentExtension: {fileID: 0}
+  extensionCount: 0
+  ObjectSegmentTriggers:
+  - {fileID: 2504912413395523635}
+  collisionChecks: 00
+  baseColour: {r: 0, g: 0, b: 0, a: 0}
+  isBeingBuilt: 0
+  canBuild: 0
+--- !u!1 &4929147796676448563
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8756231197694832304}
+  - component: {fileID: 3352449509118570833}
+  - component: {fileID: 2504912413395523635}
+  m_Layer: 6
+  m_Name: BuildTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8756231197694832304
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4929147796676448563}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4896723451962940260}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3352449509118570833
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4929147796676448563}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.535983, y: 5.1133943, z: 0.278058}
+  m_Center: {x: 0.027251542, y: 2.587694, z: 0.20602301}
+--- !u!114 &2504912413395523635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4929147796676448563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e552d296c916ec41a82d8c2aaca2422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionObjects: []
+  canBuild: 0
+  ObjectMain: {fileID: 2708193910085613456}
 --- !u!1 &6563270710007697604
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,7 +224,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4952335861763524902}
   - component: {fileID: 6625541696201374490}
-  - component: {fileID: 7563819708732926605}
   m_Layer: 6
   m_Name: ClimbCollider
   m_TagString: Ladder
@@ -176,16 +259,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.2, y: 3.6839309, z: 0.83}
   m_Center: {x: 5.5102597e-14, y: 3.4119651, z: 0.21000001}
---- !u!114 &7563819708732926605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6563270710007697604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e552d296c916ec41a82d8c2aaca2422, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collisionObjects: []

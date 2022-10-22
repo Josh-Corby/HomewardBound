@@ -254,7 +254,7 @@ public class UIManager : GameBehaviour<UIManager>
     {
         pickaxeButton.interactable = GM.havePickaxe;
 
-        buildLadderButton.interactable = BM.LadderCheck() && GM.haveBuilding;
+        //buildLadderButton.interactable = BM.LadderCheck() && GM.haveBuilding;
         //buildBridgeButton.interactable = BM.BridgeCheck(1) && GM.haveBuilding;
 
         if (GM.haveGlider || GM.haveGrappleHook)

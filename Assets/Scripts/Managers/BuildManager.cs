@@ -44,7 +44,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     public GameObject prefabToSpawn;
 
-    public GameObject buildObject;
+
     public GameObject buildingObject;
     //private Color buildObjectBaseColour;
     [SerializeField]
@@ -111,36 +111,35 @@ public class BuildManager : GameBehaviour<BuildManager>
         }
     }
 
-    private void RepeatBuild()
-    {
-        if (canRepeat)
-        {
-            if (buildingObject.CompareTag("Bridge"))
-            {
-                //Debug.Log("Repeat bridge");
-                ResetBuildObject();
-                BuildItem(2);
-                canRepeat = false;
-                return;
-            }
+    //private void RepeatBuild()
+    //{
+    //    if (canRepeat)
+    //    {
+    //        if (buildingObject.CompareTag("Bridge"))
+    //        {
+    //            //Debug.Log("Repeat bridge");
+    //            ResetBuildObject();
+    //            BuildItem(2);
+    //            canRepeat = false;
+    //            return;
+    //        }
 
-            if (buildingObject.CompareTag("Ladder"))
-            {
-                //Debug.Log("Repeat bridge");
-                ResetBuildObject();
-                BuildItem(1);
-                canRepeat = false;
-                return;
-            }
-        }
+    //        if (buildingObject.CompareTag("Ladder"))
+    //        {
+    //            //Debug.Log("Repeat bridge");
+    //            ResetBuildObject();
+    //            BuildItem(1);
+    //            canRepeat = false;
+    //            return;
+    //        }
+    //    }
 
-    }
+    //}
 
     private void ResetBuildObject()
     {
         // Reset manager bools
         buildingObject = null;
-        buildObject = null;
         prefabToSpawn = null;
         canBuild = false;
         isBuilding = false;
@@ -178,7 +177,6 @@ public class BuildManager : GameBehaviour<BuildManager>
                 //    OM.ChangeOutfits(4);
                 //    return;
                 //}
-
                 StartCoroutine(BuildObject());
                 break;
                 /*
@@ -189,7 +187,6 @@ public class BuildManager : GameBehaviour<BuildManager>
                  * break;
                 */
         }
-
         IZ.Toggle(true);
         IZ.DisableInteractions();
     }
@@ -203,13 +200,12 @@ public class BuildManager : GameBehaviour<BuildManager>
         // Destroy any objects that shouldnt be there and make buildingobject null for function
         Destroy(buildingObject);
         buildingObject = null;
-        buildObject = null;
-
         // Wait a frame for other functions and updates to process that object has been destroyed
         yield return new WaitForEndOfFrame();
 
         // Instantiate object as a child of buildZone
-        Instantiate(prefabToSpawn, buildZone.transform);
+        GameObject BuildObject =  Instantiate(prefabToSpawn, buildZone.transform);
+        buildingObject = BuildObject;
         //UI.BuildMenuToggle();
         isBuilding = true;
     }
@@ -225,7 +221,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         canBuild = false;
         isBuilding = false;
     }
-    private void SetMaterialCosts(int index, int costMultiplier)
+    public void SetMaterialCosts(int index, int costMultiplier)
     {
         switch ((BuildObjects)index)
         {
@@ -276,5 +272,5 @@ public class BuildManager : GameBehaviour<BuildManager>
         GM.mushroomsCollected += mushroomCost;
         UI.UpdateMaterialsCollected();
     }
-    #endregion
+
 }
