@@ -26,8 +26,11 @@ public class BuildManager : GameBehaviour<BuildManager>
 
 
     [Header("Craft Costs")]
+    [SerializeField]
     private int pebbleCost;
+    [SerializeField]
     private int stickCost;
+    [SerializeField]
     private int mushroomCost;
 
     [Header("Build Prefabs")]
@@ -48,12 +51,7 @@ public class BuildManager : GameBehaviour<BuildManager>
     private Color buildObjectColour;
     private MeshRenderer buildObjectRenderer;
 
-
     private bool canRepeat;
-
-
-
-
 
     private void Update()
     {
@@ -70,22 +68,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         }
         if (isBuilding)
         {
-            //if (!canBuild)
-            //{
 
-            //    buildObjectColour = Color.red;
-            //    buildObjectColour.a = 0.1f;
-            //    buildObjectRenderer.material.color = buildObjectColour;
-            //}
-
-            //if (canBuild)
-            //{
-
-            //    buildObjectColour = Color.blue;
-            //    buildObjectColour.a = 0.1f;
-            //    buildObjectRenderer.material.color = buildObjectColour;
-
-            //}
 
             if (IM.cancel_Input)
             {
@@ -109,10 +92,6 @@ public class BuildManager : GameBehaviour<BuildManager>
             // If material comparisons return true
             else if (canBuild)
             {
-                //buildObjectRenderer.material.color = buildObjectBaseColour;
-
-
-                //StartCoroutine(buildObject.LerpAlpha());
                 Debug.Log("Object Built");
 
                 // Detach object from buildzone
@@ -126,7 +105,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
                 SubtractCost();
                 ResetBuildObject();
-                return;      
+                return;
             }
             return;
         }
@@ -160,7 +139,6 @@ public class BuildManager : GameBehaviour<BuildManager>
     private void ResetBuildObject()
     {
         // Reset manager bools
-        //buildObject.GetComponent<BoxCollider>().enabled = true;
         buildingObject = null;
         buildObject = null;
         prefabToSpawn = null;
@@ -178,30 +156,28 @@ public class BuildManager : GameBehaviour<BuildManager>
         switch ((BuildObjects)value)
         {
             case BuildObjects.Ladder:
-                if (LadderCheck())
-                {
-                    OM.ChangeOutfits(1);
-                    prefabToSpawn = ladderPrefab;
-                }
-                else
-                {
-                    OM.ChangeOutfits(4);
-                    return;
-                }
+                OM.ChangeOutfits(1);
+                prefabToSpawn = ladderPrefab;
+                SetMaterialCosts(value, 1);
+                //}
+                //else
+                //{
+                //    OM.ChangeOutfits(4);
+                //    return;
+                //}
                 StartCoroutine(BuildObject());
                 break;
 
             case BuildObjects.Bridge:
-                if (BridgeCheck())
-                {
-                    prefabToSpawn = bridgePrefab;
-                    OM.ChangeOutfits(1);
-                }
-                else
-                {
-                    OM.ChangeOutfits(4);
-                    return;
-                }
+                prefabToSpawn = bridgePrefab;
+                OM.ChangeOutfits(1);
+                SetMaterialCosts(value, 1);
+                //
+                //else
+                //{
+                //    OM.ChangeOutfits(4);
+                //    return;
+                //}
 
                 StartCoroutine(BuildObject());
                 break;
@@ -229,127 +205,57 @@ public class BuildManager : GameBehaviour<BuildManager>
         buildingObject = null;
         buildObject = null;
 
-
         // Wait a frame for other functions and updates to process that object has been destroyed
         yield return new WaitForEndOfFrame();
 
         // Instantiate object as a child of buildZone
         Instantiate(prefabToSpawn, buildZone.transform);
-
-        buildingObject = buildZone.transform.GetChild(0).gameObject;
-        //buildObjectRenderer = buildingObject.GetComponentInChildren<MeshRenderer>();
-        //buildObjectBaseColour = buildObjectRenderer.material.color;
-        //buildObject = buildingObject.transform.GetChild(0).gameObject;
-        //buildObject.GetComponentInChildren<BoxCollider>().enabled = false;
-
-
         //UI.BuildMenuToggle();
         isBuilding = true;
     }
 
     public void CancelBuilding()
     {
-        if(buildingObject != null)
+        if (buildingObject != null)
         {
             Destroy(buildingObject);
         }
-  
+
         prefabToSpawn = null;
         canBuild = false;
         isBuilding = false;
     }
-
-    #region Materials Comparisons
-    /*
-     * These functions define the costs of objects that can be built
-     * After defining the cost it takes to build an object it runs a check to see if the object can be built
-     * A bool is then returned telling the manager if the player can build or not
-    */
-
-    /*
-    public bool PickaxeCheck()
+    private void SetMaterialCosts(int index, int costMultiplier)
     {
-        pebbleCost = 3;
-        stickCost = 3;
-        mushroomCost = 0;
-        return CompareChecks();
+        switch ((BuildObjects)index)
+        {
+            case BuildObjects.Ladder:
+                pebbleCost = 3;
+                stickCost = 2;
+                mushroomCost = 1;
+                break;
+            case BuildObjects.Bridge:
+                pebbleCost = 1 * costMultiplier;
+                stickCost = 1 * costMultiplier;
+                mushroomCost = 1 * costMultiplier;
+                break;
+        }
     }
-    */
-
-    /// <summary>
-    /// Define the cost of the ladder, then runs a comparison function
-    /// 
-    /// </summary>
-    /// <returns>Returns a bool that tells the manager if the object can be built </returns>
-    public bool LadderCheck()
-    {
-        pebbleCost = 3;
-        stickCost = 2;
-        mushroomCost = 1;
-        return CompareChecks();
-    }
-
-    /// <summary>
-    /// Define the cost of the bridge, then runs a comparison function
-    /// </summary>
-    /// <returns>Returns a bool that tells the manager if the object can be built</returns>
-    public bool BridgeCheck()
-    {
-        pebbleCost = 2;
-        stickCost = 3;
-        mushroomCost = 1;
-        return CompareChecks();
-    }
-    /*
-    public bool SlingshotCheck()
-    {
-        pebbleCost = 1;
-        stickCost = 2;
-        mushroomCost = 3;
-        return CompareChecks();
-    }
-
-    public bool AmmoCheck()
-    {
-        pebbleCost = 2;
-        stickCost = 0;
-        mushroomCost = 0;
-        return CompareChecks();
-    }
-    
-    public bool GliderCheck()
-    {
-        pebbleCost = 1;
-        stickCost = 2;
-        mushroomCost = 3;
-        return CompareChecks();
-    }
-    public bool GrappleHookCheck()
-    {
-        pebbleCost = 2;
-        stickCost = 2;
-        mushroomCost = 2;
-        return CompareChecks();
-    }
-    */
-
-
     /// <summary>
     /// Compare object price with materials player has
     /// </summary>
     /// <returns>Returns a bool that says if an object can be built or not</returns>
     private bool CompareChecks()
     {
-        pebbleCheck = GM.rocksCollected >= pebbleCost ? pebbleCheck = true : pebbleCheck = false;
-        stickCheck = GM.sticksCollected >= stickCost ? stickCheck = true : stickCheck = false;
-        mushroomCheck = GM.mushroomsCollected >= mushroomCost ? mushroomCheck = true : mushroomCheck = false;
+        pebbleCheck = GM.rocksCollected >= pebbleCost;
+        stickCheck = GM.sticksCollected >= stickCost;
+        mushroomCheck = GM.mushroomsCollected >= mushroomCost;
 
         if (pebbleCheck == true && stickCheck == true && mushroomCheck)
             return true;
         else
             return false;
     }
-
     /// <summary>
     /// Subtract the cost of a build object from the player when building is completed
     /// </summary>

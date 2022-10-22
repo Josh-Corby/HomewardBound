@@ -4,28 +4,20 @@ using UnityEngine;
 using System;
 public class BridgeBuild : GameBehaviour
 {
-    
-
     [SerializeField]
     private GameObject currentExtension;
     [SerializeField]
     private int extensionCount;
     [SerializeField]
-    private List<GameObject> BridgeSegments = new List<GameObject>();
-
-
+    private List<BuildObjectTrigger> BridgeSegmentTriggers = new List<BuildObjectTrigger>();
+    public bool[] collisionChecks;
     private MeshRenderer renderer;
     [SerializeField]
     private Color baseColour;
-
     [SerializeField]
-    private bool currentBuildObject;
-
+    private bool isBeingBuilt;
     [SerializeField]
     private bool canBuild;
-
-
-    private bool[] collisionCheck;
 
     private void Awake()
     {
@@ -34,57 +26,52 @@ public class BridgeBuild : GameBehaviour
         extensionCount = 0;
         currentExtension = null;
 
-        foreach (var extension in BridgeSegments)
+        for (int i = 1; i < BridgeSegmentTriggers.Count; i++)
         {
-            extension.SetActive(false);
+            BridgeSegmentTriggers[i].transform.parent.gameObject.SetActive(false);
         }
     }
-
-    private void Start()
+    public void CheckSegmentCollisions(BuildObjectTrigger trigger)
     {
-        BuildObjectTrigger.OnBridgeCollision += StartCollisionCheck;
+        for (int i = 0; i < extensionCount; i++)
+        {
+            //if (BridgeSegmentTriggers[i].enabled == false) return;
+            //Debug.Log(BridgeSegmentTriggers[i]);
+            if (BridgeSegmentTriggers[i] == trigger)
+            {
+                //Debug.Log("Collisions updated");
+                collisionChecks[i] = trigger.canBuild;
+            }
+        }
+        for (int i = 0; i < extensionCount; i++)
+        {
+            collisionChecks[i] = BridgeSegmentTriggers[i].canBuild;
+
+            //Debug.Log(collisionChecks[i]);
+            if (collisionChecks[i] == false)
+            {
+                //Debug.Log("cant build bridge");
+                canBuild = false;
+                return;
+            }
+        }
         canBuild = true;
-
-        for (int i = 0; i < BridgeSegments.Count; i++)
-        {
-
-        }
     }
-
-    private void StartCollisionCheck()
-    {
-        StopCoroutine(CheckSegmentCollisions());
-
-        StartCoroutine(CheckSegmentCollisions());
-    }
-
-    private IEnumerator CheckSegmentCollisions()
-    {
-
-        yield return new WaitForEndOfFrame();
-
-        foreach (GameObject trigger in BridgeSegments)
-        {
-            
-            canBuild = trigger.GetComponentInChildren<BuildObjectTrigger>().canBuild;
-            Debug.Log(trigger.GetComponentInChildren<BuildObjectTrigger>().canBuild);
-        }
-    }
-
     void Update()
     {
         if (UI.paused) return;
 
         BM.canBuild = canBuild;
 
-        currentBuildObject = gameObject == BM.buildingObject ? true : false;
+        isBeingBuilt = gameObject == BM.buildingObject;
 
-        if (currentBuildObject == false)
+
+        if (isBeingBuilt == false)
         {
             ChangeColourOfBridge(baseColour);
         }
 
-        if (currentBuildObject == true)
+        if (isBeingBuilt == true)
         {
             if (BM.canBuild)
             {
@@ -95,45 +82,58 @@ public class BridgeBuild : GameBehaviour
             {
                 ChangeColourOfBridge(Color.red);
             }
+        }
 
-            extensionCount = Mathf.Clamp(extensionCount, 0, BridgeSegments.Count);
-            if (this.gameObject == BM.buildingObject)
+
+        extensionCount = Mathf.Clamp(extensionCount, 1, BridgeSegmentTriggers.Count);
+        if (this.gameObject == BM.buildingObject)
+        {
+            if (Input.mouseScrollDelta.y > 0)
             {
-                if (Input.mouseScrollDelta.y > 0)
+                if (extensionCount == BridgeSegmentTriggers.Count)
                 {
-                    if (extensionCount == BridgeSegments.Count)
-                    {
-                        return;
-                    }
-                    extensionCount += 1;
-                    currentExtension = BridgeSegments[extensionCount - 1];
-                    currentExtension.SetActive(true);
+                    return;
                 }
-                if (Input.mouseScrollDelta.y < 0)
+                extensionCount += 1;
+                BM.BridgeCheck(extensionCount);
+
+                currentExtension = BridgeSegmentTriggers[extensionCount - 1].transform.parent.gameObject;
+                currentExtension.SetActive(true);
+          
+            }
+            if (Input.mouseScrollDelta.y < 0)
+            {
+                if (currentExtension == null) return;
+
+                currentExtension.SetActive(false);
+                extensionCount -= 1;
+                BM.BridgeCheck(extensionCount);
+
+                if (extensionCount <= 1)
                 {
-                    if (currentExtension == null) return;
-
-                    currentExtension.SetActive(false);
-                    extensionCount -= 1;
-
-                    if (extensionCount <= 0)
-                    {
-                        currentExtension = null;
-                        return;
-                    }
-                    currentExtension = BridgeSegments[extensionCount - 1];
+                    currentExtension = null;
+                    return;
                 }
+                currentExtension = BridgeSegmentTriggers[extensionCount - 1].transform.parent.gameObject;
             }
         }
+
     }
+
 
     private void ChangeColourOfBridge(Color colour)
     {
+
         renderer.material.color = colour;
-        foreach (GameObject extension in BridgeSegments)
+
+        for (int i = 1; i < BridgeSegmentTriggers.Count; i++)
         {
-            extension.GetComponent<MeshRenderer>().material.color = colour;
+            BridgeSegmentTriggers[i].transform.parent.gameObject.GetComponent<MeshRenderer>().material.color = colour;
         }
+        //foreach (BuildObjectTrigger extension in BridgeSegmentTriggers)
+        //{
+        //    extension.transform.parent.gameObject.GetComponent<MeshRenderer>().material.color = colour;
+        //}
     }
 }
 

@@ -5,68 +5,51 @@ using System;
 
 public class BuildObjectTrigger : GameBehaviour
 {
-    public static event Action OnBridgeCollision;
-
     public List<GameObject> collisionObjects = new List<GameObject>();
-
     public bool canBuild;
 
-    private GameObject buildObject;
-    //MeshRenderer renderer;
-    //[SerializeField]
-    //Color transparent;
-    //[SerializeField]
-    //Color opaque;
-    //Color objectColor;
+    [SerializeField]
+    private BridgeBuild BridgeMain;
 
 
+    private void Start()
+    {
+        UpdateCanBuild();
+    }
     private void OnEnable()
     {
-        foreach (GameObject collision in collisionObjects)
-        {
-            collisionObjects.Remove(collision);
-        }
+        collisionObjects.Clear();
+        UpdateCanBuild();
     }
 
     private void OnDisable()
     {
-        foreach (GameObject collision in collisionObjects)
-        {
-            collisionObjects.Remove(collision);
-        }
+        collisionObjects.Clear();
+        UpdateCanBuild();
     }
-    private void Awake()
-    {
-        buildObject = transform.parent.gameObject;
-
-    }
-    private void Update()
-    {
-        canBuild = collisionObjects.Count == 0;
-    }
-
-
 
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.CompareTag("Hawk") || other.CompareTag("Mechanics") || other.CompareTag("Player"))
         {
             return;
         }
-        //Debug.Log(other.gameObject.name);
-
         collisionObjects.Add(other.gameObject);
-
-        OnBridgeCollision();
+        UpdateCanBuild();
     }
 
     private void OnTriggerExit(Collider other)
     {
         collisionObjects.Remove(other.gameObject);
-
-        OnBridgeCollision();
+        UpdateCanBuild();
     }
+
+    private void UpdateCanBuild()
+    {
+        canBuild = collisionObjects.Count == 0;
+        BridgeMain.CheckSegmentCollisions(this);
+    }
+
 
     //public IEnumerator LerpAlpha()
     //{

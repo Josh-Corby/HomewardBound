@@ -171,15 +171,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentExtension: {fileID: 0}
   extensionCount: 0
-  BridgeSegments:
-  - {fileID: 1299501697146041603}
-  - {fileID: 1299501698043442190}
-  - {fileID: 1299501697797474279}
-  - {fileID: 1299501697381848859}
-  - {fileID: 1299501697659812639}
-  - {fileID: 1299501697306413729}
-  - {fileID: 1299501696994025479}
-  - {fileID: 1299501698611783116}
+  BridgeSegmentTriggers:
+  - {fileID: 6924953221272355778}
+  - {fileID: 1687842400257213756}
+  - {fileID: 1687842399107269681}
+  - {fileID: 1687842399876347864}
+  - {fileID: 1687842399485880100}
+  - {fileID: 1687842399738596128}
+  - {fileID: 1687842400517749406}
+  - {fileID: 1687842400138694712}
+  - {fileID: 1687842398534702579}
+  collisionChecks: 000000000000000000
+  baseColour: {r: 0, g: 0, b: 0, a: 0}
+  isBeingBuilt: 0
+  canBuild: 0
 --- !u!114 &6924953221272355778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,6 +198,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collisionObjects: []
+  canBuild: 0
+  BridgeMain: {fileID: 693926061621972264}
 --- !u!114 &276136619462600314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,6 +282,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4106535069823339043, guid: c123736cc0116224a84fe7776ab2b875,
+        type: 3}
+      propertyPath: BridgeMain
+      value: 
+      objectReference: {fileID: 693926061621972264}
     - target: {fileID: 4438857855638288924, guid: c123736cc0116224a84fe7776ab2b875,
         type: 3}
       propertyPath: m_Name
@@ -293,12 +305,18 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: -893042805095771468, guid: c123736cc0116224a84fe7776ab2b875, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c123736cc0116224a84fe7776ab2b875, type: 3}
---- !u!1 &1299501697306413729 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4438857855638288924, guid: c123736cc0116224a84fe7776ab2b875,
+--- !u!114 &1687842400517749406 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4106535069823339043, guid: c123736cc0116224a84fe7776ab2b875,
     type: 3}
   m_PrefabInstance: {fileID: 3427587152965464253}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e552d296c916ec41a82d8c2aaca2422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2674678687720115111 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 760934903778867994, guid: c123736cc0116224a84fe7776ab2b875,
@@ -372,6 +390,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4106535069823339043, guid: c123736cc0116224a84fe7776ab2b875,
+        type: 3}
+      propertyPath: BridgeMain
+      value: 
+      objectReference: {fileID: 693926061621972264}
     - target: {fileID: 4438857855638288924, guid: c123736cc0116224a84fe7776ab2b875,
         type: 3}
       propertyPath: m_Name
@@ -390,12 +413,18 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: -893042805095771468, guid: c123736cc0116224a84fe7776ab2b875, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c123736cc0116224a84fe7776ab2b875, type: 3}
---- !u!1 &1299501697146041603 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4438857855638288924, guid: c123736cc0116224a84fe7776ab2b875,
+--- !u!114 &1687842400257213756 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4106535069823339043, guid: c123736cc0116224a84fe7776ab2b875,
     type: 3}
   m_PrefabInstance: {fileID: 3427587153191603999}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e552d296c916ec41a82d8c2aaca2422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2674678687525434373 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 760934903778867994, guid: c123736cc0116224a84fe7776ab2b875,
@@ -469,6 +498,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4106535069823339043, guid: c123736cc0116224a84fe7776ab2b875,
+        type: 3}
+      propertyPath: BridgeMain
+      value: 
+      objectReference: {fileID: 693926061621972264}
     - target: {fileID: 4438857855638288924, guid: c123736cc0116224a84fe7776ab2b875,
         type: 3}
       propertyPath: m_Name
@@ -487,12 +521,18 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: -893042805095771468, guid: c123736cc0116224a84fe7776ab2b875, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c123736cc0116224a84fe7776ab2b875, type: 3}
---- !u!1 &1299501696994025479 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4438857855638288924, guid: c123736cc0116224a84fe7776ab2b875,
+--- !u!114 &1687842400138694712 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4106535069823339043, guid: c123736cc0116224a84fe7776ab2b875,
     type: 3}
   m_PrefabInstance: {fileID: 3427587153341520411}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e552d296c916ec41a82d8c2aaca2422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2674678687947972865 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 760934903778867994, guid: c123736cc0116224a84fe7776ab2b875,
@@ -566,6 +606,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4106535069823339043, guid: c123736cc0116224a84fe7776ab2b875,
+        type: 3}
+      propertyPath: BridgeMain
+      value: 
+      objectReference: {fileID: 693926061621972264}
     - target: {fileID: 4438857855638288924, guid: c123736cc0116224a84fe7776ab2b875,
         type: 3}
       propertyPath: m_Name
@@ -584,12 +629,18 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: -893042805095771468, guid: c123736cc0116224a84fe7776ab2b875, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c123736cc0116224a84fe7776ab2b875, type: 3}
---- !u!1 &1299501697797474279 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4438857855638288924, guid: c123736cc0116224a84fe7776ab2b875,
+--- !u!114 &1687842399876347864 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4106535069823339043, guid: c123736cc0116224a84fe7776ab2b875,
     type: 3}
   m_PrefabInstance: {fileID: 3427587153616043515}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e552d296c916ec41a82d8c2aaca2422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2674678687136646881 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 760934903778867994, guid: c123736cc0116224a84fe7776ab2b875,
@@ -663,6 +714,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4106535069823339043, guid: c123736cc0116224a84fe7776ab2b875,
+        type: 3}
+      propertyPath: BridgeMain
+      value: 
+      objectReference: {fileID: 693926061621972264}
     - target: {fileID: 4438857855638288924, guid: c123736cc0116224a84fe7776ab2b875,
         type: 3}
       propertyPath: m_Name
@@ -681,12 +737,18 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: -893042805095771468, guid: c123736cc0116224a84fe7776ab2b875, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c123736cc0116224a84fe7776ab2b875, type: 3}
---- !u!1 &1299501697659812639 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4438857855638288924, guid: c123736cc0116224a84fe7776ab2b875,
+--- !u!114 &1687842399738596128 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4106535069823339043, guid: c123736cc0116224a84fe7776ab2b875,
     type: 3}
   m_PrefabInstance: {fileID: 3427587153746592003}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e552d296c916ec41a82d8c2aaca2422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2674678687003933209 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 760934903778867994, guid: c123736cc0116224a84fe7776ab2b875,
@@ -760,6 +822,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4106535069823339043, guid: c123736cc0116224a84fe7776ab2b875,
+        type: 3}
+      propertyPath: BridgeMain
+      value: 
+      objectReference: {fileID: 693926061621972264}
     - target: {fileID: 4438857855638288924, guid: c123736cc0116224a84fe7776ab2b875,
         type: 3}
       propertyPath: m_Name
@@ -778,12 +845,18 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: -893042805095771468, guid: c123736cc0116224a84fe7776ab2b875, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c123736cc0116224a84fe7776ab2b875, type: 3}
---- !u!1 &1299501697381848859 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4438857855638288924, guid: c123736cc0116224a84fe7776ab2b875,
+--- !u!114 &1687842399485880100 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4106535069823339043, guid: c123736cc0116224a84fe7776ab2b875,
     type: 3}
   m_PrefabInstance: {fileID: 3427587153963773191}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e552d296c916ec41a82d8c2aaca2422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2674678687225124381 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 760934903778867994, guid: c123736cc0116224a84fe7776ab2b875,
@@ -857,6 +930,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4106535069823339043, guid: c123736cc0116224a84fe7776ab2b875,
+        type: 3}
+      propertyPath: BridgeMain
+      value: 
+      objectReference: {fileID: 693926061621972264}
     - target: {fileID: 4438857855638288924, guid: c123736cc0116224a84fe7776ab2b875,
         type: 3}
       propertyPath: m_Name
@@ -875,12 +953,18 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: -893042805095771468, guid: c123736cc0116224a84fe7776ab2b875, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c123736cc0116224a84fe7776ab2b875, type: 3}
---- !u!1 &1299501698043442190 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4438857855638288924, guid: c123736cc0116224a84fe7776ab2b875,
+--- !u!114 &1687842399107269681 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4106535069823339043, guid: c123736cc0116224a84fe7776ab2b875,
     type: 3}
   m_PrefabInstance: {fileID: 3427587154373561874}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e552d296c916ec41a82d8c2aaca2422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2674678686846792968 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 760934903778867994, guid: c123736cc0116224a84fe7776ab2b875,
@@ -954,6 +1038,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4106535069823339043, guid: c123736cc0116224a84fe7776ab2b875,
+        type: 3}
+      propertyPath: BridgeMain
+      value: 
+      objectReference: {fileID: 693926061621972264}
     - target: {fileID: 4438857855638288924, guid: c123736cc0116224a84fe7776ab2b875,
         type: 3}
       propertyPath: m_Name
@@ -972,12 +1061,18 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: -893042805095771468, guid: c123736cc0116224a84fe7776ab2b875, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c123736cc0116224a84fe7776ab2b875, type: 3}
---- !u!1 &1299501698611783116 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4438857855638288924, guid: c123736cc0116224a84fe7776ab2b875,
+--- !u!114 &1687842398534702579 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4106535069823339043, guid: c123736cc0116224a84fe7776ab2b875,
     type: 3}
   m_PrefabInstance: {fileID: 3427587154941845456}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e552d296c916ec41a82d8c2aaca2422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2674678686345553098 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 760934903778867994, guid: c123736cc0116224a84fe7776ab2b875,
