@@ -1,13 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using System;
+using Random = UnityEngine.Random;
+
 public class InteractionZone : GameBehaviour<InteractionZone>
 {
+    public static event Action OnRespawnSet;
+
     public bool canPickUp;
     public bool canDestroy;
     public bool canClimb;
     public bool canBreak;
+    [SerializeField]
+    private bool atBonfire;
     public GameObject Player;
     public GameObject objectToInteract;
     public GameObject objectToDestroy;
@@ -18,6 +24,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
     public List<GameObject> outlineObjectsList = new List<GameObject>();
 
+    private readonly float interactRange = 3f;
 
     private void Awake()
     {
@@ -100,9 +107,14 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                 //    IM.interact_Input = false;
             }
         }
-        #region Item Pickups
+        #region Item Interactions
         if (IM.interact_Input)
         {
+            if (atBonfire)
+            {
+                Debug.Log("Respawnset");
+                OnRespawnSet();
+            }
             if (canClimb)
             {
                 if (LadderEntry != null)
@@ -157,14 +169,17 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                 IM.interact_Input = false;
 
             }
+
+           
         }
-        #endregion    
+        #endregion
+
     }
 
     private void OutlineObjects()
     {
         if (outlineObjectsList.Count <= 0) return;
-        float closestDistanceSqr = 4f;
+        float closestDistanceSqr = interactRange;
         Vector3 playerPosition = Player.transform.position;
 
         foreach (GameObject objectToOutline in outlineObjectsList)
@@ -175,13 +190,12 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             {
                 objectToInteract = objectToOutline;
                 closestDistanceSqr = dSqrToTarget;
-                objectToOutline.GetComponent<Outline>().enabled = true;
+                OutlineObject(objectToOutline);
             }
             if (dSqrToTarget > closestDistanceSqr)
             {
-
-                Debug.Log("Object not highlighted");
-                objectToOutline.GetComponent<Outline>().enabled = false;
+                //Debug.Log("Object not highlighted");
+                StopOutliningObject(objectToOutline);
                 //outlineObjectsList.Remove(objectToOutline);
 
             }
@@ -201,10 +215,8 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         {
             //other.GetComponent<Outline>().enabled = true;
             canPickUp = true;
+            AddOutline(other.gameObject);
 
-
-            outlineObjectsList.Add(other.gameObject);
-            OutlineCheck();
         }
 
         //Breakable Objects
@@ -228,21 +240,12 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             objectToDestroy = other.gameObject;
             canDestroy = true;
         }
-        //if (other.CompareTag("LadderTop") || other.CompareTag("LadderBottom"))
-        //{
-        //    Debug.Log("Can Climb");
-        //    canClimb = true;
-        //    LadderEntry = other.gameObject;
-        //}
 
-        //if (other.CompareTag("LadderBody"))
-        //{
-
-        //    Debug.Log("Can Destroy Ladder");
-        //    objectToDestroy = other.gameObject;
-        //    canDestroy = true;
-        //}
-
+        if (other.CompareTag("Bonfire"))
+        {
+            atBonfire = true;
+            OutlineObject(other.gameObject);
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -250,9 +253,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         if (other.CompareTag("Rock") || other.CompareTag("Stick") || other.CompareTag("Mushroom") || other.CompareTag("LightPickUp") || other.CompareTag("Pebble"))
         {
             DisableInteractions();
-            other.GetComponent<Outline>().enabled = false;
-            outlineObjectsList.Remove(other.gameObject);
-            OutlineCheck();
+            RemoveOutline(other.gameObject);
         }
 
         if (other.CompareTag("Rock") || other.CompareTag("BreakableWall"))
@@ -270,19 +271,18 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             objectToDestroy = null;
             canDestroy = false;
         }
-        //if (other.CompareTag("LadderTop") || other.CompareTag("LadderBottom"))
-        //{
-        //    Debug.Log("Can't Climb");
-        //    canClimb = false;
-        //    LadderEntry = null;
-
-        //    objectToDestroy = null;
-        //}
 
         if (other.CompareTag("Bridge"))
         {
             objectToDestroy = null;
             canDestroy = false;
+        }
+
+        if (other.CompareTag("Bonfire"))
+        {
+            atBonfire = false;
+            StopOutliningObject(other.gameObject);
+
         }
     }
 
@@ -317,5 +317,25 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         canDestroy = false;
         canClimb = false;
         UI.UpdateMaterialsCollected();
+    }
+
+    private void OutlineObject(GameObject objectToOutline)
+    {
+        objectToOutline.GetComponent<Outline>().enabled = true;
+    }
+    private void StopOutliningObject(GameObject objectToStopOutlining)
+    {
+        objectToStopOutlining.GetComponent<Outline>().enabled = false;
+    }
+    private void AddOutline(GameObject objectToOutline)
+    {
+        outlineObjectsList.Add(objectToOutline.gameObject);
+        OutlineCheck();
+    }
+    private void RemoveOutline(GameObject objectToOutline)
+    {
+        objectToOutline.GetComponent<Outline>().enabled = false;
+        outlineObjectsList.Remove(objectToOutline.gameObject);
+        OutlineCheck();
     }
 }

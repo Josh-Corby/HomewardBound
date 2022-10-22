@@ -7,6 +7,7 @@ public enum BuildObjects
     Pickaxe,
     Ladder,
     Bridge,
+    Bonfire,
     Slingshot,
     Ammo,
     GrappleHook,
@@ -35,8 +36,12 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     [Header("Build Prefabs")]
     #region Build Prefabs
-    [SerializeField] private GameObject ladderPrefab;
-    [SerializeField] private GameObject bridgePrefab;
+    [SerializeField]
+    private GameObject ladderPrefab;
+    [SerializeField]
+    private GameObject bridgePrefab;
+    [SerializeField]
+    private GameObject bonfirePrefab;
     #endregion
 
     [SerializeField]
@@ -56,15 +61,7 @@ public class BuildManager : GameBehaviour<BuildManager>
     private void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            BuildItem(1);
-        }
-
-        if(Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            BuildItem(2);
-        }
+        ManageBuildInputs();
 
         // If the player isn't building cancel the build input
         if (!isBuilding)
@@ -111,8 +108,13 @@ public class BuildManager : GameBehaviour<BuildManager>
                 // Reactivate Interaction Zone
                 IZ.Toggle(true);
                 buildingObject.GetComponent<BoxCollider>().enabled = true;
-                buildingObject.gameObject.GetComponent<BuildObjectRB>().UnFreezeConstraints();
-                buildingObject.gameObject.GetComponent<BuildObjectRB>().frozen = false;
+                
+                if(buildingObject.GetComponent<BuildObjectRB>() != null)
+                {
+                    buildingObject.gameObject.GetComponent<BuildObjectRB>().UnFreezeConstraints();
+                    buildingObject.gameObject.GetComponent<BuildObjectRB>().frozen = false;
+                }
+                
 
                 SubtractCost();
                 ResetBuildObject();
@@ -122,6 +124,22 @@ public class BuildManager : GameBehaviour<BuildManager>
         }
     }
 
+    private void ManageBuildInputs()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            BuildItem(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            BuildItem(2);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            BuildItem(3);
+        }
+    }
     private void ResetBuildObject()
     {
         // Reset manager bools
@@ -144,12 +162,6 @@ public class BuildManager : GameBehaviour<BuildManager>
                 OM.ChangeOutfits(1);
                 prefabToSpawn = ladderPrefab;
                 SetMaterialCosts(value, 1);
-                //}
-                //else
-                //{
-                //    OM.ChangeOutfits(4);
-                //    return;
-                //}
                 StartCoroutine(BuildObject());
                 break;
 
@@ -157,21 +169,15 @@ public class BuildManager : GameBehaviour<BuildManager>
                 prefabToSpawn = bridgePrefab;
                 OM.ChangeOutfits(1);
                 SetMaterialCosts(value, 1);
-                //
-                //else
-                //{
-                //    OM.ChangeOutfits(4);
-                //    return;
-                //}
                 StartCoroutine(BuildObject());
                 break;
-                /*
-                 * case BuildObjects.Ammo:
-                 * AmmoCheck();
-                 * SS.ammo += 5;
-                 * SubtractCost();
-                 * break;
-                */
+
+            case BuildObjects.Bonfire:
+                prefabToSpawn = bonfirePrefab;
+                SetMaterialCosts(value, 1);
+                StartCoroutine(BuildObject());
+                break;
+
         }
         IZ.Toggle(true);
         IZ.DisableInteractions();
@@ -190,7 +196,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         yield return new WaitForEndOfFrame();
 
         // Instantiate object as a child of buildZone
-        GameObject BuildObject =  Instantiate(prefabToSpawn, buildZone.transform);
+        GameObject BuildObject = Instantiate(prefabToSpawn, buildZone.transform);
         buildingObject = BuildObject;
         //UI.BuildMenuToggle();
         isBuilding = true;
@@ -220,6 +226,11 @@ public class BuildManager : GameBehaviour<BuildManager>
                 pebbleCost = 1 * costMultiplier;
                 stickCost = 1 * costMultiplier;
                 mushroomCost = 1 * costMultiplier;
+                break;
+            case BuildObjects.Bonfire:
+                pebbleCost = 3;
+                stickCost = 3;
+                mushroomCost = 3;
                 break;
         }
     }

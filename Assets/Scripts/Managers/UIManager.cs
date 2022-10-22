@@ -71,6 +71,7 @@ public class UIManager : GameBehaviour<UIManager>
 
     public Image LadderOutline;
     public Image BridgeOutline;
+    public Image BonfireOutline;
 
 
     private void Start()

@@ -23,6 +23,8 @@ public enum GroundStates
 }
 public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 {
+    
+
     [Header("References")]
     public CharacterController controller;
     public Camera cam;
