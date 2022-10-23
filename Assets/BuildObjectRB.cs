@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum ObjectType { 
+public enum ObjectType
+{
     Bridge,
     Ladder
 
@@ -37,13 +38,13 @@ public class BuildObjectRB : MonoBehaviour
 
     private IEnumerator FreezeCheck()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(1f);
 
         if (!frozen)
         {
             if (rb.velocity == Vector3.zero)
             {
-                Debug.Log("Object frozen");
+                //Debug.Log("velocity is zero");
                 FreezeConstraints();
                 frozen = true;
                 yield return null;
@@ -55,20 +56,21 @@ public class BuildObjectRB : MonoBehaviour
 
     public void FreezeConstraints()
     {
-        
+        frozen = true;
         rb.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     public void UnFreezeConstraints()
     {
 
-        if(objectType == ObjectType.Bridge)
+        if (objectType == ObjectType.Bridge)
         {
-        rb.constraints = RigidbodyConstraints.None;
+            Debug.Log("Unfreeze constraints");
+            rb.constraints = RigidbodyConstraints.None;
 
         }
 
-        if(objectType == ObjectType.Ladder)
+        if (objectType == ObjectType.Ladder)
         {
             rb.constraints &= ~RigidbodyConstraints.FreezePositionY;
         }

@@ -94,7 +94,7 @@ public class ObjectBuild : GameBehaviour
         {
             if (Input.mouseScrollDelta.y > 0)
             {
-                Debug.Log("Mouse up");
+                //Debug.Log("Mouse up");
                 if (extensionCount == ObjectSegmentTriggers.Count)
                 {
                     return;
@@ -110,7 +110,7 @@ public class ObjectBuild : GameBehaviour
             }
             if (Input.mouseScrollDelta.y < 0)
             {
-                Debug.Log("Mouse down");
+                //Debug.Log("Mouse down");
                 if (currentExtension == null) return;
 
                 currentExtension.SetActive(false);
