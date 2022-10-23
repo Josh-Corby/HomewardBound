@@ -58,16 +58,16 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     private bool canRepeat;
 
+
+    private void Start()
+    {
+        PlayerManager.OnToolSelected += ToolSelectListen;
+    }
     private void Update()
     {
-
-        ManageBuildInputs();
-
         // If the player isn't building cancel the build input
         if (!isBuilding)
         {
-
-
             if (IM.cancel_Input)
             {
                 IM.cancel_Input = false;
@@ -76,8 +76,6 @@ public class BuildManager : GameBehaviour<BuildManager>
         }
         if (isBuilding)
         {
-
-
             if (IM.cancel_Input)
             {
                 if (prefabToSpawn != null)
@@ -85,7 +83,6 @@ public class BuildManager : GameBehaviour<BuildManager>
                     CancelBuilding();
                 }
             }
-
         }
 
         // Checks for if player can build
@@ -114,8 +111,6 @@ public class BuildManager : GameBehaviour<BuildManager>
                     buildingObject.gameObject.GetComponent<BuildObjectRB>().UnFreezeConstraints();
                     buildingObject.gameObject.GetComponent<BuildObjectRB>().frozen = false;
                 }
-                
-
                 SubtractCost();
                 ResetBuildObject();
                 return;
@@ -124,22 +119,14 @@ public class BuildManager : GameBehaviour<BuildManager>
         }
     }
 
-    private void ManageBuildInputs()
+    private void ToolSelectListen(int buildObjectIndex)
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if(buildObjectIndex >=1 && buildObjectIndex <= 3)
         {
-            BuildItem(1);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            BuildItem(2);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            BuildItem(3);
+            BuildItem(buildObjectIndex);
         }
     }
+
     private void ResetBuildObject()
     {
         // Reset manager bools
@@ -147,7 +134,6 @@ public class BuildManager : GameBehaviour<BuildManager>
         prefabToSpawn = null;
         canBuild = false;
         isBuilding = false;
-
     }
 
     /// <summary>
@@ -177,7 +163,6 @@ public class BuildManager : GameBehaviour<BuildManager>
                 SetMaterialCosts(value, 1);
                 StartCoroutine(BuildObject());
                 break;
-
         }
         IZ.Toggle(true);
         IZ.DisableInteractions();

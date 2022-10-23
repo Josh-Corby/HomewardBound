@@ -19,18 +19,13 @@ public class OutfitManager : GameBehaviour<OutfitManager>
     public bool canChangeOutfits;
     public bool haveSlingshot = true;
 
-    /*
-     * if 0 miner
-     * if 1 builder
-     * if 2 slingshot
-     * if 3 Utility
-     * if 4 None
-     */
 
 
     private void Start()
     {
         canChangeOutfits = true;
+
+        //PlayerManager.OnToolSelected += ChangeOutfits;
     }
 
     /// <summary>
@@ -44,7 +39,6 @@ public class OutfitManager : GameBehaviour<OutfitManager>
             return;
         }
 
-        
 
         Outfits CurrentOutfit = (Outfits)outfitValue;
 

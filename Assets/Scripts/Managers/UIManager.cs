@@ -74,8 +74,16 @@ public class UIManager : GameBehaviour<UIManager>
     public Image BonfireOutline;
 
 
+    [SerializeField]
+    private Image[] HotbarOutlines;
+
+    private Image CurrentOutline;
+
     private void Start()
     {
+        PlayerManager.OnToolSelected += SelectToolUI;
+
+
         // Set UI values for start of game
         currentBuildPanel = null;
         CurrentPanel = null;
@@ -420,7 +428,7 @@ public class UIManager : GameBehaviour<UIManager>
         
     }
         
-    
+   
     public void BuildMenuToggle()
     {
 
@@ -488,4 +496,35 @@ public class UIManager : GameBehaviour<UIManager>
             Cursor.lockState = CursorLockMode.Locked;
         }
     }
+
+
+    private void SelectToolUI(int toolIndex)
+    {
+        SelectControlUI(toolIndex);
+    }
+
+    private void SelectControlUI(int panelIndex)
+    {
+        //Debug.Log(panelIndex);
+        //Debug.Log(HotbarOutlines[panelIndex]);
+        SelectHotbarOutline(HotbarOutlines[panelIndex]);
+    }
+
+    private void SelectHotbarOutline(Image outline)
+    {
+        if (CurrentOutline != null)
+        {
+            DeselectHotbarOutline();
+        }
+        
+        CurrentOutline = outline;
+        CurrentOutline.color = Color.red;
+    }
+    private void DeselectHotbarOutline()
+    {
+        
+        CurrentOutline.color = Color.black;
+        CurrentOutline = null;
+    }
+
 }
