@@ -56,30 +56,36 @@ public class SlingShot : GameBehaviour<SlingShot>
 
     private void Update()
     {
-        if (GM.haveSlingshot)        
+        if (GM.haveSlingshot)
         {
-            if (/*UI.buildPanelStatus ||*/ UI.radialMenuStatus || BM.isBuilding || UI.paused == true)
+            if (OM.outfit == Outfits.Miner)
             {
-                return;
-            }
 
-            if(/*!UI.buildPanelStatus ||*/ !UI.radialMenuStatus)
-            {
-                MyInput();
 
-                //Set ammo display, if it exists :D
-                if (ammunitionDisplay != null)
-                    ammunitionDisplay.SetText(bulletsLeft / bulletsPerTap + " / " + magazineSize / bulletsPerTap);
-            }
-     
-            if (IM.mouseScrollY < 0)
-            {
-                CycleBullets(1);
 
-            }
-            if (IM.mouseScrollY > 0)
-            {
-                CycleBullets(-1);
+                if (/*UI.buildPanelStatus ||*/ UI.radialMenuStatus || BM.isBuilding || UI.paused == true)
+                {
+                    return;
+                }
+
+                if (/*!UI.buildPanelStatus ||*/ !UI.radialMenuStatus)
+                {
+                    MyInput();
+
+                    //Set ammo display, if it exists :D
+                    if (ammunitionDisplay != null)
+                        ammunitionDisplay.SetText(bulletsLeft / bulletsPerTap + " / " + magazineSize / bulletsPerTap);
+                }
+
+                if (IM.mouseScrollY < 0)
+                {
+                    CycleBullets(1);
+
+                }
+                if (IM.mouseScrollY > 0)
+                {
+                    CycleBullets(-1);
+                }
             }
         }
     }
@@ -93,7 +99,7 @@ public class SlingShot : GameBehaviour<SlingShot>
         currentBullet = bullets[bulletValue];
         //Debug.Log(currentBullet.name);
         UI.ChangeAmmoTypeText();
-        
+
     }
 
     private void MyInput()
@@ -119,7 +125,7 @@ public class SlingShot : GameBehaviour<SlingShot>
 
     private void Shoot()
     {
-        if(ammo > 0)
+        if (ammo > 0)
         {
             Debug.Log("bullet fired");
             readyToShoot = false;
@@ -128,7 +134,7 @@ public class SlingShot : GameBehaviour<SlingShot>
             Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //Just a ray through the middle of your current view
             RaycastHit hit;
 
-            
+
             //check if ray hits something
             Vector3 targetPoint;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
@@ -137,7 +143,7 @@ public class SlingShot : GameBehaviour<SlingShot>
                 targetPoint = hit.point;
 
             }
-                
+
             else
                 targetPoint = ray.GetPoint(75); //Just a point far away from the player
 
@@ -153,7 +159,7 @@ public class SlingShot : GameBehaviour<SlingShot>
 
             //Instantiate bullet/projectile
             GameObject currentBul = Instantiate(currentBullet, attackPoint.position, Quaternion.identity); //store instantiated bullet in currentBullet
-                                                                                                       //Rotate bullet to shoot direction
+                                                                                                           //Rotate bullet to shoot direction
             currentBul.transform.forward = directionWithSpread.normalized;
 
             //Add forces to bullet
@@ -184,7 +190,7 @@ public class SlingShot : GameBehaviour<SlingShot>
             SubtractAmmo();
         }
     }
-       
+
     private void ResetShot()
     {
         //Allow shooting and invoking again

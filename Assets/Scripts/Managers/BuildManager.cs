@@ -145,7 +145,6 @@ public class BuildManager : GameBehaviour<BuildManager>
         switch ((BuildObjects)value)
         {
             case BuildObjects.Ladder:
-                OM.ChangeOutfits(1);
                 prefabToSpawn = ladderPrefab;
                 SetMaterialCosts(value, 1);
                 StartCoroutine(BuildObject());
@@ -153,7 +152,6 @@ public class BuildManager : GameBehaviour<BuildManager>
 
             case BuildObjects.Bridge:
                 prefabToSpawn = bridgePrefab;
-                OM.ChangeOutfits(1);
                 SetMaterialCosts(value, 1);
                 StartCoroutine(BuildObject());
                 break;

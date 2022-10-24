@@ -25,7 +25,7 @@ public class OutfitManager : GameBehaviour<OutfitManager>
     {
         canChangeOutfits = true;
 
-        //PlayerManager.OnToolSelected += ChangeOutfits;
+        PlayerManager.OnToolSelected += ChangeOutfits;
     }
 
     /// <summary>
@@ -34,14 +34,27 @@ public class OutfitManager : GameBehaviour<OutfitManager>
     /// <param name="outfitValue"> Index value of outfit enum case to be changed to</param>
     public void ChangeOutfits (int outfitValue)
     {
+  
         if (!canChangeOutfits)
         {
             return;
         }
 
+        if(outfitValue >=1 && outfitValue <= 3)
+        {
+            outfitValue = 1;
+        }
+
+        if(outfitValue >= 4)
+        {
+            outfitValue -= 2;
+        }
+        Debug.Log(outfitValue);
+
 
         Outfits CurrentOutfit = (Outfits)outfitValue;
 
+        Debug.Log(CurrentOutfit);
         if (CurrentOutfit!= Outfits.Builder)
         {
             BM.CancelBuilding();
@@ -63,6 +76,7 @@ public class OutfitManager : GameBehaviour<OutfitManager>
 
             case Outfits.Utility:
                 outfit = Outfits.Utility;
+                Debug.Log("Grapple selected");
                 break;
             case Outfits.None:
                 outfit = Outfits.None;
