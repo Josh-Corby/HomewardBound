@@ -370,6 +370,7 @@ MonoBehaviour:
   - {fileID: 899375745798304517}
   - {fileID: 7449777314518176254}
   collisionChecks: 00000000
+  renderer: {fileID: 3861421459667651859}
   baseColour: {r: 0, g: 0, b: 0, a: 0}
   isBeingBuilt: 0
   canBuild: 0
@@ -414,6 +415,7 @@ MonoBehaviour:
   - {fileID: 3915719738465308679}
   - {fileID: 4664386558192703390}
   - {fileID: 4513334821158301587}
+  objectBuild: {fileID: 693926061621972264}
 --- !u!1 &7943061784166315985
 GameObject:
   m_ObjectHideFlags: 0

@@ -62,7 +62,7 @@ public class CameraTransform : GameBehaviour
         if (Input.GetKey(KeyCode.Mouse1))
         {
             //CameraTarget = zoomLook;
-            camfollow.ShoulderOffset = new Vector3(1.37f, -0.4f, 0f);
+            //camfollow.ShoulderOffset = new Vector3(1.37f, -0.4f, 0f);
             
         }
 
@@ -74,7 +74,7 @@ public class CameraTransform : GameBehaviour
 
         if (UI.menu != Menus.None || UI.paused)
             return;
-        transform.position = thirdPersonPlayer.transform.position + Offset;
+        //transform.position = thirdPersonPlayer.transform.position + Offset;
         //RotateCamera();
     }
 

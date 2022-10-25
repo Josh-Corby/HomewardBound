@@ -165,6 +165,7 @@ MonoBehaviour:
   objectType: 0
   frozen: 0
   rb: {fileID: 0}
+  collider: {fileID: 3352449509118570833}
 --- !u!114 &2708193910085613456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +183,7 @@ MonoBehaviour:
   ObjectSegmentTriggers:
   - {fileID: 2504912413395523635}
   collisionChecks: 00
+  renderer: {fileID: 3487744809145207625}
   baseColour: {r: 0, g: 0, b: 0, a: 0}
   isBeingBuilt: 0
   canBuild: 0

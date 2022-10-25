@@ -15,6 +15,7 @@ public class BridgeMeshManager : MonoBehaviour
     [SerializeField]
     private Transform[] meshPositions;
 
+    [SerializeField]
     private ObjectBuild objectBuild;
 
 
@@ -25,13 +26,7 @@ public class BridgeMeshManager : MonoBehaviour
 
     private void OnDisable()
     {
-        ObjectBuild.OnObjectLengthChange += ChangeBridgeMesh;
-    }
-
-
-    private void Awake()
-    {
-        objectBuild = GetComponent<ObjectBuild>();
+        ObjectBuild.OnObjectLengthChange -= ChangeBridgeMesh;
     }
 
     private void Start()

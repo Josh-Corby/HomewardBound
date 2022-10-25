@@ -14,6 +14,7 @@ public class ObjectBuild : GameBehaviour
     [SerializeField]
     private List<BuildObjectTrigger> ObjectSegmentTriggers = new List<BuildObjectTrigger>();
     public bool[] collisionChecks;
+    [SerializeField]
     private MeshRenderer renderer;
     [SerializeField]
     private Color baseColour;
@@ -27,7 +28,6 @@ public class ObjectBuild : GameBehaviour
 
     private void Awake()
     {
-        renderer = GetComponentInChildren<MeshRenderer>();
         baseColour = renderer.material.color;
         extensionCount = 0;
         currentExtension = null;
