@@ -36,32 +36,6 @@ public class ObjectBuild : GameBehaviour
             ObjectSegmentTriggers[i].transform.gameObject.SetActive(false);
         }
     }
-    public void CheckSegmentCollisions(BuildObjectTrigger trigger)
-    {
-        for (int i = 0; i < extensionCount; i++)
-        {
-            //if (BridgeSegmentTriggers[i].enabled == false) return;
-            //Debug.Log(BridgeSegmentTriggers[i]);
-            if (ObjectSegmentTriggers[i] == trigger)
-            {
-                //Debug.Log("Collisions updated");
-                collisionChecks[i] = trigger.canBuild;
-            }
-        }
-        for (int i = 0; i < extensionCount; i++)
-        {
-            collisionChecks[i] = ObjectSegmentTriggers[i].canBuild;
-
-            //Debug.Log(collisionChecks[i]);
-            if (collisionChecks[i] == false)
-            {
-                //Debug.Log("cant build bridge");
-                canBuild = false;
-                return;
-            }
-        }
-        canBuild = true;
-    }
     void Update()
     {
         if (UI.paused) return;
@@ -94,7 +68,7 @@ public class ObjectBuild : GameBehaviour
             {
                 ChangeColourOfObject(Color.red);
             }
-           
+
         }
         extensionCount = Mathf.Clamp(extensionCount, 1, ObjectSegmentTriggers.Count);
 
@@ -114,7 +88,7 @@ public class ObjectBuild : GameBehaviour
 
                 currentExtension = ObjectSegmentTriggers[extensionCount - 1].transform.gameObject;
                 currentExtension.SetActive(true);
-          
+
             }
             if (Input.mouseScrollDelta.y < 0)
             {
@@ -137,6 +111,33 @@ public class ObjectBuild : GameBehaviour
         }
 
     }
+    public void CheckSegmentCollisions(BuildObjectTrigger trigger)
+    {
+        for (int i = 0; i < extensionCount; i++)
+        {
+            //if (BridgeSegmentTriggers[i].enabled == false) return;
+            //Debug.Log(BridgeSegmentTriggers[i]);
+            if (ObjectSegmentTriggers[i] == trigger)
+            {
+                //Debug.Log("Collisions updated");
+                collisionChecks[i] = trigger.canBuild;
+            }
+        }
+        for (int i = 0; i < extensionCount; i++)
+        {
+            collisionChecks[i] = ObjectSegmentTriggers[i].canBuild;
+
+            //Debug.Log(collisionChecks[i]);
+            if (collisionChecks[i] == false)
+            {
+                //Debug.Log("cant build bridge");
+                canBuild = false;
+                return;
+            }
+        }
+        canBuild = true;
+    }
+  
 
 
     private void ChangeColourOfObject(Color colour)

@@ -170,20 +170,28 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
                     if (canPickUp)
                     {
-                        OnItemPickUp(objectToInteract);
-                        outlineObjectsList.Remove(objectToInteract);
-
-
-                        objectToInteract.SetActive(false);
-                        canPickUp = false;
-                        objectToInteract = null;
-                        IM.interact_Input = false;
+                        PickUpObjects();
+                       
                     }
                 }
 
             }
         }
         #endregion
+
+
+    }
+    private void PickUpObjects()
+    {
+        foreach (GameObject pickUpObject in outlineObjectsList)
+        {
+            OnItemPickUp(pickUpObject);       
+            pickUpObject.SetActive(false);
+        }
+        outlineObjectsList.Clear();
+        canPickUp = false;
+        objectToInteract = null;
+        IM.interact_Input = false;
     }
 
     private void OutlineObjects()
