@@ -11,13 +11,20 @@ public class MinableWall : GameBehaviour
         animator = gameObject.GetComponent<Animator>();
     }
 
+    private void Start()
+    {
+        GameManager.OnPlayerRespawn += EnableObject;
+    }
+    private void EnableObject()
+    {
+        gameObject.SetActive(true);
+        animator.Play("New State");
+    }
     public IEnumerator Break()
     {
         animator.Play("Break");
         
         yield return new WaitForSeconds(0.5f);
-        gameObject.SetActive(false);
-
-        
+        gameObject.SetActive(false);  
     }
 }

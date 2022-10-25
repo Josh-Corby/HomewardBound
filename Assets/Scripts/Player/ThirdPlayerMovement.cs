@@ -349,7 +349,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                         //if (Physics.Raycast(grapplePoint.transform.position, directionWithoutSpread, out RaycastHit raycastHit, 100))
                         {
                             grappleHitObject = hit.collider.gameObject;
-                            Debug.Log(grappleHitObject.name);
+                            //Debug.Log(grappleHitObject.name);
                             if (grappleHitObject.CompareTag("Non-Grappleable-Surface") || grappleHitObject.CompareTag("FallingLilyPad"))
                             {
                                 StopHookshot();

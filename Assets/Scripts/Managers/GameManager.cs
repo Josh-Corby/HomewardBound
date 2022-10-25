@@ -6,6 +6,7 @@ using System;
 public class GameManager : GameBehaviour<GameManager>
 {
     public static event Action OnMaterialsUpdated;
+    public static event Action OnPlayerRespawn;
 
     [Header("Resources Collected")]
     public int rocksCollected;
@@ -24,11 +25,6 @@ public class GameManager : GameBehaviour<GameManager>
     public bool haveBuilding;
     public bool haveGlider;
     public bool haveGrappleHook;
-
-    private void OnEnable()
-    {
-        
-    }
 
     private void Start()
     {
@@ -93,6 +89,7 @@ public class GameManager : GameBehaviour<GameManager>
     /// </summary>
     public void RespawnPlayer()
     {
+        OnPlayerRespawn();
         Player = TPM.gameObject;
         Player.GetComponent<CharacterController>().enabled = false;
         Player.transform.position = spawnPoint.transform.position;
