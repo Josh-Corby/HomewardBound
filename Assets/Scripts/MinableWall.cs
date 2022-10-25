@@ -15,8 +15,9 @@ public class MinableWall : GameBehaviour
     {
         animator.Play("Break");
         
-        yield return new WaitForSeconds(1.3f);
+        yield return new WaitForSeconds(0.5f);
+        gameObject.SetActive(false);
 
-        IZ.ClearObject();
+        
     }
 }

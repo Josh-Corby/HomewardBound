@@ -40,7 +40,7 @@ public class ObjectBuild : GameBehaviour
     {
         if (UI.paused) return;
 
-        BM.canBuild = canBuild;
+        BM.collisionCheck = canBuild;
 
         isBeingBuilt = gameObject == BM.buildingObject;
 

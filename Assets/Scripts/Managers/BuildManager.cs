@@ -19,6 +19,7 @@ public class BuildManager : GameBehaviour<BuildManager>
     [Header("Build Checks")]
     public bool isBuilding;
     public bool canBuild;
+    public bool collisionCheck;
 
     [Header("Crafting Checks")]
     private bool pebbleCheck;
@@ -78,7 +79,15 @@ public class BuildManager : GameBehaviour<BuildManager>
         }
         if (isBuilding)
         {
-            canBuild = materialsCheck;
+            if(TPM.groundState != GroundStates.Grounded)
+            {
+                canBuild = false;
+                return;
+            }
+            if(TPM.groundState == GroundStates.Grounded)
+            {
+                canBuild = materialsCheck;
+            }           
             if (IM.cancel_Input)
             {
                 if (prefabToSpawn != null)
@@ -91,14 +100,8 @@ public class BuildManager : GameBehaviour<BuildManager>
         // Checks for if player can build
         if (Input.GetKeyDown(KeyCode.Mouse0) && isBuilding && !UI.paused)
         {
-            if (TPM.groundState == GroundStates.Airborne || canBuild == false)
-            {
-                IM.rClick_Input = false;
-                return;
-            }
-
             // If material comparisons return true
-            else if (canBuild)
+            if (materialsCheck && canBuild && collisionCheck)
             {
                 //Debug.Log("Object Built");
 
