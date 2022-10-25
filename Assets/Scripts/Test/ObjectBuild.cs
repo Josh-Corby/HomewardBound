@@ -78,15 +78,23 @@ public class ObjectBuild : GameBehaviour
 
         if (isBeingBuilt == true)
         {
-            if (BM.canBuild)
+            if (BM.materialsCheck)
             {
-                ChangeColourOfObject(Color.blue);
-            }
+                if (BM.canBuild)
+                {
+                    ChangeColourOfObject(Color.blue);
+                }
 
-            if (!BM.canBuild)
+                if (!BM.canBuild)
+                {
+                    ChangeColourOfObject(Color.red);
+                }
+            }
+            else
             {
                 ChangeColourOfObject(Color.red);
             }
+           
         }
         extensionCount = Mathf.Clamp(extensionCount, 1, ObjectSegmentTriggers.Count);
 

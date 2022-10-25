@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 public class GameManager : GameBehaviour<GameManager>
 {
+    public static event Action OnMaterialsUpdated;
+
     [Header("Resources Collected")]
     public int rocksCollected;
     public int sticksCollected;
@@ -22,6 +25,11 @@ public class GameManager : GameBehaviour<GameManager>
     public bool haveGlider;
     public bool haveGrappleHook;
 
+    private void OnEnable()
+    {
+        
+    }
+
     private void Start()
     {
         RespawnPlayer();
@@ -30,14 +38,13 @@ public class GameManager : GameBehaviour<GameManager>
         haveBuilding = false;
         haveSlingshot = false;
         havePickaxe = false;
-}
+
+        InteractionZone.OnItemPickUp += IncreaseResources;
+    }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-            RespawnPlayer();
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             haveGrappleHook = true;
             haveGlider = true;
@@ -45,6 +52,40 @@ public class GameManager : GameBehaviour<GameManager>
             haveSlingshot = true;
             havePickaxe = true;
         }
+    }
+
+    private void IncreaseResources(GameObject resourceCollected)
+    {
+        if (resourceCollected.CompareTag("Rock"))
+        { 
+            rocksCollected += 1;
+            UI.UpdateMaterials(UI.smallRocksCollected, "Rocks", rocksCollected);
+            OnMaterialsUpdated();
+            return;
+        }
+        if (resourceCollected.CompareTag("Stick"))
+        { 
+            sticksCollected += 1;
+            UI.UpdateMaterials(UI.sticksCollected, "Sticks", sticksCollected);
+            OnMaterialsUpdated();
+            return;
+        }
+        if (resourceCollected.CompareTag("Mushroom"))
+        { 
+            mushroomsCollected += 1;
+            UI.UpdateMaterials(UI.mushroomsCollected, "Mushrooms", mushroomsCollected);
+            OnMaterialsUpdated();
+            return;
+        }
+        if (resourceCollected.CompareTag("Pebble"))
+        { 
+            pebblesCollected += 1;
+            UI.UpdateMaterials(UI.pebblesCollected, "Pebbles", pebblesCollected);
+            OnMaterialsUpdated();
+            return;
+        }
+
+        
     }
 
     /// <summary>

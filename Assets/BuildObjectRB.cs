@@ -78,8 +78,7 @@ public class BuildObjectRB : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject == gameObject) return;
-        if (collision.gameObject.CompareTag("Ground")) return;
+        if (collision.gameObject == gameObject || collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Player")) return;
 
         Debug.Log(collision.gameObject.name);
         FreezeConstraints();

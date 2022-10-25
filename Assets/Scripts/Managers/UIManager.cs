@@ -4,7 +4,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public enum Menus { 
+public enum Menus
+{
     None,
     Paused,
     Build,
@@ -85,61 +86,61 @@ public class UIManager : GameBehaviour<UIManager>
 
 
         // Set UI values for start of game
-        currentBuildPanel = null;
-        CurrentPanel = null;
+        //currentBuildPanel = null;
+        //CurrentPanel = null;
 
         gameObject.SetActive(true);
         gameUI.SetActive(true);
 
-        buildPanelStatus = false;    
-        buildPanel.SetActive(false);
-        RadialMenuPanel.SetActive(false);
+        //buildPanelStatus = false;    
+        //buildPanel.SetActive(false);
+        //RadialMenuPanel.SetActive(false);
         pausePanel.SetActive(false);
         paused = false;
 
-        minerText.text = "";
-        ladderText.text = "";
-        bridgeText.text = "";
-        utilityText.text = "";
+        //minerText.text = "";
+        //ladderText.text = "";
+        //bridgeText.text = "";
+        //utilityText.text = "";
 
 
-        currentBuildPanel = BuildPanels[0];
+        //currentBuildPanel = BuildPanels[0];
         Time.timeScale = 1;
 
         UpdateCanBuildText(false);
         UpdateMaterialsCollected();
-        UpdateControlText();
+        //UpdateControlText();
 
     }
     private void Update()
     {
         //flashLightIntensity.text = "Light Power: " + 
-            //FL.myLight.intensity.ToString("F2") + " /10";
+        //FL.myLight.intensity.ToString("F2") + " /10";
 
-        fallTimer.text = "Fall timer: " +  TPM.fallTimer.ToString("F2");
+        fallTimer.text = "Fall timer: " + TPM.fallTimer.ToString("F2");
 
         //currentOutfit.text = OM.outfit.ToString();
 
         Inputs();
-        
+
     }
 
     #region Text Updaters
 
     public void UpdateToolsUnlockedUI(string tool)
     {
-        if(tool == "Pickaxe")
+        if (tool == "Pickaxe")
         {
             minerText.text = "Pickaxe";
         }
 
-        if(tool == "Builder")
+        if (tool == "Builder")
         {
             ladderText.text = "Ladder";
             bridgeText.text = "Bridge";
         }
 
-        if(tool == "GrappleHook" || tool == "Glider")
+        if (tool == "GrappleHook" || tool == "Glider")
         {
             utilityText.text = "Utility";
         }
@@ -155,6 +156,12 @@ public class UIManager : GameBehaviour<UIManager>
         UpdateSticksCollected();
         UpdateMushroomsCollected();
         UpdatePebblesCollected();
+    }
+
+
+    public void UpdateMaterials(TMP_Text text, string material, int amount)
+    {
+            text.text = material + " Collected: " + amount.ToString();
     }
 
     /// <summary>
@@ -216,45 +223,45 @@ public class UIManager : GameBehaviour<UIManager>
 
     /// <summary>
     /// Reset the text for what controls the player has available to them
-    /// </summary>
-    private void ResetControlText()
-    {
-        outfitControlText1.text = "";
-        outfitControlText2.text = "";
-        outfitControlText3.text = "";
-        outfitControlText4.text = "";
-    }
+    ///// </summary>
+    //private void ResetControlText()
+    //{
+    //    outfitControlText1.text = "";
+    //    outfitControlText2.text = "";
+    //    outfitControlText3.text = "";
+    //    outfitControlText4.text = "";
+    //}
 
     /// <summary>
     /// Update the text for what controls the player has avialable ot them according to what outfit the player currently is wearing
-    /// </summary>
-    public void UpdateControlText()
-    {
-        ResetControlText();
-        switch (OM.outfit) 
-        {
-            case Outfits.Miner:
-                outfitControlText1.text = "Mine: Right Click";
-                break;
-            case Outfits.Builder:
-                outfitControlText1.text = "Open Build Menu: B";
-                outfitControlText2.text = "Build object: Right Click";
-                outfitControlText3.text = "Cancel Build: C";
-                outfitControlText4.text = "Destroy Object: E";
-                break;
-            case Outfits.Slingshot:
-                outfitControlText1.text = "Fire: Left Click";
-                outfitControlText2.text = "Change Ammo Type: Scroll Wheel";
+    ///// </summary>
+    //public void UpdateControlText()
+    //{
+    //    ResetControlText();
+    //    switch (OM.outfit)
+    //    {
+    //        case Outfits.Miner:
+    //            outfitControlText1.text = "Mine: Right Click";
+    //            break;
+    //        case Outfits.Builder:
+    //            outfitControlText1.text = "Open Build Menu: B";
+    //            outfitControlText2.text = "Build object: Right Click";
+    //            outfitControlText3.text = "Cancel Build: C";
+    //            outfitControlText4.text = "Destroy Object: E";
+    //            break;
+    //        case Outfits.Slingshot:
+    //            outfitControlText1.text = "Fire: Left Click";
+    //            outfitControlText2.text = "Change Ammo Type: Scroll Wheel";
 
-                break;
-            case Outfits.Utility:
-                outfitControlText1.text = "Glide: Hold Space";
-                outfitControlText2.text = "Grapple Hook: Right Click";
-                break;
+    //            break;
+    //        case Outfits.Utility:
+    //            outfitControlText1.text = "Glide: Hold Space";
+    //            outfitControlText2.text = "Grapple Hook: Right Click";
+    //            break;
 
-        }
-    }
-    
+    //    }
+    //}
+
 
     #endregion
 
@@ -296,6 +303,8 @@ public class UIManager : GameBehaviour<UIManager>
         if (paused)
             return;
 
+        #region old code
+        /*
         //if (IM.buildMenu_Input)
         //{
         //    if (menu != Menus.None)
@@ -312,20 +321,20 @@ public class UIManager : GameBehaviour<UIManager>
         //}
 
         //Radial menu input
-        if (Input.GetKey(KeyCode.Tab))
-        {
-            if (menu != Menus.None)
-            {
-                if(menu != Menus.Radial)
-                {
-                    return;
-                }
-            }
+        //if (Input.GetKey(KeyCode.Tab))
+        //{
+        //    if (menu != Menus.None)
+        //    {
+        //        if(menu != Menus.Radial)
+        //        {
+        //            return;
+        //        }
+        //    }
 
-            menu = Menus.Radial;
-        }
-
-        ToggleRadialMenu(radialMenuStatus);
+        //    menu = Menus.Radial;
+        //}
+        */
+        #endregion
         ToggleMenus();
 
     }
@@ -342,9 +351,9 @@ public class UIManager : GameBehaviour<UIManager>
                 //    Pause();
 
                 Cursor.lockState = CursorLockMode.Locked;
-                if(CurrentPanel != null)
+                if (CurrentPanel != null)
                     CurrentPanel.SetActive(false);
-        
+
                 break;
 
             case Menus.Paused:
@@ -355,10 +364,10 @@ public class UIManager : GameBehaviour<UIManager>
             case Menus.Build:
                 if (IM.buildMenu_Input)
                 {
-                    ToggleBuildMenu();
+                    //ToggleBuildMenu();
                     ChangeMenu(currentBuildPanel);
-                    
-                }       
+
+                }
                 break;
 
             case Menus.Radial:
@@ -368,7 +377,7 @@ public class UIManager : GameBehaviour<UIManager>
                 {
                     radialMenuStatus = false;
                     menu = Menus.None;
-                }       
+                }
                 break;
         }
     }
@@ -381,54 +390,48 @@ public class UIManager : GameBehaviour<UIManager>
     {
         if (menuToChangeTo == null)
             return;
- 
+
         CurrentPanel = menuToChangeTo;
         CurrentPanel.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
     }
 
-    public void ToggleBuildMenu()
-    {
-        if (currentBuildPanel != null)
-            {
-                currentBuildPanel.SetActive(false);
-            }
+    //public void ToggleBuildMenu()
+    //{
+    //    if (currentBuildPanel != null)
+    //    {
+    //        currentBuildPanel.SetActive(false);
+    //        { 
+
+    //    switch (OM.outfit)
+    //    {
+    //        case Outfits.Miner:
+    //            currentBuildPanel = null;
+
+    //            break;
+    //        case Outfits.Builder:
+    //            currentBuildPanel = BuildPanels[0];
+    //            break;
+    //        case Outfits.Slingshot:
+    //            currentBuildPanel = BuildPanels[1];
+    //            break;
+    //        case Outfits.Utility:
+    //            currentBuildPanel = null;
+    //            ResetControlText();
+    //            break;
 
 
-        switch (OM.outfit)
-        {
-            case Outfits.Miner:
-                currentBuildPanel = null;
-                
-                break;
-            case Outfits.Builder:
-                currentBuildPanel = BuildPanels[0];
-                break;
-            case Outfits.Slingshot:
-                currentBuildPanel = BuildPanels[1];
-                break;
-            case Outfits.Utility:
-                currentBuildPanel = null;
-                ResetControlText();
-                break;
+    //    }
+    //    IM.buildMenu_Input = false;
+    //    if (currentBuildPanel == null)
+    //    {
+    //        menu = Menus.None;
+    //        return;
+    //    }
 
+    //    BuildMenuToggle();
+    //}
 
-        }
-        IM.buildMenu_Input = false;
-        if (currentBuildPanel == null)
-        {
-            menu = Menus.None;
-            return;
-        }
-            
-
-        
-        BuildMenuToggle();
-
-        
-    }
-        
-   
     public void BuildMenuToggle()
     {
 
@@ -470,7 +473,7 @@ public class UIManager : GameBehaviour<UIManager>
     /// Change the active state of the radial menu depending on the bool passed in
     /// </summary>
     /// <param name="status"> bool that defines Radial menu active state</param>
-    private void ToggleRadialMenu(bool status) 
+    private void ToggleRadialMenu(bool status)
     {
         RadialMenuPanel.SetActive(status);
         IsButtonClickable();
@@ -516,13 +519,13 @@ public class UIManager : GameBehaviour<UIManager>
         {
             DeselectHotbarOutline();
         }
-        
+
         CurrentOutline = outline;
         CurrentOutline.color = Color.red;
     }
     private void DeselectHotbarOutline()
     {
-        
+
         CurrentOutline.color = Color.black;
         CurrentOutline = null;
     }

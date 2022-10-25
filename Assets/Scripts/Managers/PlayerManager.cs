@@ -6,12 +6,9 @@ public class PlayerManager : GameBehaviour<PlayerManager>
 
     public static event Action<int> OnToolSelected;
 
-
     public bool isInteracting;
     public bool isClimbing;
     public bool playerIsStealthed;
-
-
 
     private void Awake()
     {
@@ -25,45 +22,40 @@ public class PlayerManager : GameBehaviour<PlayerManager>
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
-        { 
-            if(GM.havePickaxe)
+        {
+            if (GM.havePickaxe)
             { OnToolSelected(0); }
         }
-           
+
         if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
             if (GM.haveBuilding)
-            {
-                { OnToolSelected(1); }
+            { OnToolSelected(1); }
+        }
 
-            }
-
-        if(Input.GetKeyDown(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
             if (GM.haveBuilding)
-            {
-        { OnToolSelected(2); }
+            { OnToolSelected(2); }
+        }
 
-            }
-
-        if(Input.GetKeyDown(KeyCode.Alpha4))
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
             if (GM.haveBuilding)
-            {
-        { OnToolSelected(3); }
+            { OnToolSelected(3); }
+        }
 
-            }
-
-        if(Input.GetKeyDown(KeyCode.Alpha5))
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
             if (GM.haveSlingshot)
-            {
-        { OnToolSelected(4); }
+            { OnToolSelected(4); }
+        }
 
-            }
-
-        if(Input.GetKeyDown(KeyCode.Alpha6))
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
             if (GM.haveGrappleHook)
-            {
-        { OnToolSelected(5); }
-
-            }
+            { OnToolSelected(5); }
+        }
     }
 
     private void PlayerStealth()

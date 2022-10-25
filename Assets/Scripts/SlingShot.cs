@@ -98,7 +98,7 @@ public class SlingShot : GameBehaviour<SlingShot>
 
         currentBullet = bullets[bulletValue];
         //Debug.Log(currentBullet.name);
-        UI.ChangeAmmoTypeText();
+        //UI.ChangeAmmoTypeText();
 
     }
 

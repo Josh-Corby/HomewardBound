@@ -51,7 +51,6 @@ public class OutfitManager : GameBehaviour<OutfitManager>
         }
         Debug.Log(outfitValue);
 
-
         Outfits CurrentOutfit = (Outfits)outfitValue;
 
         Debug.Log(CurrentOutfit);
@@ -84,6 +83,6 @@ public class OutfitManager : GameBehaviour<OutfitManager>
         }
 
         //Update controls UI to match current outfit controls
-        UI.UpdateControlText();
+        //UI.UpdateControlText();
     }
 }

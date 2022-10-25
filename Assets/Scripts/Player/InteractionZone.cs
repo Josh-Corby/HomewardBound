@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 public class InteractionZone : GameBehaviour<InteractionZone>
 {
     public static event Action OnRespawnSet;
+    public static event Action<GameObject> OnItemPickUp;
 
     public bool canPickUp;
     public bool canDestroy;
@@ -110,70 +111,46 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         #region Item Interactions
         if (IM.interact_Input)
         {
-            if (atBonfire)
-            {
-                Debug.Log("Respawnset");
-                OnRespawnSet();
-            }
-            if (canClimb)
-            {
-                if (LadderEntry != null)
-                {
-                    Player.transform.position = LadderEntry.transform.position;
-                    Player.transform.rotation = LadderEntry.transform.rotation;
-                    PM.isClimbing = true;
-                }
-                PM.isClimbing = true;
-                Debug.Log("ClimbingLadder");
-            }
-            if (objectToInteract == null && !BM.isBuilding)
+            if (objectToInteract == null)
             {
                 IM.interact_Input = false;
                 return;
             }
-
-            if (canPickUp)
+            if (objectToInteract != null)
             {
-                outlineObjectsList.Remove(objectToInteract);
-                if (objectToInteract.CompareTag("Rock"))
-                {
-                    GM.rocksCollected += 1;
-                    UI.UpdateRocksCollected();
-                    Debug.Log(GM.rocksCollected);
-                }
 
-                if (objectToInteract.CompareTag("Stick"))
+                if (atBonfire)
                 {
-                    GM.sticksCollected += 1;
-                    UI.UpdateSticksCollected();
-                    Debug.Log(GM.sticksCollected);
+                    Debug.Log("Respawnset");
+                    OnRespawnSet();
                 }
-                if (objectToInteract.CompareTag("Mushroom"))
+                if (canClimb)
                 {
-                    GM.mushroomsCollected += 1;
-                    UI.UpdateMushroomsCollected();
-                    Debug.Log(GM.mushroomsCollected);
+                    if (LadderEntry != null)
+                    {
+                        Player.transform.position = LadderEntry.transform.position;
+                        Player.transform.rotation = LadderEntry.transform.rotation;
+                        PM.isClimbing = true;
+                    }
+                    PM.isClimbing = true;
+                    Debug.Log("ClimbingLadder");
                 }
-                if (objectToInteract.CompareTag("Pebble"))
+               
+
+                if (canPickUp)
                 {
-                    GM.pebblesCollected += 1;
-                    UI.UpdatePebblesCollected();
-                    Debug.Log(GM.pebblesCollected);
+                    OnItemPickUp(objectToInteract);
+                    outlineObjectsList.Remove(objectToInteract);
+
+
+                    objectToInteract.SetActive(false);
+                    canPickUp = false;
+                    objectToInteract = null;
+                    IM.interact_Input = false;
                 }
-
-                //Debug.Log("Picked up small object");
-                //Destroy(objectToInteract);
-                objectToInteract.SetActive(false);
-                canPickUp = false;
-                objectToInteract = null;
-                IM.interact_Input = false;
-
-            }
-
-           
+            }        
         }
         #endregion
-
     }
 
     private void OutlineObjects()
@@ -197,7 +174,6 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                 //Debug.Log("Object not highlighted");
                 StopOutliningObject(objectToOutline);
                 //outlineObjectsList.Remove(objectToOutline);
-
             }
         }
     }
@@ -216,17 +192,13 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             //other.GetComponent<Outline>().enabled = true;
             canPickUp = true;
             AddOutline(other.gameObject);
-
         }
-
         //Breakable Objects
         if (other.CompareTag("Rock") || other.CompareTag("BreakableWall") || other.CompareTag("MinableObject"))
         {
             objectToInteract = other.gameObject;
             //other.GetComponent<Outline>().enabled = true;
-
             //outlineObjectsList.Add(objectToInteract);
-
         }
         if (other.CompareTag("Ladder"))
         {
@@ -240,7 +212,6 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             objectToDestroy = other.gameObject;
             canDestroy = true;
         }
-
         if (other.CompareTag("Bonfire"))
         {
             atBonfire = true;
@@ -255,15 +226,12 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             DisableInteractions();
             RemoveOutline(other.gameObject);
         }
-
         if (other.CompareTag("Rock") || other.CompareTag("BreakableWall"))
         {
             //outlineObjectsList.Remove(other.gameObject);
             //canBreak = false;
             //objectToInteract.GetComponent<Outline>().enabled = false;
-
         }
-
         if (other.CompareTag("Ladder"))
         {
             PM.isClimbing = false;
@@ -271,18 +239,15 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             objectToDestroy = null;
             canDestroy = false;
         }
-
         if (other.CompareTag("Bridge"))
         {
             objectToDestroy = null;
             canDestroy = false;
         }
-
         if (other.CompareTag("Bonfire"))
         {
             atBonfire = false;
             StopOutliningObject(other.gameObject);
-
         }
     }
 
@@ -306,7 +271,6 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
     public void ClearObject()
     {
-
         Destroy(objectToInteract);
         objectToInteract = null;
     }
