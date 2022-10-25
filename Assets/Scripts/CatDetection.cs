@@ -11,6 +11,8 @@ namespace Cat
         public LayerMask mask;
         public bool raycasting;
         public CatManager catManager;
+        [SerializeField]
+        private BoxCollider col;
 
         private float detectionTimer;
         [SerializeField]
@@ -44,10 +46,12 @@ namespace Cat
             if (raycasting)
             {
                 catManager.aiState = AIStates.Detecting;
+
                 if (Physics.Raycast(transform.position, (Player.transform.position - transform.position), out RaycastHit hit, detectionRange, mask))
                 {
                     if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
                     {
+                        col.enabled = true;
                         if (catManager.aiState == AIStates.Aggro)
                         {
                             return;
@@ -68,6 +72,7 @@ namespace Cat
                     {
                         catManager.aiState = AIStates.Walk;
                         detectionTimer = detectionTimerMax;
+                        col.enabled = false;
                     }
                 }
             }
@@ -95,6 +100,7 @@ namespace Cat
         {
             if (other.CompareTag("Player"))
             {
+                
                 ResetCatDetection();
                 GM.RespawnPlayer();
                 catManager.RestartPath();

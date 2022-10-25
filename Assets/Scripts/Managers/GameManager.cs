@@ -47,7 +47,11 @@ public class GameManager : GameBehaviour<GameManager>
             haveBuilding = true;
             haveSlingshot = true;
             havePickaxe = true;
+            rocksCollected = 1000;
+            sticksCollected = 1000;
+            mushroomsCollected = 1000;
         }
+
     }
 
     private void IncreaseResources(GameObject resourceCollected)
@@ -90,6 +94,7 @@ public class GameManager : GameBehaviour<GameManager>
     public void RespawnPlayer()
     {
         OnPlayerRespawn();
+
         Player = TPM.gameObject;
         Player.GetComponent<CharacterController>().enabled = false;
         Player.transform.position = spawnPoint.transform.position;
@@ -108,6 +113,8 @@ public class GameManager : GameBehaviour<GameManager>
         BM.CancelBuilding();
         
     }
+
+
 
     /// <summary>
     /// Set spawn point of player
