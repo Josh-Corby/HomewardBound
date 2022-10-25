@@ -39,6 +39,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     public GameObject grappleHook;
     public Transform groundCheck;
     public LayerMask groundMask;
+    public LayerMask buildMask;
 
     ThirdPlayerMovement basicMovementScript;
 
@@ -54,7 +55,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private float glidingSpeed = 1f;
     private float glideTimer;
     private float glideTimerMax = 5f;
-    private float groundDistance = 0.2f;
+    private float groundDistance = 0.8f;
     private float moveSpeed = 6f;
     private float sprintSpeed = 12f;
     private float coyoteTimer;
@@ -84,7 +85,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private readonly float pullSpeedMax = 2;
     private float grappleRange = 50f;
     [SerializeField]
-    LayerMask mask;
+    LayerMask grappleMask;
 
 
 
@@ -186,6 +187,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     {
         groundState = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) ? GroundStates.Grounded : GroundStates.Airborne;
 
+        BM.onBuildObject = Physics.CheckSphere(groundCheck.position, groundDistance, buildMask);
 
         switch (groundState)
         {
@@ -336,7 +338,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
                         //check if ray hits something
                         Vector3 targetPoint;
-                        if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
+                        if (Physics.Raycast(ray, out hit, Mathf.Infinity, grappleMask))
                             targetPoint = hit.point;
                         else
                             targetPoint = ray.GetPoint(grappleRange); //Just a point far away from the player
@@ -344,7 +346,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                         //Calculate direction from attackPoint to targetPoint
                         Vector3 directionWithoutSpread = targetPoint - grapplePoint.transform.position;
 
-                        if (Physics.Raycast(grapplePoint.transform.position, directionWithoutSpread, out hit, grappleRange, mask))
+                        if (Physics.Raycast(grapplePoint.transform.position, directionWithoutSpread, out hit, grappleRange, grappleMask))
 
                         //if (Physics.Raycast(grapplePoint.transform.position, directionWithoutSpread, out RaycastHit raycastHit, 100))
                         {

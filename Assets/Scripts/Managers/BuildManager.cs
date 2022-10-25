@@ -20,6 +20,7 @@ public class BuildManager : GameBehaviour<BuildManager>
     public bool isBuilding;
     public bool canBuild;
     public bool collisionCheck;
+    public bool onBuildObject;
 
     [Header("Crafting Checks")]
     private bool pebbleCheck;
@@ -79,7 +80,8 @@ public class BuildManager : GameBehaviour<BuildManager>
         }
         if (isBuilding)
         {
-            if(TPM.groundState != GroundStates.Grounded)
+
+            if(TPM.groundState != GroundStates.Grounded || onBuildObject)
             {
                 canBuild = false;
                 return;
@@ -101,7 +103,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         if (Input.GetKeyDown(KeyCode.Mouse0) && isBuilding && !UI.paused)
         {
             // If material comparisons return true
-            if (materialsCheck && canBuild && collisionCheck)
+            if (materialsCheck && canBuild && collisionCheck && !onBuildObject)
             {
                 //Debug.Log("Object Built");
 
