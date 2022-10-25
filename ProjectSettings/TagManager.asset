@@ -32,6 +32,7 @@ TagManager:
   - Ground
   - Mechanics
   - Bonfire
+  - RollingRock
   layers:
   - Default
   - TransparentFX

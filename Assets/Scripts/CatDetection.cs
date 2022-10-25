@@ -99,6 +99,11 @@ namespace Cat
                 GM.RespawnPlayer();
                 catManager.RestartPath();
             }
+
+            if(other.CompareTag("Ladder") || other.CompareTag("Bridge") || other.CompareTag("Bonfire"))
+            {
+                Destroy(other.gameObject);
+            }
         }
     }
 }

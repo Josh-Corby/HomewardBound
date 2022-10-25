@@ -173,16 +173,19 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     }
     private void LookFoward()
     {
-        var lookPos = cam.transform.position - cameraLook.position;
-        lookPos.y = 0;
-        var rotation = Quaternion.LookRotation(lookPos);
-        transform.rotation = rotation;
+        if (!IZ.isRolling)
+        {
+            var lookPos = cam.transform.position - cameraLook.position;
+            lookPos.y = 0;
+            var rotation = Quaternion.LookRotation(lookPos);
+            transform.rotation = rotation;
+        }
+     
     }
     private void HandleMovement()
     {
         groundState = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) ? GroundStates.Grounded : GroundStates.Airborne;
 
-        //buildState = Physics.CheckSphere(groundCheck.position, groundDistance, )
 
         switch (groundState)
         {
@@ -217,6 +220,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         }
         if (Input.GetButtonDown("Jump") && coyoteTimer >= 0 && !UI.paused)
         {
+            if (IZ.isRolling) return;
             StartCoroutine(Jump());
         }
         velocity.y += gravity * Time.deltaTime;
@@ -242,7 +246,9 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             }
         }
         if (groundState == GroundStates.Airborne) return;
-        HandleSprinting();
+
+        if(!IZ.isRolling)
+            HandleSprinting();
     }
     private void ResetCoyoteTimer()
     {

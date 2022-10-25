@@ -13,6 +13,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
     public bool canDestroy;
     public bool canClimb;
     public bool canBreak;
+    public bool isRolling;
     [SerializeField]
     private bool atBonfire;
     public GameObject Player;
@@ -27,9 +28,11 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
     private readonly float interactRange = 3f;
 
+    private Collider col;
     private void Awake()
     {
         Player = TPM.gameObject;
+        col = GetComponent<BoxCollider>();
     }
     private void Update()
     {
@@ -55,8 +58,8 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             if (IM.rClick_Input)
             {
                 if (objectToInteract == null)
-                {              
-                    IM.lClick_Input = false;               
+                {
+                    IM.lClick_Input = false;
                     return;
                 }
 
@@ -111,6 +114,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         #region Item Interactions
         if (IM.interact_Input)
         {
+
             if (objectToInteract == null)
             {
                 IM.interact_Input = false;
@@ -118,37 +122,66 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             }
             if (objectToInteract != null)
             {
-
-                if (atBonfire)
+                if (isRolling)
                 {
-                    Debug.Log("Respawnset");
-                    OnRespawnSet();
-                }
-                if (canClimb)
-                {
-                    if (LadderEntry != null)
-                    {
-                        Player.transform.position = LadderEntry.transform.position;
-                        Player.transform.rotation = LadderEntry.transform.rotation;
-                        PM.isClimbing = true;
-                    }
-                    PM.isClimbing = true;
-                    Debug.Log("ClimbingLadder");
-                }
-               
+                    Debug.Log("Stop rolling");
+                    objectToInteract.transform.parent.parent = null;
 
-                if (canPickUp)
-                {
-                    OnItemPickUp(objectToInteract);
-                    outlineObjectsList.Remove(objectToInteract);
-
-
-                    objectToInteract.SetActive(false);
-                    canPickUp = false;
-                    objectToInteract = null;
+                    col.enabled = true;
+                    isRolling = false;
                     IM.interact_Input = false;
+                    return;
                 }
-            }        
+
+
+                if (!isRolling)
+                {
+                    if (atBonfire)
+                    {
+                        Debug.Log("Respawnset");
+                        OnRespawnSet();
+                    }
+
+                    if (objectToInteract.CompareTag("RollingRock"))
+                    {
+                        if (TPM.groundState == GroundStates.Grounded)
+                        {
+
+                            objectToInteract.transform.parent.SetParent(TPM.transform);
+                            col.enabled = false;
+                            isRolling = true;
+                            IM.interact_Input = false;
+                            return;
+                        }
+                    }
+
+                    if (canClimb)
+                    {
+                        if (LadderEntry != null)
+                        {
+                            Player.transform.position = LadderEntry.transform.position;
+                            Player.transform.rotation = LadderEntry.transform.rotation;
+                            PM.isClimbing = true;
+                        }
+                        PM.isClimbing = true;
+                        Debug.Log("ClimbingLadder");
+                    }
+
+
+                    if (canPickUp)
+                    {
+                        OnItemPickUp(objectToInteract);
+                        outlineObjectsList.Remove(objectToInteract);
+
+
+                        objectToInteract.SetActive(false);
+                        canPickUp = false;
+                        objectToInteract = null;
+                        IM.interact_Input = false;
+                    }
+                }
+
+            }
         }
         #endregion
     }
@@ -200,6 +233,12 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             //other.GetComponent<Outline>().enabled = true;
             //outlineObjectsList.Add(objectToInteract);
         }
+
+        if(other.CompareTag("RollingRock"))
+        {
+            objectToInteract = other.gameObject;
+        }
+
         if (other.CompareTag("Ladder"))
         {
             objectToDestroy = other.gameObject;
@@ -217,6 +256,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             atBonfire = true;
             OutlineObject(other.gameObject);
         }
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -226,11 +266,16 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             DisableInteractions();
             RemoveOutline(other.gameObject);
         }
-        if (other.CompareTag("Rock") || other.CompareTag("BreakableWall"))
+        if (other.CompareTag("Rock") || other.CompareTag("BreakableWall") || other.CompareTag("MinableObject") || other.CompareTag("RollingRock"))
         {
             //outlineObjectsList.Remove(other.gameObject);
             //canBreak = false;
             //objectToInteract.GetComponent<Outline>().enabled = false;
+        }
+
+        if(other.CompareTag("RollingRock"))
+        {
+            DisableInteractions();
         }
         if (other.CompareTag("Ladder"))
         {

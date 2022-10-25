@@ -237,7 +237,7 @@ public class BuildManager : GameBehaviour<BuildManager>
     }
     private bool CompareChecks()
     {
-        Debug.Log("Comparing materials");
+        //Debug.Log("Comparing materials");
 
         pebbleCheck = GM.rocksCollected >= pebbleCost;
         stickCheck = GM.sticksCollected >= stickCost;

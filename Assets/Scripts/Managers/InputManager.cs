@@ -81,7 +81,6 @@ public class InputManager : GameBehaviour<InputManager>
     public void HandleAllInputs()
     {
         HandleMovementInput();
-        HandleSprintingInput();
         HandleJumpingInput();
         HandleCameraInput();
     }
@@ -94,8 +93,6 @@ public class InputManager : GameBehaviour<InputManager>
         verticalInput = movementInput.y;
         horizontalInput = movementInput.x;
 
-        
-
         moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
         //AM.UpdateAnimatorValues(0, moveAmount, PL.isSprinting);
     }
@@ -105,20 +102,7 @@ public class InputManager : GameBehaviour<InputManager>
         cameraInputX = cameraInput.x;
         cameraInputY = cameraInput.y;
     }
-    /// <summary>
-    /// Handle sprint input
-    /// </summary>
-    private void HandleSprintingInput()
-    {
-        if (sprint_Input && moveAmount > 0.5f)
-        {
-            //PL.isSprinting = true;
-        }
-        else
-        {
-            //PL.isSprinting = false;
-        }
-    }
+   
 
     /// <summary>
     /// Handle jump input
