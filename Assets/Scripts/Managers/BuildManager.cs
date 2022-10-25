@@ -63,6 +63,7 @@ public class BuildManager : GameBehaviour<BuildManager>
     {
         PlayerManager.OnToolSelected += ToolSelectListen;
         GameManager.OnMaterialsUpdated += RunMaterialChecks;
+        ObjectBuild.OnObjectLengthChange += RunMaterialChecks;
     }
     private void Update()
     {
@@ -99,7 +100,7 @@ public class BuildManager : GameBehaviour<BuildManager>
             // If material comparisons return true
             else if (canBuild)
             {
-                Debug.Log("Object Built");
+                //Debug.Log("Object Built");
 
                 // Detach object from buildzone
                 buildZone.transform.DetachChildren();
@@ -212,6 +213,7 @@ public class BuildManager : GameBehaviour<BuildManager>
                 pebbleCost = 1 * costMultiplier;
                 stickCost = 1 * costMultiplier;
                 mushroomCost = 1 * costMultiplier;
+                RunMaterialChecks();
                 break;
             case BuildObjects.Bonfire:
                 pebbleCost = 3;
@@ -228,41 +230,43 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     private void RunMaterialChecks()
     {
-        if(isBuilding)
-        CompareChecks();
+        if (isBuilding)
+        {
+            materialsCheck = CompareChecks();
+        }
     }
     private bool CompareChecks()
     {
-        {
-            pebbleCheck = GM.rocksCollected >= pebbleCost;
-            stickCheck = GM.sticksCollected >= stickCost;
-            mushroomCheck = GM.mushroomsCollected >= mushroomCost;
+        Debug.Log("Comparing materials");
 
-            if (pebbleCheck == true && stickCheck == true && mushroomCheck)
-                return true;
-            else
-                return false;
-        }
-    }
-        /// <summary>
-        /// Subtract the cost of a build object from the player when building is completed
-        /// </summary>
-        private void SubtractCost()
-        {
-            GM.rocksCollected -= pebbleCost;
-            GM.sticksCollected -= stickCost;
-            GM.mushroomsCollected -= mushroomCost;
-            UI.UpdateMaterialsCollected();
-        }
-        /// <summary>
-        /// Add the cost of a build object back to the player when building is cancelled
-        /// </summary>
-        private void AddCost()
-        {
-            GM.rocksCollected += pebbleCost;
-            GM.sticksCollected += stickCost;
-            GM.mushroomsCollected += mushroomCost;
-            UI.UpdateMaterialsCollected();
-        }
+        pebbleCheck = GM.rocksCollected >= pebbleCost;
+        stickCheck = GM.sticksCollected >= stickCost;
+        mushroomCheck = GM.mushroomsCollected >= mushroomCost;
 
+        if (pebbleCheck == true && stickCheck == true && mushroomCheck)
+            return true;
+        else
+            return false;
     }
+    /// <summary>
+    /// Subtract the cost of a build object from the player when building is completed
+    /// </summary>
+    private void SubtractCost()
+    {
+        GM.rocksCollected -= pebbleCost;
+        GM.sticksCollected -= stickCost;
+        GM.mushroomsCollected -= mushroomCost;
+        UI.UpdateMaterialsCollected();
+    }
+    /// <summary>
+    /// Add the cost of a build object back to the player when building is cancelled
+    /// </summary>
+    private void AddCost()
+    {
+        GM.rocksCollected += pebbleCost;
+        GM.sticksCollected += stickCost;
+        GM.mushroomsCollected += mushroomCost;
+        UI.UpdateMaterialsCollected();
+    }
+
+}

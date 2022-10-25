@@ -65,7 +65,7 @@ public class BuildObjectRB : MonoBehaviour
 
         if (objectType == ObjectType.Bridge)
         {
-            Debug.Log("Unfreeze constraints");
+            //Debug.Log("Unfreeze constraints");
             rb.constraints = RigidbodyConstraints.None;
 
         }

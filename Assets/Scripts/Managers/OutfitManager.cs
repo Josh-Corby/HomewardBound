@@ -49,11 +49,11 @@ public class OutfitManager : GameBehaviour<OutfitManager>
         {
             outfitValue -= 2;
         }
-        Debug.Log(outfitValue);
+        //Debug.Log(outfitValue);
 
         Outfits CurrentOutfit = (Outfits)outfitValue;
 
-        Debug.Log(CurrentOutfit);
+        //Debug.Log(CurrentOutfit);
         if (CurrentOutfit!= Outfits.Builder)
         {
             BM.CancelBuilding();
