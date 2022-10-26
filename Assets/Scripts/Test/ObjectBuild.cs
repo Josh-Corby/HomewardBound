@@ -22,12 +22,13 @@ public class ObjectBuild : GameBehaviour
     private bool isBeingBuilt;
     [SerializeField]
     private bool canBuild;
-
     [SerializeField]
     private BridgeMeshManager bridgeMeshManager;
+    private BuildObjectTrigger trigger;
 
     private void Awake()
     {
+        trigger = GetComponentInChildren<BuildObjectTrigger>();
         baseColour = renderer.material.color;
         extensionCount = 0;
         currentExtension = null;
@@ -54,8 +55,14 @@ public class ObjectBuild : GameBehaviour
         {
             if (BM.materialsCheck)
             {
+                
                 if (BM.canBuild)
                 {
+                    if (!trigger.collisionCheck)
+                    {
+                        ChangeColourOfObject(Color.red);
+                    }
+                    else
                     ChangeColourOfObject(Color.blue);
                 }
 
@@ -120,12 +127,12 @@ public class ObjectBuild : GameBehaviour
             if (ObjectSegmentTriggers[i] == trigger)
             {
                 //Debug.Log("Collisions updated");
-                collisionChecks[i] = trigger.canBuild;
+                collisionChecks[i] = trigger.collisionCheck;
             }
         }
         for (int i = 0; i < extensionCount; i++)
         {
-            collisionChecks[i] = ObjectSegmentTriggers[i].canBuild;
+            collisionChecks[i] = ObjectSegmentTriggers[i].collisionCheck;
 
             //Debug.Log(collisionChecks[i]);
             if (collisionChecks[i] == false)

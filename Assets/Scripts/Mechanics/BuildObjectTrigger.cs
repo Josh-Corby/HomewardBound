@@ -6,7 +6,7 @@ using System;
 public class BuildObjectTrigger : GameBehaviour
 {
     public List<GameObject> collisionObjects = new List<GameObject>();
-    public bool canBuild;
+    public bool collisionCheck;
 
     [SerializeField]
     private ObjectBuild ObjectMain;
@@ -46,7 +46,7 @@ public class BuildObjectTrigger : GameBehaviour
 
     private void UpdateCanBuild()
     {
-        canBuild = collisionObjects.Count == 0;
+        collisionCheck = collisionObjects.Count == 0;
 
         if (ObjectMain == null) return;
         ObjectMain.CheckSegmentCollisions(this);

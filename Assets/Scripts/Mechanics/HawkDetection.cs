@@ -87,7 +87,7 @@ public class HawkDetection : GameBehaviour
                     {
                         detectionCircle.GetComponent<MeshRenderer>().enabled = true;
                         Debug.DrawLine(hawkRay.origin, hit.point, Color.red);
-                        detectionCircle.transform.position = new Vector3(other.transform.position.x, TPM.groundCheck.transform.position.y -0.01f, other.transform.position.z);
+                        detectionCircle.transform.position = new Vector3(other.transform.position.x, TPM.groundCheck.transform.position.y -0.15f, other.transform.position.z);
                         isGrowing = true;
                     }
 
