@@ -87,6 +87,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     [SerializeField]
     LayerMask grappleMask;
 
+    private Vector3 groundBox =  new Vector3(0.5f, 0.5f, 0.5f);
 
 
     public GameObject LilypadOffset;
@@ -185,8 +186,9 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     }
     private void HandleMovement()
     {
-        groundState = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) ? GroundStates.Grounded : GroundStates.Airborne;
+        //groundState = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) ? GroundStates.Grounded : GroundStates.Airborne;
 
+        groundState = Physics.CheckBox(groundCheck.position, groundBox, Quaternion.identity, groundMask) ? GroundStates.Grounded : GroundStates.Airborne;
         BM.onBuildObject = Physics.CheckSphere(groundCheck.position, groundDistance, buildMask);
 
         switch (groundState)
