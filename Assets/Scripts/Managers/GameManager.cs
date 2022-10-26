@@ -23,14 +23,14 @@ public class GameManager : GameBehaviour<GameManager>
     public bool havePickaxe;
     public bool haveSlingshot;
     public bool haveBuilding;
-    public bool haveGlider;
+    //public bool haveGlider;
     public bool haveGrappleHook;
 
     private void Start()
     {
         RespawnPlayer();
         haveGrappleHook = false;
-        haveGlider = false;
+        //haveGlider = false;
         haveBuilding = false;
         haveSlingshot = false;
         havePickaxe = false;
@@ -43,7 +43,7 @@ public class GameManager : GameBehaviour<GameManager>
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             haveGrappleHook = true;
-            haveGlider = true;
+            //haveGlider = true;
             haveBuilding = true;
             haveSlingshot = true;
             havePickaxe = true;

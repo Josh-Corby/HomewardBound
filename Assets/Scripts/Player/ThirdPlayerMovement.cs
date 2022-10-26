@@ -230,23 +230,23 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         controller.Move(velocity * Time.deltaTime);
 
         gravity = defaultGravity;
-        if (OM.outfit == Outfits.Utility)
-        {
-            if (glideTimer > 0 && IM.glide_Input && velocity.y <= 0)
-            {
-                groundState = GroundStates.Gliding;
-                if (glideTimer <= 0)
-                {
-                    groundState = GroundStates.Airborne;
-                    return;
-                }
-                gravity = 0;
-                velocity = new Vector3(velocity.z, -glidingSpeed);
-                //velocity.y = Mathf.Sqrt(gravity * -0.1f / jumpHeight);
-                glideTimer -= Time.deltaTime;
-                fallTimer = fallTimerMax;
-            }
-        }
+        //if (OM.outfit == Outfits.Utility)
+        //{
+        //    if (glideTimer > 0 && IM.glide_Input && velocity.y <= 0)
+        //    {
+        //        groundState = GroundStates.Gliding;
+        //        if (glideTimer <= 0)
+        //        {
+        //            groundState = GroundStates.Airborne;
+        //            return;
+        //        }
+        //        gravity = 0;
+        //        velocity = new Vector3(velocity.z, -glidingSpeed);
+        //        //velocity.y = Mathf.Sqrt(gravity * -0.1f / jumpHeight);
+        //        glideTimer -= Time.deltaTime;
+        //        fallTimer = fallTimerMax;
+        //    }
+        //}
         if (groundState == GroundStates.Airborne) return;
 
         if(!IZ.isRolling)

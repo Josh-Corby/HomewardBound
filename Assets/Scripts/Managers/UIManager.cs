@@ -140,9 +140,9 @@ public class UIManager : GameBehaviour<UIManager>
             bridgeText.text = "Bridge";
         }
 
-        if (tool == "GrappleHook" || tool == "Glider")
+        if (tool == "GrappleHook")
         {
-            utilityText.text = "Utility";
+            utilityText.text = "GrappleHook";
         }
 
     }
@@ -271,20 +271,20 @@ public class UIManager : GameBehaviour<UIManager>
     /// <summary>
     /// Check if UI buttons are clickable by running material checks
     /// </summary>
-    public void IsButtonClickable()
-    {
-        pickaxeButton.interactable = GM.havePickaxe;
+    //public void IsButtonClickable()
+    //{
+    //    pickaxeButton.interactable = GM.havePickaxe;
 
-        //buildLadderButton.interactable = BM.LadderCheck() && GM.haveBuilding;
-        //buildBridgeButton.interactable = BM.BridgeCheck(1) && GM.haveBuilding;
+    //    //buildLadderButton.interactable = BM.LadderCheck() && GM.haveBuilding;
+    //    //buildBridgeButton.interactable = BM.BridgeCheck(1) && GM.haveBuilding;
 
-        if (GM.haveGlider || GM.haveGrappleHook)
-            utilityButton.interactable = true;
+    //    if ( GM.haveGrappleHook)
+    //        utilityButton.interactable = true;
 
-        if (!GM.haveGlider && !GM.haveGrappleHook)
-            utilityButton.interactable = false;
+    //    if (!GM.haveGrappleHook)
+    //        utilityButton.interactable = false;
 
-    }
+    //}
 
 
     #endregion
@@ -432,29 +432,29 @@ public class UIManager : GameBehaviour<UIManager>
     //    BuildMenuToggle();
     //}
 
-    public void BuildMenuToggle()
-    {
+    //public void BuildMenuToggle()
+    //{
 
-        Debug.Log("Build Menu Toggled");
+    //    Debug.Log("Build Menu Toggled");
 
-        buildPanelStatus = !buildPanelStatus;
-        buildPanel.SetActive(buildPanelStatus);
-        if (buildPanelStatus)
-        {
-            currentBuildPanel.SetActive(true);
-            OM.canChangeOutfits = false;
+    //    buildPanelStatus = !buildPanelStatus;
+    //    buildPanel.SetActive(buildPanelStatus);
+    //    if (buildPanelStatus)
+    //    {
+    //        currentBuildPanel.SetActive(true);
+    //        OM.canChangeOutfits = false;
 
-        }
+    //    }
 
-        if (!buildPanelStatus)
-        {
-            OM.canChangeOutfits = true;
-            menu = Menus.None;
+    //    if (!buildPanelStatus)
+    //    {
+    //        OM.canChangeOutfits = true;
+    //        menu = Menus.None;
 
-        }
+    //    }
 
-        IM.buildMenu_Input = false;
-    }
+    //    IM.buildMenu_Input = false;
+    //}
 
     public void Toggle(GameObject objectToToggle)
     {
@@ -464,20 +464,20 @@ public class UIManager : GameBehaviour<UIManager>
     /// <summary>
     /// Change the UI of current bullet type to the current bullet type that is active
     /// </summary>
-    public void ChangeAmmoTypeText()
-    {
-        currentAmmoType.text = SS.currentBullet.name.ToString();
-    }
+    //public void ChangeAmmoTypeText()
+    //{
+    //    currentAmmoType.text = SS.currentBullet.name.ToString();
+    //}
 
     /// <summary>
     /// Change the active state of the radial menu depending on the bool passed in
     /// </summary>
     /// <param name="status"> bool that defines Radial menu active state</param>
-    private void ToggleRadialMenu(bool status)
-    {
-        RadialMenuPanel.SetActive(status);
-        IsButtonClickable();
-    }
+    //private void ToggleRadialMenu(bool status)
+    //{
+    //    RadialMenuPanel.SetActive(status);
+    //    IsButtonClickable();
+    //}
 
     /// <summary>
     /// Pause the game and active the pause panel, manage cursor states

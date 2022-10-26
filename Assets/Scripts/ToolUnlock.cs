@@ -9,7 +9,7 @@ enum Pickups {
     Builder,
     Slingshot,
     GrappleHook,
-    Glider
+    //Glider
 }
 
 public class ToolUnlock : GameBehaviour
@@ -64,9 +64,9 @@ public class ToolUnlock : GameBehaviour
                 break;
             case Pickups.GrappleHook:
                 break;
-            case Pickups.Glider:
-                GM.haveGlider = !GM.haveGlider;
-                break;
+            //case Pickups.Glider:
+            //    GM.haveGlider = !GM.haveGlider;
+            //    break;
         }
         UI.UpdateToolsUnlockedUI(pickups.ToString());
     }

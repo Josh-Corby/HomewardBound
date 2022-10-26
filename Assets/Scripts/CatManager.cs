@@ -16,9 +16,11 @@ namespace Cat
     public class CatManager : GameBehaviour
     {
         public CatDetection catDetection;
-        
+
         public Transform distractionTransform = null;
-        public Transform[] points;
+        public Transform[] patrolPoints;
+        [SerializeField]
+        private Transform closestPatrolPoint;
         private int destinationIndex = 0;
         private NavMeshAgent agent;
         private readonly float agentWalkSpeed = 5f;
@@ -47,46 +49,46 @@ namespace Cat
 
             aiState = AIStates.Walk;
         }
-        private void GotoNextPoint()
-        {
-            // Returns if no points have been set up
-            if (points.Length == 0)
-                return;
+        //private void GotoNextPoint()
+        //{
+        //    // Returns if no points have been set up
+        //    if (patrolPoints.Length == 0)
+        //        return;
 
-            // Set the agent to go to the currently selected destination.
-            agent.destination = points[destinationIndex].position;
+        //    // Set the agent to go to the currently selected destination.
+        //    agent.destination = patrolPoints[destinationIndex].position;
 
-            // Choose the next point in the array as the destination,
-            // cycling to the start if necessary.
-            destinationIndex = (destinationIndex + 1) % points.Length;
-        }
+        //    // Choose the next point in the array as the destination,
+        //    // cycling to the start if necessary.
+        //    destinationIndex = (destinationIndex + 1) % patrolPoints.Length;
+        //}
 
         private void ResumePath()
         {
-            // Returns if no points have been set up
-            if (points.Length == 0)
+            // returns if no points have been set up
+            if (patrolPoints.Length == 0)
                 return;
 
-            // Set the agent to go to the currently selected destination.
-            agent.destination = points[destinationIndex].position;
+            agent.destination = closestPatrolPoint.position;
+            //// set the agent to go to the currently selected destination.
+            //agent.destination = patrolpoints[destinationindex].position;
 
-            // Choose the next point in the array as the destination,
-            // cycling to the start if necessary.
-            destinationIndex = (destinationIndex) % points.Length;
+            //// choose the next point in the array as the destination,
+            //// cycling to the start if necessary.
+            //destinationindex = (destinationindex) % patrolpoints.length;
         }
 
         public void RestartPath()
         {
-            transform.position = points[0].position;
+            transform.position = patrolPoints[0].position;
 
-            if(points.Length >= 2)
+            if (patrolPoints.Length >= 2)
             {
-                transform.LookAt(points[1].position);
+                transform.LookAt(patrolPoints[1].position);
             }
 
             destinationIndex = 0;
             aiState = AIStates.Walk;
-            
 
         }
         private void Update()
@@ -107,7 +109,8 @@ namespace Cat
                             // Choose the next destination point when the agent gets
                             // close to the current one.
                             if (!agent.pathPending && agent.remainingDistance < 0.5f)
-                                GotoNextPoint();
+                                FindNextPoint();
+
                         }
                         break;
                     }
@@ -125,7 +128,7 @@ namespace Cat
                         break;
                     }
                 case AIStates.Distracted:
-                    if(distractionTransform == null)
+                    if (distractionTransform == null)
                     {
                         aiState = AIStates.Walk;
                         return;
@@ -133,6 +136,31 @@ namespace Cat
                     Distract(distractionTransform);
                     break;
             }
+        }
+        private void FindNextPoint()
+        {
+            if (patrolPoints.Length <= 0) return;
+            float closestpoint = Mathf.Infinity;
+            Vector3 playerPosition = Player.transform.position;
+
+            foreach (Transform patrolPoint in patrolPoints)
+            {
+                if (patrolPoint != closestPatrolPoint)
+                {
+
+                    Vector3 directionToTarget = patrolPoint.position - playerPosition;
+                    float dSqrToTarget = directionToTarget.sqrMagnitude;
+                    if (dSqrToTarget < closestpoint)
+                    {
+
+                        closestpoint = dSqrToTarget;
+                        closestPatrolPoint = patrolPoint;
+                    }
+                }
+            }
+
+            agent.SetDestination(closestPatrolPoint.position);
+            Debug.Log(closestPatrolPoint);
         }
 
         public void LookAtPlayer()
@@ -142,6 +170,7 @@ namespace Cat
             var rotation = Quaternion.LookRotation(lookPos);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
         }
+
         private void Distract(Transform distraction)
         {
             agent.SetDestination(distraction.position);
@@ -153,12 +182,12 @@ namespace Cat
                 Debug.Log(other.name + " is in range");
                 catDetection.raycasting = true;
             }
-            if (other.CompareTag("BerryBomb"))
-            {
-                Debug.Log("Distraction");
-                distractionTransform = other.gameObject.transform;
-                aiState = AIStates.Distracted;
-            }
+            //if (other.CompareTag("BerryBomb"))
+            //{
+            //    Debug.Log("Distraction");
+            //    distractionTransform = other.gameObject.transform;
+            //    aiState = AIStates.Distracted;
+            //}
         }
         private void OnTriggerExit(Collider other)
         {
@@ -169,11 +198,11 @@ namespace Cat
                 aiState = AIStates.Walk;
             }
 
-            if (other.CompareTag("BerryBomb"))
-            {
-                distractionTransform = null;
-                aiState = AIStates.Walk;
-            }
+            //if (other.CompareTag("BerryBomb"))
+            //{
+            //    distractionTransform = null;
+            //    aiState = AIStates.Walk;
+            //}
         }
     }
 }
