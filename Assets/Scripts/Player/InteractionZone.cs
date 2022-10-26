@@ -262,6 +262,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         if (other.CompareTag("Bonfire"))
         {
             atBonfire = true;
+            objectToInteract = other.gameObject;
             OutlineObject(other.gameObject);
         }
 

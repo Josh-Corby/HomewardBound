@@ -50,6 +50,8 @@ public class GameManager : GameBehaviour<GameManager>
             rocksCollected = 1000;
             sticksCollected = 1000;
             mushroomsCollected = 1000;
+            pebblesCollected = 1000;
+            SS.UpdateAmmo();
         }
 
     }
@@ -82,6 +84,8 @@ public class GameManager : GameBehaviour<GameManager>
             pebblesCollected += 1;
             UI.UpdateMaterials(UI.pebblesCollected, "Pebbles", pebblesCollected);
             OnMaterialsUpdated();
+            SS.UpdateAmmo();
+            
             return;
         }
 

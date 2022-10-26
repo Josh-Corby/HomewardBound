@@ -17,7 +17,7 @@ public class OutfitManager : GameBehaviour<OutfitManager>
 {
     public Outfits outfit;
     public bool canChangeOutfits;
-    public bool haveSlingshot = true;
+    //public bool haveSlingshot = true;
 
 
 

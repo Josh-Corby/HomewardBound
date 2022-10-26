@@ -4,9 +4,7 @@ using TMPro;
 public class SlingShot : GameBehaviour<SlingShot>
 {
     //bullet 
-    public GameObject[] bullets;
-    [HideInInspector]
-    public GameObject currentBullet;
+    public GameObject bullet;
     private int bulletValue = 0;
     //bullet force
     public float shootForce, upwardForce;
@@ -17,7 +15,6 @@ public class SlingShot : GameBehaviour<SlingShot>
     public bool allowButtonHold;
 
     int bulletsLeft, bulletsShot;
-    [HideInInspector]
     public int ammo;
     //Recoil
     //public Rigidbody playerRb;
@@ -49,8 +46,6 @@ public class SlingShot : GameBehaviour<SlingShot>
 
     private void Start()
     {
-        bulletValue = 0;
-        CycleBullets(bulletValue);
         UpdateAmmo();
     }
 
@@ -58,49 +53,33 @@ public class SlingShot : GameBehaviour<SlingShot>
     {
         if (GM.haveSlingshot)
         {
-            if (OM.outfit == Outfits.Miner)
+            if (OM.outfit == Outfits.Slingshot)
             {
-
-
-
-                if (/*UI.buildPanelStatus ||*/ UI.radialMenuStatus || BM.isBuilding || UI.paused == true)
+                if (BM.isBuilding || UI.paused == true)
                 {
                     return;
                 }
 
-                if (/*!UI.buildPanelStatus ||*/ !UI.radialMenuStatus)
-                {
                     MyInput();
-
                     //Set ammo display, if it exists :D
                     if (ammunitionDisplay != null)
                         ammunitionDisplay.SetText(bulletsLeft / bulletsPerTap + " / " + magazineSize / bulletsPerTap);
-                }
 
-                if (IM.mouseScrollY < 0)
-                {
-                    CycleBullets(1);
-
-                }
-                if (IM.mouseScrollY > 0)
-                {
-                    CycleBullets(-1);
-                }
             }
         }
     }
 
-    private void CycleBullets(int val)
-    {
-        bulletValue += val;
-        if (bulletValue < 0) bulletValue = (bullets.Length - 1);
-        if (bulletValue > (bullets.Length - 1)) bulletValue = 0;
+    //private void CycleBullets(int val)
+    //{
+    //    bulletValue += val;
+    //    if (bulletValue < 0) bulletValue = (bullets.Length - 1);
+    //    if (bulletValue > (bullets.Length - 1)) bulletValue = 0;
 
-        currentBullet = bullets[bulletValue];
-        //Debug.Log(currentBullet.name);
-        //UI.ChangeAmmoTypeText();
+    //    currentBullet = bullets[bulletValue];
+    //    //Debug.Log(currentBullet.name);
+    //    //UI.ChangeAmmoTypeText();
 
-    }
+    //}
 
     private void MyInput()
     {
@@ -125,6 +104,7 @@ public class SlingShot : GameBehaviour<SlingShot>
 
     private void Shoot()
     {
+
         if (ammo > 0)
         {
             Debug.Log("bullet fired");
@@ -158,7 +138,7 @@ public class SlingShot : GameBehaviour<SlingShot>
             Vector3 directionWithSpread = directionWithoutSpread + new Vector3(x, y, 0); //Just add spread to last direction
 
             //Instantiate bullet/projectile
-            GameObject currentBul = Instantiate(currentBullet, attackPoint.position, Quaternion.identity); //store instantiated bullet in currentBullet
+            GameObject currentBul = Instantiate(bullet, attackPoint.position, Quaternion.identity); //store instantiated bullet in currentBullet
                                                                                                            //Rotate bullet to shoot direction
             currentBul.transform.forward = directionWithSpread.normalized;
 
@@ -210,7 +190,7 @@ public class SlingShot : GameBehaviour<SlingShot>
         reloading = false;
     }
 
-    private void UpdateAmmo()
+    public void UpdateAmmo()
     {
         ammo = GM.pebblesCollected;
     }
