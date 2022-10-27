@@ -5,7 +5,6 @@ public class SlingShot : GameBehaviour<SlingShot>
 {
     //bullet 
     public GameObject bullet;
-    private int bulletValue = 0;
     //bullet force
     public float shootForce, upwardForce;
 

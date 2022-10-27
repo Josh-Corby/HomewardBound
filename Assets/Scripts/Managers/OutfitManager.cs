@@ -75,7 +75,7 @@ public class OutfitManager : GameBehaviour<OutfitManager>
 
             case Outfits.Utility:
                 outfit = Outfits.Utility;
-                Debug.Log("Grapple selected");
+                //Debug.Log("Grapple selected");
                 break;
             case Outfits.None:
                 outfit = Outfits.None;

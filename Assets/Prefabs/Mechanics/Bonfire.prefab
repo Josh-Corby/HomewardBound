@@ -232,6 +232,7 @@ MonoBehaviour:
   isBeingBuilt: 0
   canBuild: 0
   bridgeMeshManager: {fileID: 0}
+  trigger: {fileID: 2193318521920689344}
 --- !u!114 &2193318521920689344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,5 +246,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collisionObjects: []
-  canBuild: 0
+  collisionCheck: 0
   ObjectMain: {fileID: -5343926630921050758}

@@ -61,6 +61,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
 
 
+
     private void Start()
     {
         PlayerManager.OnToolSelected += ToolSelectListen;
@@ -80,8 +81,15 @@ public class BuildManager : GameBehaviour<BuildManager>
         }
         if (isBuilding)
         {
+            if (IM.cancel_Input)
+            {
+                if (prefabToSpawn != null)
+                {
+                    CancelBuilding();
+                }
+            }
 
-            if(TPM.groundState != GroundStates.Grounded || onBuildObject)
+            if (TPM.groundState != GroundStates.Grounded || onBuildObject)
             {
                 canBuild = false;
                 return;
@@ -90,13 +98,7 @@ public class BuildManager : GameBehaviour<BuildManager>
             {
                 canBuild = materialsCheck;
             }           
-            if (IM.cancel_Input)
-            {
-                if (prefabToSpawn != null)
-                {
-                    CancelBuilding();
-                }
-            }
+           
         }
 
         // Checks for if player can build

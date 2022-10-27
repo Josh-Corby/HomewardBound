@@ -21,9 +21,10 @@ public class ObjectBuild : GameBehaviour
     [SerializeField]
     private bool isBeingBuilt;
     [SerializeField]
-    private bool canBuild;
+    private bool segmentCollisionCheck;
     [SerializeField]
     private BridgeMeshManager bridgeMeshManager;
+    [SerializeField]
     private BuildObjectTrigger trigger;
 
     private void Awake()
@@ -37,11 +38,13 @@ public class ObjectBuild : GameBehaviour
             ObjectSegmentTriggers[i].transform.gameObject.SetActive(false);
         }
     }
+
+
     void Update()
     {
         if (UI.paused) return;
 
-        BM.collisionCheck = canBuild;
+        BM.collisionCheck = segmentCollisionCheck;
 
         isBeingBuilt = gameObject == BM.buildingObject;
 
@@ -50,34 +53,6 @@ public class ObjectBuild : GameBehaviour
         {
             ChangeColourOfObject(baseColour);
         }
-
-        if (isBeingBuilt == true)
-        {
-            if (BM.materialsCheck)
-            {
-                
-                if (BM.canBuild)
-                {
-                    if (!trigger.collisionCheck)
-                    {
-                        ChangeColourOfObject(Color.red);
-                    }
-                    else
-                    ChangeColourOfObject(Color.blue);
-                }
-
-                if (!BM.canBuild)
-                {
-                    ChangeColourOfObject(Color.red);
-                }
-            }
-            else
-            {
-                ChangeColourOfObject(Color.red);
-            }
-
-        }
-        extensionCount = Mathf.Clamp(extensionCount, 1, ObjectSegmentTriggers.Count);
 
         if (isBeingBuilt)
         {
@@ -115,15 +90,68 @@ public class ObjectBuild : GameBehaviour
                 }
                 currentExtension = ObjectSegmentTriggers[extensionCount - 1].transform.gameObject;
             }
-        }
+            if (BM.materialsCheck)
+            {
+                if (segmentCollisionCheck)
+                {
+                    ChangeColourOfObject(Color.blue);
 
+                    if(TPM.groundState == GroundStates.Grounded)
+                    {
+                        ChangeColourOfObject(Color.blue);
+                    }
+                    else
+                    {
+                        ChangeColourOfObject(Color.red);
+                    }
+                }
+                else
+                    ChangeColourOfObject(Color.red);
+
+
+            }
+
+            else 
+            {
+                ChangeColourOfObject(Color.red);
+            }
+
+            //    if (BM.materialsCheck)
+            //    {
+            //        if (BM.canBuild)
+            //        {
+            //            if (trigger.collisionCheck)
+            //            {
+            //                ChangeColourOfObject(Color.blue);
+
+            //                if(TPM.groundState == GroundStates.Grounded)
+            //                {
+            //                    ChangeColourOfObject(Color.blue);
+            //                }
+
+            //                if(TPM.groundState != GroundStates.Grounded)
+            //                {
+            //                    ChangeColourOfObject(Color.red);
+            //                }
+            //            }
+            //            else if (!trigger.collisionCheck)
+            //                ChangeColourOfObject(Color.red);
+            //        }         
+            //    }
+
+            //    else
+            //        ChangeColourOfObject(Color.red);
+            //}
+            extensionCount = Mathf.Clamp(extensionCount, 1, ObjectSegmentTriggers.Count);
+
+        }
     }
     public void CheckSegmentCollisions(BuildObjectTrigger trigger)
     {
         for (int i = 0; i < extensionCount; i++)
         {
             //if (BridgeSegmentTriggers[i].enabled == false) return;
-            //Debug.Log(BridgeSegmentTriggers[i]);
+            //Debug.Log(ObjectSegmentTriggers[i]);
             if (ObjectSegmentTriggers[i] == trigger)
             {
                 //Debug.Log("Collisions updated");
@@ -138,28 +166,18 @@ public class ObjectBuild : GameBehaviour
             if (collisionChecks[i] == false)
             {
                 //Debug.Log("cant build bridge");
-                canBuild = false;
+                segmentCollisionCheck = false;
                 return;
             }
         }
-        canBuild = true;
+        segmentCollisionCheck = true;
     }
-  
+
 
 
     private void ChangeColourOfObject(Color colour)
     {
-
         renderer.material.color = colour;
-
-        for (int i = 1; i < ObjectSegmentTriggers.Count; i++)
-        {
-            ObjectSegmentTriggers[i].transform.parent.gameObject.GetComponentInChildren<MeshRenderer>().material.color = colour;
-        }
-        //foreach (BuildObjectTrigger extension in BridgeSegmentTriggers)
-        //{
-        //    extension.transform.parent.gameObject.GetComponent<MeshRenderer>().material.color = colour;
-        //}
     }
 
 }
