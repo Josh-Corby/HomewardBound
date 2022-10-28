@@ -34,8 +34,14 @@ public class DestructableObject : GameBehaviour
             Debug.Log("Bullet hit");
             if(FallingObject != null)
             {
+<<<<<<< Updated upstream
                 FallingObjectRB.useGravity = true;
                 FallingObjectRB.constraints &= ~RigidbodyConstraints.FreezePositionY;
+=======
+                childRB.useGravity = true;
+                childRB.constraints = ~RigidbodyConstraints.FreezePosition;
+
+>>>>>>> Stashed changes
             }
 
             
