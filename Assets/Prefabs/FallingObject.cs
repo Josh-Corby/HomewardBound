@@ -16,6 +16,7 @@ public class FallingObject : MonoBehaviour
             if (collision.gameObject.CompareTag("Ground"))
             {
             rb.constraints = RigidbodyConstraints.FreezeAll;
+                rb.isKinematic = true;
             }
         }
     }

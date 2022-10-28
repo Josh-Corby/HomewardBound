@@ -38,7 +38,10 @@ public class DestructableObject : GameBehaviour
                 FallingObjectRB.useGravity = true;
                 FallingObjectRB.constraints &= ~RigidbodyConstraints.FreezePositionY;
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
             }
 
             
