@@ -176,7 +176,7 @@ MonoBehaviour:
   ObjectSegmentTriggers:
   - {fileID: 2193318521920689344}
   collisionChecks: 00
-  renderer: {fileID: 0}
+  renderer: {fileID: 3703477686481565308}
   baseColour: {r: 0, g: 0, b: 0, a: 0}
   isBeingBuilt: 0
   segmentCollisionCheck: 0

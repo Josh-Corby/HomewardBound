@@ -30,8 +30,8 @@ public class DialogueManager : GameBehaviour<DialogueManager>
     private float wordSpeed;
 
     private bool isInDialogue;
-    [SerializeField]
-    private bool isConversationStarted;
+    
+    public bool isConversationStarted;
 
     private void Start()
     {
@@ -46,6 +46,7 @@ public class DialogueManager : GameBehaviour<DialogueManager>
             {
                 if (Input.GetKeyDown(KeyCode.E))
                 {
+                    currentNPC.DisableOutline();
                     StartDialogue();
                     return;
                 }
@@ -54,7 +55,7 @@ public class DialogueManager : GameBehaviour<DialogueManager>
             if (!isSentenceOver)
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    wordSpeed = 0.01f;
+                    wordSpeed = 0.005f;
                 }
 
             if (isSentenceOver)
@@ -64,7 +65,9 @@ public class DialogueManager : GameBehaviour<DialogueManager>
                     currentSentence_Index += 1;
                     if (currentSentence_Index > currentNPC_Dialogue.Length - 1)
                     {
+                        
                         EndDialogue();
+                        
                         return;
                     }
                     StartNextSentence();
@@ -109,7 +112,6 @@ public class DialogueManager : GameBehaviour<DialogueManager>
 
     public void EndDialogue()
     {
-        ClearNPCInformation();
         if (isInDialogue)
         {
             StopCoroutine(Typing());
@@ -117,6 +119,8 @@ public class DialogueManager : GameBehaviour<DialogueManager>
             dialogPanel.SetActive(false);
             isConversationStarted = false;
             isInDialogue = false;
+            currentSentence_Index = 0;
+            currentNPC.EnableOutline();
         }
     }
 
