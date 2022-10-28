@@ -17,6 +17,7 @@ public class GameBehaviour : JMC
     protected static SlingShot SS { get { return SlingShot.INSTANCE; } }
     protected static OutfitManager OM { get { return OutfitManager.INSTANCE; } }
     protected static LadderClimb LC { get { return LadderClimb.INSTANCE; } }
+    protected static DialogueManager DM { get { return DialogueManager.INSTANCE; } }
 }
 
 public class GameBehaviour<T> : GameBehaviour where T : GameBehaviour

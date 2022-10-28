@@ -13,6 +13,8 @@ public class MinableWall : GameBehaviour
 
     private void Start()
     {
+        if(gameObject !=null)
+
         GameManager.OnPlayerRespawn += EnableObject;
     }
     private void EnableObject()

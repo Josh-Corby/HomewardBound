@@ -92,7 +92,7 @@ public class GameManager : GameBehaviour<GameManager>
     /// </summary>
     public void RespawnPlayer()
     {
-        OnPlayerRespawn();
+        
 
         Player = TPM.gameObject;
         Player.GetComponent<CharacterController>().enabled = false;
@@ -110,7 +110,9 @@ public class GameManager : GameBehaviour<GameManager>
         LC.inside = false;
         //Debug.Log("Player Respawned");
         BM.CancelBuilding();
-        
+
+        OnPlayerRespawn();
+
     }
 
 
