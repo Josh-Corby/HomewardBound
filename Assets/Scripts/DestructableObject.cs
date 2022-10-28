@@ -4,25 +4,41 @@ using UnityEngine;
 
 public class DestructableObject : GameBehaviour
 {
-    public GameObject childObject;
-    private Rigidbody childRB;
+    [SerializeField]
+    private Transform FallingObjectSpawnPosition;
+    [SerializeField]
+    private GameObject FallingObject;
+    private Rigidbody FallingObjectRB;
+
+    private bool isDestroyed;
 
     private void Start()
     {
-        childRB = childObject.GetComponent<Rigidbody>();
+        FallingObjectSpawnPosition.position = FallingObject.transform.position;
+        FallingObjectRB = FallingObject.GetComponent<Rigidbody>();
+        GameManager.OnPlayerRespawn += ResetObject;
+        ResetObject();
     }
 
+    private void ResetObject()
+    {
+        gameObject.SetActive(true);
+        FallingObject.transform.position = FallingObjectSpawnPosition.position;
+        FallingObjectRB.useGravity = false;
+        FallingObjectRB.constraints = RigidbodyConstraints.FreezeAll;
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            if(childObject != null)
+            Debug.Log("Bullet hit");
+            if(FallingObject != null)
             {
-                childRB.useGravity = true;
-                childRB.constraints = ~RigidbodyConstraints.FreezePosition;
+                FallingObjectRB.useGravity = true;
+                FallingObjectRB.constraints &= ~RigidbodyConstraints.FreezePositionY;
             }
-        
-            Destroy(this.gameObject);
+
+            
         }
     }
 }

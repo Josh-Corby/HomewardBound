@@ -99,6 +99,16 @@ public class ObjectBuild : GameBehaviour
                     if(TPM.groundState == GroundStates.Grounded)
                     {
                         ChangeColourOfObject(Color.blue);
+
+                        if (!BM.onBuildObject)
+                        {
+                            ChangeColourOfObject(Color.blue);
+                        }
+
+                        else
+                        {
+                            ChangeColourOfObject(Color.red);
+                        }
                     }
                     else
                     {

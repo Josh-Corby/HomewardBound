@@ -38,7 +38,7 @@ public class Bullet : MonoBehaviour
         {
             Destroy(collision.gameObject);
         }
-        Debug.Log(collision.gameObject.name);
+        //Debug.Log(collision.gameObject.name);
         gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         Destroy(gameObject);
         //StartCoroutine(DestroyBullet());

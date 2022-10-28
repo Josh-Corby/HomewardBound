@@ -48,6 +48,9 @@ public class BuildManager : GameBehaviour<BuildManager>
     #endregion
 
     [SerializeField]
+    private GameObject[] buildObjects;
+
+    [SerializeField]
     private GameObject buildZone;
 
     public GameObject prefabToSpawn;
@@ -60,7 +63,7 @@ public class BuildManager : GameBehaviour<BuildManager>
     private MeshRenderer buildObjectRenderer;
 
 
-
+    private int currentBuildObject_Index;
 
     private void Start()
     {
@@ -131,9 +134,17 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     private void ToolSelectListen(int buildObjectIndex)
     {
+        if(buildObjectIndex == currentBuildObject_Index)
+        {
+            CancelBuilding();
+            currentBuildObject_Index = -1;
+            return;
+        }
+
         if (buildObjectIndex >= 1 && buildObjectIndex <= 3)
         {
             BuildItem(buildObjectIndex);
+            currentBuildObject_Index = buildObjectIndex;
         }
     }
 
@@ -144,6 +155,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         prefabToSpawn = null;
         canBuild = false;
         isBuilding = false;
+        currentBuildObject_Index = -1;
     }
 
     /// <summary>
