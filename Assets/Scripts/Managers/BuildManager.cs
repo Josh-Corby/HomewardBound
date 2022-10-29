@@ -117,7 +117,8 @@ public class BuildManager : GameBehaviour<BuildManager>
 
                 // Reactivate Interaction Zone
                 IZ.Toggle(true);
-                buildingObject.GetComponent<BoxCollider>().enabled = true;
+                
+                buildingObject.GetComponent<ObjectBuild>().currentTrigger.isTrigger = false;
 
                 if (buildingObject.GetComponent<BuildObjectRB>() != null)
                 {
