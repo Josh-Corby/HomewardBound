@@ -6,12 +6,16 @@ TagManager:
   tags:
   - SmallObject
   - Mud
+  - LightPickUp
   - BuildZone
   - Ladder
+  - LadderTop
+  - LadderBottom
   - Stick
   - Mushroom
   - Bridge
   - Floor
+  - LadderBody
   - Pebble
   - Rock
   - BreakableWall
@@ -29,7 +33,6 @@ TagManager:
   - Mechanics
   - Bonfire
   - RollingRock
-  - LadderClimb
   layers:
   - Default
   - TransparentFX

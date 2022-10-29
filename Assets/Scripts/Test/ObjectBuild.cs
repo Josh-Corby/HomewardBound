@@ -7,46 +7,44 @@ public class ObjectBuild : GameBehaviour
 
     public static event Action OnObjectLengthChange;
 
-    public BoxCollider currentTrigger;
-
     [SerializeField]
-    public int objectLength;
-
+    private GameObject currentExtension;
     [SerializeField]
-    private List<BuildObjectTrigger> ObjectColliders = new List<BuildObjectTrigger>();
-
+    public int extensionCount;
     [SerializeField]
-
+    private List<BuildObjectTrigger> ObjectSegmentTriggers = new List<BuildObjectTrigger>();
+    public bool[] collisionChecks;
+    [SerializeField]
     private MeshRenderer renderer;
-
     [SerializeField]
     private Color baseColour;
-
     [SerializeField]
     private bool isBeingBuilt;
-
     [SerializeField]
-    private bool isTriggerColliding;
-
+    private bool segmentCollisionCheck;
     [SerializeField]
-    private BuildObjectMeshManager bridgeMeshManager;
+    private BridgeMeshManager bridgeMeshManager;
+    [SerializeField]
+    private BuildObjectTrigger trigger;
 
     private void Awake()
     {
+        trigger = GetComponentInChildren<BuildObjectTrigger>();
         baseColour = renderer.material.color;
-        objectLength = 0;
-        for (int i = 1; i < ObjectColliders.Count; i++)
+        extensionCount = 0;
+        currentExtension = null;
+        for (int i = 1; i < ObjectSegmentTriggers.Count; i++)
         {
-            ObjectColliders[i].transform.gameObject.SetActive(false);
+            ObjectSegmentTriggers[i].transform.gameObject.SetActive(false);
         }
-        currentTrigger = ObjectColliders[0].gameObject.GetComponent<BoxCollider>();
     }
+
 
     void Update()
     {
         if (UI.paused) return;
 
-        BM.collisionCheck = isTriggerColliding;
+        BM.collisionCheck = segmentCollisionCheck;
 
         isBeingBuilt = gameObject == BM.buildingObject;
 
@@ -61,47 +59,44 @@ public class ObjectBuild : GameBehaviour
             if (Input.mouseScrollDelta.y > 0)
             {
                 //Debug.Log("Mouse up");
-                if (objectLength == ObjectColliders.Count)
+                if (extensionCount == ObjectSegmentTriggers.Count)
                 {
                     return;
                 }
-                objectLength += 1;
+                extensionCount += 1;
                 OnObjectLengthChange();
 
-                BM.SetMaterialCosts(2, objectLength);
+                BM.SetMaterialCosts(2, extensionCount);
 
-                if (currentTrigger != null)
-                {
-                currentTrigger.gameObject.SetActive(false);
-                }
-                currentTrigger = ObjectColliders[objectLength - 1].transform.gameObject.GetComponent<BoxCollider>();
-
-                currentTrigger.gameObject.SetActive(true);
+                currentExtension = ObjectSegmentTriggers[extensionCount - 1].transform.gameObject;
+                currentExtension.SetActive(true);
 
             }
             if (Input.mouseScrollDelta.y < 0)
             {
-                if (objectLength <= 1)
-                {
-                    return;
-                }
                 //Debug.Log("Mouse down");
-                if (currentTrigger == null) return;
-                objectLength -= 1;
+                if (currentExtension == null) return;
+
+                currentExtension.SetActive(false);
+                extensionCount -= 1;
                 OnObjectLengthChange();
 
-                BM.SetMaterialCosts(2, objectLength);         
-                currentTrigger.gameObject.SetActive(false);
-                currentTrigger = ObjectColliders[objectLength - 1].transform.gameObject.GetComponent<BoxCollider>();
-                currentTrigger.gameObject.SetActive(true);
+                BM.SetMaterialCosts(2, extensionCount);
+
+                if (extensionCount <= 1)
+                {
+                    currentExtension = null;
+                    return;
+                }
+                currentExtension = ObjectSegmentTriggers[extensionCount - 1].transform.gameObject;
             }
             if (BM.materialsCheck)
             {
-                if (isTriggerColliding)
+                if (segmentCollisionCheck)
                 {
                     ChangeColourOfObject(Color.blue);
 
-                    if (TPM.groundState == GroundStates.Grounded)
+                    if(TPM.groundState == GroundStates.Grounded)
                     {
                         ChangeColourOfObject(Color.blue);
 
@@ -109,6 +104,7 @@ public class ObjectBuild : GameBehaviour
                         {
                             ChangeColourOfObject(Color.blue);
                         }
+
                         else
                         {
                             ChangeColourOfObject(Color.red);
@@ -121,19 +117,74 @@ public class ObjectBuild : GameBehaviour
                 }
                 else
                     ChangeColourOfObject(Color.red);
+
+
             }
-            else
+
+            else 
             {
                 ChangeColourOfObject(Color.red);
             }
-            objectLength = Mathf.Clamp(objectLength, 1, ObjectColliders.Count);
+
+            //    if (BM.materialsCheck)
+            //    {
+            //        if (BM.canBuild)
+            //        {
+            //            if (trigger.collisionCheck)
+            //            {
+            //                ChangeColourOfObject(Color.blue);
+
+            //                if(TPM.groundState == GroundStates.Grounded)
+            //                {
+            //                    ChangeColourOfObject(Color.blue);
+            //                }
+
+            //                if(TPM.groundState != GroundStates.Grounded)
+            //                {
+            //                    ChangeColourOfObject(Color.red);
+            //                }
+            //            }
+            //            else if (!trigger.collisionCheck)
+            //                ChangeColourOfObject(Color.red);
+            //        }         
+            //    }
+
+            //    else
+            //        ChangeColourOfObject(Color.red);
+            //}
+            extensionCount = Mathf.Clamp(extensionCount, 1, ObjectSegmentTriggers.Count);
+
         }
     }
-
-    public void CanObjectBeBuilt(bool triggerCollision)
+    public void CheckSegmentCollisions(BuildObjectTrigger trigger)
     {
-        isTriggerColliding = triggerCollision;
+        for (int i = 0; i < extensionCount; i++)
+        {
+            //if (BridgeSegmentTriggers[i].enabled == false) return;
+            //Debug.Log(ObjectSegmentTriggers[i]);
+            if (ObjectSegmentTriggers[i] == trigger)
+            {
+                //Debug.Log("Collisions updated");
+                collisionChecks[i] = trigger.collisionCheck;
+            }
+        }
+        for (int i = 0; i < extensionCount; i++)
+        {
+            collisionChecks[i] = ObjectSegmentTriggers[i].collisionCheck;
+
+            //Debug.Log(collisionChecks[i]);
+            if (collisionChecks[i] == false)
+            {
+                //Debug.Log("cant build bridge");
+                segmentCollisionCheck = false;
+                return;
+            }
+        }
+        segmentCollisionCheck = true;
     }
+
+
+
     private void ChangeColourOfObject(Color colour)
     {
         renderer.material.color = colour;

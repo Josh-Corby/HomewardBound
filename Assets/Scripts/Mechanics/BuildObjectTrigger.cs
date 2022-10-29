@@ -6,25 +6,26 @@ using System;
 public class BuildObjectTrigger : GameBehaviour
 {
     public List<GameObject> collisionObjects = new List<GameObject>();
-    public bool isNotColliding;
-
-    public ObjectBuild ObjectMain;
+    public bool collisionCheck;
 
     [SerializeField]
-    private BoxCollider collider;
+    private ObjectBuild ObjectMain;
 
 
+    private void Start()
+    {
+        UpdateCanBuild();
+    }
     private void OnEnable()
     {
         collisionObjects.Clear();
         UpdateCanBuild();
-        collider.isTrigger = true;
     }
 
-    private void UpdateCanBuild()
+    private void OnDisable()
     {
-        isNotColliding = collisionObjects.Count == 0;
-        ObjectMain.CanObjectBeBuilt(isNotColliding);
+        collisionObjects.Clear();
+        UpdateCanBuild();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,7 +44,13 @@ public class BuildObjectTrigger : GameBehaviour
         UpdateCanBuild();
     }
 
-    
+    private void UpdateCanBuild()
+    {
+        collisionCheck = collisionObjects.Count == 0;
+
+        if (ObjectMain == null) return;
+        ObjectMain.CheckSegmentCollisions(this);
+    }
 
 
     //public IEnumerator LerpAlpha()

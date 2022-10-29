@@ -2,14 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildObjectMeshManager : GameBehaviour
+public class BridgeMeshManager : MonoBehaviour
 {
     [SerializeField]
-    private MeshFilter Mesh;
+    private GameObject BridgeMeshObject;
+    [SerializeField]
+    private MeshFilter BridgeMesh;
+
     [SerializeField]
     private Mesh[] bridgeMeshesArray;
+
     [SerializeField]
     private Transform[] meshPositions;
+
     [SerializeField]
     private ObjectBuild objectBuild;
 
@@ -26,12 +31,13 @@ public class BuildObjectMeshManager : GameBehaviour
 
     private void Start()
     {
-        Mesh.mesh = bridgeMeshesArray[0];
-        Mesh.transform.position = meshPositions[0].position;
+        BridgeMesh.mesh = bridgeMeshesArray[0];
+        BridgeMesh.transform.position = meshPositions[0].position;
     }
     public void ChangeBridgeMesh()
     {
-        Mesh.mesh = bridgeMeshesArray[objectBuild.objectLength - 1];
-        Mesh.transform.position = meshPositions[objectBuild.objectLength - 1].transform.position;     
+        BridgeMesh.mesh = bridgeMeshesArray[objectBuild.extensionCount - 1];
+        BridgeMesh.transform.position = meshPositions[objectBuild.extensionCount - 1].transform.position;
+        
     }
 }

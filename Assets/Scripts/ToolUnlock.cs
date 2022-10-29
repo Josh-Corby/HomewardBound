@@ -68,7 +68,7 @@ public class ToolUnlock : GameBehaviour
             //    GM.haveGlider = !GM.haveGlider;
             //    break;
         }
-       // UI.UpdateToolsUnlockedUI(pickups.ToString());
+        UI.UpdateToolsUnlockedUI(pickups.ToString());
     }
 
     private void OnTriggerEnter(Collider other)
