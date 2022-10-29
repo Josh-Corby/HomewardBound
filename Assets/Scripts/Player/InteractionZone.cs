@@ -140,6 +140,9 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                     {
                         Debug.Log("Respawnset");
                         OnRespawnSet();
+                        IM.interact_Input = false;
+                        
+                        return;
                     }
 
                     if (objectToInteract.CompareTag("RollingRock"))
