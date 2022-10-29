@@ -16,7 +16,7 @@ public class LadderClimb : GameBehaviour<LadderClimb>
     }
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Ladder")
+        if (col.gameObject.tag == "LadderClimb")
         {
             TPM.groundState = GroundStates.Grounded;
             TPM.enabled = false;
@@ -25,7 +25,7 @@ public class LadderClimb : GameBehaviour<LadderClimb>
     }
     void OnTriggerExit(Collider col)
     {
-        if (col.gameObject.tag == "Ladder")
+        if (col.gameObject.tag == "LadderClimb")
         {
             TPM.enabled = true;
             TPM.groundState = GroundStates.Grounded;
