@@ -177,7 +177,7 @@ namespace Cat
         }
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject == TPM.gameObject))
+            if (other.gameObject == TPM.gameObject)
             {
                 Debug.Log(other.name + " is in range");
                 catDetection.raycasting = true;

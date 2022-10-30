@@ -87,7 +87,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     [SerializeField]
     LayerMask grappleMask;
 
-    private Vector3 groundBox =  new Vector3(0.5f, 0.5f, 0.5f);
+    private Vector3 groundBox =  new Vector3(0.3f, 0.5f, 0.3f);
 
 
     public GameObject LilypadOffset;
