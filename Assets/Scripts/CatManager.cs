@@ -23,7 +23,7 @@ namespace Cat
         private Transform closestPatrolPoint;
         private int destinationIndex = 0;
         private NavMeshAgent agent;
-        private readonly float agentWalkSpeed = 5f;
+        private readonly float agentWalkSpeed = 10f;
 
         public AIStates aiState;
         private GameObject Player;
@@ -160,7 +160,7 @@ namespace Cat
             }
 
             agent.SetDestination(closestPatrolPoint.position);
-            Debug.Log(closestPatrolPoint);
+            //Debug.Log(closestPatrolPoint);
         }
 
         public void LookAtPlayer()
@@ -177,7 +177,7 @@ namespace Cat
         }
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.gameObject == TPM.gameObject))
             {
                 Debug.Log(other.name + " is in range");
                 catDetection.raycasting = true;
@@ -191,7 +191,7 @@ namespace Cat
         }
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.gameObject == TPM.gameObject)
             {
                 //Debug.Log(other.name + " is no longer in range");
                 catDetection.raycasting = false;

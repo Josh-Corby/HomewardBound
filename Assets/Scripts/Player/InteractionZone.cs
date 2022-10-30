@@ -250,6 +250,11 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             objectToInteract = other.gameObject;
         }
 
+        if(other.CompareTag("Ladder") || other.CompareTag("Bridge") || other.CompareTag("Bonfire"))
+        {
+            OutlineObject(other.gameObject.GetComponentInParent<ObjectBuild>().gameObject);
+        }
+
         if (other.CompareTag("Ladder") || other.CompareTag("Bridge"))
         {
             objectToDestroy = other.gameObject.GetComponent<BuildObjectTrigger>().ObjectMain.gameObject;
@@ -284,7 +289,13 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             DisableInteractions();
         }
 
-        if(other.CompareTag("Ladder") || other.CompareTag("Bridge"))
+
+
+        if (other.CompareTag("Ladder") || other.CompareTag("Bridge") || other.CompareTag("Bonfire"))
+        {
+            StopOutliningObject(other.gameObject.GetComponentInParent<ObjectBuild>().gameObject);
+        }
+        if (other.CompareTag("Ladder") || other.CompareTag("Bridge"))
         {
             objectToDestroy = null;
         }

@@ -16,11 +16,11 @@ public class CameraTransform : GameBehaviour
     [SerializeField]
     private GameObject cameraLook;
     [SerializeField]
-    private GameObject zoomLook;
-    [SerializeField]
     private GameObject CameraTarget;
     [SerializeField]
     Vector3 Offset;
+
+    private float cameraDistance;
 
     private const float _threshold = 0.01f;
 
@@ -53,38 +53,31 @@ public class CameraTransform : GameBehaviour
 
     private void Update()
     {
+
+
+        cameraDistance = Mathf.Clamp(cameraDistance,10f, 20f);
+        camfollow.CameraDistance = cameraDistance;
         if (vcam.Follow == null) return;
         if (vcam.LookAt == null) return;
 
 
         vcam.Follow = CameraTarget.transform;
         vcam.LookAt = CameraTarget.transform;
-        if (Input.GetKey(KeyCode.Mouse1))
-        {
-            //CameraTarget = zoomLook;
-            //camfollow.ShoulderOffset = new Vector3(1.37f, -0.4f, 0f);
-            
-        }
-
-        //if (!Input.GetKey(KeyCode.Mouse1))
-        //{
-        //    //CameraTarget = cameraLook;
-        //    camfollow.ShoulderOffset = new Vector3();
-        //}
-
+  
         if (UI.menu != Menus.None || UI.paused)
             return;
-        //transform.position = thirdPersonPlayer.transform.position + Offset;
-        //RotateCamera();
+
+
+        //if (Input.mouseScrollDelta.y < 0)
+        //{
+        //    cameraDistance += 2;
+        //}
+
+        //if(Input.mouseScrollDelta.y >0)
+        //{
+        //    cameraDistance -= 2;
+        //}
     }
-
-    //public void RotateCamera()
-    //{
-    //    turn.x += Input.GetAxis("Mouse X");
-    //    turn.y += Input.GetAxis("Mouse Y");
-    //    transform.localRotation = Quaternion.Euler(-turn.y, turn.x, 0);
-    //}
-
     private void LateUpdate()
     {
         if (!UI.paused)
