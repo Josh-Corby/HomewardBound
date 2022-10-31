@@ -68,18 +68,6 @@ public class SlingShot : GameBehaviour<SlingShot>
         }
     }
 
-    //private void CycleBullets(int val)
-    //{
-    //    bulletValue += val;
-    //    if (bulletValue < 0) bulletValue = (bullets.Length - 1);
-    //    if (bulletValue > (bullets.Length - 1)) bulletValue = 0;
-
-    //    currentBullet = bullets[bulletValue];
-    //    //Debug.Log(currentBullet.name);
-    //    //UI.ChangeAmmoTypeText();
-
-    //}
-
     private void MyInput()
     {
         //Check if allowed to hold down button and take corresponding input

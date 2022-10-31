@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3422273934882830527}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: CatPatrolPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3422273935112178422}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: PatrolPoint2
   m_TagString: Untagged
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
@@ -79,7 +79,7 @@ GameObject:
   - component: {fileID: 1089815187943783672}
   - component: {fileID: 4403429072455924490}
   - component: {fileID: 1028917102408864700}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: CatDetection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ Transform:
   m_LocalScale: {x: 11.21628, y: 11.21628, z: 11.21628}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 543450652686196288}
+  - {fileID: 5006512735810507441}
   m_Father: {fileID: 4817668145205667619}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -132,6 +132,7 @@ MonoBehaviour:
     m_Bits: 128
   raycasting: 0
   catManager: {fileID: 1089815188081010613}
+  col: {fileID: 0}
   detectionTimerMax: 4
 --- !u!33 &4403429072455924490
 MeshFilter:
@@ -192,7 +193,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3422273936398524182}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: PatrolPoint1
   m_TagString: Untagged
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
@@ -223,7 +224,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3422273936627243135}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: PatrolPoint4
   m_TagString: Untagged
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
@@ -254,7 +255,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3422273936698640434}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: PatrolPoint3
   m_TagString: Untagged
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
@@ -288,7 +289,7 @@ GameObject:
   - component: {fileID: 1089815188081010613}
   - component: {fileID: 1089815188081010603}
   - component: {fileID: 7112589376474335024}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: CatManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,8 +326,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   catDetection: {fileID: 1089815187943783672}
   distractionTransform: {fileID: 0}
-  points:
-  - {fileID: 3422273936398524182}
+  patrolPoints: []
+  closestPatrolPoint: {fileID: 0}
   aiState: 0
 --- !u!195 &1089815188081010603
 NavMeshAgent:
@@ -473,16 +474,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 5141c07f08efd6043a2d08dcdf391a2c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5141c07f08efd6043a2d08dcdf391a2c,
         type: 3}
       propertyPath: m_Name
       value: CatModel
       objectReference: {fileID: 0}
+    - target: {fileID: 4286262436669939097, guid: 5141c07f08efd6043a2d08dcdf391a2c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5141c07f08efd6043a2d08dcdf391a2c, type: 3}
---- !u!4 &543450652686196288 stripped
+--- !u!4 &5006512735810507441 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5141c07f08efd6043a2d08dcdf391a2c,
+  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 5141c07f08efd6043a2d08dcdf391a2c,
     type: 3}
   m_PrefabInstance: {fileID: 1022228907}
   m_PrefabAsset: {fileID: 0}

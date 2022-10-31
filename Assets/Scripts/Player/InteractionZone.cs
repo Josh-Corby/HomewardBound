@@ -94,7 +94,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         }
         if (OM.outfit == Outfits.Builder)
         {
-            if (IM.interact_Input)
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 if (canDestroy)
                 {
@@ -108,16 +108,16 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                     DestroyObject();
                 }
                 //if (!canDestroy)
-                //    IM.interact_Input = false;
+                //    Input.GetKeyDown(KeyCode.E) = false;
             }
         }
         #region Item Interactions
-        if (IM.interact_Input)
+        if (Input.GetKeyDown(KeyCode.E))
         {
 
             if (objectToInteract == null)
             {
-                IM.interact_Input = false;
+
                 return;
             }
             if (objectToInteract != null)
@@ -129,7 +129,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
                     col.enabled = true;
                     isRolling = false;
-                    IM.interact_Input = false;
+
                     return;
                 }
 
@@ -140,7 +140,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                     {
                         Debug.Log("Respawnset");
                         OnRespawnSet();
-                        IM.interact_Input = false;
+
                         
                         return;
                     }
@@ -153,7 +153,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                             objectToInteract.transform.parent.SetParent(TPM.transform);
                             col.enabled = false;
                             isRolling = true;
-                            IM.interact_Input = false;
+
                             return;
                         }
                     }
@@ -194,7 +194,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         outlineObjectsList.Clear();
         canPickUp = false;
         objectToInteract = null;
-        IM.interact_Input = false;
+
     }
 
     private void OutlineObjects()

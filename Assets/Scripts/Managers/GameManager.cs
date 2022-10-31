@@ -5,8 +5,8 @@ using TMPro;
 using System;
 public class GameManager : GameBehaviour<GameManager>
 {
-    public static event Action OnMaterialsUpdated;
-    public static event Action OnPlayerRespawn;
+    public static event Action OnMaterialsUpdated = null;
+    public static event Action OnPlayerRespawn = null;
 
     [Header("Resources Collected")]
     public int rocksCollected;
@@ -111,7 +111,7 @@ public class GameManager : GameBehaviour<GameManager>
         //Debug.Log("Player Respawned");
         BM.CancelBuilding();
 
-        OnPlayerRespawn();
+        OnPlayerRespawn?.Invoke();
 
     }
 

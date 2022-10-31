@@ -10,16 +10,25 @@ public class DestructableObject : GameBehaviour
     private GameObject FallingObject;
     private Rigidbody FallingObjectRB;
 
-    private bool isDestroyed;
 
-    private void Start()
+    private void Awake()
     {
         FallingObjectSpawnPosition.position = FallingObject.transform.position;
         FallingObjectRB = FallingObject.GetComponent<Rigidbody>();
+
+    }
+ 
+
+    private void OnEnable()
+    {
         GameManager.OnPlayerRespawn += ResetObject;
-        ResetObject();
     }
 
+
+    private void OnDisable()
+    {
+        GameManager.OnPlayerRespawn -= ResetObject;
+    }
     private void ResetObject()
     {
         gameObject.SetActive(true);

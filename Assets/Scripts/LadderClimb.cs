@@ -32,7 +32,8 @@ public class LadderClimb : GameBehaviour<LadderClimb>
             inside = !inside;
         }
     }
-    void Update()
+
+    private void LateUpdate()
     {
         if (inside == true && Input.GetKey("w"))
         {
@@ -46,4 +47,5 @@ public class LadderClimb : GameBehaviour<LadderClimb>
             //Debug.Log("Climbing Down");
         }
     }
+
 }
