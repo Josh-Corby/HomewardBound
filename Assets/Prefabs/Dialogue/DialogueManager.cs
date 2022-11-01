@@ -7,8 +7,6 @@ using System;
 
 public class DialogueManager : GameBehaviour<DialogueManager>
 {
-    public static event Action OnStartTalkingToPlayer;
-    public static event Action OnEndTalkingToPlayer;
 
     [SerializeField]
     private GameObject dialogPanel;
@@ -127,7 +125,7 @@ public class DialogueManager : GameBehaviour<DialogueManager>
     IEnumerator Typing()
     {
         isSentenceOver = false;
-        wordSpeed = 0.1f;
+        wordSpeed = 0.02f;
         current_NPC_Dialogue_Text.text = "";
         foreach (char letter in currentSentence.ToCharArray())
         {

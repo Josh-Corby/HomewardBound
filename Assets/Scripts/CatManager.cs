@@ -21,7 +21,7 @@ namespace Cat
         public Transform[] patrolPoints;
         [SerializeField]
         private Transform closestPatrolPoint;
-        private int destinationIndex = 0;
+        //private int destinationIndex = 0;
         private NavMeshAgent agent;
         private readonly float agentWalkSpeed = 10f;
 
@@ -87,7 +87,7 @@ namespace Cat
                 transform.LookAt(patrolPoints[1].position);
             }
 
-            destinationIndex = 0;
+            //destinationIndex = 0;
             aiState = AIStates.Walk;
 
         }

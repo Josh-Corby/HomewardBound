@@ -52,7 +52,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     public float jumpHeight = 3f;
     public float fallTimer;
     public float fallTimerMax = 5f;
-    private float glidingSpeed = 1f;
+    //private float glidingSpeed = 1f;
     private float glideTimer;
     private float glideTimerMax = 5f;
     private float groundDistance = 0.8f;

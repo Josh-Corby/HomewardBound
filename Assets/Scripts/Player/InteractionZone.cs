@@ -230,13 +230,13 @@ public class InteractionZone : GameBehaviour<InteractionZone>
     private void OnTriggerEnter(Collider other)
     {
         //Pickups
-        if (other.CompareTag("Rock") || other.CompareTag("Stick") ||
-            other.CompareTag("Mushroom") || other.CompareTag("Pebble"))
-        {
-            //other.GetComponent<Outline>().enabled = true;
-            canPickUp = true;
-            AddOutline(other.gameObject);
-        }
+        //if (other.CompareTag("Rock") || other.CompareTag("Stick") ||
+        //    other.CompareTag("Mushroom") || other.CompareTag("Pebble"))
+        //{
+        //    other.GetComponent<Outline>().enabled = true;
+        //    canPickUp = true;
+        //    AddOutline(other.gameObject);
+        //}
         //Breakable Objects
         if (other.CompareTag("Rock") || other.CompareTag("BreakableWall") || other.CompareTag("MinableObject"))
         {

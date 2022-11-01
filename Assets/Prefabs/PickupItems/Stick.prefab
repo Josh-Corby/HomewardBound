@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2410762843656312042}
   - component: {fileID: 7727975120020512922}
   - component: {fileID: 8242813932310850656}
+  - component: {fileID: 2075984849871649393}
   m_Layer: 1
   m_Name: Stick
   m_TagString: Stick
@@ -117,3 +118,16 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &2075984849871649393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2410762843658570282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aff386131e26c4948be3783c5d2f6e50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isMovingTowardsPlayer: 0

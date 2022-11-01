@@ -10,6 +10,8 @@ public class PlayerManager : GameBehaviour<PlayerManager>
     public bool isClimbing;
     public bool playerIsStealthed;
 
+
+    public GameObject pickUpSpot;
     private void Awake()
     {
         PlayerTrigger.OnPlayerStealth += PlayerStealth;
