@@ -4,7 +4,7 @@ using System;
 public class PlayerManager : GameBehaviour<PlayerManager>
 {
 
-    public static event Action<int> OnToolSelected;
+    public static event Action<int> OnToolSelected = null;
 
     public bool isInteracting;
     public bool isClimbing;

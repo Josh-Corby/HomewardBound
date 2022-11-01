@@ -28,8 +28,10 @@ public class ObjectBuild : GameBehaviour
     [SerializeField]
     private bool isTriggerColliding;
 
-    [SerializeField]
-    private BuildObjectMeshManager bridgeMeshManager;
+
+    public int stickCost;
+    public int rockCost;
+    public int mushroomCost;
 
     private void Awake()
     {

@@ -31,7 +31,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     [Header("Craft Costs")]
     [SerializeField]
-    private int pebbleCost;
+    private int rockCost;
     [SerializeField]
     private int stickCost;
     [SerializeField]
@@ -118,6 +118,8 @@ public class BuildManager : GameBehaviour<BuildManager>
                 // Reactivate Interaction Zone
                 IZ.Toggle(true);
                 buildingObject.GetComponent<ObjectBuild>().currentTrigger.isTrigger = false;
+                SetObjectValue(buildingObject.GetComponent<ObjectBuild>());
+
 
                 if (buildingObject.GetComponent<BuildObjectRB>() != null)
                 {
@@ -130,6 +132,13 @@ public class BuildManager : GameBehaviour<BuildManager>
             }
             return;
         }
+    }
+
+    private void SetObjectValue(ObjectBuild objectBuilt)
+    {
+        objectBuilt.stickCost = stickCost;
+        objectBuilt.rockCost = rockCost;
+        objectBuilt.mushroomCost = mushroomCost;
     }
 
     private void ToolSelectListen(int buildObjectIndex)
@@ -224,18 +233,18 @@ public class BuildManager : GameBehaviour<BuildManager>
         switch ((BuildObjects)index)
         {
             case BuildObjects.Ladder:
-                pebbleCost = 3;
+                rockCost = 3;
                 stickCost = 2;
                 mushroomCost = 1;
                 break;
             case BuildObjects.Bridge:
-                pebbleCost = 1 * costMultiplier;
+                rockCost = 1 * costMultiplier;
                 stickCost = 1 * costMultiplier;
                 mushroomCost = 1 * costMultiplier;
                 RunMaterialChecks();
                 break;
             case BuildObjects.Bonfire:
-                pebbleCost = 3;
+                rockCost = 3;
                 stickCost = 3;
                 mushroomCost = 3;
                 break;
@@ -258,7 +267,7 @@ public class BuildManager : GameBehaviour<BuildManager>
     {
         //Debug.Log("Comparing materials");
 
-        pebbleCheck = GM.rocksCollected >= pebbleCost;
+        pebbleCheck = GM.rocksCollected >= rockCost;
         stickCheck = GM.sticksCollected >= stickCost;
         mushroomCheck = GM.mushroomsCollected >= mushroomCost;
 
@@ -272,7 +281,7 @@ public class BuildManager : GameBehaviour<BuildManager>
     /// </summary>
     private void SubtractCost()
     {
-        GM.rocksCollected -= pebbleCost;
+        GM.rocksCollected -= rockCost;
         GM.sticksCollected -= stickCost;
         GM.mushroomsCollected -= mushroomCost;
         UI.UpdateMaterialsCollected();
@@ -282,7 +291,7 @@ public class BuildManager : GameBehaviour<BuildManager>
     /// </summary>
     private void AddCost()
     {
-        GM.rocksCollected += pebbleCost;
+        GM.rocksCollected += rockCost;
         GM.sticksCollected += stickCost;
         GM.mushroomsCollected += mushroomCost;
         UI.UpdateMaterialsCollected();

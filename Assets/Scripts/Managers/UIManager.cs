@@ -18,7 +18,7 @@ public class UIManager : GameBehaviour<UIManager>
     public Menus menu;
 
     [Header("Text")]
-    public TMP_Text flashLightIntensity;
+    //public TMP_Text flashLightIntensity;
     public TMP_Text canBuild;
     public TMP_Text fallTimer;
     public TMP_Text smallRocksCollected;
@@ -28,17 +28,17 @@ public class UIManager : GameBehaviour<UIManager>
     public TMP_Text currentOutfit;
     public TMP_Text currentAmmoType;
 
-    [Header("Control Text")]
-    public TMP_Text outfitControlText1;
-    public TMP_Text outfitControlText2;
-    public TMP_Text outfitControlText3;
-    public TMP_Text outfitControlText4;
+    //[Header("Control Text")]
+    //public TMP_Text outfitControlText1;
+    //public TMP_Text outfitControlText2;
+    //public TMP_Text outfitControlText3;
+    //public TMP_Text outfitControlText4;
 
-    [Header("Radial Menu Text")]
-    public TMP_Text minerText;
-    public TMP_Text ladderText;
-    public TMP_Text bridgeText;
-    public TMP_Text utilityText;
+    //[Header("Radial Menu Text")]
+    //public TMP_Text minerText;
+    //public TMP_Text ladderText;
+    //public TMP_Text bridgeText;
+    //public TMP_Text utilityText;
 
     [Header("Panels")]
     public GameObject gameUI;
@@ -56,18 +56,18 @@ public class UIManager : GameBehaviour<UIManager>
     public bool radialMenuStatus;
     public bool paused;
 
-    [Header("Buttons")]
-    public Button pickaxeButton;
-    public Button buildLadderButton;
-    public Button buildBridgeButton;
+    //[Header("Buttons")]
+    //public Button pickaxeButton;
+    //public Button buildLadderButton;
+    //public Button buildBridgeButton;
     //public Button buildSlingshotButton;
-    public Button utilityButton;
-    public Button buildAmmoButton;
+    //public Button utilityButton;
+    //public Button buildAmmoButton;
     //public Button buildGliderButton;
     //public Button buildGrappleHookButton;
 
 
-    public float timeScale;
+    //public float timeScale;
 
 
     public Image LadderOutline;
@@ -127,25 +127,25 @@ public class UIManager : GameBehaviour<UIManager>
 
     #region Text Updaters
 
-    public void UpdateToolsUnlockedUI(string tool)
-    {
-        if (tool == "Pickaxe")
-        {
-            minerText.text = "Pickaxe";
-        }
+    //public void UpdateToolsUnlockedUI(string tool)
+    //{
+    //    if (tool == "Pickaxe")
+    //    {
+    //        minerText.text = "Pickaxe";
+    //    }
 
-        if (tool == "Builder")
-        {
-            ladderText.text = "Ladder";
-            bridgeText.text = "Bridge";
-        }
+    //    if (tool == "Builder")
+    //    {
+    //        ladderText.text = "Ladder";
+    //        bridgeText.text = "Bridge";
+    //    }
 
-        if (tool == "GrappleHook")
-        {
-            utilityText.text = "GrappleHook";
-        }
+    //    if (tool == "GrappleHook")
+    //    {
+    //        utilityText.text = "GrappleHook";
+    //    }
 
-    }
+    //}
 
     /// <summary>
     /// Update UI of materials player has collected
@@ -510,7 +510,7 @@ public class UIManager : GameBehaviour<UIManager>
     {
         //Debug.Log(panelIndex);
         //Debug.Log(HotbarOutlines[panelIndex]);
-        SelectHotbarOutline(HotbarOutlines[panelIndex]);
+        SelectHotbarOutline(HotbarOutlines[panelIndex-1]);
     }
 
     private void SelectHotbarOutline(Image outline)

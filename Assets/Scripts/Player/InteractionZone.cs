@@ -157,7 +157,6 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                             return;
                         }
                     }
-
                     if (canClimb)
                     {
                         if (LadderEntry != null)
@@ -169,15 +168,11 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                         PM.isClimbing = true;
                         Debug.Log("ClimbingLadder");
                     }
-
-
                     if (canPickUp)
                     {
-                        PickUpObjects();
-                       
+                        PickUpObjects();          
                     }
                 }
-
             }
         }
         #endregion
