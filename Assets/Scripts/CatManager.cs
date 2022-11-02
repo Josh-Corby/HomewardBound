@@ -23,17 +23,14 @@ namespace Cat
         private Transform closestPatrolPoint;
         //private int destinationIndex = 0;
         private NavMeshAgent agent;
-        private readonly float agentWalkSpeed = 10f;
-        private readonly float agentRunSpeed = 15;
+        private readonly float agentWalkSpeed = 15f;
+        private readonly float agentRunSpeed = 20;
 
         public AIStates aiState;
         private GameObject Player;
-        private bool resuming;
-
-        private int rotationX;
-        private int rotationZ;
         private readonly float rotationSpeed = 1f;
 
+        public bool isDistracted;
         private void Awake()
         {
             Player = TPM.gameObject;
@@ -46,12 +43,10 @@ namespace Cat
             // Disabling auto-braking allows for continuous movement
             // between points (ie, the agent doesn't slow down as it
             // approaches a destination point).
-            agent.autoBraking = false;
 
-            aiState = AIStates.Walk;
+
+            StartWalking();
         }
-
-
         private void ResumePath()
         {
             // returns if no points have been set up
@@ -59,7 +54,6 @@ namespace Cat
                 return;
             agent.destination = closestPatrolPoint.position;
         }
-
         public void RestartPath()
         {
             transform.position = patrolPoints[0].position;
@@ -69,39 +63,27 @@ namespace Cat
                 transform.LookAt(patrolPoints[1].position);
             }
 
-            //destinationIndex = 0;
-            aiState = AIStates.Walk;
 
+            StartWalking();
         }
         private void Update()
         {
+            if(agent.remainingDistance < 0.5f)
+            {
+                FindNextPoint();
+            }
+
+
             switch (aiState)
             {
                 case AIStates.Walk:
                     {
                         agent.speed = agentWalkSpeed;
-                        StartCoroutine(ResetAggro());
-                        //if (resuming)
-                        //{
-                        //    ResumePath();
-                        //    resuming = false;
-                        //    return;
-                        //}
-                        //if (!resuming)
-                        //{
-                            // Choose the next destination point when the agent gets
-                            // close to the current one.
-                            //if (!agent.pathPending && agent.remainingDistance < 0.5f)
-
-                                
-
-                        //}
                         break;
                     }
                 case AIStates.Detecting:
                     {
                         agent.SetDestination(transform.position);
-                        resuming = true;
                         break;
                     }
                 case AIStates.Aggro:
@@ -112,23 +94,45 @@ namespace Cat
                         break;
                     }
                 case AIStates.Distracted:
-                    if (distractionTransform == null)
                     {
-                        aiState = AIStates.Walk;
-                        return;
+                        Distract(transform);
+                        ResetAggro();
                     }
-                    Distract(distractionTransform);
                     break;
             }
         }
 
-        private IEnumerator ResetAggro()
+        public void Distract()
         {
-            yield return new WaitForSeconds(1f);
+            isDistracted = true;
+            aiState = AIStates.Distracted;
+
+        }
+
+        public void StartWalking()
+        {
+            agent.destination = transform.position;
+            Debug.Log("Start walking");
+            aiState = AIStates.Walk;
+            FindNextPoint();
+        }
+        public void ResetAggro()
+        {
+            StopCoroutine(ResetAggroTimer());
+            StartCoroutine(ResetAggroTimer());
+        }
+
+        private IEnumerator ResetAggroTimer()
+        {
+            Debug.Log("Resetting aggro");
+            yield return new WaitForSeconds(0.05f);
+            isDistracted = false;
             FindNextPoint();
         }
         private void FindNextPoint()
         {
+            agent.isStopped = true;
+            Debug.Log("finding next point");
             if (patrolPoints.Length <= 0) return;
             float closestpoint = Mathf.Infinity;
             Vector3 playerPosition = Player.transform.position;
@@ -148,7 +152,7 @@ namespace Cat
                     }
                 }
             }
-
+            agent.isStopped = false;
             agent.SetDestination(closestPatrolPoint.position);
             //Debug.Log(closestPatrolPoint);
         }
@@ -163,7 +167,7 @@ namespace Cat
 
         private void Distract(Transform distraction)
         {
-            agent.SetDestination(distraction.position);
+            agent.SetDestination(transform.position);
         }
         private void OnTriggerEnter(Collider other)
         {
@@ -185,14 +189,9 @@ namespace Cat
             {
                 //Debug.Log(other.name + " is no longer in range");
                 catDetection.raycasting = false;
-                aiState = AIStates.Walk;
+                StartWalking();
             }
 
-            //if (other.CompareTag("BerryBomb"))
-            //{
-            //    distractionTransform = null;
-            //    aiState = AIStates.Walk;
-            //}
         }
     }
 }

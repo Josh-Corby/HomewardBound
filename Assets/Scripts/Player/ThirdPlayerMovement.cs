@@ -233,7 +233,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
                 if (velocity.y < 0)
                 {
-                    velocity.y = -2f;
+                    velocity.y = -3f;
                 }
                 break;
 

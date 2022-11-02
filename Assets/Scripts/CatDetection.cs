@@ -14,10 +14,14 @@ namespace Cat
         [SerializeField]
         private BoxCollider col;
 
+        [SerializeField]
         private float detectionTimer;
         [SerializeField]
-        private float detectionTimerMax;
+        private float detectionTimerMax = 2f;
         private float detectionRange;
+
+        [SerializeField]
+        private bool isNotDetecting;
 
         static readonly string playerLayerMaskName = "Player";
         static readonly string tallGrassLayerMaskName = "TallGrass";
@@ -43,43 +47,57 @@ namespace Cat
         {
             detectionTimer = Mathf.Clamp(detectionTimer, 0, detectionTimerMax);
 
-            if (raycasting)
+            if (!catManager.isDistracted)
             {
-                catManager.aiState = AIStates.Detecting;
-
-                if (Physics.Raycast(transform.position, (Player.transform.position - transform.position), out RaycastHit hit, detectionRange, mask))
+                if (raycasting)
                 {
-                    if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
+                    
+
+                    if (Physics.Raycast(transform.position, (Player.transform.position - transform.position), out RaycastHit hit, detectionRange, mask))
                     {
-                        col.enabled = true;
-                        if (catManager.aiState == AIStates.Aggro)
+                        
+                        if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
                         {
-                            return;
+                            catManager.aiState = AIStates.Detecting;
+                            isNotDetecting = false;
+                            col.enabled = true;
+                            if (catManager.aiState == AIStates.Aggro)
+                            {
+                                return;
+                            }
+                            if (detectionTimer >= 0)
+                            {
+                                Debug.DrawLine(transform.position, hit.point, Color.green);
+                                detectionTimer -= Time.deltaTime;
+                            }
+                            if (detectionTimer <= 0)
+                            {
+                                //Debug.Log("PlayerDetected");
+                                Debug.DrawLine(transform.position, hit.point, Color.red);
+                                catManager.aiState = AIStates.Aggro;
+                            }
                         }
-                        if (detectionTimer >= 0)
+                        else
                         {
-                            Debug.DrawLine(transform.position, hit.point, Color.green);
-                            detectionTimer -= Time.deltaTime;
+                            if (!isNotDetecting)
+                            {
+                                catManager.StartWalking();
+
+                                detectionTimer = detectionTimerMax;
+                                col.enabled = false;
+                                isNotDetecting = true;
+                            }
+                            
                         }
-                        if (detectionTimer <= 0)
-                        {
-                            //Debug.Log("PlayerDetected");
-                            Debug.DrawLine(transform.position, hit.point, Color.red);
-                            catManager.aiState = AIStates.Aggro;
-                        }
-                    }
-                    else
-                    {
-                        catManager.aiState = AIStates.Walk;
-                        detectionTimer = detectionTimerMax;
-                        col.enabled = false;
                     }
                 }
+                if (!raycasting)
+                {
+                    detectionTimer = detectionTimerMax;
+                }
             }
-            if (!raycasting)
-            {
-                detectionTimer = detectionTimerMax;
-            }
+
+            
         }
         private void ResetCatDetection()
         {
@@ -98,6 +116,12 @@ namespace Cat
         }
         private void OnTriggerEnter(Collider other)
         {
+            if (other.CompareTag("Bullet"))
+            {
+                catManager.Distract();
+                Destroy(other.gameObject);
+            }
+
             if (other.CompareTag("Player"))
             {
                 

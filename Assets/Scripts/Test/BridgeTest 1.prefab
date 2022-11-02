@@ -382,7 +382,9 @@ MonoBehaviour:
   baseColour: {r: 0, g: 0, b: 0, a: 0}
   isBeingBuilt: 0
   isTriggerColliding: 0
-  bridgeMeshManager: {fileID: 877173870650877913}
+  stick_Refund_Value: 0
+  rock_Refund_Value: 0
+  mushroom_Refund_Value: 0
 --- !u!114 &276136619462600314
 MonoBehaviour:
   m_ObjectHideFlags: 0
