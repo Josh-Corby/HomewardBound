@@ -29,9 +29,9 @@ public class ObjectBuild : GameBehaviour
     private bool isTriggerColliding;
 
 
-    public int stickCost;
-    public int rockCost;
-    public int mushroomCost;
+    public int stick_Refund_Value;
+    public int rock_Refund_Value;
+    public int mushroom_Refund_Value;
 
     private void Awake()
     {
@@ -131,7 +131,6 @@ public class ObjectBuild : GameBehaviour
             objectLength = Mathf.Clamp(objectLength, 1, ObjectColliders.Count);
         }
     }
-
     public void CanObjectBeBuilt(bool triggerCollision)
     {
         isTriggerColliding = triggerCollision;
@@ -141,5 +140,9 @@ public class ObjectBuild : GameBehaviour
         renderer.material.color = colour;
     }
 
+    public void RefundMaterials()
+    {
+        GM.AddMaterials(stick_Refund_Value, rock_Refund_Value, mushroom_Refund_Value);
+    }
 }
 

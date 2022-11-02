@@ -27,21 +27,12 @@ public class CollectableMaterial : GameBehaviour
     }
     public void MoveTowardsPlayer()
     {
-        transform.position = Vector3.MoveTowards(transform.position, PM.pickUpSpot.transform.position, 0.1f);
+        transform.position = Vector3.MoveTowards(transform.position, PM.pickUpSpot.transform.position, 0.2f);
     }
 
     public void StartMovingTowardsPlayer()
     {
         isMovingTowardsPlayer = true;
         col.isTrigger = true;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("PickUpSpot"))
-        {
-            
-            //gameObject.SetActive(false);
-        }
     }
 }

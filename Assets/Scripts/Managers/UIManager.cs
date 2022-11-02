@@ -42,18 +42,18 @@ public class UIManager : GameBehaviour<UIManager>
 
     [Header("Panels")]
     public GameObject gameUI;
-    public GameObject buildPanel;
-    public GameObject SlingShotPanel;
-    public GameObject RadialMenuPanel;
+    //public GameObject buildPanel;
+    //public GameObject SlingShotPanel;
+    //public GameObject RadialMenuPanel;
     public GameObject pausePanel;
     public GameObject CurrentPanel;
-    public GameObject[] BuildPanels;
-    [SerializeField]
-    private GameObject currentBuildPanel;
+    //public GameObject[] BuildPanels;
+    
+    //private GameObject currentBuildPanel;
 
     [Header("Bools")]
-    public bool buildPanelStatus;
-    public bool radialMenuStatus;
+    //public bool buildPanelStatus;
+    //public bool radialMenuStatus;
     public bool paused;
 
     //[Header("Buttons")]
@@ -365,20 +365,20 @@ public class UIManager : GameBehaviour<UIManager>
                 if (IM.buildMenu_Input)
                 {
                     //ToggleBuildMenu();
-                    ChangeMenu(currentBuildPanel);
+                    //ChangeMenu(currentBuildPanel);
 
                 }
                 break;
 
-            case Menus.Radial:
-                ChangeMenu(RadialMenuPanel);
-                radialMenuStatus = true;
-                if (Input.GetKey(KeyCode.Tab) == false)
-                {
-                    radialMenuStatus = false;
-                    menu = Menus.None;
-                }
-                break;
+            //case Menus.Radial:
+            //    ChangeMenu(RadialMenuPanel);
+            //    radialMenuStatus = true;
+            //    if (Input.GetKey(KeyCode.Tab) == false)
+            //    {
+            //        radialMenuStatus = false;
+            //        menu = Menus.None;
+            //    }
+            //    break;
         }
     }
 

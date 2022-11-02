@@ -29,7 +29,7 @@ public class BuildObjectTrigger : GameBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Hawk") || other.CompareTag("Mechanics") || other.CompareTag("Player"))
+        if (other.CompareTag("Hawk") || other.CompareTag("Mechanics") || other.CompareTag("Player") || other.gameObject == IZ.gameObject)
         {
             return;
         }

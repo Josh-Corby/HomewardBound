@@ -48,7 +48,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         {
             //Break Items
 
-            if (UI.radialMenuStatus || UI.paused == true)
+            if (/*UI.radialMenuStatus ||*/ UI.paused == true)
             {
                 //canBreak = false;
                 return;
@@ -98,17 +98,16 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             {
                 if (canDestroy)
                 {
+                    objectToDestroy.GetComponent<ObjectBuild>().RefundMaterials();
+
+                    
                     if (objectToDestroy.CompareTag("Ladder"))
                     {
-                        DestroyObject();
                         LC.inside = false;
                         TPM.enabled = true;
-
                     }
                     DestroyObject();
                 }
-                //if (!canDestroy)
-                //    Input.GetKeyDown(KeyCode.E) = false;
             }
         }
         #region Item Interactions

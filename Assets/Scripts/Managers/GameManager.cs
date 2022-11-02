@@ -51,9 +51,18 @@ public class GameManager : GameBehaviour<GameManager>
 
     }
 
+    public void AddMaterials(int sticks, int rocks, int mushrooms)
+    {
+        sticksCollected += sticks;
+        rocksCollected += rocks;
+        mushroomsCollected += mushrooms;
+        OnMaterialsUpdated?.Invoke();
+    }
+
+   
     public void IncreaseResources(GameObject resourceCollected)
     {
-        Debug.Log(resourceCollected);
+        //Debug.Log(resourceCollected);
 
         if (resourceCollected.CompareTag("Rock"))
         { 
@@ -84,9 +93,7 @@ public class GameManager : GameBehaviour<GameManager>
             SS.UpdateAmmo();
             
             return;
-        }
-
-        
+        }       
     }
 
     /// <summary>
@@ -94,8 +101,6 @@ public class GameManager : GameBehaviour<GameManager>
     /// </summary>
     public void RespawnPlayer()
     {
-        
-
         Player = TPM.gameObject;
         Player.GetComponent<CharacterController>().enabled = false;
         Player.transform.position = spawnPoint.transform.position;
@@ -114,7 +119,6 @@ public class GameManager : GameBehaviour<GameManager>
         BM.CancelBuilding();
 
         OnPlayerRespawn?.Invoke();
-
     }
 
 

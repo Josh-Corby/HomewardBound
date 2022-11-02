@@ -136,9 +136,9 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     private void SetObjectValue(ObjectBuild objectBuilt)
     {
-        objectBuilt.stickCost = stickCost;
-        objectBuilt.rockCost = rockCost;
-        objectBuilt.mushroomCost = mushroomCost;
+        objectBuilt.stick_Refund_Value = stickCost/2;
+        objectBuilt.rock_Refund_Value = rockCost/2;
+        objectBuilt.mushroom_Refund_Value = mushroomCost/2;
     }
 
     private void ToolSelectListen(int buildObjectIndex)
@@ -233,14 +233,14 @@ public class BuildManager : GameBehaviour<BuildManager>
         switch ((BuildObjects)index)
         {
             case BuildObjects.Ladder:
-                rockCost = 3;
+                rockCost = 2;
                 stickCost = 2;
-                mushroomCost = 1;
+                mushroomCost = 2;
                 break;
             case BuildObjects.Bridge:
-                rockCost = 1 * costMultiplier;
-                stickCost = 1 * costMultiplier;
-                mushroomCost = 1 * costMultiplier;
+                rockCost = 2 * costMultiplier;
+                stickCost = 2 * costMultiplier;
+                mushroomCost = 2 * costMultiplier;
                 RunMaterialChecks();
                 break;
             case BuildObjects.Bonfire:

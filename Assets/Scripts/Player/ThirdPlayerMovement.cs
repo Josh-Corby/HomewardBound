@@ -92,7 +92,10 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     public GameObject LilypadOffset;
 
-
+    [SerializeField]
+    public Animator animator;
+    private bool isWalking;
+    private bool isRunning;
     private void Awake()
     {
         hookshotState = HookshotStates.Default;
@@ -107,13 +110,23 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     void Update()
     {
+
+
+        
+        isWalking = Input.GetKey(KeyCode.W);
+
+        isRunning = Input.GetKey(KeyCode.LeftShift);
+
+        animator.SetBool("isWalking", isWalking);
+        animator.SetBool("isRunning", isRunning);
+
         LookFoward();
         if (OM.outfit == Outfits.Utility && groundState == GroundStates.Airborne)
         {
             DisableGrappleInput();
 
         }
-        if (UI.buildPanelStatus || UI.radialMenuStatus || UI.menu == Menus.Paused || UI.menu == Menus.Paused)
+        if (/*UI.buildPanelStatus || UI.radialMenuStatus || */UI.menu == Menus.Paused || UI.menu == Menus.Paused)
             return;
     }
     private void LateUpdate()
@@ -157,6 +170,19 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             //transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            //Debug.Log("iswalking");
+            //isWalking = true;
+            //animator.SetBool("isWalking", isWalking);
+        }
+        if(direction.magnitude== 0f)
+        {
+            //Debug.Log("isnotwlaking");
+            
+            //isWalking = false;
+           
+            //isRunning = false;
+            //animator.SetBool("isWalking", isWalking);
+            //animator.SetBool("isRunning", isRunning);
         }
 
         if (LilypadOffset != null)
@@ -300,10 +326,12 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 moveSpeeds = MovementSpeeds.Sprinting;
+
             }
 
             if (Input.GetKeyUp(KeyCode.LeftShift))
             {
+
                 moveSpeeds = MovementSpeeds.Walking;
             }
         }
@@ -323,8 +351,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     {
         if (!UI.paused)
         {
-            if (!UI.buildPanelStatus)
-            {
+            //if (!UI.buildPanelStatus)
+            
                 if (OM.outfit == Outfits.Utility)
                 {
 
@@ -371,7 +399,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                         IM.rClick_Input = false;
                     }
                 }
-            }
+            
         }
     }
 

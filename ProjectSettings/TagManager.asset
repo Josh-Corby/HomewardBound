@@ -30,6 +30,7 @@ TagManager:
   - Bonfire
   - RollingRock
   - LadderClimb
+  - PickUpZone
   layers:
   - Default
   - TransparentFX
