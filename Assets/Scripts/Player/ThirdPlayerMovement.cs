@@ -97,6 +97,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private bool isWalking;
     private bool isRunning;
     private bool isJumping;
+    private bool isGrounded;
 
     private void Awake()
     {
@@ -197,6 +198,9 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     private void ManageAnimations()
     {
+        isGrounded = groundState == GroundStates.Grounded;
+        animator.SetBool("isGrounded", isGrounded);
+
         isJumping = false;
         animator.SetBool("isJumping", isJumping);
 
