@@ -92,7 +92,12 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     public GameObject LilypadOffset;
 
-    
+    [SerializeField]
+    public Animator animator;
+    private bool isWalking;
+    private bool isRunning;
+    private bool isJumping;
+    private bool isGrounded;
 
     private void Awake()
     {
@@ -108,6 +113,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     void Update()
     {
+        ManageAnimations();
 
 
         LookFoward();
@@ -190,7 +196,31 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         }
     }
 
-   
+    private void ManageAnimations()
+    {
+        isGrounded = groundState == GroundStates.Grounded;
+        animator.SetBool("isGrounded", isGrounded);
+
+        isJumping = false;
+        animator.SetBool("isJumping", isJumping);
+
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            isJumping = true;
+            animator.SetBool("isJumping", isJumping);
+            return;
+        }
+
+        if (isJumping == true) return;
+
+        isWalking = Input.GetKey(KeyCode.W);
+        isRunning = Input.GetKey(KeyCode.LeftShift);
+
+        animator.SetBool("isWalking", isWalking);
+        animator.SetBool("isRunning", isRunning);
+
+    }
     private void LookFoward()
     {
         if (!IZ.isRolling)
