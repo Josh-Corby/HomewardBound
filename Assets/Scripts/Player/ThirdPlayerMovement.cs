@@ -96,6 +96,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     public Animator animator;
     private bool isWalking;
     private bool isRunning;
+    private bool isJumping;
+
     private void Awake()
     {
         hookshotState = HookshotStates.Default;
@@ -110,15 +112,30 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     void Update()
     {
+        isJumping = false;
+        animator.SetBool("isJumping", isJumping);
 
 
-        
+        if (Input.GetKey(KeyCode.Space))
+        {
+            isJumping = true;
+            animator.SetBool("isJumping", isJumping);
+            return;
+        }
+
+
+
         isWalking = Input.GetKey(KeyCode.W);
 
         isRunning = Input.GetKey(KeyCode.LeftShift);
 
+
+        
+
         animator.SetBool("isWalking", isWalking);
         animator.SetBool("isRunning", isRunning);
+        
+
 
         LookFoward();
         if (OM.outfit == Outfits.Utility && groundState == GroundStates.Airborne)

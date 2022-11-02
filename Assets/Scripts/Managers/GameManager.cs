@@ -122,6 +122,7 @@ public class GameManager : GameBehaviour<GameManager>
         //Debug.Log("Player Respawned");
         BM.CancelBuilding();
 
+
         OnPlayerRespawn?.Invoke();
     }
 

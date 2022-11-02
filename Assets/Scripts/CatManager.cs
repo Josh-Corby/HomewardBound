@@ -125,14 +125,14 @@ namespace Cat
         private IEnumerator ResetAggroTimer()
         {
             Debug.Log("Resetting aggro");
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.1f);
             isDistracted = false;
             FindNextPoint();
         }
         private void FindNextPoint()
         {
             agent.isStopped = true;
-            Debug.Log("finding next point");
+            //Debug.Log("finding next point");
             if (patrolPoints.Length <= 0) return;
             float closestpoint = Mathf.Infinity;
             Vector3 playerPosition = Player.transform.position;

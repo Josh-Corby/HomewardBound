@@ -227,6 +227,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         prefabToSpawn = null;
         canBuild = false;
         isBuilding = false;
+        currentBuildObject_Index = -1;
     }
     public void SetMaterialCosts(int index, int costMultiplier)
     {

@@ -114,6 +114,8 @@ namespace Cat
             //Debug.Log("Grass is no longer being detected");
             mask &= ~(1 << LayerMask.NameToLayer(tallGrassLayerMaskName));
         }
+
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Bullet"))
@@ -132,6 +134,7 @@ namespace Cat
 
             if(other.CompareTag("Ladder") || other.CompareTag("Bridge") || other.CompareTag("Bonfire"))
             {
+                Debug.Log(other.gameObject);
                 Destroy(other.gameObject);
             }
         }
