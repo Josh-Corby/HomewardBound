@@ -24,6 +24,7 @@ namespace Cat
         //private int destinationIndex = 0;
         private NavMeshAgent agent;
         private readonly float agentWalkSpeed = 10f;
+        private readonly float agentRunSpeed = 15;
 
         public AIStates aiState;
         private GameObject Player;
@@ -49,33 +50,14 @@ namespace Cat
 
             aiState = AIStates.Walk;
         }
-        //private void GotoNextPoint()
-        //{
-        //    // Returns if no points have been set up
-        //    if (patrolPoints.Length == 0)
-        //        return;
 
-        //    // Set the agent to go to the currently selected destination.
-        //    agent.destination = patrolPoints[destinationIndex].position;
-
-        //    // Choose the next point in the array as the destination,
-        //    // cycling to the start if necessary.
-        //    destinationIndex = (destinationIndex + 1) % patrolPoints.Length;
-        //}
 
         private void ResumePath()
         {
             // returns if no points have been set up
             if (patrolPoints.Length == 0)
                 return;
-
             agent.destination = closestPatrolPoint.position;
-            //// set the agent to go to the currently selected destination.
-            //agent.destination = patrolpoints[destinationindex].position;
-
-            //// choose the next point in the array as the destination,
-            //// cycling to the start if necessary.
-            //destinationindex = (destinationindex) % patrolpoints.length;
         }
 
         public void RestartPath()
@@ -98,20 +80,22 @@ namespace Cat
                 case AIStates.Walk:
                     {
                         agent.speed = agentWalkSpeed;
-                        if (resuming)
-                        {
-                            ResumePath();
-                            resuming = false;
-                            return;
-                        }
-                        if (!resuming)
-                        {
+                        StartCoroutine(ResetAggro());
+                        //if (resuming)
+                        //{
+                        //    ResumePath();
+                        //    resuming = false;
+                        //    return;
+                        //}
+                        //if (!resuming)
+                        //{
                             // Choose the next destination point when the agent gets
                             // close to the current one.
-                            if (!agent.pathPending && agent.remainingDistance < 0.5f)
-                                FindNextPoint();
+                            //if (!agent.pathPending && agent.remainingDistance < 0.5f)
 
-                        }
+                                
+
+                        //}
                         break;
                     }
                 case AIStates.Detecting:
@@ -124,7 +108,7 @@ namespace Cat
                     {
                         agent.SetDestination(Player.transform.position);
                         LookAtPlayer();
-                        agent.speed = 15;
+                        agent.speed = agentRunSpeed;
                         break;
                     }
                 case AIStates.Distracted:
@@ -136,6 +120,12 @@ namespace Cat
                     Distract(distractionTransform);
                     break;
             }
+        }
+
+        private IEnumerator ResetAggro()
+        {
+            yield return new WaitForSeconds(1f);
+            FindNextPoint();
         }
         private void FindNextPoint()
         {

@@ -47,6 +47,10 @@ public class GameManager : GameBehaviour<GameManager>
             haveBuilding = true;
             haveSlingshot = true;
             havePickaxe = true;
+
+            pebblesCollected += 1000;
+            AddMaterials(1000, 1000, 1000);
+            SS.UpdateAmmo();
         }
 
     }
