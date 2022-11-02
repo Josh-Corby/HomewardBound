@@ -38,6 +38,12 @@ public class Bullet : MonoBehaviour
         {
             Destroy(collision.gameObject);
         }
+
+        if(collision.gameObject.CompareTag("Mechanics"))
+        {
+            return;
+        }
+        Debug.Log(collision.gameObject);
         //Debug.Log(collision.gameObject.name);
         gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         Destroy(gameObject);

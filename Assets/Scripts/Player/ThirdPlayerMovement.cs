@@ -112,29 +112,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     void Update()
     {
-        isJumping = false;
-        animator.SetBool("isJumping", isJumping);
-
-
-        if (Input.GetKey(KeyCode.Space))
-        {
-            isJumping = true;
-            animator.SetBool("isJumping", isJumping);
-            return;
-        }
-
-
-
-        isWalking = Input.GetKey(KeyCode.W);
-
-        isRunning = Input.GetKey(KeyCode.LeftShift);
-
-
-        
-
-        animator.SetBool("isWalking", isWalking);
-        animator.SetBool("isRunning", isRunning);
-        
+        ManageAnimations();
 
 
         LookFoward();
@@ -215,6 +193,29 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         {
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
         }
+    }
+
+    private void ManageAnimations()
+    {
+        isJumping = false;
+        animator.SetBool("isJumping", isJumping);
+
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            isJumping = true;
+            animator.SetBool("isJumping", isJumping);
+            return;
+        }
+
+        if (isJumping == true) return;
+
+        isWalking = Input.GetKey(KeyCode.W);
+        isRunning = Input.GetKey(KeyCode.LeftShift);
+
+        animator.SetBool("isWalking", isWalking);
+        animator.SetBool("isRunning", isRunning);
+
     }
     private void LookFoward()
     {

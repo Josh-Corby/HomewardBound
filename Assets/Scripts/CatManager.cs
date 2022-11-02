@@ -96,7 +96,7 @@ namespace Cat
                 case AIStates.Distracted:
                     {
                         Distract(transform);
-                        ResetAggro();
+                        
                     }
                     break;
             }
@@ -112,7 +112,7 @@ namespace Cat
         public void StartWalking()
         {
             agent.destination = transform.position;
-            Debug.Log("Start walking");
+            //Debug.Log("Start walking");
             aiState = AIStates.Walk;
             FindNextPoint();
         }
@@ -125,7 +125,7 @@ namespace Cat
         private IEnumerator ResetAggroTimer()
         {
             Debug.Log("Resetting aggro");
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.5f);
             isDistracted = false;
             FindNextPoint();
         }
@@ -173,7 +173,7 @@ namespace Cat
         {
             if (other.gameObject == TPM.gameObject)
             {
-                Debug.Log(other.name + " is in range");
+                //Debug.Log(other.name + " is in range");
                 catDetection.raycasting = true;
             }
             //if (other.CompareTag("BerryBomb"))

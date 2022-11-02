@@ -94,7 +94,7 @@ public class SlingShot : GameBehaviour<SlingShot>
 
         if (ammo > 0)
         {
-            Debug.Log("bullet fired");
+            //Debug.Log("bullet fired");
             readyToShoot = false;
 
             //Find the exact hit position using a raycast

@@ -22,7 +22,7 @@ public class NPCDialog : GameBehaviour
     {
         if (other.gameObject == TPM.gameObject)
         {
-            Debug.Log("player in radius");
+            //Debug.Log("player in radius");
             DM.GetNPCInformation(this);
             EnableOutline();
         }
