@@ -5,7 +5,6 @@ using UnityEngine;
 public class AnimatorManager : GameBehaviour<AnimatorManager>
 {
     private Animator animator;
-    int horizontal, vertical;
 
     private bool isWalking;
     private bool isRunning;
@@ -15,8 +14,7 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        horizontal = Animator.StringToHash("Horizontal");
-        vertical = Animator.StringToHash("Vertical");
+
     }
 
     private void Update()
