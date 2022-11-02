@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class AnimatorManager : GameBehaviour<AnimatorManager>
 {
-    public Animator animator;
+    private Animator animator;
     int horizontal, vertical;
 
+    private bool isWalking;
+    private bool isRunning;
+    private bool isJumping;
+    private bool isGrounded;
+    private bool isWalkingBack;
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -14,70 +19,36 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
         vertical = Animator.StringToHash("Vertical");
     }
 
-    public void PlayTargetAnimation(string targetAnimation, bool isInteracting)
+    private void Update()
     {
-        animator.SetBool("isInteracting", isInteracting);
-        animator.CrossFade(targetAnimation, 0.2f);
+        ManageAnimations();
     }
-    public void UpdateAnimatorValues(float horizontalMovement, float verticalMovement, bool isSprinting)
+    private void ManageAnimations()
     {
-        //Animation Snapping
-        float snappedHorizontal;
-        float snappedVertical;
+        isGrounded = TPM.groundState == GroundStates.Grounded;
+        animator.SetBool("isGrounded", isGrounded);
 
-        #region Snapped Horizontal
-        if (horizontalMovement > 0 && horizontalMovement < 0.55f)
-        {
-            snappedHorizontal = 0.5f;
-        }
-        else if (horizontalMovement > 0.55f)
-        {
-            snappedHorizontal = 1;
-        }
-        else if (horizontalMovement < 0 && horizontalMovement > -0.55f)
-        {
-            snappedHorizontal = -0 / 5f;
-        }
-        else if(horizontalMovement < -0.55f)
-        {
-            snappedHorizontal = -1;
-        }
-        else
-        {
-            snappedHorizontal = 0;
-        }
-        #endregion
+        isJumping = false;
+        animator.SetBool("isJumping", isJumping);
 
-        #region Snapped Vertical
-        if (verticalMovement > 0 && verticalMovement < 0.55f)
-        {
-            snappedVertical = 0.5f;
-        }
-        else if (verticalMovement > 0.55f)
-        {
-            snappedVertical = 1;
-        }
-        else if (verticalMovement < 0 && verticalMovement > -0.55f)
-        {
-            snappedVertical = -0 / 5f;
-        }
-        else if (verticalMovement < -0.55f)
-        {
-            snappedVertical = -1;
-        }
-        else
-        {
-            snappedVertical = 0;
-        }
-        #endregion
 
-        if (isSprinting)
+        if (Input.GetKey(KeyCode.Space))
         {
-            snappedHorizontal = horizontalMovement;
-            snappedVertical = 2;
+            isJumping = true;
+            animator.SetBool("isJumping", isJumping);
+            return;
         }
 
-        animator.SetFloat(horizontal, snappedHorizontal, 0.1f, Time.deltaTime);
-        animator.SetFloat(vertical, snappedVertical, 0.1f, Time.deltaTime);
+        if (isJumping == true) return;
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S)) return;
+
+        isWalking = Input.GetKey(KeyCode.W);
+        isRunning = Input.GetKey(KeyCode.LeftShift);
+        isWalkingBack = Input.GetKey(KeyCode.S);
+
+        animator.SetBool("isWalkingBack", isWalkingBack);
+        animator.SetBool("isWalking", isWalking);
+        animator.SetBool("isRunning", isRunning);
+
     }
 }
