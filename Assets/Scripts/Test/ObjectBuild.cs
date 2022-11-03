@@ -33,6 +33,8 @@ public class ObjectBuild : GameBehaviour
     public int rock_Refund_Value;
     public int mushroom_Refund_Value;
 
+
+
     private void Awake()
     {
         baseColour = renderer.material.color;
