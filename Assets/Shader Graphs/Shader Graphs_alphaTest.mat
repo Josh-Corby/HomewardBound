@@ -49,7 +49,12 @@ Material:
     m_Ints: []
     m_Floats:
     - _QueueControl: 1
-    - _QueueOffset: 0
-    - _alpha_value: 0
-    m_Colors: []
+    - _QueueOffset: 50
+    - _alphaClip: 0
+    - _alpha_value: 1.5
+    - _blendBase: 2
+    - _opacity: 1.5
+    m_Colors:
+    - _Colour: {r: 1, g: 0, b: 0, a: 0}
+    - _baseColour: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
