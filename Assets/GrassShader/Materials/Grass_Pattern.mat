@@ -113,7 +113,7 @@ Material:
     - _BladeHeightDelta: 0.05
     - _BladeHeightMax: 2
     - _BladeHeightMin: 2
-    - _BladeSegments: 1
+    - _BladeSegments: 8.17
     - _BladeWidth: 0.015
     - _BladeWidthDelta: 0.02
     - _BladeWidthMax: 0.1
@@ -159,5 +159,5 @@ Material:
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _TipColor: {r: 0.99358773, g: 1, b: 0.56078434, a: 1}
     - _WindDirection: {r: 1, g: 0, b: 0, a: 0}
-    - _WindVelocity: {r: 0.2, g: 0, b: 0.15, a: 0}
+    - _WindVelocity: {r: 0.63, g: 0, b: 0.15, a: 0}
   m_BuildTextureStacks: []
