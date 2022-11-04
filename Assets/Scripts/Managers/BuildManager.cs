@@ -30,12 +30,9 @@ public class BuildManager : GameBehaviour<BuildManager>
 
 
     [Header("Craft Costs")]
-    [SerializeField]
-    private int rockCost;
-    [SerializeField]
-    private int stickCost;
-    [SerializeField]
-    private int mushroomCost;
+    public int rockCost;
+    public int stickCost;
+    public int mushroomCost;
 
     [Header("Build Prefabs")]
     #region Build Prefabs
@@ -47,8 +44,7 @@ public class BuildManager : GameBehaviour<BuildManager>
     private GameObject bonfirePrefab;
     #endregion
 
-    [SerializeField]
-    private GameObject[] buildObjects;
+
 
     [SerializeField]
     private GameObject buildZone;
@@ -57,10 +53,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
 
     public GameObject buildingObject;
-    //private Color buildObjectBaseColour;
-    [SerializeField]
-    private Color buildObjectColour;
-    private MeshRenderer buildObjectRenderer;
+
 
 
     private int currentBuildObject_Index;
@@ -146,14 +139,25 @@ public class BuildManager : GameBehaviour<BuildManager>
         if(buildObjectIndex == currentBuildObject_Index)
         {
             CancelBuilding();
+            UI.DisablePanel();
             currentBuildObject_Index = -1;
+            
+
             return;
         }
 
-        if (buildObjectIndex >= 1 && buildObjectIndex <= 3)
+        if (buildObjectIndex >= 1 && buildObjectIndex <= 2)
         {
+            UI.SelectMaterialUI(buildObjectIndex);
             BuildItem(buildObjectIndex);
             currentBuildObject_Index = buildObjectIndex;
+        }
+
+        if(buildObjectIndex == 3)
+        {
+            UI.SelectMaterialUI(buildObjectIndex);
+            currentBuildObject_Index = buildObjectIndex;
+
         }
     }
 
@@ -223,7 +227,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         {
             Destroy(buildingObject);
         }
-
+        
         prefabToSpawn = null;
         canBuild = false;
         isBuilding = false;

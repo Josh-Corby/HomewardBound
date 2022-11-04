@@ -39,7 +39,7 @@ ModelImporter:
       name: MouseJump
       takeName: Take 001
       internalID: 0
-      firstFrame: 10
+      firstFrame: 13
       lastFrame: 25
       wrapMode: 0
       orientationOffsetY: 0

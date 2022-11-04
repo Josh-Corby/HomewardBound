@@ -89,10 +89,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     private Vector3 groundBox =  new Vector3(0.3f, 0.5f, 0.3f);
 
-
     public GameObject LilypadOffset;
-
-    
 
     private void Awake()
     {
@@ -156,24 +153,12 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         if (direction.magnitude >= 0.1f)
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.transform.eulerAngles.y;
-            //float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            //transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
 
             moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            //Debug.Log("iswalking");
-            //isWalking = true;
-            //animator.SetBool("isWalking", isWalking);
+
         }
-        if(direction.magnitude== 0f)
-        {
-            //Debug.Log("isnotwlaking");
-            
-            //isWalking = false;
-           
-            //isRunning = false;
-            //animator.SetBool("isWalking", isWalking);
-            //animator.SetBool("isRunning", isRunning);
-        }
+
 
         if (LilypadOffset != null)
         {
@@ -250,23 +235,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         controller.Move(velocity * Time.deltaTime);
 
         gravity = defaultGravity;
-        //if (OM.outfit == Outfits.Utility)
-        //{
-        //    if (glideTimer > 0 && IM.glide_Input && velocity.y <= 0)
-        //    {
-        //        groundState = GroundStates.Gliding;
-        //        if (glideTimer <= 0)
-        //        {
-        //            groundState = GroundStates.Airborne;
-        //            return;
-        //        }
-        //        gravity = 0;
-        //        velocity = new Vector3(velocity.z, -glidingSpeed);
-        //        //velocity.y = Mathf.Sqrt(gravity * -0.1f / jumpHeight);
-        //        glideTimer -= Time.deltaTime;
-        //        fallTimer = fallTimerMax;
-        //    }
-        //}
+       
         if (groundState == GroundStates.Airborne) return;
 
         if(!IZ.isRolling)
@@ -285,16 +254,21 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         coyoteTimer -= Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Space) && groundState == GroundStates.Airborne && coyoteTimer > 0)
         {
-            Jump();
+            Debug.Log("jump");
+            StartCoroutine(Jump());
         }
     }
     private IEnumerator Jump()
     {
+        AM.Jump();
         LilypadOffset = null;
         velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
 
         yield return new WaitForSeconds(coyoteTimerOffset);
         coyoteTimer = 0f;
+
+        yield return new WaitForSeconds(0.5f);
+        AM.StopJumping();
     }
     private void HandleSprinting()
     {

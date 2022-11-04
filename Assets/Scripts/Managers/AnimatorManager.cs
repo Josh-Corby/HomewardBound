@@ -23,20 +23,15 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
     }
     private void ManageAnimations()
     {
-        isGrounded = TPM.groundState == GroundStates.Grounded;
-        animator.SetBool("isGrounded", isGrounded);
-
-        isJumping = false;
-        animator.SetBool("isJumping", isJumping);
-
-
-        if (Input.GetKey(KeyCode.Space))
+        if(TPM.groundState == GroundStates.Grounded)
         {
-            isJumping = true;
-            animator.SetBool("isJumping", isJumping);
-            return;
+            animator.SetBool("isGrounded", true);
         }
 
+        if (TPM.groundState != GroundStates.Grounded)
+        {
+            animator.SetBool("isGrounded", false);
+        }
         if (isJumping == true) return;
         if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S)) return;
 
@@ -48,5 +43,19 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
         animator.SetBool("isWalking", isWalking);
         animator.SetBool("isRunning", isRunning);
 
+    }
+
+    public void Jump()
+    {
+        animator.SetBool("isJumping", true);
+    }
+
+    public void StopJumping()
+    {
+        animator.SetBool("isJumping", false);
+    }
+    public void Grounded()
+    {
+        animator.SetBool("isJumping", false);
     }
 }

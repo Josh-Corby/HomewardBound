@@ -41,16 +41,16 @@ public class PlayerManager : GameBehaviour<PlayerManager>
             { OnToolSelected(2); }
         }
 
+        //if (Input.GetKeyDown(KeyCode.Alpha3))
+        //{
+        //    if (GM.haveBuilding)
+        //    { OnToolSelected(3); }
+        //}
+
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            if (GM.haveBuilding)
-            { OnToolSelected(3); }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
             if (GM.haveSlingshot)
-            { OnToolSelected(4); }
+            { OnToolSelected(3); }
         }
 
         //if (Input.GetKeyDown(KeyCode.Alpha6))

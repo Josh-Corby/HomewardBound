@@ -40,14 +40,14 @@ public class OutfitManager : GameBehaviour<OutfitManager>
             return;
         }
 
-        if(outfitValue >=1 && outfitValue <= 3)
+        if(outfitValue >=1 && outfitValue <= 2)
         {
             outfitValue = 1;
         }
 
-        if(outfitValue >= 4)
+        if(outfitValue >= 3)
         {
-            outfitValue -= 2;
+            outfitValue -= 1;
         }
         //Debug.Log(outfitValue);
 
@@ -56,7 +56,7 @@ public class OutfitManager : GameBehaviour<OutfitManager>
         //Debug.Log(CurrentOutfit);
         if (CurrentOutfit!= Outfits.Builder)
         {
-            BM.CancelBuilding();
+           
         }
 
         switch (CurrentOutfit)

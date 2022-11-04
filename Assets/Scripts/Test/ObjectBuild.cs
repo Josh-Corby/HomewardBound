@@ -33,12 +33,14 @@ public class ObjectBuild : GameBehaviour
     public int rock_Refund_Value;
     public int mushroom_Refund_Value;
 
+    private Material material;
 
-
+    private float objectBuiltAlpha = 2f;
+    private bool isBuilt;
     private void Awake()
     {
-        baseColour = renderer.material.color;
-        objectLength = 0;
+        material = renderer.material;
+        baseColour = material.GetColor("_colour");
         for (int i = 1; i < ObjectColliders.Count; i++)
         {
             ObjectColliders[i].transform.gameObject.SetActive(false);
@@ -46,6 +48,12 @@ public class ObjectBuild : GameBehaviour
         currentTrigger = ObjectColliders[0].gameObject.GetComponent<BoxCollider>();
     }
 
+
+    private void Start()
+    {
+        isBuilt = false;
+        objectLength = 0;
+    }
     void Update()
     {
         if (UI.paused) return;
@@ -57,7 +65,7 @@ public class ObjectBuild : GameBehaviour
 
         if (isBeingBuilt == false)
         {
-            ChangeColourOfObject(baseColour);
+            ObjectBuilt();
         }
 
         if (isBeingBuilt)
@@ -76,7 +84,7 @@ public class ObjectBuild : GameBehaviour
 
                 if (currentTrigger != null)
                 {
-                currentTrigger.gameObject.SetActive(false);
+                    currentTrigger.gameObject.SetActive(false);
                 }
                 currentTrigger = ObjectColliders[objectLength - 1].transform.gameObject.GetComponent<BoxCollider>();
 
@@ -94,7 +102,7 @@ public class ObjectBuild : GameBehaviour
                 objectLength -= 1;
                 OnObjectLengthChange();
 
-                BM.SetMaterialCosts(2, objectLength);         
+                BM.SetMaterialCosts(2, objectLength);
                 currentTrigger.gameObject.SetActive(false);
                 currentTrigger = ObjectColliders[objectLength - 1].transform.gameObject.GetComponent<BoxCollider>();
                 currentTrigger.gameObject.SetActive(true);
@@ -139,7 +147,23 @@ public class ObjectBuild : GameBehaviour
     }
     private void ChangeColourOfObject(Color colour)
     {
-        renderer.material.color = colour;
+        material.SetColor("_colour", colour);
+    }
+
+    private void ObjectBuilt()
+    {
+        if (!isBuilt)
+        {
+            ChangeOpacityOfObject(objectBuiltAlpha);
+            ChangeColourOfObject(baseColour);
+            isBuilt = true;
+        }
+    }
+
+    private void ChangeOpacityOfObject(float alpha)
+    {
+        Debug.Log("Alpha changed");
+        material.SetFloat("_alphaValue", alpha);
     }
 
     public void RefundMaterials()

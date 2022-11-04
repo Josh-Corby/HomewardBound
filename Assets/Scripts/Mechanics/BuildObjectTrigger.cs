@@ -43,13 +43,5 @@ public class BuildObjectTrigger : GameBehaviour
         UpdateCanBuild();
     }
 
-    
-
-
-    //public IEnumerator LerpAlpha()
-    //{
-    //    objectColor = Color.Lerp(transparent, opaque, 2f);
-    //    renderer.material.color = objectColor;
-    //    yield return new WaitForEndOfFrame();
-    //}
+   
 }

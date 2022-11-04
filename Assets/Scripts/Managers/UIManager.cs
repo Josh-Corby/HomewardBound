@@ -48,7 +48,7 @@ public class UIManager : GameBehaviour<UIManager>
     public GameObject pausePanel;
     public GameObject CurrentPanel;
     //public GameObject[] BuildPanels;
-    
+
     //private GameObject currentBuildPanel;
 
     [Header("Bools")]
@@ -76,41 +76,45 @@ public class UIManager : GameBehaviour<UIManager>
 
 
     [SerializeField]
+    private GameObject currentMaterialPanel;
+    [SerializeField]
+    private int currentMaterialPanelIndex;
+    [SerializeField]
+    private GameObject[] materialUIPanels;
+
+    private TMP_Text[] materialCosts;
+
+
+    [SerializeField]
     private Image[] HotbarOutlines;
 
     private Image CurrentOutline;
 
+    
+
+
     private void Start()
     {
-        PlayerManager.OnToolSelected += SelectToolUI;
-
-
+        PlayerManager.OnToolSelected += SelectControlUI;
         // Set UI values for start of game
         //currentBuildPanel = null;
         //CurrentPanel = null;
-
         gameObject.SetActive(true);
         gameUI.SetActive(true);
-
         //buildPanelStatus = false;    
         //buildPanel.SetActive(false);
         //RadialMenuPanel.SetActive(false);
         pausePanel.SetActive(false);
         paused = false;
-
         //minerText.text = "";
         //ladderText.text = "";
         //bridgeText.text = "";
         //utilityText.text = "";
-
-
         //currentBuildPanel = BuildPanels[0];
         Time.timeScale = 1;
-
-        UpdateCanBuildText(false);
+        //UpdateCanBuildText(false);
         UpdateMaterialsCollected();
         //UpdateControlText();
-
     }
     private void Update()
     {
@@ -122,7 +126,6 @@ public class UIManager : GameBehaviour<UIManager>
         //currentOutfit.text = OM.outfit.ToString();
 
         Inputs();
-
     }
 
     #region Text Updaters
@@ -147,6 +150,8 @@ public class UIManager : GameBehaviour<UIManager>
 
     //}
 
+
+
     /// <summary>
     /// Update UI of materials player has collected
     /// </summary>
@@ -157,13 +162,10 @@ public class UIManager : GameBehaviour<UIManager>
         UpdateMushroomsCollected();
         UpdatePebblesCollected();
     }
-
-
     public void UpdateMaterials(TMP_Text text, string material, int amount)
     {
-            text.text = material + " Collected: " + amount.ToString();
+        text.text = material + " Collected: " + amount.ToString();
     }
-
     /// <summary>
     /// Update UI of how many rocks the player has collected
     /// </summary>
@@ -171,7 +173,6 @@ public class UIManager : GameBehaviour<UIManager>
     {
         smallRocksCollected.text = "Rocks Collected: " + GM.rocksCollected.ToString();
     }
-
     /// <summary>
     /// Update the UI of how many sticks the player has collected
     /// </summary>
@@ -179,7 +180,6 @@ public class UIManager : GameBehaviour<UIManager>
     {
         sticksCollected.text = "Sticks Collected: " + GM.sticksCollected.ToString();
     }
-
     /// <summary>
     /// Update the UI of how many mushrooms the player has collected
     /// </summary>
@@ -187,7 +187,6 @@ public class UIManager : GameBehaviour<UIManager>
     {
         mushroomsCollected.text = "Mushrooms Collected: " + GM.mushroomsCollected.ToString();
     }
-
     /// <summary>
     /// Update the UI of how many Pebbles the player has collected
     /// </summary>
@@ -195,7 +194,6 @@ public class UIManager : GameBehaviour<UIManager>
     {
         pebblesCollected.text = "Pebbles Collected: " + GM.pebblesCollected.ToString();
     }
-
     /// <summary>
     /// Update UI prompt for when the player can build
     /// </summary>
@@ -211,7 +209,6 @@ public class UIManager : GameBehaviour<UIManager>
             this.canBuild.text = "Build";
         }
     }
-
     /// <summary>
     /// Tell the player if they can build, if not, tell the player what materials the player doesn't have enough of
     /// </summary>
@@ -338,7 +335,6 @@ public class UIManager : GameBehaviour<UIManager>
         ToggleMenus();
 
     }
-
     /// <summary>
     /// Toggle UI depending on enum case
     /// </summary>
@@ -369,16 +365,6 @@ public class UIManager : GameBehaviour<UIManager>
 
                 }
                 break;
-
-            //case Menus.Radial:
-            //    ChangeMenu(RadialMenuPanel);
-            //    radialMenuStatus = true;
-            //    if (Input.GetKey(KeyCode.Tab) == false)
-            //    {
-            //        radialMenuStatus = false;
-            //        menu = Menus.None;
-            //    }
-            //    break;
         }
     }
 
@@ -499,18 +485,38 @@ public class UIManager : GameBehaviour<UIManager>
             Cursor.lockState = CursorLockMode.Locked;
         }
     }
-
-
-    private void SelectToolUI(int toolIndex)
+    public void SelectMaterialUI(int panelIndex)
     {
-        SelectControlUI(toolIndex);
+
+        if (currentMaterialPanel != null)
+        {
+            currentMaterialPanel.SetActive(false);
+        }
+
+        if (panelIndex >= 1 && panelIndex <= 2)
+        {
+            currentMaterialPanelIndex = 1;
+        }
+
+        if (panelIndex >= 3)
+        {
+            currentMaterialPanelIndex = panelIndex - 1;
+
+        }
+        currentMaterialPanel = materialUIPanels[currentMaterialPanelIndex - 1];
+        currentMaterialPanel.SetActive(true);
+        Debug.Log("panel selected");
     }
 
+    public void DisablePanel()
+    {
+        Debug.Log(currentMaterialPanel);
+        currentMaterialPanel.SetActive(false);
+        currentMaterialPanel = null;
+    }
     private void SelectControlUI(int panelIndex)
     {
-        //Debug.Log(panelIndex);
-        //Debug.Log(HotbarOutlines[panelIndex]);
-        SelectHotbarOutline(HotbarOutlines[panelIndex-1]);
+        SelectHotbarOutline(HotbarOutlines[panelIndex - 1]);
     }
 
     private void SelectHotbarOutline(Image outline)

@@ -97,14 +97,6 @@ public class HawkDetection : GameBehaviour
                         Debug.DrawLine(hawkRay.origin, hawkRay.origin * 100, Color.green);
                         isGrowing = false;
                     }
-
-
-                    //if (hit.transform.gameObject.layer != LayerMask.NameToLayer("Player") && hit.collider.isTrigger)
-                    //{
-                    //    detectionCircle.GetComponent<MeshRenderer>().enabled = false;
-                    //    Debug.DrawLine(hawkRay.origin, hawkRay.origin * 100, Color.green);
-                    //    isGrowing = false;
-                    //}
                 }
                 
             }
