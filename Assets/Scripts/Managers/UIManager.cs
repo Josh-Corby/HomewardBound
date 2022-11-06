@@ -488,24 +488,25 @@ public class UIManager : GameBehaviour<UIManager>
     public void SelectMaterialUI(int panelIndex)
     {
 
-        if (currentMaterialPanel != null)
-        {
-            currentMaterialPanel.SetActive(false);
-        }
 
-        if (panelIndex >= 1 && panelIndex <= 2)
-        {
-            currentMaterialPanelIndex = 1;
-        }
+        //if (currentMaterialPanel != null)
+        //{
+        //    currentMaterialPanel.SetActive(false);
+        //}
 
-        if (panelIndex >= 3)
-        {
-            currentMaterialPanelIndex = panelIndex - 1;
+        //if (panelIndex >= 1 && panelIndex <= 2)
+        //{
+        //    currentMaterialPanelIndex = 1;
+        //}
 
-        }
-        currentMaterialPanel = materialUIPanels[currentMaterialPanelIndex - 1];
-        currentMaterialPanel.SetActive(true);
-        Debug.Log("panel selected");
+        //if (panelIndex >= 3)
+        //{
+        //    currentMaterialPanelIndex = panelIndex - 1;
+
+        //}
+        //currentMaterialPanel = materialUIPanels[currentMaterialPanelIndex - 1];
+        //currentMaterialPanel.SetActive(true);
+        //Debug.Log("panel selected");
     }
 
     public void DisablePanel()
