@@ -3,15 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum FallType
-{
-    Falling,
-    Rotating
-}
+
 public class FallingObject : MonoBehaviour
 {
-    public FallType type;
-
     private Rigidbody rb;
     private bool frozen;
     private void Awake()
@@ -20,6 +14,11 @@ public class FallingObject : MonoBehaviour
     }
 
     private void Start()
+    {
+        frozen = false;
+    }
+
+    public void Unfreeze()
     {
         frozen = false;
         StartCoroutine(FreezeCheck());
@@ -33,7 +32,7 @@ public class FallingObject : MonoBehaviour
         {
             if (rb.velocity == Vector3.zero)
             {
-                //Debug.Log("velocity is zero");
+                Debug.Log("velocity is zero");
                 FreezeConstraints();
                 frozen = true;
                 yield return null;
@@ -47,17 +46,18 @@ public class FallingObject : MonoBehaviour
     {
         frozen = true;
         rb.constraints = RigidbodyConstraints.FreezeAll;
+        rb.isKinematic = true;
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject != transform.parent.gameObject)
-        {
-            if (collision.gameObject.CompareTag("Ground"))
-            {
-                rb.constraints = RigidbodyConstraints.FreezeAll;
-                rb.isKinematic = true;
-            }
-        }
-    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if(collision.gameObject != transform.parent.gameObject)
+    //    {
+    //        if (collision.gameObject.CompareTag("Ground"))
+    //        {
+    //            rb.constraints = RigidbodyConstraints.FreezeAll;
+    //            rb.isKinematic = true;
+    //        }
+    //    }
+    //}
 }

@@ -43,12 +43,12 @@ public class DestructableObject : GameBehaviour
         if (collision.gameObject.CompareTag("Bullet"))
         {
             Debug.Log("Bullet hit");
-            if (Child != null)
+            if (FallingObjectRB != null)
             {
                 FallingObjectRB.useGravity = true;
                 FallingObjectRB.constraints &= ~RigidbodyConstraints.FreezePositionY;
                 FallingObjectRB.constraints &= ~RigidbodyConstraints.FreezeRotationZ;
-
+                fallingObject.Unfreeze();
             }
         }
     }
