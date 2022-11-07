@@ -35,6 +35,7 @@ public class ObjectBuild : GameBehaviour
 
     private Material material;
 
+    private float objectBuildingAlpha = 1.1f;
     private float objectBuiltAlpha = 2f;
     private bool isBuilt;
     private void Awake()
@@ -53,6 +54,7 @@ public class ObjectBuild : GameBehaviour
     {
         isBuilt = false;
         objectLength = 0;
+        ChangeChangeValueOfMaterial(objectBuildingAlpha);
     }
     void Update()
     {
@@ -154,13 +156,13 @@ public class ObjectBuild : GameBehaviour
     {
         if (!isBuilt)
         {
-            ChangeOpacityOfObject(objectBuiltAlpha);
+            ChangeChangeValueOfMaterial(objectBuiltAlpha);
             ChangeColourOfObject(baseColour);
             isBuilt = true;
         }
     }
 
-    private void ChangeOpacityOfObject(float alpha)
+    private void ChangeChangeValueOfMaterial(float alpha)
     {
         Debug.Log("Alpha changed");
         material.SetFloat("_alphaValue", alpha);
