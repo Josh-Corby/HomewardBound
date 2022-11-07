@@ -7,17 +7,19 @@ public class DestructableObject : GameBehaviour
     [SerializeField]
     private Transform FallingObjectSpawnPosition;
     [SerializeField]
-    private GameObject FallingObject;
+    private GameObject Child;
+
+    private FallingObject fallingObject;
     private Rigidbody FallingObjectRB;
 
 
     private void Awake()
     {
-        FallingObjectSpawnPosition.position = FallingObject.transform.position;
-        FallingObjectRB = FallingObject.GetComponent<Rigidbody>();
-
+        FallingObjectSpawnPosition.position = Child.transform.position;
+        FallingObjectRB = Child.GetComponent<Rigidbody>();
+        fallingObject = Child.GetComponent<FallingObject>();
     }
- 
+
 
     private void OnEnable()
     {
@@ -32,7 +34,7 @@ public class DestructableObject : GameBehaviour
     private void ResetObject()
     {
         gameObject.SetActive(true);
-        FallingObject.transform.position = FallingObjectSpawnPosition.position;
+        Child.transform.position = FallingObjectSpawnPosition.position;
         FallingObjectRB.useGravity = false;
         FallingObjectRB.constraints = RigidbodyConstraints.FreezeAll;
     }
@@ -41,16 +43,13 @@ public class DestructableObject : GameBehaviour
         if (collision.gameObject.CompareTag("Bullet"))
         {
             Debug.Log("Bullet hit");
-            if(FallingObject != null)
+            if (Child != null)
             {
-
                 FallingObjectRB.useGravity = true;
                 FallingObjectRB.constraints &= ~RigidbodyConstraints.FreezePositionY;
-
+                FallingObjectRB.constraints &= ~RigidbodyConstraints.FreezeRotationZ;
 
             }
-
-            
         }
     }
 }
