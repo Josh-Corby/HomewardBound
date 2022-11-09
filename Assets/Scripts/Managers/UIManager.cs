@@ -59,8 +59,9 @@ public class UIManager : GameBehaviour<UIManager>
     private Image CurrentOutline;
 
     [SerializeField]
+    private GameObject TestUI;
+    [SerializeField]
     private GameObject[] TestUIPanels;
-
     private GameObject currentTestPanel;
     private int testPanelIndex;
 
@@ -87,16 +88,14 @@ public class UIManager : GameBehaviour<UIManager>
         //UpdateCanBuildText(false);
         UpdateMaterialsCollected();
         //UpdateControlText();
-
+        TestUI.SetActive(false);
         GameStartUI();
     }
     private void Update()
     {
         //flashLightIntensity.text = "Light Power: " + 
         //FL.myLight.intensity.ToString("F2") + " /10";
-
         fallTimer.text = "Fall timer: " + TPM.fallTimer.ToString("F2");
-
         //currentOutfit.text = OM.outfit.ToString();
 
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -104,10 +103,18 @@ public class UIManager : GameBehaviour<UIManager>
             ChangeTestUI();
         }
 
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            ToggleTestUI();
+        }
         Inputs();
     }
 
-
+    private void ToggleTestUI()
+    {
+        TestUI.SetActive(!TestUI.activeSelf);
+        gameUI.SetActive(!gameUI.activeSelf);
+    }
     private void GameStartUI()
     {
         for (int i = 0; i < TestUIPanels.Length; i++)
@@ -121,6 +128,11 @@ public class UIManager : GameBehaviour<UIManager>
 
     private void ChangeTestUI()
     {
+        if (!TestUI.activeSelf)
+        {
+            return;
+        }
+
         currentTestPanel.SetActive(false);
         if(testPanelIndex == TestUIPanels.Length-1)
         {
