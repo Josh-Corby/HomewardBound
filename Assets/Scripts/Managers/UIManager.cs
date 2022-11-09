@@ -18,7 +18,6 @@ public class UIManager : GameBehaviour<UIManager>
     public Menus menu;
 
     [Header("Text")]
-    //public TMP_Text flashLightIntensity;
     public TMP_Text canBuild;
     public TMP_Text fallTimer;
     public TMP_Text smallRocksCollected;
@@ -28,47 +27,16 @@ public class UIManager : GameBehaviour<UIManager>
     public TMP_Text currentOutfit;
     public TMP_Text currentAmmoType;
 
-    //[Header("Control Text")]
-    //public TMP_Text outfitControlText1;
-    //public TMP_Text outfitControlText2;
-    //public TMP_Text outfitControlText3;
-    //public TMP_Text outfitControlText4;
-
-    //[Header("Radial Menu Text")]
-    //public TMP_Text minerText;
-    //public TMP_Text ladderText;
-    //public TMP_Text bridgeText;
-    //public TMP_Text utilityText;
-
     [Header("Panels")]
     public GameObject gameUI;
-    //public GameObject buildPanel;
-    //public GameObject SlingShotPanel;
-    //public GameObject RadialMenuPanel;
+
     public GameObject pausePanel;
     public GameObject CurrentPanel;
-    //public GameObject[] BuildPanels;
 
-    //private GameObject currentBuildPanel;
 
     [Header("Bools")]
-    //public bool buildPanelStatus;
-    //public bool radialMenuStatus;
+
     public bool paused;
-
-    //[Header("Buttons")]
-    //public Button pickaxeButton;
-    //public Button buildLadderButton;
-    //public Button buildBridgeButton;
-    //public Button buildSlingshotButton;
-    //public Button utilityButton;
-    //public Button buildAmmoButton;
-    //public Button buildGliderButton;
-    //public Button buildGrappleHookButton;
-
-
-    //public float timeScale;
-
 
     public Image LadderOutline;
     public Image BridgeOutline;
@@ -90,7 +58,11 @@ public class UIManager : GameBehaviour<UIManager>
 
     private Image CurrentOutline;
 
-    
+    [SerializeField]
+    private GameObject[] TestUIPanels;
+
+    private GameObject currentTestPanel;
+    private int testPanelIndex;
 
 
     private void Start()
@@ -115,6 +87,8 @@ public class UIManager : GameBehaviour<UIManager>
         //UpdateCanBuildText(false);
         UpdateMaterialsCollected();
         //UpdateControlText();
+
+        GameStartUI();
     }
     private void Update()
     {
@@ -125,31 +99,42 @@ public class UIManager : GameBehaviour<UIManager>
 
         //currentOutfit.text = OM.outfit.ToString();
 
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            ChangeTestUI();
+        }
+
         Inputs();
     }
 
+
+    private void GameStartUI()
+    {
+        for (int i = 0; i < TestUIPanels.Length; i++)
+        {
+            TestUIPanels[i].SetActive(false);
+        }
+        TestUIPanels[0].SetActive(true);
+        currentTestPanel = TestUIPanels[0];
+        testPanelIndex = 0;
+    }
+
+    private void ChangeTestUI()
+    {
+        currentTestPanel.SetActive(false);
+        if(testPanelIndex == TestUIPanels.Length-1)
+        {
+            testPanelIndex = 0;
+        }
+        else
+        {
+        testPanelIndex += 1;
+        }
+
+        TestUIPanels[testPanelIndex].SetActive(true);
+        currentTestPanel = TestUIPanels[testPanelIndex];
+    }
     #region Text Updaters
-
-    //public void UpdateToolsUnlockedUI(string tool)
-    //{
-    //    if (tool == "Pickaxe")
-    //    {
-    //        minerText.text = "Pickaxe";
-    //    }
-
-    //    if (tool == "Builder")
-    //    {
-    //        ladderText.text = "Ladder";
-    //        bridgeText.text = "Bridge";
-    //    }
-
-    //    if (tool == "GrappleHook")
-    //    {
-    //        utilityText.text = "GrappleHook";
-    //    }
-
-    //}
-
 
 
     /// <summary>
