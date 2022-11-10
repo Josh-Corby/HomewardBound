@@ -24,7 +24,9 @@ public class NPCDialog : GameBehaviour
         {
             //Debug.Log("player in radius");
             DM.GetNPCInformation(this);
-            EnableOutline();
+            DM.StartDialogue();
+            //EnableOutline();
+
         }
     }
 

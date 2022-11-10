@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Whitebox 5 Prefab #2.prefab.meta
 guid: 97025b08322fdc44fb9c421a55e9b3b5
 PrefabImporter:
+========
+guid: ec236920bfa3da1449f82f2fb8c7712f
+DefaultImporter:
+>>>>>>>> 6a666dca21670d6079804bdb5b05420285e5267b:Assets/Scenes/PlaygroundTest 1.unity.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
