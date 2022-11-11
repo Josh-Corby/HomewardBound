@@ -119,6 +119,7 @@ public class BuildManager : GameBehaviour<BuildManager>
                     buildingObject.gameObject.GetComponent<BuildObjectRB>().UnFreezeConstraints();
                     buildingObject.gameObject.GetComponent<BuildObjectRB>().frozen = false;
                 }
+                UI.DeselectHotbarOutline();
                 SubtractCost();
                 ResetBuildObject();
                 return;
@@ -138,11 +139,11 @@ public class BuildManager : GameBehaviour<BuildManager>
     {
         if(buildObjectIndex == currentBuildObject_Index)
         {
+            UI.DeselectHotbarOutline();
             CancelBuilding();
             UI.DisablePanel();
-            currentBuildObject_Index = -1;
-            
 
+            currentBuildObject_Index = -1;
             return;
         }
 
@@ -155,6 +156,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
         if(buildObjectIndex == 3)
         {
+            CancelBuilding();
             UI.SelectMaterialUI(buildObjectIndex);
             currentBuildObject_Index = buildObjectIndex;
 
@@ -223,6 +225,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     public void CancelBuilding()
     {
+        
         if (buildingObject != null)
         {
             Destroy(buildingObject);

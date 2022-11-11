@@ -23,13 +23,14 @@ public enum GroundStates
 }
 public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 {
-    
 
+    [SerializeField]
+    private CameraTransform cameraControl;
     [Header("References")]
     public CharacterController controller;
     public Camera cam;
     [SerializeField]
-    private Transform cameraLook;
+    private Transform cameraLookRight;
     public Vector3 characterVelocityMomentum;
     [SerializeField]
     private Transform debugHitPointTransform;
@@ -91,6 +92,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     public GameObject LilypadOffset;
 
+    [SerializeField]
+    private GameObject model;
     private void Awake()
     {
         hookshotState = HookshotStates.Default;
@@ -178,14 +181,21 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
    
     private void LookFoward()
     {
-        if (!IZ.isRolling)
+        if (Vector3.Distance(cam.transform.position, cameraLookRight.transform.position) <= 0.8f)
         {
-            var lookPos = cam.transform.position - cameraLook.position;
-            lookPos.y = 0;
-            var rotation = Quaternion.LookRotation(lookPos);
-            transform.rotation = rotation;
+            model.SetActive(false);
+            return;
         }
-     
+        else
+        {
+            model.SetActive(true);
+        }
+        var lookPos = cam.transform.position - cameraLookRight.position;
+        lookPos.y = 0;
+        var rotation = Quaternion.LookRotation(lookPos);
+        transform.rotation = rotation;
+        
+
     }
     private void HandleMovement()
     {

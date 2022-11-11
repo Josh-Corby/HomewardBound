@@ -12,24 +12,47 @@ public class DestructableObject : GameBehaviour
     private FallingObject fallingObject;
     private Rigidbody FallingObjectRB;
 
-
-    private void Awake()
-    {
-        FallingObjectSpawnPosition.position = Child.transform.position;
-        FallingObjectRB = Child.GetComponent<Rigidbody>();
-        fallingObject = Child.GetComponent<FallingObject>();
-    }
+    private Outline outline;
+    [SerializeField]
+    private bool isVisible;
 
 
     private void OnEnable()
     {
         GameManager.OnPlayerRespawn += ResetObject;
     }
-
-
     private void OnDisable()
     {
         GameManager.OnPlayerRespawn -= ResetObject;
+    }
+    private void Awake()
+    {
+        FallingObjectSpawnPosition.position = Child.transform.position;
+        FallingObjectRB = Child.GetComponent<Rigidbody>();
+        fallingObject = Child.GetComponent<FallingObject>();
+        outline = GetComponent<Outline>();
+    }
+    private void Update()
+    {
+        if (isVisible)
+        {
+            if (Vector3.Distance(gameObject.transform.position, TPM.gameObject.transform.position) <= 50)
+            {
+                outline.enabled = true;
+                return;
+            }
+            else
+            {
+                outline.enabled = false;
+                return;
+            }
+        }
+        if (!isVisible)
+        {
+            outline.enabled = false;
+            return;
+        }
+        
     }
     private void ResetObject()
     {
@@ -51,5 +74,17 @@ public class DestructableObject : GameBehaviour
                 fallingObject.Unfreeze();
             }
         }
+    }
+
+    private void OnBecameVisible()
+    {
+
+        isVisible = true;
+    }
+
+
+    private void OnBecameInvisible() 
+    {
+        isVisible = false;
     }
 }

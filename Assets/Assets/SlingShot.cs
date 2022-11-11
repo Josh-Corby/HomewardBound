@@ -99,12 +99,11 @@ public class SlingShot : GameBehaviour<SlingShot>
 
             //Find the exact hit position using a raycast
             Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //Just a ray through the middle of your current view
-            RaycastHit hit;
 
 
             //check if ray hits something
             Vector3 targetPoint;
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, mask))
             {
                 Debug.Log(hit.collider.gameObject);
                 targetPoint = hit.point;

@@ -238,15 +238,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fefe5d704b5623641ad4c50c7d3451fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
   vcam: {fileID: 0}
-  thirdPersonPlayer: {fileID: 8710679983595202227}
-  cameraLook: {fileID: 2259520644333130633}
-  CameraTarget: {fileID: 0}
-  Offset: {x: 0, y: 0, z: 0}
   LockCameraPosition: 0
   TopClamp: 70
   BottomClamp: -70
   CameraAngleOverride: 0
+  isColliding: 0
+  mask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &2971507129487608043
 GameObject:
   m_ObjectHideFlags: 0
@@ -726,6 +727,60 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &7601390312614736623
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3169701160220890916}
+  - component: {fileID: 6261632239035113761}
+  m_Layer: 7
+  m_Name: CameraLook (1)
+  m_TagString: Player
+  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3169701160220890916
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7601390312614736623}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.26, y: 0.57, z: 0.06}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8710679983595202226}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6261632239035113761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7601390312614736623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fefe5d704b5623641ad4c50c7d3451fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 0}
+  vcam: {fileID: 0}
+  LockCameraPosition: 0
+  TopClamp: 70
+  BottomClamp: -70
+  CameraAngleOverride: 0
+  isColliding: 0
+  mask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &8416380020802483257
 GameObject:
   m_ObjectHideFlags: 0
@@ -826,6 +881,7 @@ Transform:
   - {fileID: 3248885081920953885}
   - {fileID: 8710679983326173725}
   - {fileID: 4352278479036785450}
+  - {fileID: 3169701160220890916}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

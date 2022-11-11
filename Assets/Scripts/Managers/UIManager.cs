@@ -527,7 +527,7 @@ public class UIManager : GameBehaviour<UIManager>
         CurrentOutline = outline;
         CurrentOutline.color = Color.red;
     }
-    private void DeselectHotbarOutline()
+    public void DeselectHotbarOutline()
     {
 
         CurrentOutline.color = Color.black;
