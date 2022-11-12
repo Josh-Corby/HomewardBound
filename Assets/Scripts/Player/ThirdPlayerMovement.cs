@@ -183,12 +183,12 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     {
         if (Vector3.Distance(cam.transform.position, cameraLookRight.transform.position) <= 0.8f)
         {
-            model.SetActive(false);
+            //model.SetActive(false);
             return;
         }
         else
         {
-            model.SetActive(true);
+            //model.SetActive(true);
         }
         var lookPos = cam.transform.position - cameraLookRight.position;
         lookPos.y = 0;
