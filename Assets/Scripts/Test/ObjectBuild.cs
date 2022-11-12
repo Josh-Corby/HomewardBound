@@ -164,7 +164,7 @@ public class ObjectBuild : GameBehaviour
 
     private void ChangeChangeValueOfMaterial(float alpha)
     {
-        Debug.Log("Alpha changed");
+        //Debug.Log("Alpha changed");
         material.SetFloat("_alphaValue", alpha);
     }
 

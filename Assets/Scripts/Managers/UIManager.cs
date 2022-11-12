@@ -508,7 +508,7 @@ public class UIManager : GameBehaviour<UIManager>
 
     public void DisablePanel()
     {
-        Debug.Log(currentMaterialPanel);
+        //Debug.Log(currentMaterialPanel);
         currentMaterialPanel.SetActive(false);
         currentMaterialPanel = null;
     }
