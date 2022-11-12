@@ -34,24 +34,24 @@ public class DestructableObject : GameBehaviour
     }
     private void Update()
     {
-        if (isVisible)
-        {
-            if (Vector3.Distance(gameObject.transform.position, TPM.gameObject.transform.position) <= 50)
-            {
-                outline.enabled = true;
-                return;
-            }
-            else
-            {
-                outline.enabled = false;
-                return;
-            }
-        }
-        if (!isVisible)
-        {
-            outline.enabled = false;
-            return;
-        }
+        //if (isVisible)
+        //{
+        //    if (Vector3.Distance(gameObject.transform.position, TPM.gameObject.transform.position) <= 50)
+        //    {
+        //        outline.enabled = true;
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        outline.enabled = false;
+        //        return;
+        //    }
+        //}
+        //if (!isVisible)
+        //{
+        //    outline.enabled = false;
+        //    return;
+        //}
         
     }
     private void ResetObject()
