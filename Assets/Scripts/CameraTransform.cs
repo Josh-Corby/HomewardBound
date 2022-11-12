@@ -9,7 +9,7 @@ public class CameraTransform : GameBehaviour
     private Camera cam;
     [SerializeField]
     private CinemachineVirtualCamera vcam;
-    private Cinemachine3rdPersonFollow camfollow;
+    public Cinemachine3rdPersonFollow camfollow;
 
 
     private float cameraDistance;
@@ -34,9 +34,8 @@ public class CameraTransform : GameBehaviour
 
 
     [SerializeField]
-    private Transform cameraLookRight;
-    [SerializeField]
-    private Transform cameraLookLeft;
+    private Transform cameraLook;
+
     private void Awake()
     {
         camfollow = vcam.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
@@ -61,7 +60,9 @@ public class CameraTransform : GameBehaviour
 
         if (UI.menu != Menus.None || UI.paused)
             return;
-       // CameraPosition();
+        // CameraPosition();
+
+
     }
     private void LateUpdate()
     {
@@ -71,12 +72,31 @@ public class CameraTransform : GameBehaviour
             
         }
     }
-
     public void SetCameraTarget(Transform target)
     {
         vcam.Follow = target;
         vcam.LookAt =target;
     }
+
+    public IEnumerator LerpCameraSide(float value)
+    {
+        float timeElapsed = 0;
+        float lerpDuration = 1.5f;
+        while (timeElapsed < lerpDuration)
+        {
+            camfollow.CameraSide = Mathf.Lerp(camfollow.CameraSide, value, timeElapsed / lerpDuration);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+        camfollow.CameraSide = value;
+    }
+
+    public void ChangeCameraSide(float value)
+    {
+        camfollow.CameraSide = Mathf.Lerp(camfollow.CameraSide, value, 0.1f);
+
+    }
+
     private void CameraRotation()
     {
         //CameraTarget = UI.menu == Menus.Radial? null: cameraLook;
@@ -113,26 +133,10 @@ public class CameraTransform : GameBehaviour
             transform.position = hit.transform.position;
         }
     }
-
-
-
     private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
     {
         if (lfAngle < -360f) lfAngle += 360f;
         if (lfAngle > 360f) lfAngle -= 360f;
         return Mathf.Clamp(lfAngle, lfMin, lfMax);
     }
-
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    Debug.Log("camera right");
-    //    SetCameraTarget(cameraLookLeft);
-    //}
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    Debug.Log("Camera left");
-    //    SetCameraTarget(cameraLookRight);
-    //}
 }
