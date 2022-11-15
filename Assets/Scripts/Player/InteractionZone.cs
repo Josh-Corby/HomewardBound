@@ -92,8 +92,8 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                 }
             }
         }
-        if (OM.outfit == Outfits.Builder)
-        {
+        //if (OM.outfit == Outfits.Builder)
+        //{
             if (Input.GetKeyDown(KeyCode.E))
             {
                 if (canDestroy)
@@ -109,7 +109,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                     DestroyObject();
                 }
             }
-        }
+        //}
         #region Item Interactions
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -255,12 +255,12 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             canDestroy = true;
         }
 
-        if (other.CompareTag("Bonfire"))
-        {
-            atBonfire = true;
-            objectToInteract = other.gameObject;
-            OutlineObject(other.gameObject);
-        }
+        //if (other.CompareTag("Bonfire"))
+        //{
+        //    atBonfire = true;
+        //    objectToInteract = other.gameObject;
+        //    OutlineObject(other.gameObject);
+        //}
 
     }
 
@@ -283,10 +283,10 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             DisableInteractions();
         }
 
-        if (other.CompareTag("Bonfire"))
-        {
-            StopOutliningObject(other.gameObject);
-        }
+        //if (other.CompareTag("Bonfire"))
+        //{
+        //    StopOutliningObject(other.gameObject);
+        //}
 
         if (other.CompareTag("Ladder") || other.CompareTag("Bridge"))
         {

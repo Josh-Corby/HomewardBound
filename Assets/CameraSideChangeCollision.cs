@@ -52,7 +52,7 @@ public class CameraSideChangeCollision : MonoBehaviour
 
             if (waitTimer <= 0f)
             {
-                _camera.camfollow.CameraSide = Mathf.Lerp(_camera.camfollow.CameraSide, _cameraSideExitValue, 0.1f);
+                _camera.camfollow.CameraSide = Mathf.Lerp(_camera.camfollow.CameraSide, _cameraSideExitValue, 0.03f);
                 return;
             }
         }
@@ -60,34 +60,19 @@ public class CameraSideChangeCollision : MonoBehaviour
         {
 
             waitTimer = waitTimerMax;
-            _camera.camfollow.CameraSide = Mathf.Lerp(_camera.camfollow.CameraSide, _cameraSideEnterValue, 0.1f);
+            _camera.camfollow.CameraSide = Mathf.Lerp(_camera.camfollow.CameraSide, _cameraSideEnterValue, 0.03f);
         }
 
     }
 
-    //public IEnumerator LerpCameraSide(float value)
-    //{
-    //    float timeElapsed = 0;
-    //    float lerpDuration = 1.5f;
-    //    while (timeElapsed < lerpDuration)
-    //    {
-    //        camfollow.CameraSide = Mathf.Lerp(camfollow.CameraSide, value, timeElapsed / lerpDuration);
-    //        timeElapsed += Time.deltaTime;
-    //        yield return null;
-    //    }
-    //    camfollow.CameraSide = value;
-    //}
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Wall"))
         {
             triggerState = true;
             Debug.Log("Camera side changing");
-            //StartCoroutine(CanLerp());
-            //StartCoroutine(DisableCollider());
-            //StopCoroutine(_camera.LerpCameraSide(_cameraSideEnterValue));
-            //StartCoroutine(_camera.LerpCameraSide(_cameraSideEnterValue));
-            //_camera.ChangeCameraSide(_CameraSideEnterValue);
+
         }
     }
 
@@ -97,10 +82,7 @@ public class CameraSideChangeCollision : MonoBehaviour
         {
             triggerState = false;
             Debug.Log("Camera side changing");
-            ////StartCoroutine(DisableCollider());
-            //StopCoroutine(_camera.LerpCameraSide(_cameraSideExitValue));
-            //StartCoroutine(_camera.LerpCameraSide(_cameraSideExitValue));
-            //_camera.ChangeCameraSide(_CameraSideEnterValue);
+
         }
     }
 
