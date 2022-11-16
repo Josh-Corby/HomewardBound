@@ -80,8 +80,8 @@ public class CameraTransform : GameBehaviour
 
     public IEnumerator LerpCameraSide(float value)
     {
-        float timeElapsed = 0;
-        float lerpDuration = 1.5f;
+        float timeElapsed = 0.1f;
+        float lerpDuration = 3f;
         while (timeElapsed < lerpDuration)
         {
             camfollow.CameraSide = Mathf.Lerp(camfollow.CameraSide, value, timeElapsed / lerpDuration);

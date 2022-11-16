@@ -92,8 +92,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     public GameObject LilypadOffset;
 
-    [SerializeField]
-    private GameObject model;
+
+    private bool isSprinting;
     private void Awake()
     {
         hookshotState = HookshotStates.Default;
@@ -288,39 +288,51 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
         }
 
-        if (groundState == GroundStates.Grounded)
-        {
-            if (!Input.GetKey(KeyCode.LeftShift))
-            {
-                moveSpeeds = MovementSpeeds.Walking;
-            }
-        }
+        //if (groundState == GroundStates.Grounded)
+        //{
+        //    if (!Input.GetKey(KeyCode.LeftShift))
+        //    {
+        //        moveSpeeds = MovementSpeeds.Walking;
+        //    }
+        //}
 
         if (groundState == GroundStates.Grounded || groundState == GroundStates.Airborne)
         {
-
-            if (Input.GetKey(KeyCode.LeftShift))
+            if(Input.GetKeyDown(KeyCode.LeftShift))
             {
-                moveSpeeds = MovementSpeeds.Sprinting;
-
+                ToggleSprint();
             }
 
-            if (Input.GetKeyUp(KeyCode.LeftShift))
-            {
 
-                moveSpeeds = MovementSpeeds.Walking;
-            }
+            //if (Input.GetKey(KeyCode.LeftShift))
+            //{
+            //    moveSpeeds = MovementSpeeds.Sprinting;
+
+            //}
+
+            //if (Input.GetKeyUp(KeyCode.LeftShift))
+            //{
+
+            //    moveSpeeds = MovementSpeeds.Walking;
+            //}
         }
 
-        switch (moveSpeeds)
-        {
-            case MovementSpeeds.Walking:
-                basicMovementScript.speed = moveSpeed;
-                break;
-            case MovementSpeeds.Sprinting:
-                basicMovementScript.speed = sprintSpeed;
-                break;
-        }
+        //switch (moveSpeeds)
+        //{
+        //    case MovementSpeeds.Walking:
+        //        basicMovementScript.speed = moveSpeed;
+        //        break;
+        //    case MovementSpeeds.Sprinting:
+        //        basicMovementScript.speed = sprintSpeed;
+        //        break;
+        //}
+    }
+
+    private void ToggleSprint()
+    {
+        isSprinting = !isSprinting;
+
+        basicMovementScript.speed = isSprinting ? sprintSpeed : moveSpeed;
     }
     #region GrappleHook
     private void StartGrapple()
