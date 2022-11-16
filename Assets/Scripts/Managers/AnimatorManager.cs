@@ -7,14 +7,18 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
     private Animator animator;
 
     private bool isWalking;
-    private bool isRunning;
     private bool isJumping;
     private bool isGrounded;
     private bool isWalkingBack;
+    public bool isSprinting;
     private void Awake()
     {
         animator = GetComponent<Animator>();
 
+    }
+    private void Start()
+    {
+        isSprinting = false;
     }
 
     private void Update()
@@ -35,14 +39,13 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
         if (isJumping == true) return;
         if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S)) return;
 
+
+
         isWalking = Input.GetKey(KeyCode.W);
-        isRunning = Input.GetKey(KeyCode.LeftShift);
         isWalkingBack = Input.GetKey(KeyCode.S);
 
         animator.SetBool("isWalkingBack", isWalkingBack);
         animator.SetBool("isWalking", isWalking);
-        animator.SetBool("isRunning", isRunning);
-
     }
 
     public void Jump()
@@ -57,5 +60,10 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
     public void Grounded()
     {
         animator.SetBool("isJumping", false);
+    }
+
+    public void SetBool(string name, bool value)
+    {
+        animator.SetBool(name, value);
     }
 }

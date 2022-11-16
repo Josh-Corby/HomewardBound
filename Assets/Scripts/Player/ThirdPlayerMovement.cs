@@ -333,6 +333,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         isSprinting = !isSprinting;
 
         basicMovementScript.speed = isSprinting ? sprintSpeed : moveSpeed;
+        AM.SetBool("isSprinting", isSprinting);
+        AM.isSprinting = isSprinting;
     }
     #region GrappleHook
     private void StartGrapple()

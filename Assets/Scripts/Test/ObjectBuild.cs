@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+
+public enum BuildType
+{
+    LADDER, BRIDGE
+}
 public class ObjectBuild : GameBehaviour
 {
-
+    public BuildType type;
     public static event Action OnObjectLengthChange;
 
     public BoxCollider currentTrigger;
@@ -38,6 +43,23 @@ public class ObjectBuild : GameBehaviour
     private float objectBuildingAlpha = 1.1f;
     private float objectBuiltAlpha = 2f;
     private bool isBuilt;
+
+    [SerializeField]
+    private GameObject[] bridgeEndPoints;
+    [SerializeField]
+    private GameObject[] bridgeLandPoints;
+
+    [SerializeField]
+    private GameObject bridgeEndPoint;
+    [SerializeField]
+    private GameObject bridgeLandPoint;
+
+    private bool isMarking;
+    [SerializeField]
+    private LayerMask mask;
+
+    [SerializeField]
+    private GameObject landingMarker;
     private void Awake()
     {
         material = renderer.material;
@@ -49,12 +71,16 @@ public class ObjectBuild : GameBehaviour
         currentTrigger = ObjectColliders[0].gameObject.GetComponent<BoxCollider>();
     }
 
-
     private void Start()
     {
         isBuilt = false;
         objectLength = 0;
         ChangeChangeValueOfMaterial(objectBuildingAlpha);
+        if (type == BuildType.BRIDGE)
+        {
+            UpdateLandingMarker(objectLength);
+
+        }
     }
     void Update()
     {
@@ -63,7 +89,6 @@ public class ObjectBuild : GameBehaviour
         BM.collisionCheck = isTriggerColliding;
 
         isBeingBuilt = gameObject == BM.buildingObject;
-
 
         if (isBeingBuilt == false)
         {
@@ -108,6 +133,7 @@ public class ObjectBuild : GameBehaviour
                 currentTrigger.gameObject.SetActive(false);
                 currentTrigger = ObjectColliders[objectLength - 1].transform.gameObject.GetComponent<BoxCollider>();
                 currentTrigger.gameObject.SetActive(true);
+
             }
             if (BM.materialsCheck)
             {
@@ -120,27 +146,30 @@ public class ObjectBuild : GameBehaviour
                         ChangeColourOfObject(Color.blue);
 
                         if (!BM.onBuildObject)
-                        {
                             ChangeColourOfObject(Color.blue);
-                        }
                         else
-                        {
                             ChangeColourOfObject(Color.red);
-                        }
                     }
                     else
-                    {
                         ChangeColourOfObject(Color.red);
-                    }
                 }
                 else
                     ChangeColourOfObject(Color.red);
             }
             else
-            {
                 ChangeColourOfObject(Color.red);
-            }
+
             objectLength = Mathf.Clamp(objectLength, 1, ObjectColliders.Count);
+        }
+
+
+        if (type == BuildType.BRIDGE)
+        {
+            UpdateLandingMarker(objectLength - 1);
+            if (isMarking)
+            {
+                LandingMarker();
+            }
         }
     }
     public void CanObjectBeBuilt(bool triggerCollision)
@@ -159,6 +188,12 @@ public class ObjectBuild : GameBehaviour
             ChangeChangeValueOfMaterial(objectBuiltAlpha);
             ChangeColourOfObject(baseColour);
             isBuilt = true;
+            isMarking = false;
+            if (type == BuildType.BRIDGE)
+            {
+
+                landingMarker.SetActive(false);
+            }
         }
     }
 
@@ -172,5 +207,27 @@ public class ObjectBuild : GameBehaviour
     {
         GM.AddMaterials(stick_Refund_Value, rock_Refund_Value, mushroom_Refund_Value);
     }
+
+
+    private void UpdateLandingMarker(int value)
+    {
+        isMarking = false;
+        bridgeLandPoint.SetActive(false);
+        bridgeEndPoint.SetActive(false);
+        bridgeEndPoint = bridgeEndPoints[value];
+        bridgeLandPoint = bridgeLandPoints[value];
+        bridgeEndPoint.SetActive(true);
+        bridgeLandPoint.SetActive(true);
+        isMarking = true;
+    }
+
+    private void LandingMarker()
+    {
+        Physics.Raycast(bridgeEndPoint.transform.position, bridgeLandPoint.transform.position);
+        Physics.Raycast(bridgeEndPoint.transform.position, bridgeLandPoint.transform.position - bridgeEndPoint.transform.position, out RaycastHit hit, Mathf.Infinity, mask);
+        landingMarker.transform.position = hit.point;
+
+    }
+
 }
 

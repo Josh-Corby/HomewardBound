@@ -29,18 +29,18 @@ public class ToolUnlock : GameBehaviour
     }
 
 
-    private void Update()
-    {
-        if (canPickUp)
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                UnlockTool(pickups);
+    //private void Update()
+    //{
+    //    if (canPickUp)
+    //    {
+    //        if (Input.GetKeyDown(KeyCode.E))
+    //        {
+    //            UnlockTool(pickups);
 
-                StartCoroutine(WaitToDestroy());
-            }
-        }
-    }
+    //            StartCoroutine(WaitToDestroy());
+    //        }
+    //    }
+    //}
 
     IEnumerator WaitToDestroy()
     {
@@ -84,8 +84,12 @@ public class ToolUnlock : GameBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            canPickUp = false;
-            outline.enabled = false;
+
+            UnlockTool(pickups);
+
+            StartCoroutine(WaitToDestroy());
+            //canPickUp = false;
+            //outline.enabled = false;
         }           
     }
 }
