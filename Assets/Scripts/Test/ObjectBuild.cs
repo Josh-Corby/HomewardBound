@@ -31,7 +31,7 @@ public class ObjectBuild : GameBehaviour
     private bool isBeingBuilt;
 
     [SerializeField]
-    private bool isTriggerColliding;
+    private bool isTriggerNotColliding;
 
 
     public int stick_Refund_Value;
@@ -86,7 +86,7 @@ public class ObjectBuild : GameBehaviour
     {
         if (UI.paused) return;
 
-        BM.collisionCheck = isTriggerColliding;
+        BM.collisionCheck = isTriggerNotColliding;
 
         isBeingBuilt = gameObject == BM.buildingObject;
 
@@ -137,7 +137,7 @@ public class ObjectBuild : GameBehaviour
             }
             if (BM.materialsCheck)
             {
-                if (isTriggerColliding)
+                if (isTriggerNotColliding)
                 {
                     ChangeColourOfObject(Color.blue);
 
@@ -174,7 +174,7 @@ public class ObjectBuild : GameBehaviour
     }
     public void CanObjectBeBuilt(bool triggerCollision)
     {
-        isTriggerColliding = triggerCollision;
+        isTriggerNotColliding = triggerCollision;
     }
     private void ChangeColourOfObject(Color colour)
     {

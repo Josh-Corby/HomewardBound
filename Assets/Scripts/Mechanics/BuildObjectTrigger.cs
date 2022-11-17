@@ -21,6 +21,7 @@ public class BuildObjectTrigger : GameBehaviour
         collider.isTrigger = true;
     }
 
+
     private void UpdateCanBuild()
     {
         isNotColliding = collisionObjects.Count == 0;
