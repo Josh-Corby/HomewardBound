@@ -17,5 +17,4 @@ public class GUITween : MonoBehaviour
         transform.DORotate(new Vector3(0, 360, 0), _tweenTime * 3f, RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
     }
 
-
 }
