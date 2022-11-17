@@ -103,8 +103,7 @@ public class BuildManager : GameBehaviour<BuildManager>
             // If material comparisons return true
             if (materialsCheck && canBuild && collisionCheck && !onBuildObject)
             {
-                //Debug.Log("Object Built");
-
+   
                 // Detach object from buildzone
                 buildZone.transform.DetachChildren();
 

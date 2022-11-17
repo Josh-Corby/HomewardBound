@@ -12,7 +12,7 @@ public class CameraSideChangeCollision : MonoBehaviour
 {
     [SerializeField]
     private Side _side;
-    private float _cameraSideEnterValue = 0;
+    private float _cameraSideEnterValue = 0.6f;
     private float _cameraSideExitValue = 1;
 
     [SerializeField]

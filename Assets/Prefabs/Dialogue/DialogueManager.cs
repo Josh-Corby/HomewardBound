@@ -118,7 +118,7 @@ public class DialogueManager : GameBehaviour<DialogueManager>
             isConversationStarted = false;
             isInDialogue = false;
             currentSentence_Index = 0;
-            currentNPC.EnableOutline();
+            //currentNPC.EnableOutline();
         }
     }
 
