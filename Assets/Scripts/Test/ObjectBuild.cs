@@ -79,7 +79,11 @@ public class ObjectBuild : GameBehaviour
         if (type == BuildType.BRIDGE)
         {
             UpdateLandingMarker(objectLength);
+        }
 
+        if(type == BuildType.LADDER)
+        {
+            isMarking = true;
         }
     }
     void Update()
@@ -180,7 +184,6 @@ public class ObjectBuild : GameBehaviour
     {
         material.SetColor("_colour", colour);
     }
-
     private void ObjectBuilt()
     {
         if (!isBuilt)
@@ -189,26 +192,18 @@ public class ObjectBuild : GameBehaviour
             ChangeColourOfObject(baseColour);
             isBuilt = true;
             isMarking = false;
-            if (type == BuildType.BRIDGE)
-            {
-
-                landingMarker.SetActive(false);
-            }
+            landingMarker.SetActive(false);
         }
     }
-
     private void ChangeChangeValueOfMaterial(float alpha)
     {
         //Debug.Log("Alpha changed");
         material.SetFloat("_alphaValue", alpha);
     }
-
     public void RefundMaterials()
     {
         GM.AddMaterials(stick_Refund_Value, rock_Refund_Value, mushroom_Refund_Value);
     }
-
-
     private void UpdateLandingMarker(int value)
     {
         isMarking = false;
@@ -220,14 +215,11 @@ public class ObjectBuild : GameBehaviour
         bridgeLandPoint.SetActive(true);
         isMarking = true;
     }
-
     private void LandingMarker()
     {
         Physics.Raycast(bridgeEndPoint.transform.position, bridgeLandPoint.transform.position);
         Physics.Raycast(bridgeEndPoint.transform.position, bridgeLandPoint.transform.position - bridgeEndPoint.transform.position, out RaycastHit hit, Mathf.Infinity, mask);
         landingMarker.transform.position = hit.point;
-
     }
-
 }
 

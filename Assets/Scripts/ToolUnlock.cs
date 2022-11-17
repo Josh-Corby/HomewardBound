@@ -75,21 +75,20 @@ public class ToolUnlock : GameBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            canPickUp = true;
-            outline.enabled = true;
+            //canPickUp = true;
+            //outline.enabled = true;
+
+            UnlockTool(pickups);
+            StartCoroutine(WaitToDestroy());
         }          
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-
-            UnlockTool(pickups);
-
-            StartCoroutine(WaitToDestroy());
-            //canPickUp = false;
-            //outline.enabled = false;
-        }           
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {         
+    //        //canPickUp = false;
+    //        //outline.enabled = false;
+    //    }           
+    //}
 }
