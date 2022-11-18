@@ -11,12 +11,15 @@ public class NPCDialog : GameBehaviour
     [SerializeField]
     private Outline outline;
 
-    //[SerializeField]
-    //private GameObject UIAboveHead;
+    [SerializeField]
+    private GameObject UIAboveHead;
+    public GUITween GUI;
+
 
     private void Awake()
     {
-        outline = GetComponentInParent<Outline>();
+        outline = transform.parent.GetComponentInChildren<Outline>();
+        GUI = transform.parent.GetComponentInChildren<GUITween>();
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -26,6 +29,7 @@ public class NPCDialog : GameBehaviour
             DM.GetNPCInformation(this);
             DM.StartDialogue();
             //EnableOutline();
+            //DisableHoverUI();
 
         }
     }
@@ -37,6 +41,7 @@ public class NPCDialog : GameBehaviour
             DM.EndDialogue();
             DM.ClearNPCInformation();
             DisableOutline();
+            //EnableHoverUI();
         }
     }
 
@@ -50,13 +55,13 @@ public class NPCDialog : GameBehaviour
         outline.enabled = false;
     }
 
-    //private void EnableHoverUI()
-    //{
-    //    UIAboveHead.SetActive(true);
-    //}
+    public void EnableHoverUI()
+    {
+        UIAboveHead.SetActive(true);
+    }
 
-    //private void DisableHoverUI()
-    //{
-    //    UIAboveHead.SetActive(false);
-    //}
+    public void DisableHoverUI()
+    {
+        UIAboveHead.SetActive(false);
+    }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public enum Menus
 {
@@ -11,8 +12,6 @@ public enum Menus
     Build,
     Radial
 }
-
-
 public class UIManager : GameBehaviour<UIManager>
 {
     public Menus menu;
@@ -33,7 +32,6 @@ public class UIManager : GameBehaviour<UIManager>
     public GameObject pausePanel;
     public GameObject CurrentPanel;
 
-
     [Header("Bools")]
 
     public bool paused;
@@ -41,7 +39,6 @@ public class UIManager : GameBehaviour<UIManager>
     public Image LadderOutline;
     public Image BridgeOutline;
     public Image BonfireOutline;
-
 
     [SerializeField]
     private GameObject currentMaterialPanel;
@@ -51,7 +48,6 @@ public class UIManager : GameBehaviour<UIManager>
     private GameObject[] materialUIPanels;
 
     private TMP_Text[] materialCosts;
-
 
     [SerializeField]
     private Image[] HotbarOutlines;
@@ -65,7 +61,8 @@ public class UIManager : GameBehaviour<UIManager>
     private GameObject currentTestPanel;
     private int testPanelIndex;
 
-
+    [SerializeField]
+    private GameObject checkpointText;
     private void Start()
     {
         PlayerManager.OnToolSelected += SelectControlUI;
@@ -90,6 +87,7 @@ public class UIManager : GameBehaviour<UIManager>
         //UpdateControlText();
         TestUI.SetActive(false);
         GameStartUI();
+        checkpointText.SetActive(false);
     }
     private void Update()
     {
@@ -109,7 +107,6 @@ public class UIManager : GameBehaviour<UIManager>
         }
         Inputs();
     }
-
     private void ToggleTestUI()
     {
         TestUI.SetActive(!TestUI.activeSelf);
@@ -125,7 +122,6 @@ public class UIManager : GameBehaviour<UIManager>
         currentTestPanel = TestUIPanels[0];
         testPanelIndex = 0;
     }
-
     private void ChangeTestUI()
     {
         if (!TestUI.activeSelf)
@@ -134,13 +130,13 @@ public class UIManager : GameBehaviour<UIManager>
         }
 
         currentTestPanel.SetActive(false);
-        if(testPanelIndex == TestUIPanels.Length-1)
+        if (testPanelIndex == TestUIPanels.Length - 1)
         {
             testPanelIndex = 0;
         }
         else
         {
-        testPanelIndex += 1;
+            testPanelIndex += 1;
         }
 
         TestUIPanels[testPanelIndex].SetActive(true);
@@ -346,7 +342,6 @@ public class UIManager : GameBehaviour<UIManager>
                 Cursor.lockState = CursorLockMode.Locked;
                 if (CurrentPanel != null)
                     CurrentPanel.SetActive(false);
-
                 break;
 
             case Menus.Paused:
@@ -354,14 +349,14 @@ public class UIManager : GameBehaviour<UIManager>
                 Pause();
                 break;
 
-            case Menus.Build:
-                if (IM.buildMenu_Input)
-                {
-                    //ToggleBuildMenu();
-                    //ChangeMenu(currentBuildPanel);
+                //case Menus.Build:
+                //    if (IM.buildMenu_Input)
+                //    {
+                //        ToggleBuildMenu();
+                //        ChangeMenu(currentBuildPanel);
 
-                }
-                break;
+                //    }
+                //    break;
         }
     }
 
@@ -481,6 +476,15 @@ public class UIManager : GameBehaviour<UIManager>
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
+    }
+
+    public IEnumerator CheckpointPopup()
+    {
+        checkpointText.SetActive(true);
+        Debug.Log("bonfire found");
+        checkpointText.GetComponent<Animator>().Play("CheckpointText");
+        yield return new WaitForSeconds(1.5f);
+        checkpointText.SetActive(false);
     }
     public void SelectMaterialUI(int panelIndex)
     {

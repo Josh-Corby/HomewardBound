@@ -9,10 +9,19 @@ public class BonfireManager : GameBehaviour
     private Transform SpawnPoint;
     [SerializeField]
     private GameObject particles;
+
+    [SerializeField]
+    private BoxCollider col;
+
+    private void Awake()
+    {
+        col = GetComponent<BoxCollider>();
+    }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == IZ.gameObject)
+        if (other.gameObject == TPM.gameObject)
         {
+            col.enabled = false;
             Debug.Log(other.gameObject);
             //Debug.Log("Player at bonfire");
             //InteractionZone.OnRespawnSet += SetRespawnPoint;   
@@ -29,8 +38,10 @@ public class BonfireManager : GameBehaviour
     //}
     private void SetRespawnPoint()
     {
+        
         Debug.Log("Respawn set");
         GM.spawnPoint = SpawnPoint;
         particles.SetActive(true);
+        StartCoroutine(UI.CheckpointPopup());
     }
 }

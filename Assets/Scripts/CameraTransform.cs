@@ -31,11 +31,6 @@ public class CameraTransform : GameBehaviour
     [SerializeField]
     private LayerMask mask;
 
-
-
-    [SerializeField]
-    private Transform cameraLook;
-
     private void Awake()
     {
         camfollow = vcam.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
@@ -54,10 +49,6 @@ public class CameraTransform : GameBehaviour
         if (vcam.Follow == null) return;
         if (vcam.LookAt == null) return;
 
-
-        //vcam.Follow = gameObject.transform;
-       //vcam.LookAt = gameObject.transform;
-
         if (UI.menu != Menus.None || UI.paused)
             return;
         // CameraPosition();
@@ -75,7 +66,13 @@ public class CameraTransform : GameBehaviour
     public void SetCameraTarget(Transform target)
     {
         vcam.Follow = target;
-        vcam.LookAt =target;
+        vcam.LookAt = target;
+    }
+
+    public void LookAtPlayer()
+    {
+        vcam.Follow = gameObject.transform;
+        vcam.LookAt = gameObject.transform;
     }
 
     public IEnumerator LerpCameraSide(float value)

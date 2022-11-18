@@ -31,6 +31,8 @@ public class DialogueManager : GameBehaviour<DialogueManager>
     
     public bool isConversationStarted;
 
+    [SerializeField]
+    private CameraTransform cam;
     private void Start()
     {
         isSentenceOver = false;
@@ -102,10 +104,14 @@ public class DialogueManager : GameBehaviour<DialogueManager>
 
     public void StartDialogue()
     {
-        currentNPC.DisableOutline();
+        currentNPC.EnableOutline();
+        currentNPC.GUI.ScaleDown();
+        //currentNPC.DisableOutline();
         isInDialogue = true;
         EnablePanel();
         StartNextSentence();
+        //cam.SetCameraTarget(currentNPC.gameObject.transform);
+        
     }
 
     public void EndDialogue()
@@ -118,7 +124,11 @@ public class DialogueManager : GameBehaviour<DialogueManager>
             isConversationStarted = false;
             isInDialogue = false;
             currentSentence_Index = 0;
+            currentNPC.DisableOutline();
+            //currentNPC.EnableHoverUI();
+            currentNPC.GUI.ScaleUp();
             //currentNPC.EnableOutline();
+            cam.LookAtPlayer();
         }
     }
 

@@ -13,8 +13,7 @@ public class BridgeMarkerTween : MonoBehaviour
     private void Start()
     {
         transform.DOScale(_tweenScale, _tweenTime).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
-        //transform.DORotate(new Vector3(transform.rotation.x, 360, 0), _tweenTime * 3f, RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
-
+        //transform.DOLocalRotate(new Vector3(transform.localRotation.x, 360, transform.localRotation.z), _tweenTime * 3f,RotateMode.FastBeyond360).SetLoops(-1,LoopType.Restart).SetEase(Ease.Linear);
     }
 
 }

@@ -12,7 +12,7 @@ public class CameraSideChangeCollision : MonoBehaviour
 {
     [SerializeField]
     private Side _side;
-    private float _cameraSideEnterValue = 0.6f;
+    private float _cameraSideEnterValue = 0;
     private float _cameraSideExitValue = 1;
 
     [SerializeField]
@@ -52,7 +52,7 @@ public class CameraSideChangeCollision : MonoBehaviour
 
             if (waitTimer <= 0f)
             {
-                _camera.camfollow.CameraSide = Mathf.Lerp(_camera.camfollow.CameraSide, _cameraSideExitValue, 0.03f);
+                _camera.camfollow.CameraSide = Mathf.Lerp(_camera.camfollow.CameraSide, _cameraSideExitValue, 0.01f);
                 return;
             }
         }
@@ -60,7 +60,7 @@ public class CameraSideChangeCollision : MonoBehaviour
         {
 
             waitTimer = waitTimerMax;
-            _camera.camfollow.CameraSide = Mathf.Lerp(_camera.camfollow.CameraSide, _cameraSideEnterValue, 0.03f);
+            _camera.camfollow.CameraSide = Mathf.Lerp(_camera.camfollow.CameraSide, _cameraSideEnterValue, 0.01f);
         }
 
     }

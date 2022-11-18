@@ -3560,6 +3560,7 @@ MonoBehaviour:
   currentSentence_Index: 0
   wordSpeed: 0
   isConversationStarted: 0
+  cam: {fileID: 0}
 --- !u!1 &627316128 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2291979057131922387, guid: f9c33c9e72afc7d41a9f4932e7141879,
@@ -5076,6 +5077,7 @@ MonoBehaviour:
   - {fileID: 254035373}
   - {fileID: 1478498727}
   - {fileID: 885863319}
+  checkpointText: {fileID: 0}
 --- !u!1 &1041125421
 GameObject:
   m_ObjectHideFlags: 0
@@ -7519,7 +7521,7 @@ MonoBehaviour:
   mushroomsCollected: 0
   pebblesCollected: 0
   Player: {fileID: 3796254960522185500}
-  spawnPoint: {fileID: 373224760}
+  spawnPoint: {fileID: 1169440152}
   pebblePrefab: {fileID: 3955830984390602653, guid: 277dce065c58b974ab689311f4e0d852,
     type: 3}
   havePickaxe: 0
@@ -9942,6 +9944,26 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &2145444173 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 597034925343986044, guid: 147e98bf371c3264390d78076de6d52c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2319374872591394942}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &2145444177
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2145444173}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -208274054146199770, guid: 306af03afbd68ed4e96d0968e62db46c, type: 3}
 --- !u!1 &991571351134785278 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4724074168082408273, guid: 8837f8195b35b894689dab8190bd588a,
@@ -10015,6 +10037,26 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 306975665}
+    - target: {fileID: 1784617354176250152, guid: 147e98bf371c3264390d78076de6d52c,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 3.5352268
+      objectReference: {fileID: 0}
+    - target: {fileID: 1784617354176250152, guid: 147e98bf371c3264390d78076de6d52c,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0.000000007561732
+      objectReference: {fileID: 0}
+    - target: {fileID: 1784617354176250152, guid: 147e98bf371c3264390d78076de6d52c,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 1.6826127
+      objectReference: {fileID: 0}
+    - target: {fileID: 1784617354176250152, guid: 147e98bf371c3264390d78076de6d52c,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -0.00000001928438
+      objectReference: {fileID: 0}
     - target: {fileID: 2946729231290012736, guid: 147e98bf371c3264390d78076de6d52c,
         type: 3}
       propertyPath: m_RootOrder
