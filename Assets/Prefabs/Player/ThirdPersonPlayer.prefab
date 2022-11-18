@@ -343,7 +343,6 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 0
-  cameraLook: {fileID: 3621660246582591613}
 --- !u!1 &2971507129487608043
 GameObject:
   m_ObjectHideFlags: 0
@@ -1150,6 +1149,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8710679983595202226}
     m_Modifications:
+    - target: {fileID: -9136814445521863847, guid: 14cc1f75ad2a02142ad733b669ca561d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ebdef6736d9ff0b44989ad2f69945d9f, type: 2}
     - target: {fileID: -8679921383154817045, guid: 14cc1f75ad2a02142ad733b669ca561d,
         type: 3}
       propertyPath: m_RootOrder
@@ -1220,6 +1224,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8064891319752656561, guid: 14cc1f75ad2a02142ad733b669ca561d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a4d86a7329714044a8d4d942c2fb8141, type: 2}
+    - target: {fileID: -7948908726283503924, guid: 14cc1f75ad2a02142ad733b669ca561d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a4d86a7329714044a8d4d942c2fb8141, type: 2}
     - target: {fileID: 919132149155446097, guid: 14cc1f75ad2a02142ad733b669ca561d,
         type: 3}
       propertyPath: m_Name
@@ -1265,6 +1279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8c225301488d1a4588c92b73f3ac363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSprinting: 0
 --- !u!4 &3248885081920953885 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 14cc1f75ad2a02142ad733b669ca561d,
