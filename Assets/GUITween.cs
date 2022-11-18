@@ -13,8 +13,7 @@ public class GUITween : MonoBehaviour
     void Start()
     {
         _destination = new Vector3(transform.position.x, transform.position.y + 0.75f, transform.position.z);
-        transform.DOMove(_destination, _tweenTime).SetEase(Ease.InOutSine).SetLoops(-1,LoopType.Yoyo);
-
+        transform.DOMove(_destination, _tweenTime).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
         transform.DORotate(new Vector3(0, 360, 0), _tweenTime * 3f, RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
     }
 
