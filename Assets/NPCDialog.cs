@@ -20,6 +20,7 @@ public class NPCDialog : GameBehaviour
     {
         outline = transform.parent.GetComponentInChildren<Outline>();
         GUI = transform.parent.GetComponentInChildren<GUITween>();
+        UIAboveHead = GUI.gameObject;
     }
     private void OnTriggerEnter(Collider other)
     {
