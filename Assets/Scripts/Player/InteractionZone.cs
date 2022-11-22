@@ -44,59 +44,59 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         if (outlineObjectsList.Count < 0)
             canPickUp = false;
 
-        if (OM.outfit == Outfits.Miner)
-        {
-            //Break Items
+        //if (OM.outfit == Outfits.Miner)
+        //{
+        //    //Break Items
 
-            if (/*UI.radialMenuStatus ||*/ UI.paused == true)
-            {
-                //canBreak = false;
-                return;
-            }
+        //    if (/*UI.radialMenuStatus ||*/ UI.paused == true)
+        //    {
+        //        //canBreak = false;
+        //        return;
+        //    }
 
 
-            if (IM.rClick_Input)
-            {
-                if (objectToInteract == null)
-                {
-                    IM.lClick_Input = false;
-                    return;
-                }
+        //    if (IM.rClick_Input)
+        //    {
+        //        if (objectToInteract == null)
+        //        {
+        //            IM.lClick_Input = false;
+        //            return;
+        //        }
 
-                if (objectToInteract.CompareTag("Rock"))
-                {
-                    //canBreak = true;
-                    outlineObjectsList.Remove(objectToInteract);
-                    for (int i = 1; i <= 3; i++)
-                    {
-                        GameObject pebble = Instantiate(GM.pebblePrefab);
-                        pebble.transform.parent = objectToInteract.transform;
-                        pebble.transform.localPosition = new Vector3(Random.Range(0.0f, 1.0f), 0, Random.Range(0f, 1f));
-                        pebbleCounter += 1;
-                        pebble.transform.parent = null;
-                        pebble.name = "Pebble_" + pebbleCounter;
-                    }
-                    Destroy(objectToInteract);
-                    TogglePickUpBools();
-                    canBreak = false;
-                    return;
-                }
+        //        if (objectToInteract.CompareTag("Rock"))
+        //        {
+        //            //canBreak = true;
+        //            outlineObjectsList.Remove(objectToInteract);
+        //            for (int i = 1; i <= 3; i++)
+        //            {
+        //                GameObject pebble = Instantiate(GM.pebblePrefab);
+        //                pebble.transform.parent = objectToInteract.transform;
+        //                pebble.transform.localPosition = new Vector3(Random.Range(0.0f, 1.0f), 0, Random.Range(0f, 1f));
+        //                pebbleCounter += 1;
+        //                pebble.transform.parent = null;
+        //                pebble.name = "Pebble_" + pebbleCounter;
+        //            }
+        //            Destroy(objectToInteract);
+        //            TogglePickUpBools();
+        //            canBreak = false;
+        //            return;
+        //        }
 
-                if (objectToInteract.CompareTag("MinableObject"))
-                {
-                    StartCoroutine(objectToInteract.GetComponent<MinableWall>().Break());
-                }
-                else
-                {
-                    return;
-                }
-            }
-        }
+        //        if (objectToInteract.CompareTag("MinableObject"))
+        //        {
+        //            StartCoroutine(objectToInteract.GetComponent<MinableWall>().Break());
+        //        }
+        //        else
+        //        {
+        //            return;
+        //        }
+        //    }
+        //}
         //if (OM.outfit == Outfits.Builder)
         //{
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (canDestroy)
+                if (canDestroy && UI.paused == false)
                 {
                     objectToDestroy.GetComponent<ObjectBuild>().RefundMaterials();
 

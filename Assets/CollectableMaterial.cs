@@ -22,6 +22,7 @@ public class CollectableMaterial : GameBehaviour
         if (Vector3.Distance(transform.position, PM.pickUpSpot.transform.position) <= 0.1f)
         {
             GM.IncreaseResources(gameObject);
+            SM.PlayClip(SM.pickupClip);
             gameObject.SetActive(false);
         }
     }

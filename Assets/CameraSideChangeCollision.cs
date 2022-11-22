@@ -23,7 +23,7 @@ public class CameraSideChangeCollision : MonoBehaviour
     private CapsuleCollider col;
     private float waitTimer;
     private float waitTimerMax = 0.5f;
-
+    private float lerpAmount = 0.005f;
     private void Awake()
     {
         col = GetComponent<CapsuleCollider>();
@@ -52,7 +52,7 @@ public class CameraSideChangeCollision : MonoBehaviour
 
             if (waitTimer <= 0f)
             {
-                _camera.camfollow.CameraSide = Mathf.Lerp(_camera.camfollow.CameraSide, _cameraSideExitValue, 0.01f);
+                _camera.camfollow.CameraSide = Mathf.Lerp(_camera.camfollow.CameraSide, _cameraSideExitValue, lerpAmount);
                 return;
             }
         }
@@ -60,7 +60,7 @@ public class CameraSideChangeCollision : MonoBehaviour
         {
 
             waitTimer = waitTimerMax;
-            _camera.camfollow.CameraSide = Mathf.Lerp(_camera.camfollow.CameraSide, _cameraSideEnterValue, 0.01f);
+            _camera.camfollow.CameraSide = Mathf.Lerp(_camera.camfollow.CameraSide, _cameraSideEnterValue, lerpAmount);
         }
 
     }

@@ -58,18 +58,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8e771f3a6e74e4c9ddf6edb98eba79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NPC_Name: Ant - 1276
+  NPC_Name: Ant - 3743 | Press E to Talk
   NPC_Dialogue:
-  - Was' up Julius!
-  - Press E to pick up the Build Item.
-  - You can press 1, 2 and 3 to build the Ladder and Bridge
-  - The Ladder you can climb, the Bridge you can walk over and extend with MOUSE
-    SCROLL WHEEL, and the Bonfire, you go back to incase of something bad happening.
-  - To build items, they require resources, rocks, mushrooms and sticks, you can
-    find them all over the place. Go near them to pick up the resources.
-  outline: {fileID: 5009846919783662846}
-  UIAboveHead: {fileID: 8574706884887526541}
-  GUI: {fileID: 8574706884887524211}
+  - Walk up to a bonfire to rest at it.
+  - Resting at a bonfire will make a checkpoint, which you can reset at in the pause
+    menu by pressing the ESC key.
+  outline: {fileID: 0}
+  UIAboveHead: {fileID: 0}
+  GUI: {fileID: 0}
 --- !u!1 &5928734489339067669
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,7 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 0
+  outlineMode: 1
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
   outlineWidth: 2
   precomputeOutline: 0

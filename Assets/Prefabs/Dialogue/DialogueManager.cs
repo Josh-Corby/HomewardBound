@@ -128,7 +128,6 @@ public class DialogueManager : GameBehaviour<DialogueManager>
             //currentNPC.EnableHoverUI();
             currentNPC.GUI.ScaleUp();
             //currentNPC.EnableOutline();
-            cam.LookAtPlayer();
         }
     }
 
