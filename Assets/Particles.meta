@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Particles.meta
 guid: 068f91125f71b164b8111702a7ca56ef
+========
+guid: e14784377ed615b4c9e0e7d8a88daa52
+>>>>>>>> 32665d3a76e98f7800e22c5be4f8081d9b94454a:Assets/Textures/Sully_Refined_Textures.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

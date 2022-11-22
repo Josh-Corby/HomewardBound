@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Sounds.meta
 guid: 61d84b7525503e44eb4cd6daeadc5e74
+========
+guid: 93e17b1d63f5adb47a8087de2db00e0c
+>>>>>>>> 32665d3a76e98f7800e22c5be4f8081d9b94454a:Assets/Textures/Sully_Refined_Textures/Requested log.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
