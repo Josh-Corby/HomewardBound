@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class SoundManager : GameBehaviour<SoundManager>
 {
-    [SerializeField]
-    private AudioSource SFX;
+    public AudioSource SFX;
     [SerializeField]
     private AudioSource BGM;
     public AudioClip pickupClip;
@@ -15,4 +14,5 @@ public class SoundManager : GameBehaviour<SoundManager>
         SFX.clip = clip;
         SFX.Play();
     }
+
 }

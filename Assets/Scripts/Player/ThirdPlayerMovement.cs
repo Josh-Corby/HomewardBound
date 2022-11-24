@@ -94,6 +94,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
 
     private bool isSprinting;
+
     private void Awake()
     {
         hookshotState = HookshotStates.Default;
@@ -226,6 +227,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
             case GroundStates.Airborne:
                 {
+                    CheckGroundRays();
                     fallTimer -= Time.deltaTime;
                     CoyoteTimer();
                 }
@@ -242,8 +244,9 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         }
         velocity.y += gravity * Time.deltaTime;
         velocity += characterVelocityMomentum;
+        //Debug.Log(velocity);
+        //Debug.Log(controller.velocity);
         controller.Move(velocity * Time.deltaTime);
-
         gravity = defaultGravity;
        
         if (groundState == GroundStates.Airborne) return;
@@ -251,6 +254,44 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         if(!IZ.isRolling)
             HandleSprinting();
     }
+
+
+
+    private Ray CreateEdgeCheckRay(Vector3 dir)
+    {
+        Vector3 rayPos = transform.position;
+        rayPos.y -= controller.height / 4f;
+        Debug.DrawLine(rayPos, dir, Color.red);
+        return new Ray(rayPos, dir);
+    }
+
+    private Ray[] CreateSideRays()
+    {
+        Vector3 rayStart = transform.position;
+        rayStart.y -= (controller.height / 4f);
+        Ray[] sideRays = new Ray[4];
+        sideRays[0] = CreateEdgeCheckRay(rayStart + Vector3.right);
+        sideRays[1] = CreateEdgeCheckRay(rayStart + Vector3.left);
+        sideRays[2] = CreateEdgeCheckRay(rayStart + Vector3.forward);
+        sideRays[3] = CreateEdgeCheckRay(rayStart + Vector3.back);
+        return sideRays;
+    }
+
+    private void CheckGroundRays()
+    {
+        Vector3 inEdgeMovement = Vector3.zero;
+        foreach (Ray ray in CreateSideRays())
+        {
+            if(Physics.Raycast(ray, out RaycastHit hit, 1,groundMask))
+            {
+                Debug.Log(hit.collider.gameObject);
+                inEdgeMovement += (-ray.direction);
+                Debug.Log(inEdgeMovement);
+            }
+            controller.Move(inEdgeMovement * Time.deltaTime);
+        }
+    }
+
     private void ResetCoyoteTimer()
     {
         coyoteTimer = coyoteTime;
