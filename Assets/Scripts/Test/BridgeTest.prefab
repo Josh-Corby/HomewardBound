@@ -104,8 +104,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collisionObjects: []
-  collisionCheck: 0
+  isNotColliding: 0
   ObjectMain: {fileID: 693926061621972264}
+  collider: {fileID: 0}
 --- !u!1 &2366382778918201669
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,20 +363,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc5c4b81729d21f41904b8426a859cf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentExtension: {fileID: 0}
-  extensionCount: 0
-  ObjectSegmentTriggers:
-  - {fileID: 4439072627314622990}
-  - {fileID: 591388285142593126}
-  - {fileID: 899375745798304517}
-  - {fileID: 7449777314518176254}
-  collisionChecks: 00000000
+  type: 0
+  currentTrigger: {fileID: 0}
+  objectLength: 0
+  ObjectColliders: []
   renderer: {fileID: 3861421459667651859}
   baseColour: {r: 0, g: 0, b: 0, a: 0}
   isBeingBuilt: 0
-  segmentCollisionCheck: 0
-  bridgeMeshManager: {fileID: 1700212102205551946}
-  trigger: {fileID: 4439072627314622990}
+  isTriggerNotColliding: 0
+  stick_Refund_Value: 0
+  rock_Refund_Value: 0
+  mushroom_Refund_Value: 0
+  bridgeEndPoints: []
+  bridgeLandPoints: []
+  bridgeEndPoint: {fileID: 0}
+  bridgeLandPoint: {fileID: 0}
+  mask:
+    serializedVersion: 2
+    m_Bits: 0
+  landingMarker: {fileID: 0}
 --- !u!114 &276136619462600314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,8 +410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2387a70ad5481844b80620f95e660255, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BridgeMeshObject: {fileID: 3187178603301328470}
-  BridgeMesh: {fileID: 5382333594218241483}
+  Mesh: {fileID: 0}
   bridgeMeshesArray:
   - {fileID: 8128075262371223473, guid: 1e8e218368e46ed4795138d250204c90, type: 3}
   - {fileID: -4562859212395215800, guid: b6983e1776ee33542b91bc17ea91a548, type: 3}
@@ -560,8 +565,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collisionObjects: []
-  collisionCheck: 0
+  isNotColliding: 0
   ObjectMain: {fileID: 693926061621972264}
+  collider: {fileID: 0}
 --- !u!4 &1065660361661424775 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b6983e1776ee33542b91bc17ea91a548,
@@ -676,8 +682,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collisionObjects: []
-  collisionCheck: 0
+  isNotColliding: 0
   ObjectMain: {fileID: 693926061621972264}
+  collider: {fileID: 0}
 --- !u!4 &828458943334253748 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: dab62952d04997244b2d7a98967490d0,
@@ -1140,5 +1147,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collisionObjects: []
-  collisionCheck: 0
+  isNotColliding: 0
   ObjectMain: {fileID: 693926061621972264}
+  collider: {fileID: 0}

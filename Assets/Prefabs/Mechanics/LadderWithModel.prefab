@@ -25,14 +25,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 150414442392881099}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalRotation: {x: 0.019935787, y: 0.96990806, z: -0.085087664, w: 0.22724691}
   m_LocalPosition: {x: 0, y: 0, z: 0.41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4896723451962940260}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 10.027, y: 153.627, z: 0}
 --- !u!33 &1597625038801962522
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3137980298835721479, guid: 3ed4ce49e5393d6418b56cdc031cda6a, type: 3}
+  - {fileID: 8748892135801146194, guid: 051f797d41dde844299358f4b89ab4e2, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -178,17 +178,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc5c4b81729d21f41904b8426a859cf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentExtension: {fileID: 0}
-  extensionCount: 0
-  ObjectSegmentTriggers:
-  - {fileID: 2504912413395523635}
-  collisionChecks: 00
+  type: 0
+  currentTrigger: {fileID: 0}
+  objectLength: 0
+  ObjectColliders: []
   renderer: {fileID: 3487744809145207625}
   baseColour: {r: 0, g: 0, b: 0, a: 0}
   isBeingBuilt: 0
-  segmentCollisionCheck: 0
-  bridgeMeshManager: {fileID: 0}
-  trigger: {fileID: 2504912413395523635}
+  isTriggerNotColliding: 0
+  stick_Refund_Value: 0
+  rock_Refund_Value: 0
+  mushroom_Refund_Value: 0
+  bridgeEndPoints: []
+  bridgeLandPoints: []
+  bridgeEndPoint: {fileID: 0}
+  bridgeLandPoint: {fileID: 0}
+  mask:
+    serializedVersion: 2
+    m_Bits: 0
+  landingMarker: {fileID: 0}
 --- !u!1 &4929147796676448563
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,8 +256,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collisionObjects: []
-  collisionCheck: 0
+  isNotColliding: 0
   ObjectMain: {fileID: 2708193910085613456}
+  collider: {fileID: 0}
 --- !u!1 &6563270710007697604
 GameObject:
   m_ObjectHideFlags: 0
