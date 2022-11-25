@@ -26,7 +26,7 @@ public class InputManager : GameBehaviour<InputManager>
 
         /// <summary>
         /// Define all inputs and how the player performs them
-        /// </summary>
+        /// /// </summary>
     private void OnEnable()
     {
         if (playerControls == null)
@@ -73,47 +73,4 @@ public class InputManager : GameBehaviour<InputManager>
     {
         playerControls.Disable();
     }
-    /// <summary>
-    /// Handle all movement related inputs
-    /// </summary>
-    /// 
-
-    public void HandleAllInputs()
-    {
-        HandleMovementInput();
-        HandleJumpingInput();
-        HandleCameraInput();
-    }
-
-    /// <summary>
-    /// Handle player movement inputs
-    /// </summary>
-    private void HandleMovementInput()
-    {
-        verticalInput = movementInput.y;
-        horizontalInput = movementInput.x;
-
-        moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
-        //AM.UpdateAnimatorValues(0, moveAmount, PL.isSprinting);
-    }
-
-    private void HandleCameraInput()
-    {
-        cameraInputX = cameraInput.x;
-        cameraInputY = cameraInput.y;
-    }
-   
-
-    /// <summary>
-    /// Handle jump input
-    /// </summary>
-    private void HandleJumpingInput()
-    {
-        if (jump_Input)
-        {
-            jump_Input = false;
-            //PL.HandleJumping();
-        }
-    }
-
 }

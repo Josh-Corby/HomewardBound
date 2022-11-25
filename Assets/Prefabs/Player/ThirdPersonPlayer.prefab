@@ -979,7 +979,7 @@ MonoBehaviour:
   defaultGravity: -19.6
   jumpHeight: 2.05
   fallTimer: 0
-  fallTimerMax: 5
+  fallTimerMax: 3
   coyoteTime: 0.1
   coyoteTimerOffset: 0
   moveDir: {x: 0, y: 0, z: 0}

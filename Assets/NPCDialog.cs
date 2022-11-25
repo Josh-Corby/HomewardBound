@@ -31,7 +31,6 @@ public class NPCDialog : GameBehaviour
             DM.StartDialogue();
             //EnableOutline();
             //DisableHoverUI();
-
         }
     }
 
@@ -40,7 +39,6 @@ public class NPCDialog : GameBehaviour
         if (other.gameObject == TPM.gameObject)
         {
             DM.EndDialogue();
-            DM.ClearNPCInformation();
             DisableOutline();
             //EnableHoverUI();
         }

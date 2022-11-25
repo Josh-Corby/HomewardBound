@@ -276,7 +276,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4952335861763524902}
   - component: {fileID: 6625541696201374490}
-  m_Layer: 6
+  m_Layer: 2
   m_Name: ClimbCollider
   m_TagString: LadderClimb
   m_Icon: {fileID: 0}

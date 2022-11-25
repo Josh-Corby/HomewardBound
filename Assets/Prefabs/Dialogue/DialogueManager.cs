@@ -22,7 +22,9 @@ public class DialogueManager : GameBehaviour<DialogueManager>
     private string[] currentNPC_Dialogue;
     [SerializeField]
     private int currentSentence_Index;
+    [SerializeField]
     private string currentSentence;
+    [SerializeField]
     private bool isSentenceOver;
     [SerializeField]
     private float wordSpeed;
@@ -33,6 +35,8 @@ public class DialogueManager : GameBehaviour<DialogueManager>
 
     [SerializeField]
     private CameraTransform cam;
+
+    private Coroutine typing;
     private void Start()
     {
         isSentenceOver = false;
@@ -86,7 +90,7 @@ public class DialogueManager : GameBehaviour<DialogueManager>
     private void StartNextSentence()
     {
         currentSentence = currentNPC_Dialogue[currentSentence_Index];
-        StartCoroutine(Typing());
+        typing = StartCoroutine(Typing());
     }
 
     public void ClearNPCInformation()
@@ -94,6 +98,7 @@ public class DialogueManager : GameBehaviour<DialogueManager>
         currentNPC = null;
         currentNPC_Name = null;
         currentNPC_Dialogue = null;
+        currentSentence = null;
     }
 
     private void EnablePanel()
@@ -106,38 +111,45 @@ public class DialogueManager : GameBehaviour<DialogueManager>
     {
         currentNPC.EnableOutline();
         currentNPC.GUI.ScaleDown();
-        //currentNPC.DisableOutline();
         isInDialogue = true;
         EnablePanel();
-        StartNextSentence();
-        //cam.SetCameraTarget(currentNPC.gameObject.transform);
-        
+        StartNextSentence();  
     }
 
     public void EndDialogue()
     {
         if (isInDialogue)
         {
-            StopCoroutine(Typing());
+            
+            currentSentence = "";
+            currentNPC.DisableOutline();
+            currentNPC.GUI.ScaleUp();
+            ClearNPCInformation();
             current_NPC_Dialogue_Text.text = "";
+           
             dialogPanel.SetActive(false);
             isConversationStarted = false;
+            isSentenceOver = true;
             isInDialogue = false;
             currentSentence_Index = 0;
-            currentNPC.DisableOutline();
-            //currentNPC.EnableHoverUI();
-            currentNPC.GUI.ScaleUp();
-            //currentNPC.EnableOutline();
+           
+            StopCoroutine(typing);
         }
     }
 
     IEnumerator Typing()
     {
+        Debug.Log("is typing");
         isSentenceOver = false;
         wordSpeed = 0.02f;
         current_NPC_Dialogue_Text.text = "";
         foreach (char letter in currentSentence.ToCharArray())
         {
+            
+            if (currentSentence == "")
+            {
+                yield return null;
+            }
             current_NPC_Dialogue_Text.text += letter;
             yield return new WaitForSeconds(wordSpeed);
         }
