@@ -465,7 +465,9 @@ public class UIManager : GameBehaviour<UIManager>
         //Debug.Log("Paused");
         paused = !paused;
         Time.timeScale = paused ? 0 : 1;
+
         pausePanel.SetActive(paused);
+        gameUI.SetActive(!paused);
         //Debug.Log(Time.timeScale);
 
         if (paused)
