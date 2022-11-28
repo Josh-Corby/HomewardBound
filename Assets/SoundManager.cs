@@ -7,12 +7,12 @@ public class SoundManager : GameBehaviour<SoundManager>
     public AudioSource SFX;
     [SerializeField]
     private AudioSource BGM;
-    public AudioClip pickupClip;
+    public AudioSource StepSFX;
+    public AudioClip pickupClip; 
 
     public void PlayClip(AudioClip clip)
     {
         SFX.clip = clip;
         SFX.Play();
     }
-
 }

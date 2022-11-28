@@ -13,6 +13,11 @@ public class BonfireManager : GameBehaviour
     [SerializeField]
     private BoxCollider col;
 
+    [SerializeField]
+    private AudioSource sounds;
+
+    [SerializeField]
+    private AudioClip bonfireClip;
     private void Awake()
     {
         col = GetComponent<BoxCollider>();
@@ -26,6 +31,7 @@ public class BonfireManager : GameBehaviour
             //Debug.Log("Player at bonfire");
             //InteractionZone.OnRespawnSet += SetRespawnPoint;   
             SetRespawnPoint();
+            sounds.PlayOneShot(bonfireClip);
         }
     }
     //private void OnTriggerExit(Collider other)

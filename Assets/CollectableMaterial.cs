@@ -7,6 +7,8 @@ public class CollectableMaterial : GameBehaviour
     [SerializeField]
     private bool isMovingTowardsPlayer;
     private Collider col;
+
+    private float moveSpeed = 0.3f;
     private void Awake()
     {
         isMovingTowardsPlayer = false;
@@ -14,6 +16,7 @@ public class CollectableMaterial : GameBehaviour
     }
     private void Update()
     {
+
         if (isMovingTowardsPlayer)
         {
             MoveTowardsPlayer();
@@ -32,7 +35,7 @@ public class CollectableMaterial : GameBehaviour
     }
     public void MoveTowardsPlayer()
     {
-        transform.position = Vector3.MoveTowards(transform.position, PM.pickUpSpot.transform.position, 0.2f);
+        transform.position = Vector3.MoveTowards(transform.position, PM.pickUpSpot.transform.position, moveSpeed);
     }
 
     public void StartMovingTowardsPlayer()

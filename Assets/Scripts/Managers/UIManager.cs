@@ -153,39 +153,39 @@ public class UIManager : GameBehaviour<UIManager>
         UpdateRocksCollected();
         UpdateSticksCollected();
         UpdateMushroomsCollected();
-        UpdatePebblesCollected();
+        //UpdatePebblesCollected();
     }
     public void UpdateMaterials(TMP_Text text, string material, int amount)
     {
-        text.text = material + " Collected: " + amount.ToString();
+        text.text =  amount.ToString();
     }
     /// <summary>
     /// Update UI of how many rocks the player has collected
     /// </summary>
     public void UpdateRocksCollected()
     {
-        smallRocksCollected.text = "Rocks Collected: " + GM.rocksCollected.ToString();
+        smallRocksCollected.text = GM.rocksCollected.ToString();
     }
     /// <summary>
     /// Update the UI of how many sticks the player has collected
     /// </summary>
     public void UpdateSticksCollected()
     {
-        sticksCollected.text = "Sticks Collected: " + GM.sticksCollected.ToString();
+        sticksCollected.text = GM.sticksCollected.ToString();
     }
     /// <summary>
     /// Update the UI of how many mushrooms the player has collected
     /// </summary>
     public void UpdateMushroomsCollected()
     {
-        mushroomsCollected.text = "Mushrooms Collected: " + GM.mushroomsCollected.ToString();
+        mushroomsCollected.text = GM.mushroomsCollected.ToString();
     }
     /// <summary>
     /// Update the UI of how many Pebbles the player has collected
     /// </summary>
     public void UpdatePebblesCollected()
     {
-        pebblesCollected.text = "Pebbles Collected: " + GM.pebblesCollected.ToString();
+        pebblesCollected.text = GM.pebblesCollected.ToString();
     }
     /// <summary>
     /// Update UI prompt for when the player can build
