@@ -71,28 +71,28 @@ public class GameManager : GameBehaviour<GameManager>
         if (resourceCollected.CompareTag("Rock"))
         { 
             rocksCollected += 1;
-            UI.UpdateMaterials(UI.smallRocksCollected, "Rocks", rocksCollected);
+            UI.UpdateMaterials(UI.smallRocksCollected,rocksCollected);
             OnMaterialsUpdated?.Invoke();
             return;
         }
         if (resourceCollected.CompareTag("Stick"))
         { 
             sticksCollected += 1;
-            UI.UpdateMaterials(UI.sticksCollected, "Sticks", sticksCollected);
+            UI.UpdateMaterials(UI.sticksCollected,sticksCollected);
             OnMaterialsUpdated?.Invoke();
             return;
         }
         if (resourceCollected.CompareTag("Mushroom"))
         { 
             mushroomsCollected += 1;
-            UI.UpdateMaterials(UI.mushroomsCollected, "Mushrooms", mushroomsCollected);
+            UI.UpdateMaterials(UI.mushroomsCollected,mushroomsCollected);
             OnMaterialsUpdated?.Invoke();
             return;
         }
         if (resourceCollected.CompareTag("Pebble"))
         { 
             pebblesCollected += 1;
-            UI.UpdateMaterials(UI.pebblesCollected, "Pebbles", pebblesCollected);
+            UI.UpdateMaterials(UI.pebblesCollected, pebblesCollected);
             OnMaterialsUpdated?.Invoke();
             SS.UpdateAmmo();
             

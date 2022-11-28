@@ -9,13 +9,10 @@ public class BonfireManager : GameBehaviour
     private Transform SpawnPoint;
     [SerializeField]
     private GameObject particles;
-
     [SerializeField]
     private BoxCollider col;
-
     [SerializeField]
     private AudioSource sounds;
-
     [SerializeField]
     private AudioClip bonfireClip;
     private void Awake()

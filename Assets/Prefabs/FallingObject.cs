@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
 public class FallingObject : MonoBehaviour
 {
     private Rigidbody rb;
@@ -27,7 +25,6 @@ public class FallingObject : MonoBehaviour
     private IEnumerator FreezeCheck()
     {
         yield return new WaitForSeconds(0.1f);
-
         if (!frozen)
         {
             if (rb.velocity == Vector3.zero)

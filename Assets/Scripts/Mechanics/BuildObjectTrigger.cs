@@ -7,12 +7,9 @@ public class BuildObjectTrigger : GameBehaviour
 {
     public List<GameObject> collisionObjects = new List<GameObject>();
     public bool isNotColliding;
-
     public ObjectBuild ObjectMain;
-
     [SerializeField]
     private BoxCollider collider;
-
 
     private void OnEnable()
     {
@@ -20,8 +17,6 @@ public class BuildObjectTrigger : GameBehaviour
         UpdateCanBuild();
         collider.isTrigger = true;
     }
-
-
     private void UpdateCanBuild()
     {
         isNotColliding = collisionObjects.Count == 0;
@@ -30,7 +25,7 @@ public class BuildObjectTrigger : GameBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Hawk") || other.CompareTag("Mechanics") || other.CompareTag("Player") || other.gameObject == IZ.gameObject)
+        if (other.CompareTag("Hawk") || other.CompareTag("Mechanics") || other.CompareTag("Player") || other.CompareTag("Bonfire") || other.gameObject == IZ.gameObject)
         {
             return;
         }

@@ -140,15 +140,12 @@ public class BuildManager : GameBehaviour<BuildManager>
         {
             UI.DeselectHotbarOutline();
             CancelBuilding();
-            UI.DisablePanel();
-
             currentBuildObject_Index = -1;
             return;
         }
 
         if (buildObjectIndex >= 1 && buildObjectIndex <= 2)
         {
-            UI.SelectMaterialUI(buildObjectIndex);
             BuildItem(buildObjectIndex);
             currentBuildObject_Index = buildObjectIndex;
         }
@@ -156,9 +153,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         if(buildObjectIndex == 3)
         {
             CancelBuilding();
-            UI.SelectMaterialUI(buildObjectIndex);
             currentBuildObject_Index = buildObjectIndex;
-
         }
     }
 
