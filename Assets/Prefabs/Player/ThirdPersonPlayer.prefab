@@ -374,7 +374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 6494793122019285344, guid: acfc01b6be0faa4468d35e1018eaff98, type: 3}
-  shootForce: 100
+  shootForce: 0.00001
   upwardForce: 0
   timeBetweenShooting: 0.1
   spread: 0
