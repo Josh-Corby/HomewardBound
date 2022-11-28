@@ -70,22 +70,23 @@ PrefabInstance:
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: NPC_Dialogue.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: NPC_Dialogue.Array.data[0]
-      value: OH, you're here now.
+      value: Welcome Julius!
       objectReference: {fileID: 0}
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: NPC_Dialogue.Array.data[1]
-      value: Sorry kid but your family is in another tree.
+      value: Sorry to say but, your barking up the wrong tree, the one you want is
+        wayyyy over there
       objectReference: {fileID: 0}
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: NPC_Dialogue.Array.data[2]
-      value: Wayyyyyyy over there.
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5928734489339067666, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
@@ -190,17 +191,17 @@ PrefabInstance:
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: NPC_Dialogue.Array.data[0]
-      value: Hi Julius.
+      value: Almost there kiddo, not too far now
       objectReference: {fileID: 0}
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: NPC_Dialogue.Array.data[1]
-      value: You're almost home! It's up there!
+      value: That tree ahead, if you climb it you will find what your seeking
       objectReference: {fileID: 0}
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: NPC_Dialogue.Array.data[2]
-      value: You gotta use everything you learned and make it to the top!
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5928734488968708551, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
@@ -390,17 +391,20 @@ PrefabInstance:
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: NPC_Dialogue.Array.data[0]
-      value: Hello Julius!
+      value: Julius! Long time, no see! You look lost, is everything ok
       objectReference: {fileID: 0}
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: NPC_Dialogue.Array.data[1]
-      value: Press the LEFT SHIFT KEY to sprint and press the SPACE BAR to jump.
+      value: I see well, us ants can help your journey home. Start by crossing these
+        mushrooms, you can sprint or walk by pressing SHIFT, and jump by pressing
+        SPACE
       objectReference: {fileID: 0}
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: NPC_Dialogue.Array.data[2]
-      value: You can SPRINT JUMP by sprinting first than jumping.
+      value: And remember, if the gap seems too big you can always sprint jump across.
+        Good luck Julius!
       objectReference: {fileID: 0}
     - target: {fileID: 5928734488968708551, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
@@ -620,12 +624,19 @@ PrefabInstance:
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: NPC_Dialogue.Array.size
-      value: 3
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
+        type: 3}
+      propertyPath: NPC_Dialogue.Array.data[0]
+      value: Walk up to a bJulius beware! the gap is too far for your bridges!nfire
+        to rest at it.
       objectReference: {fileID: 0}
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: NPC_Dialogue.Array.data[1]
-      value: Sometimes you need to build longer bridges
+      value: To get across safely, try extending the bridge with MOUSE SCROLL WHEEL.
+        Safe Travels!
       objectReference: {fileID: 0}
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
@@ -855,19 +866,18 @@ PrefabInstance:
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: NPC_Dialogue.Array.data[0]
-      value: Hola Julius!
+      value: Built too much kid? ...me too...
       objectReference: {fileID: 0}
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: NPC_Dialogue.Array.data[1]
-      value: In case you want to remove a built item you made, go close to it and
-        when it's highlighted red, press E to remove that item.
+      value: you can demolish your built items by pressing E when they have a red
+        outline
       objectReference: {fileID: 0}
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: NPC_Dialogue.Array.data[2]
-      value: 'if you don''t want to build any items but have it toggled on, press
-        the same button to remove it. '
+      value: might be a pain, but it will let you get some materials back
       objectReference: {fileID: 0}
     - target: {fileID: 5928734488968708553, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
@@ -1009,6 +1019,27 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6007750629422868952}
     m_Modifications:
+    - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
+        type: 3}
+      propertyPath: NPC_Dialogue.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
+        type: 3}
+      propertyPath: NPC_Dialogue.Array.data[0]
+      value: Greetings Julius, come join me by the bonfire.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
+        type: 3}
+      propertyPath: NPC_Dialogue.Array.data[1]
+      value: You can rest at bonfires by walking over to them. They will help you
+        reset if you're stuck or fall too far
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
+        type: 3}
+      propertyPath: NPC_Dialogue.Array.data[2]
+      value: You can also reset to the last bonfire by opening the menu using ESC
+      objectReference: {fileID: 0}
     - target: {fileID: 5928734489339067666, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: m_RootOrder
@@ -1107,23 +1138,23 @@ PrefabInstance:
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: NPC_Dialogue.Array.size
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: NPC_Dialogue.Array.data[0]
-      value: Welcome Julius.
+      value: Watch out Julius, its a firing zone ahead!
       objectReference: {fileID: 0}
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: NPC_Dialogue.Array.data[1]
-      value: That Item there is the Slingshot. Press E to pick it up.
+      value: If you want to continue on through here, your going to need that slingshot
+        behind me. You can use it by pressing 3
       objectReference: {fileID: 0}
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: NPC_Dialogue.Array.data[2]
-      value: This will help you shoot weak targets to create pathways for you. Such
-        as that weak target that is RED.
+      value: Good luck friend!
       objectReference: {fileID: 0}
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
@@ -1233,19 +1264,20 @@ PrefabInstance:
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: NPC_Dialogue.Array.data[0]
-      value: Hola Julius!
+      value: Julius, as creative as ever I see! You can toggle your builds by pressing
+        the NUMBER KEYS
       objectReference: {fileID: 0}
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: NPC_Dialogue.Array.data[1]
-      value: In case you want to remove a built item you made, go close to it and
-        when it's highlighted red, press E to remove that item.
+      value: As fun as it is, you will need to pick up materials like mine here,
+        you will find them along your journey.
       objectReference: {fileID: 0}
     - target: {fileID: 5928734488968708550, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
       propertyPath: NPC_Dialogue.Array.data[2]
-      value: 'if you don''t want to build any items but have it toggled on, press
-        the same button to remove it. '
+      value: ROCKS, STICKS and STRING are laying around along the way, they're just
+        waiting to be collected!
       objectReference: {fileID: 0}
     - target: {fileID: 5928734488968708553, guid: b65ffa366d193da499d04bcb6b1a0e78,
         type: 3}
@@ -1485,8 +1517,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NPC_Name: Spider
   NPC_Dialogue:
-  - Greetings Julius!
-  - You can get Strings from me
+  - Sorry about the webs scattered around the place, thanks for cleaning them up...
+  - ANYWAYS, I hear you are on a journey so your probably looking to go towards the
+    big tree over there.
   outline: {fileID: 0}
   UIAboveHead: {fileID: 0}
   GUI: {fileID: 0}
