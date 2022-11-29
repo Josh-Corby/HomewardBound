@@ -107,6 +107,8 @@ public class CameraTransform : GameBehaviour
                 _cinemachineTargetPitch += -IM.cameraInput.y * deltaTimeMultiplier;
             }
 
+
+
             // clamp our rotations so our values are limited 360 degrees
             _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
             _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
