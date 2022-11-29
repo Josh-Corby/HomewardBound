@@ -350,6 +350,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4896723451962940260}
     m_Modifications:
+    - target: {fileID: 909367933369707038, guid: eb221327f4a617949998aa208d3036bc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 5561349426305759274, guid: ff44ce20d9820264ca7f4732b9663f2f,
+        type: 3}
+    - target: {fileID: 1151676816880625140, guid: eb221327f4a617949998aa208d3036bc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 5561349426305759274, guid: ff44ce20d9820264ca7f4732b9663f2f,
+        type: 3}
     - target: {fileID: 2366930520016913556, guid: eb221327f4a617949998aa208d3036bc,
         type: 3}
       propertyPath: m_RootOrder
@@ -410,6 +422,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: LadderMarker
       objectReference: {fileID: 0}
+    - target: {fileID: 3968692356680945646, guid: eb221327f4a617949998aa208d3036bc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 5561349426305759274, guid: ff44ce20d9820264ca7f4732b9663f2f,
+        type: 3}
+    - target: {fileID: 8550588336729829129, guid: eb221327f4a617949998aa208d3036bc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 5561349426305759274, guid: ff44ce20d9820264ca7f4732b9663f2f,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb221327f4a617949998aa208d3036bc, type: 3}
 --- !u!1 &575635237442532161 stripped
