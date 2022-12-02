@@ -299,7 +299,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isTurningRIght
+    m_ConditionEvent: isTurningRight
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 257246187652335702}
@@ -324,7 +324,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isTurningRIght
+    m_ConditionEvent: isTurningRight
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2841510823294064168}
@@ -736,7 +736,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: isTurningRIght
+  - m_Name: isTurningRight
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -1010,7 +1010,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: TurnLeft
-  m_Speed: -3
+  m_Speed: 3
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -3724859738177835564}
@@ -1020,14 +1020,14 @@ AnimatorState:
   m_WriteDefaultValues: 1
   m_Mirror: 1
   m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
+  m_MirrorParameterActive: 1
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 1827226128182048838, guid: ff9008b2ad6915149b636f1553b29081,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
-  m_MirrorParameter: 
+  m_MirrorParameter: isTurningLeft
   m_CycleOffsetParameter: 
   m_TimeParameter: 
 --- !u!1101 &2043249459154197953
