@@ -513,7 +513,6 @@ MonoBehaviour:
   objectType: 0
   frozen: 0
   rb: {fileID: 0}
-  collider: {fileID: 0}
 --- !u!114 &877173870650877913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -551,7 +550,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 1, g: 0.1273585, b: 0.1273585, a: 1}
+  outlineColor: {r: 0.17268857, g: 0, b: 0.38679248, a: 1}
   outlineWidth: 6.02
   precomputeOutline: 0
   bakeKeys: []
