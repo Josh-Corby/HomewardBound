@@ -15,8 +15,9 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
     private bool isSteppingRight;
     public bool isSprinting;
 
-    public bool turnRight;
-    public bool turnLeft;
+
+    public bool isTurningLeft;
+    public bool isTurningRight;
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -67,24 +68,12 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
         animator.SetBool("isWalking", isWalking = Input.GetKey(KeyCode.W));
         animator.SetBool("isWalkingBack", isWalkingBack = Input.GetKey(KeyCode.S));
 
-    
 
-        if(IM.cameraInputX > 0)
-        {
-            turnRight = true;
-        }
+        isTurningLeft = IM.cameraInput.x < 0;
+        isTurningRight = IM.cameraInput.x > 0;
 
-        if(IM.cameraInputX < 0)
-        {
-            turnLeft = true;
-        }
-
-
-        if (IM.cameraInputX == 0)
-        {
-            turnLeft = false;
-            turnRight = false;
-        }
+        animator.SetBool("isTurningLeft", isTurningLeft);
+        animator.SetBool("isTurningRight", isTurningRight);
     }
 
     public void Jump()
