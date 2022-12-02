@@ -51,6 +51,12 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
             return;
         }
 
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
+        {
+            animator.SetBool("isSteppingLeft", isSteppingLeft = false);
+            animator.SetBool("isSteppingRight", isSteppingRight = false);
+            return;
+        }
 
         isSteppingLeft = Input.GetKey(KeyCode.A);
         animator.SetBool("isSteppingLeft", isSteppingLeft);
