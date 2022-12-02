@@ -15,22 +15,19 @@ public class NPCDialog : GameBehaviour
     private GameObject UIAboveHead;
     public GUITween GUI;
 
-
     private void Awake()
     {
         outline = transform.parent.GetComponentInChildren<Outline>();
         GUI = transform.parent.GetComponentInChildren<GUITween>();
         UIAboveHead = GUI.gameObject;
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == TPM.gameObject)
         {
-            //Debug.Log("player in radius");
             DM.GetNPCInformation(this);
             DM.StartDialogue();
-            //EnableOutline();
-            //DisableHoverUI();
         }
     }
 
@@ -40,7 +37,6 @@ public class NPCDialog : GameBehaviour
         {
             DM.EndDialogue();
             DisableOutline();
-            //EnableHoverUI();
         }
     }
 

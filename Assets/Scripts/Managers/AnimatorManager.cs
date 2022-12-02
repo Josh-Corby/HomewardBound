@@ -10,7 +10,9 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
     private bool isJumping;
     private bool isGrounded;
     private bool isWalkingBack;
-    private bool isStrafing;
+
+    private bool isSteppingLeft;
+    private bool isSteppingRight;
     public bool isSprinting;
 
     public bool turnRight;
@@ -42,24 +44,24 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
         }
         if (isJumping == true) return;
 
-        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S)) return;
-
-        isWalking = Input.GetKey(KeyCode.W);
-        isWalkingBack = Input.GetKey(KeyCode.S);
-        animator.SetBool("isWalkingBack", isWalkingBack);
-        animator.SetBool("isWalking", isWalking);
-
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S))
         {
-            isStrafing = true;
-            animator.SetBool("isStrafing", isStrafing);
+            animator.SetBool("isWalkingBack", isWalkingBack= false);
+            animator.SetBool("isWalking", isWalking = false);
+            return;
         }
 
-        if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
-        {
-            isStrafing = false;
-            animator.SetBool("isStrafing", isStrafing);        
-        }
+
+        isSteppingLeft = Input.GetKey(KeyCode.A);
+        animator.SetBool("isSteppingLeft", isSteppingLeft);
+
+        isSteppingRight = Input.GetKey(KeyCode.D);
+        animator.SetBool("isSteppingRight", isSteppingRight);
+
+        animator.SetBool("isWalking", isWalking = Input.GetKey(KeyCode.W));
+        animator.SetBool("isWalkingBack", isWalkingBack = Input.GetKey(KeyCode.S));
+
+    
 
         if(IM.cameraInputX > 0)
         {

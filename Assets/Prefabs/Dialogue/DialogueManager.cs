@@ -7,12 +7,8 @@ using System;
 
 public class DialogueManager : GameBehaviour<DialogueManager>
 {
-
-    [SerializeField]
-    private GameObject dialogPanel;
-    [SerializeField]
+    private GameObject dialoguePanel;
     private TMP_Text currentNPC_Name_Text;
-    [SerializeField]
     private TMP_Text current_NPC_Dialogue_Text;
 
     private NPCDialog currentNPC;
@@ -37,6 +33,13 @@ public class DialogueManager : GameBehaviour<DialogueManager>
     private CameraTransform cam;
 
     private Coroutine typing;
+
+    private void Awake()
+    {
+        dialoguePanel = UI.DialoguePanel;
+        currentNPC_Name_Text = UI.currentNPC_Name_Text;
+        current_NPC_Dialogue_Text = UI.current_NPC_Dialogue_Text;
+    }
     private void Start()
     {
         isSentenceOver = false;
@@ -103,7 +106,7 @@ public class DialogueManager : GameBehaviour<DialogueManager>
 
     private void EnablePanel()
     {
-        dialogPanel.SetActive(true);
+        dialoguePanel.SetActive(true);
         isConversationStarted = true;
     }
 
@@ -127,7 +130,7 @@ public class DialogueManager : GameBehaviour<DialogueManager>
             ClearNPCInformation();
             current_NPC_Dialogue_Text.text = "";
            
-            dialogPanel.SetActive(false);
+            dialoguePanel.SetActive(false);
             isConversationStarted = false;
             isSentenceOver = true;
             isInDialogue = false;

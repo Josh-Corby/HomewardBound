@@ -8,7 +8,6 @@ public class PickUpZone : GameBehaviour
     {
         if(other.CompareTag("Rock") || other.CompareTag("Stick") || other.CompareTag("Mushroom") || other.CompareTag("Pebble"))
         {
-            //Debug.Log("start material pickup");
             other.gameObject.GetComponent<CollectableMaterial>().StartMovingTowardsPlayer();
         }
     }

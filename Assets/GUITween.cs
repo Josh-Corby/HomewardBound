@@ -7,7 +7,6 @@ public class GUITween : MonoBehaviour
     private Vector3 _destination;
     [SerializeField]
     private float _tweenTime;
-
     private float _scaleTweenTime = 0.3f;
 
     void Start()

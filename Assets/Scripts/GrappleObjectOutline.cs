@@ -15,14 +15,5 @@ public class GrappleObjectOutline : GameBehaviour
         objectOutline.enabled = false;
     }
 
-    private void Update()
-    {
-        if (OM.outfit == Outfits.Utility)
-        {
-            objectOutline.enabled = true;
-            objectOutline.OutlineWidth = Mathf.PingPong(Time.time * 10, outlineWidth);
-        }
-        else
-            objectOutline.enabled = false;
-    }
+  
 }

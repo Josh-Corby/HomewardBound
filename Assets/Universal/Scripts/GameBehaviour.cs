@@ -23,6 +23,8 @@ public class GameBehaviour : JMC
 
 public class GameBehaviour<T> : GameBehaviour where T : GameBehaviour
 {
+    public bool dontDestroy;
+
     private static T instance_;
     public static T INSTANCE
     {
@@ -45,6 +47,7 @@ public class GameBehaviour<T> : GameBehaviour where T : GameBehaviour
         if (instance_ == null)
         {
             instance_ = this as T;
+            if (dontDestroy) DontDestroyOnLoad(gameObject);
         }
         else
         {

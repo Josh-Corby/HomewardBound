@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FootSteps : GameBehaviour
 {
-
     [SerializeField]
     private AudioClip[] walkClips;
 
@@ -16,6 +15,7 @@ public class FootSteps : GameBehaviour
 
     [SerializeField]
     private AudioClip[] landClips;
+
     private void Step()
     {
         SM.StepSFX.PlayOneShot(walkClips[Random.Range(0, walkClips.Length)]);

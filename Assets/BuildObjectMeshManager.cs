@@ -13,7 +13,6 @@ public class BuildObjectMeshManager : GameBehaviour
     [SerializeField]
     private ObjectBuild objectBuild;
 
-
     private void OnEnable()
     {
         ObjectBuild.OnObjectLengthChange += ChangeBridgeMesh;

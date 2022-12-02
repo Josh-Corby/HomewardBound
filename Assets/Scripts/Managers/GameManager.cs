@@ -109,13 +109,12 @@ public class GameManager : GameBehaviour<GameManager>
         Player.GetComponent<CharacterController>().enabled = false;
         Player.transform.position = spawnPoint.transform.position;
         Player.transform.rotation = spawnPoint.transform.rotation;
-        TPM.LilypadOffset = null;
+
         Player.GetComponent<CharacterController>().enabled = true;
 
-        TPM.LilypadOffset = null;
         TPM.fallTimer = TPM.fallTimerMax;
         TPM.enabled = true;
-        TPM.StopHookshot();
+
 
         PM.isClimbing = false;
         LC.inside = false;

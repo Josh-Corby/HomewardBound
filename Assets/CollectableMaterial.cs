@@ -9,11 +9,13 @@ public class CollectableMaterial : GameBehaviour
     private Collider col;
 
     private float moveSpeed = 0.3f;
+
     private void Awake()
     {
         isMovingTowardsPlayer = false;
         col = gameObject.GetComponent<Collider>();
     }
+
     private void Update()
     {
 

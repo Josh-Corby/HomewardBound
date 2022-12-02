@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum Outfits { 
-
-    Miner,
+public enum Outfits 
+{ 
     Builder,
     Slingshot,
-    Utility,
     None
 }
 
@@ -18,8 +16,6 @@ public class OutfitManager : GameBehaviour<OutfitManager>
     public Outfits outfit;
     public bool canChangeOutfits;
     //public bool haveSlingshot = true;
-
-
 
     private void Start()
     {
@@ -53,18 +49,9 @@ public class OutfitManager : GameBehaviour<OutfitManager>
 
         Outfits CurrentOutfit = (Outfits)outfitValue;
 
-        //Debug.Log(CurrentOutfit);
-        if (CurrentOutfit!= Outfits.Builder)
-        {
-           
-        }
 
         switch (CurrentOutfit)
         {
-            case Outfits.Miner:
-                outfit = Outfits.Miner;
-                break;
-
             case Outfits.Builder:
                 outfit = Outfits.Builder;
                 break;
@@ -73,16 +60,10 @@ public class OutfitManager : GameBehaviour<OutfitManager>
                 outfit = Outfits.Slingshot;
                 break;
 
-            case Outfits.Utility:
-                outfit = Outfits.Utility;
-                //Debug.Log("Grapple selected");
-                break;
             case Outfits.None:
                 outfit = Outfits.None;
                 break;
         }
 
-        //Update controls UI to match current outfit controls
-        //UI.UpdateControlText();
     }
 }

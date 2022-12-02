@@ -3,23 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-enum Pickups { 
-
-    Pickaxe,
+enum Pickups 
+{ 
     Builder,
     Slingshot,
-    GrappleHook,
-    //Glider
 }
 
 public class ToolUnlock : GameBehaviour
 {
-
     [SerializeField]
     private Pickups pickups;
-
     private bool canPickUp;
-
     private Outline outline;
 
     private void Awake()
@@ -27,20 +21,6 @@ public class ToolUnlock : GameBehaviour
         outline = gameObject.GetComponent<Outline>();
         outline.enabled = false;  
     }
-
-
-    //private void Update()
-    //{
-    //    if (canPickUp)
-    //    {
-    //        if (Input.GetKeyDown(KeyCode.E))
-    //        {
-    //            UnlockTool(pickups);
-
-    //            StartCoroutine(WaitToDestroy());
-    //        }
-    //    }
-    //}
 
     IEnumerator WaitToDestroy()
     {
@@ -52,9 +32,6 @@ public class ToolUnlock : GameBehaviour
     {
         switch (pickups) 
         {
-            case Pickups.Pickaxe:
-                GM.havePickaxe = !GM.havePickaxe;
-                break;
             case Pickups.Builder:
                 GM.haveBuilding = !GM.haveBuilding;
                 break;
@@ -62,33 +39,15 @@ public class ToolUnlock : GameBehaviour
             case Pickups.Slingshot:
                 GM.haveSlingshot = !GM.haveSlingshot;
                 break;
-            case Pickups.GrappleHook:
-                break;
-            //case Pickups.Glider:
-            //    GM.haveGlider = !GM.haveGlider;
-            //    break;
         }
-       // UI.UpdateToolsUnlockedUI(pickups.ToString());
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            //canPickUp = true;
-            //outline.enabled = true;
-
             UnlockTool(pickups);
             StartCoroutine(WaitToDestroy());
         }          
     }
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {         
-    //        //canPickUp = false;
-    //        //outline.enabled = false;
-    //    }           
-    //}
 }

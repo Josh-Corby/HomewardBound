@@ -70,8 +70,7 @@ public class LilyPad : GameBehaviour
 
     public void ResetLilyPad()
     {
-        //Debug.Log("stop");
-        TPM.StopHookshot();
+
         waitTime = waitTimeMax;
         MoveBackToStartPosition();    
     }

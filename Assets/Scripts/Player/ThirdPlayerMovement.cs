@@ -112,17 +112,13 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
 
         LookFoward();
-        if (OM.outfit == Outfits.Utility && groundState == GroundStates.Airborne)
-        {
-            DisableGrappleInput();
-
-        }
+        
         if (/*UI.buildPanelStatus || UI.radialMenuStatus || */UI.menu == Menus.Paused || UI.menu == Menus.Paused)
             return;
     }
     private void LateUpdate()
     {
-        if (UI.menu == Menus.Radial) return;
+
 
         switch (hookshotState)
         {
@@ -384,52 +380,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         {
             //if (!UI.buildPanelStatus)
             
-                if (OM.outfit == Outfits.Utility)
-                {
-
-                    if (groundState == GroundStates.Airborne)
-                    {
-                        return;
-                    }
-                    if (IM.rClick_Input)
-                    {
-                        //Find the exact hit position using a raycast
-                        Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //Just a ray through the middle of your current view
-                        RaycastHit hit;
-
-                        //check if ray hits something
-                        Vector3 targetPoint;
-                        if (Physics.Raycast(ray, out hit, Mathf.Infinity, grappleMask))
-                            targetPoint = hit.point;
-                        else
-                            targetPoint = ray.GetPoint(grappleRange); //Just a point far away from the player
-
-                        //Calculate direction from attackPoint to targetPoint
-                        Vector3 directionWithoutSpread = targetPoint - grapplePoint.transform.position;
-
-                        if (Physics.Raycast(grapplePoint.transform.position, directionWithoutSpread, out hit, grappleRange, grappleMask))
-
-                        //if (Physics.Raycast(grapplePoint.transform.position, directionWithoutSpread, out RaycastHit raycastHit, 100))
-                        {
-                            grappleHitObject = hit.collider.gameObject;
-                            //Debug.Log(grappleHitObject.name);
-                            if (grappleHitObject.CompareTag("Non-Grappleable-Surface") || grappleHitObject.CompareTag("FallingLilyPad"))
-                            {
-                                StopHookshot();
-                                IM.rClick_Input = false;
-                                return;
-                            }
-
-                            debugHitPointTransform.position = hit.point;
-                            hookshotPosition = hit.point;
-                            hookshotSize = 0f;
-                            hookshotTransform.gameObject.SetActive(true);
-                            hookshotTransform.localScale = Vector3.zero;
-                            hookshotState = HookshotStates.HookshotThrown;
-                        }
-                        IM.rClick_Input = false;
-                    }
-                }
+             
             
         }
     }

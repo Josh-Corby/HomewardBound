@@ -16,6 +16,7 @@ public class TriggerPickUp : MonoBehaviour
 
             this.transform.parent = GameObject.Find("Destination").transform;
         }
+
         else
         {
             this.transform.parent = null;

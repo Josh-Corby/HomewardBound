@@ -7,7 +7,6 @@ public enum ObjectType
 {
     Bridge,
     Ladder
-
 }
 
 public class BuildObjectRB : MonoBehaviour
@@ -18,23 +17,18 @@ public class BuildObjectRB : MonoBehaviour
     [SerializeField]
     private Rigidbody rb;
 
-    [SerializeField]
-    private BoxCollider collider;
-
-
     private void Awake()
     {
-        collider = GetComponent<BoxCollider>();
+
         rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeAll;
     }
+
     private void Start()
     {
         frozen = false;
         StartCoroutine(FreezeCheck());
     }
-
-
 
     private IEnumerator FreezeCheck()
     {
@@ -44,7 +38,6 @@ public class BuildObjectRB : MonoBehaviour
         {
             if (rb.velocity == Vector3.zero)
             {
-                //Debug.Log("velocity is zero");
                 FreezeConstraints();
                 frozen = true;
                 yield return null;
@@ -62,7 +55,6 @@ public class BuildObjectRB : MonoBehaviour
 
     public void UnFreezeConstraints()
     {
-
         if (objectType == ObjectType.Bridge)
         {
             //Debug.Log("Unfreeze constraints");

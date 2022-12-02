@@ -17,7 +17,6 @@ public class MovingLilypadTrigger : GameBehaviour
         {
             Debug.Log("Player on lilypad");
             playerFollowObject.transform.position = new Vector3(TPM.transform.position.x, transform.position.y, TPM.transform.position.z);
-            TPM.LilypadOffset = playerFollowObject;
         }
     }
 }

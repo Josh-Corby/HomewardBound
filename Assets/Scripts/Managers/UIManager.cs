@@ -9,81 +9,48 @@ public enum Menus
 {
     None,
     Paused,
-    Build,
-    Radial
 }
 public class UIManager : GameBehaviour<UIManager>
 {
     public Menus menu;
 
     [Header("Text")]
-    public TMP_Text canBuild;
-    public TMP_Text fallTimer;
+
     public TMP_Text smallRocksCollected;
     public TMP_Text sticksCollected;
     public TMP_Text mushroomsCollected;
     public TMP_Text pebblesCollected;
-    public TMP_Text currentOutfit;
-    public TMP_Text currentAmmoType;
 
     [Header("Panels")]
     public GameObject gameUI;
-
     public GameObject pausePanel;
-    public GameObject CurrentPanel;
+    private GameObject CurrentPanel;
 
     [Header("Bools")]
-
     public bool paused;
-
-    public Image LadderOutline;
-    public Image BridgeOutline;
-    public Image BonfireOutline;
-
-    [SerializeField]
-    private GameObject currentMaterialPanel;
-    [SerializeField]
-    private int currentMaterialPanelIndex;
-    [SerializeField]
-    private GameObject[] materialUIPanels;
-
-    private TMP_Text[] materialCosts;
 
     [SerializeField]
     private Image[] HotbarOutlines;
-
     private Image CurrentOutline;
 
-    [SerializeField]
-    private GameObject TestUI;
-    [SerializeField]
-    private GameObject[] TestUIPanels;
-    private GameObject currentTestPanel;
-    private int testPanelIndex;
+    public GameObject DialoguePanel;
+    public TMP_Text currentNPC_Name_Text;
+    public TMP_Text current_NPC_Dialogue_Text;
 
-    [SerializeField]
-    private GameObject checkpointText;
     private void Start()
     {
         PlayerManager.OnToolSelected += SelectControlUI;
         // Set UI values for start of game
-
-        gameObject.SetActive(true);
-        gameUI.SetActive(true);
         pausePanel.SetActive(false);
         paused = false;
         Time.timeScale = 1;
         UpdateMaterialsCollected();
-        TestUI.SetActive(false);
-        checkpointText.SetActive(false);
     }
     private void Update()
     {
-        fallTimer.text = "Fall timer: " + TPM.fallTimer.ToString("F2");
         Inputs();
        
         #region Text Updaters
-
 
         /// <summary>
         /// Update UI of materials player has collected
@@ -133,27 +100,11 @@ public class UIManager : GameBehaviour<UIManager>
     /// Update UI prompt for when the player can build
     /// </summary>
     /// <param name="canBuild">The bool that defines if the player can build </param>
-    public void UpdateCanBuildText(bool canBuild)
-    {
-        if (!canBuild)
-        {
-            this.canBuild.text = "";
-        }
-        if (canBuild)
-        {
-            this.canBuild.text = "Build";
-        }
-    }
+
     /// <summary>
     /// Tell the player if they can build, if not, tell the player what materials the player doesn't have enough of
     /// </summary>
     /// <param name="text">The string that defines the text to be displayed</param>
-    public void UpdateBuildStatus(string text)
-    {
-        canBuild.text = text;
-    }
-
-
     #endregion
 
     /// <summary>
@@ -168,7 +119,10 @@ public class UIManager : GameBehaviour<UIManager>
         }
 
         if (paused)
+        {
             return;
+        }
+
         ToggleMenus();
 
     }
@@ -180,10 +134,12 @@ public class UIManager : GameBehaviour<UIManager>
         switch (menu)
         {
             default:
-
                 Cursor.lockState = CursorLockMode.Locked;
+
                 if (CurrentPanel != null)
+                {
                     CurrentPanel.SetActive(false);
+                }
                 break;
 
             case Menus.Paused:
@@ -200,7 +156,10 @@ public class UIManager : GameBehaviour<UIManager>
     private void ChangeMenu(GameObject menuToChangeTo)
     {
         if (menuToChangeTo == null)
+        {
             return;
+        }
+
         CurrentPanel = menuToChangeTo;
         CurrentPanel.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
@@ -225,20 +184,13 @@ public class UIManager : GameBehaviour<UIManager>
         {
             Cursor.lockState = CursorLockMode.None;
         }
+
         if (!paused)
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
     }
 
-    public IEnumerator CheckpointPopup()
-    {
-        checkpointText.SetActive(true);
-        Debug.Log("bonfire found");
-        checkpointText.GetComponent<Animator>().Play("CheckpointText");
-        yield return new WaitForSeconds(1.5f);
-        checkpointText.SetActive(false);
-    }
 
     private void SelectControlUI(int panelIndex)
     {
@@ -254,6 +206,7 @@ public class UIManager : GameBehaviour<UIManager>
         CurrentOutline = outline;
         CurrentOutline.color = Color.red;
     }
+
     public void DeselectHotbarOutline()
     {
         CurrentOutline.color = Color.black;

@@ -884,9 +884,9 @@ GameObject:
   - component: {fileID: 8710679983595202224}
   - component: {fileID: 8710679983595202225}
   - component: {fileID: 5498205265661020283}
-  - component: {fileID: 5498205265661020282}
   - component: {fileID: 3012716498868361529}
   - component: {fileID: 3796254960522185502}
+  - component: {fileID: 3796254960522185508}
   m_Layer: 7
   m_Name: ThirdPersonPlayer
   m_TagString: Player
@@ -950,10 +950,6 @@ MonoBehaviour:
   cam: {fileID: 0}
   cameraLookRight: {fileID: 3621660246582591613}
   characterVelocityMomentum: {x: 0, y: 0, z: 0}
-  debugHitPointTransform: {fileID: 0}
-  hookshotTransform: {fileID: 3830397746120076031}
-  grapplePoint: {fileID: 1698337190967145347}
-  grappleHook: {fileID: 5498205264208078484}
   groundCheck: {fileID: 8710679983326173725}
   groundMask:
     serializedVersion: 2
@@ -969,14 +965,7 @@ MonoBehaviour:
   coyoteTime: 0.1
   coyoteTimerOffset: 0
   moveDir: {x: 0, y: 0, z: 0}
-  hookshotState: 0
-  moveSpeeds: 0
   groundState: 0
-  grappleHitObject: {fileID: 0}
-  grappleMask:
-    serializedVersion: 2
-    m_Bits: 11088
-  LilypadOffset: {fileID: 0}
 --- !u!114 &5498205265661020283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -993,35 +982,6 @@ MonoBehaviour:
   inside: 0
   speedUpDown: 17.32
   TPMMovement: {fileID: 8710679983595202225}
---- !u!114 &5498205265661020282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8710679983595202227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b49f25c6f5f5e304a97d7fdf14b04c3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementInput: {x: 0, y: 0}
-  cameraInput: {x: 0, y: 0}
-  cameraInputX: 0
-  cameraInputY: 0
-  moveAmount: 0
-  verticalInput: 0
-  horizontalInput: 0
-  mouseScrollY: 0
-  sprint_Input: 0
-  jump_Input: 0
-  interact_Input: 0
-  glide_Input: 0
-  buildMenu_Input: 0
-  destroy_Input: 0
-  cancel_Input: 0
-  lClick_Input: 0
-  rClick_Input: 0
 --- !u!114 &3012716498868361529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1051,6 +1011,35 @@ MonoBehaviour:
   isClimbing: 0
   playerIsStealthed: 0
   pickUpSpot: {fileID: 2074899338}
+--- !u!114 &3796254960522185508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8710679983595202227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b49f25c6f5f5e304a97d7fdf14b04c3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementInput: {x: 0, y: 0}
+  cameraInput: {x: 0, y: 0}
+  cameraInputX: 0
+  cameraInputY: 0
+  moveAmount: 0
+  verticalInput: 0
+  horizontalInput: 0
+  mouseScrollY: 0
+  sprint_Input: 0
+  jump_Input: 0
+  interact_Input: 0
+  glide_Input: 0
+  buildMenu_Input: 0
+  destroy_Input: 0
+  cancel_Input: 0
+  lClick_Input: 0
+  rClick_Input: 0
 --- !u!1001 &3070578333265410550
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1286,6 +1275,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSprinting: 0
+  turnRight: 0
+  turnLeft: 0
 --- !u!114 &5255001425672898020
 MonoBehaviour:
   m_ObjectHideFlags: 0
