@@ -8,7 +8,6 @@ public class InputManager : GameBehaviour<InputManager>
 
     [Header("Definitions of all inputs and what type they are")]
     public Vector2 movementInput, cameraInput;
-    public float cameraInputX, cameraInputY;
     public float moveAmount;
     public float verticalInput, horizontalInput;
     public float mouseScrollY;
