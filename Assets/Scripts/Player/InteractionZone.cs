@@ -223,26 +223,8 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
     private void OnTriggerEnter(Collider other)
     {
-        //Pickups
-        //if (other.CompareTag("Rock") || other.CompareTag("Stick") ||
-        //    other.CompareTag("Mushroom") || other.CompareTag("Pebble"))
-        //{
-        //    other.GetComponent<Outline>().enabled = true;
-        //    canPickUp = true;
-        //    AddOutline(other.gameObject);
-        //}
-        //Breakable Objects
-        if (other.CompareTag("Rock") || other.CompareTag("BreakableWall") || other.CompareTag("MinableObject"))
-        {
-            objectToInteract = other.gameObject;
-            //other.GetComponent<Outline>().enabled = true;
-            //outlineObjectsList.Add(objectToInteract);
-        }
 
-        if(other.CompareTag("RollingRock"))
-        {
-            objectToInteract = other.gameObject;
-        }
+    
 
         if(other.CompareTag("Ladder") || other.CompareTag("Bridge"))
         {
@@ -255,45 +237,16 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             canDestroy = true;
         }
 
-        //if (other.CompareTag("Bonfire"))
-        //{
-        //    atBonfire = true;
-        //    objectToInteract = other.gameObject;
-        //    OutlineObject(other.gameObject);
-        //}
 
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Rock") || other.CompareTag("Stick") || other.CompareTag("Mushroom") || other.CompareTag("Pebble"))
-        {
-            DisableInteractions();
-            RemoveOutline(other.gameObject);
-        }
-        if (other.CompareTag("Rock") || other.CompareTag("BreakableWall") || other.CompareTag("MinableObject") || other.CompareTag("RollingRock"))
-        {
-            //outlineObjectsList.Remove(other.gameObject);
-            //canBreak = false;
-            //objectToInteract.GetComponent<Outline>().enabled = false;
-        }
-
-        if(other.CompareTag("RollingRock"))
-        {
-            DisableInteractions();
-        }
-
-        //if (other.CompareTag("Bonfire"))
-        //{
-        //    StopOutliningObject(other.gameObject);
-        //}
+     
 
         if (other.CompareTag("Ladder") || other.CompareTag("Bridge"))
         {
             StopOutliningObject(other.gameObject.GetComponentInParent<ObjectBuild>().gameObject);
-        }
-        if (other.CompareTag("Ladder") || other.CompareTag("Bridge"))
-        {
             objectToDestroy = null;
         }
 
@@ -310,7 +263,6 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         if (other.CompareTag("Bonfire"))
         {
             atBonfire = false;
-            //StopOutliningObject(other.gameObject);
         }
     }
 

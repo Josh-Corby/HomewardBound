@@ -36,7 +36,7 @@ public class ObjectBuild : GameBehaviour
 
     public int stick_Refund_Value;
     public int rock_Refund_Value;
-    public int mushroom_Refund_Value;
+    public int string_Refund_Value;
 
     private Material material;
 
@@ -202,7 +202,7 @@ public class ObjectBuild : GameBehaviour
     }
     public void RefundMaterials()
     {
-        GM.AddMaterials(stick_Refund_Value, rock_Refund_Value, mushroom_Refund_Value);
+        GM.AddMaterials(stick_Refund_Value, rock_Refund_Value, string_Refund_Value);
     }
     private void UpdateLandingMarker(int value)
     {

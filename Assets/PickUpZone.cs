@@ -6,7 +6,7 @@ public class PickUpZone : GameBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Rock") || other.CompareTag("Stick") || other.CompareTag("Mushroom") || other.CompareTag("Pebble"))
+        if(other.CompareTag("Rock") || other.CompareTag("Stick") || other.CompareTag("String") || other.CompareTag("Pebble"))
         {
             other.gameObject.GetComponent<CollectableMaterial>().StartMovingTowardsPlayer();
         }

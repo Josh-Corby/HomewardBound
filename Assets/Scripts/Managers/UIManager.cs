@@ -18,7 +18,7 @@ public class UIManager : GameBehaviour<UIManager>
 
     public TMP_Text smallRocksCollected;
     public TMP_Text sticksCollected;
-    public TMP_Text mushroomsCollected;
+    public TMP_Text stringCollected;
     public TMP_Text pebblesCollected;
 
     [Header("Panels")]
@@ -61,7 +61,7 @@ public class UIManager : GameBehaviour<UIManager>
     {
         UpdateRocksCollected();
         UpdateSticksCollected();
-        UpdateMushroomsCollected();
+        UpdateStringCollected();
         //UpdatePebblesCollected();
     }
     public void UpdateMaterials(TMP_Text text, int amount)
@@ -85,9 +85,9 @@ public class UIManager : GameBehaviour<UIManager>
     /// <summary>
     /// Update the UI of how many mushrooms the player has collected
     /// </summary>
-    public void UpdateMushroomsCollected()
+    public void UpdateStringCollected()
     {
-        mushroomsCollected.text = GM.mushroomsCollected.ToString();
+        stringCollected.text = GM.stringCollected.ToString();
     }
     /// <summary>
     /// Update the UI of how many Pebbles the player has collected

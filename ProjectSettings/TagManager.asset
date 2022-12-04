@@ -4,34 +4,23 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - SmallObject
-  - Mud
-  - BuildZone
   - Ladder
   - Stick
-  - Mushroom
   - Bridge
   - Floor
   - Pebble
   - Rock
   - BreakableWall
-  - BerryBomb
-  - Non-Grappleable-Surface
   - Bullet
-  - Hawk
-  - Grappleable-Surface
-  - Lilypad
-  - FallingLilyPad
-  - MinableObject
-  - TallGrass
-  - PlayerInteraction
   - Ground
   - Mechanics
   - Bonfire
-  - RollingRock
-  - LadderClimb
   - PickUpZone
   - Wall
+  - String
+  - LadderClimb
+  - Mushroom
+  - RollingRock
   layers:
   - Default
   - TransparentFX
@@ -44,10 +33,10 @@ TagManager:
   - SmallObjects
   - Ladder
   - Projectiles
-  - Non-Grappleable-Wall
-  - TallGrass
-  - Lilypad
   - BuildObject
+  - 
+  - 
+  - 
   - 
   - 
   - 

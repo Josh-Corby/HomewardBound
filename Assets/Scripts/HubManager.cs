@@ -16,7 +16,7 @@ public class HubManager : GameBehaviour
     [SerializeField]
     private GameObject stickPrefab;
     [SerializeField]
-    private GameObject mushroomPrefab;
+    private GameObject stringPrefab;
 
     [Header("Pools")]
     [SerializeField]
@@ -24,7 +24,7 @@ public class HubManager : GameBehaviour
     [SerializeField]
     private GameObject[] sticksPool;
     [SerializeField]
-    private GameObject[] mushroomsPool;
+    private GameObject[] stringPool;
 
     private void Start()
     {
@@ -35,7 +35,7 @@ public class HubManager : GameBehaviour
     {
         SpawnItemsToPool(rocksPool, rockPrefab);
         SpawnItemsToPool(sticksPool, stickPrefab);
-        SpawnItemsToPool(mushroomsPool, mushroomPrefab);
+        SpawnItemsToPool(stringPool, stringPrefab);
     }
 
     private void SpawnItemsToPool(GameObject[] poolToSpawnTo, GameObject prefabToSpawn)
@@ -52,7 +52,7 @@ public class HubManager : GameBehaviour
     {
         EnableObjects(rocksPool);
         EnableObjects(sticksPool);
-        EnableObjects(mushroomsPool);
+        EnableObjects(stringPool);
     }
 
     public void EnableObjects(GameObject[] poolToEnable)
@@ -67,7 +67,7 @@ public class HubManager : GameBehaviour
     {
         DisableObjects(rocksPool);
         DisableObjects(sticksPool);
-        DisableObjects(mushroomsPool);
+        DisableObjects(stringPool);
     }
 
     public void DisableObjects(GameObject[] poolToDisable)

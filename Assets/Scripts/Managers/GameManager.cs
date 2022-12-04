@@ -11,7 +11,7 @@ public class GameManager : GameBehaviour<GameManager>
     [Header("Resources Collected")]
     public int rocksCollected;
     public int sticksCollected;
-    public int mushroomsCollected;
+    public int stringCollected;
     public int pebblesCollected;
 
 
@@ -55,11 +55,11 @@ public class GameManager : GameBehaviour<GameManager>
 
     }
 
-    public void AddMaterials(int sticks, int rocks, int mushrooms)
+    public void AddMaterials(int sticks, int rocks, int strings)
     {
         sticksCollected += sticks;
         rocksCollected += rocks;
-        mushroomsCollected += mushrooms;
+        stringCollected += strings;
         OnMaterialsUpdated?.Invoke();
     }
 
@@ -82,10 +82,10 @@ public class GameManager : GameBehaviour<GameManager>
             OnMaterialsUpdated?.Invoke();
             return;
         }
-        if (resourceCollected.CompareTag("Mushroom"))
+        if (resourceCollected.CompareTag("String"))
         { 
-            mushroomsCollected += 1;
-            UI.UpdateMaterials(UI.mushroomsCollected,mushroomsCollected);
+            stringCollected += 1;
+            UI.UpdateMaterials(UI.stringCollected,stringCollected);
             OnMaterialsUpdated?.Invoke();
             return;
         }

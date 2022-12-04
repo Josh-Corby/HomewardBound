@@ -25,14 +25,14 @@ public class BuildManager : GameBehaviour<BuildManager>
     [Header("Crafting Checks")]
     private bool pebbleCheck;
     private bool stickCheck;
-    private bool mushroomCheck;
+    private bool stringCheck;
     public bool materialsCheck;
 
 
     [Header("Craft Costs")]
     public int rockCost;
     public int stickCost;
-    public int mushroomCost;
+    public int stringCost;
 
     [Header("Build Prefabs")]
     #region Build Prefabs
@@ -131,7 +131,7 @@ public class BuildManager : GameBehaviour<BuildManager>
     {
         objectBuilt.stick_Refund_Value = stickCost/2;
         objectBuilt.rock_Refund_Value = rockCost/2;
-        objectBuilt.mushroom_Refund_Value = mushroomCost/2;
+        objectBuilt.string_Refund_Value = stringCost/2;
     }
 
     private void ToolSelectListen(int buildObjectIndex)
@@ -237,18 +237,18 @@ public class BuildManager : GameBehaviour<BuildManager>
             case BuildObjects.Ladder:
                 rockCost = 2;
                 stickCost = 2;
-                mushroomCost = 2;
+                stringCost = 2;
                 break;
             case BuildObjects.Bridge:
                 rockCost = 2 * costMultiplier;
                 stickCost = 2 * costMultiplier;
-                mushroomCost = 2 * costMultiplier;
+                stringCost = 2 * costMultiplier;
                 RunMaterialChecks();
                 break;
             case BuildObjects.Bonfire:
                 rockCost = 3;
                 stickCost = 3;
-                mushroomCost = 3;
+                stringCost = 3;
                 break;
         }
     }
@@ -271,9 +271,9 @@ public class BuildManager : GameBehaviour<BuildManager>
 
         pebbleCheck = GM.rocksCollected >= rockCost;
         stickCheck = GM.sticksCollected >= stickCost;
-        mushroomCheck = GM.mushroomsCollected >= mushroomCost;
+        stringCheck = GM.stringCollected >= stringCost;
 
-        if (pebbleCheck == true && stickCheck == true && mushroomCheck)
+        if (pebbleCheck == true && stickCheck == true && stringCheck)
             return true;
         else
             return false;
@@ -285,7 +285,7 @@ public class BuildManager : GameBehaviour<BuildManager>
     {
         GM.rocksCollected -= rockCost;
         GM.sticksCollected -= stickCost;
-        GM.mushroomsCollected -= mushroomCost;
+        GM.stringCollected -= stringCost;
         UI.UpdateMaterialsCollected();
     }
     /// <summary>
@@ -295,7 +295,7 @@ public class BuildManager : GameBehaviour<BuildManager>
     {
         GM.rocksCollected += rockCost;
         GM.sticksCollected += stickCost;
-        GM.mushroomsCollected += mushroomCost;
+        GM.stringCollected += stringCost;
         UI.UpdateMaterialsCollected();
     }
 
