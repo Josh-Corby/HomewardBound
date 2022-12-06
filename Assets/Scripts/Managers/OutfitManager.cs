@@ -38,12 +38,16 @@ public class OutfitManager : GameBehaviour<OutfitManager>
 
         if(outfitValue >=1 && outfitValue <= 2)
         {
-            outfitValue = 1;
+            outfitValue = 0;
         }
 
+        if(outfitValue == 3)
+        {
+            outfitValue = 1;
+        }
         if(outfitValue >= 4)
         {
-            outfitValue -= 1;
+            outfitValue =2;
         }
         //Debug.Log(outfitValue);
 
