@@ -41,7 +41,7 @@ public class OutfitManager : GameBehaviour<OutfitManager>
             outfitValue = 1;
         }
 
-        if(outfitValue >= 3)
+        if(outfitValue >= 4)
         {
             outfitValue -= 1;
         }
