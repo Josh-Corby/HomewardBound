@@ -92,7 +92,7 @@ public class GameManager : GameBehaviour<GameManager>
         if (resourceCollected.CompareTag("Pebble"))
         { 
             pebblesCollected += 1;
-            UI.UpdateMaterials(UI.pebblesCollected, pebblesCollected);
+            //UI.UpdateMaterials(UI.pebblesCollected, pebblesCollected);
             OnMaterialsUpdated?.Invoke();
             SS.UpdateAmmo();
             
