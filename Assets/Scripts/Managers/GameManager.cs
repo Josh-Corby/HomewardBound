@@ -17,7 +17,6 @@ public class GameManager : GameBehaviour<GameManager>
 
     public GameObject Player;
     public Transform spawnPoint;
-    public GameObject pebblePrefab;
 
     [Header("Tools bools")]
     public bool havePickaxe;
