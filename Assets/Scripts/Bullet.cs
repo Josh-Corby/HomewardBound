@@ -36,6 +36,7 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("BreakableWall"))
         {
+
             Destroy(collision.gameObject);
         }
 
@@ -45,14 +46,14 @@ public class Bullet : MonoBehaviour
         }
         Debug.Log(collision.gameObject);
         //Debug.Log(collision.gameObject.name);
-        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        Destroy(gameObject);
+        //gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        StartCoroutine(nameof(DestroyBullet));
         //StartCoroutine(DestroyBullet());
     }
 
     IEnumerator DestroyBullet()
     {
-        yield return new WaitForSeconds(3f);
-        Destroy(this);
+        yield return new WaitForEndOfFrame();
+        Destroy(gameObject);
     }
 }

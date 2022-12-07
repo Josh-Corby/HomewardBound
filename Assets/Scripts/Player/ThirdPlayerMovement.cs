@@ -251,6 +251,10 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             HandleSprinting();
     }
 
+    public void DivideVelocity(int value)
+    {
+        velocity.y /= value;
+    }
 
 
     private Ray CreateEdgeCheckRay(Vector3 dir)

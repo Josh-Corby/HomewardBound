@@ -46,15 +46,4 @@ public class FallingObject : MonoBehaviour
         rb.isKinematic = true;
     }
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if(collision.gameObject != transform.parent.gameObject)
-    //    {
-    //        if (collision.gameObject.CompareTag("Ground"))
-    //        {
-    //            rb.constraints = RigidbodyConstraints.FreezeAll;
-    //            rb.isKinematic = true;
-    //        }
-    //    }
-    //}
 }
