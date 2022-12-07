@@ -53,7 +53,6 @@ public class DestructableObject : GameBehaviour
             {
                 FallingObjectRB.useGravity = true;
                 FallingObjectRB.constraints &= ~RigidbodyConstraints.FreezePositionY;
-                FallingObjectRB.constraints &= ~RigidbodyConstraints.FreezeRotationY;
                 switch (direction)
                 {
                     case RotateDirection.X:
