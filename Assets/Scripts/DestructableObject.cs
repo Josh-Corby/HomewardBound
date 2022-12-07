@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DestructableObject : GameBehaviour
 {
+    public enum RotateDirection { X, Z}
+    public RotateDirection direction;
     [SerializeField]
     private Transform FallingObjectSpawnPosition;
     [SerializeField]
@@ -16,6 +18,9 @@ public class DestructableObject : GameBehaviour
     [SerializeField]
     private bool isVisible;
 
+
+    [SerializeField]
+    private string rotateDirection;
     private void OnEnable()
     {
         GameManager.OnPlayerRespawn += ResetObject;
@@ -31,28 +36,7 @@ public class DestructableObject : GameBehaviour
         fallingObject = Child.GetComponent<FallingObject>();
         outline = GetComponent<Outline>();
     }
-    //private void Update()
-    //{
-    //    if (isVisible)
-    //    {
-    //        if (Vector3.Distance(gameObject.transform.position, TPM.gameObject.transform.position) <= 50)
-    //        {
-    //            outline.enabled = true;
-    //            return;
-    //        }
-    //        else
-    //        {
-    //            outline.enabled = false;
-    //            return;
-    //        }
-    //    }
-    //    if (!isVisible)
-    //    {
-    //        outline.enabled = false;
-    //        return;
-    //    }
 
-    //}
     private void ResetObject()
     {
         gameObject.SetActive(true);
@@ -69,7 +53,19 @@ public class DestructableObject : GameBehaviour
             {
                 FallingObjectRB.useGravity = true;
                 FallingObjectRB.constraints &= ~RigidbodyConstraints.FreezePositionY;
-                FallingObjectRB.constraints &= ~RigidbodyConstraints.FreezeRotationZ;
+                FallingObjectRB.constraints &= ~RigidbodyConstraints.FreezeRotationY;
+                switch (direction)
+                {
+                    case RotateDirection.X:
+                        FallingObjectRB.constraints &= ~RigidbodyConstraints.FreezeRotationX;
+                        break;
+                    case RotateDirection.Z:
+                        FallingObjectRB.constraints &= ~RigidbodyConstraints.FreezeRotationZ;
+                        break;
+                }
+
+                
+
                 fallingObject.Unfreeze();
             }
         }
