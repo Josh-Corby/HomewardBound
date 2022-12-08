@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public enum BuildObjects
 {
@@ -15,6 +16,7 @@ public enum BuildObjects
 }
 public class BuildManager : GameBehaviour<BuildManager>
 {
+    public static event Action<bool> OnCanBuildStatus = null;
 
     [Header("Build Checks")]
     public bool isBuilding;
@@ -27,6 +29,7 @@ public class BuildManager : GameBehaviour<BuildManager>
     private bool stickCheck;
     private bool stringCheck;
     public bool materialsCheck;
+    public bool allChecks;
 
 
     [Header("Craft Costs")]
@@ -88,13 +91,24 @@ public class BuildManager : GameBehaviour<BuildManager>
             if (TPM.groundState != GroundStates.Grounded || onBuildObject)
             {
                 canBuild = false;
-                return;
             }
-            if(TPM.groundState == GroundStates.Grounded)
+            if (TPM.groundState == GroundStates.Grounded)
             {
                 canBuild = materialsCheck;
-            }           
-           
+            }
+
+            if (TPM.groundState == GroundStates.Grounded && canBuild && collisionCheck && !onBuildObject && !UI.paused)
+            {
+
+                allChecks = true;
+                OnCanBuildStatus(true);
+            }
+
+            if(TPM.groundState != GroundStates.Grounded || !canBuild || !collisionCheck || onBuildObject || UI.paused)
+            {
+                allChecks = false;
+                OnCanBuildStatus(false);
+            }
         }
 
         // Checks for if player can build
@@ -103,7 +117,7 @@ public class BuildManager : GameBehaviour<BuildManager>
             // If material comparisons return true
             if (materialsCheck && canBuild && collisionCheck && !onBuildObject)
             {
-   
+
                 // Detach object from buildzone
                 buildZone.transform.DetachChildren();
 
@@ -129,14 +143,14 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     private void SetObjectValue(ObjectBuild objectBuilt)
     {
-        objectBuilt.stick_Refund_Value = stickCost/2;
-        objectBuilt.rock_Refund_Value = rockCost/2;
-        objectBuilt.string_Refund_Value = stringCost/2;
+        objectBuilt.stick_Refund_Value = stickCost / 2;
+        objectBuilt.rock_Refund_Value = rockCost / 2;
+        objectBuilt.string_Refund_Value = stringCost / 2;
     }
 
     private void ToolSelectListen(int buildObjectIndex)
     {
-        if(buildObjectIndex == currentBuildObject_Index)
+        if (buildObjectIndex == currentBuildObject_Index)
         {
             UI.DeselectHotbarOutline();
             CancelBuilding();
@@ -150,7 +164,7 @@ public class BuildManager : GameBehaviour<BuildManager>
             currentBuildObject_Index = buildObjectIndex;
         }
 
-        if(buildObjectIndex == 3)
+        if (buildObjectIndex == 3)
         {
             CancelBuilding();
             currentBuildObject_Index = buildObjectIndex;
@@ -219,12 +233,12 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     public void CancelBuilding()
     {
-        
+
         if (buildingObject != null)
         {
             Destroy(buildingObject);
         }
-        
+
         prefabToSpawn = null;
         canBuild = false;
         isBuilding = false;
