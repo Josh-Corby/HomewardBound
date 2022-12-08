@@ -21,6 +21,7 @@ TagManager:
   - LadderClimb
   - Mushroom
   - RollingRock
+  - Box
   layers:
   - Default
   - TransparentFX
