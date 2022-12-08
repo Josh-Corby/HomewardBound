@@ -507,6 +507,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tweenScale: {x: 1, y: 1, z: 1}
   _tweenTime: 1.5
+  canBuildColour: {r: 0.09411765, g: 0.14901961, b: 0.6117647, a: 0.42745098}
+  cantBuildColour: {r: 1, g: 0.09067254, b: 0, a: 0}
 --- !u!1 &7941000893956781815
 GameObject:
   m_ObjectHideFlags: 0
