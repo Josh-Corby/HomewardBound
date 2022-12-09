@@ -11,6 +11,9 @@ public class DialogueManager : GameBehaviour<DialogueManager>
     private TMP_Text currentNPC_Name_Text;
     private TMP_Text current_NPC_Dialogue_Text;
 
+    [SerializeField]
+    private Sprite[] dialoguePanelBackgrounds;
+
     private NPCDialog currentNPC;
     [SerializeField]
     private string currentNPC_Name;

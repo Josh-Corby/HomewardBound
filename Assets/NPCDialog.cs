@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+public enum NPCType { Ant, Spider}
 public class NPCDialog : GameBehaviour
 {
+    public NPCType type;
     public string NPC_Name;
     public string[] NPC_Dialogue;
 
