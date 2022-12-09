@@ -16,6 +16,8 @@ public class BridgeMarkerTween : MonoBehaviour
     [SerializeField]
     private Color cantBuildColour;
 
+    [SerializeField]
+    private float emissionIntensity;
     private MeshRenderer renderer;
 
     private void Awake()
@@ -41,13 +43,13 @@ public class BridgeMarkerTween : MonoBehaviour
         if(value == true)
         {
             renderer.material.color = canBuildColour;
-            renderer.material.SetColor("Emission", canBuildColour);
+            renderer.material.SetColor("_EmissionColor", canBuildColour * emissionIntensity);
         }
 
         if (value == false)
         {
             renderer.material.color = cantBuildColour;
-            renderer.material.SetColor("Emission", cantBuildColour);
+            renderer.material.SetColor("_EmissionColor", cantBuildColour * emissionIntensity);
         }
     }
 }

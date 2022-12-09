@@ -113,7 +113,7 @@ public class DialogueManager : GameBehaviour<DialogueManager>
     public void StartDialogue()
     {
         currentNPC.EnableOutline();
-        currentNPC.GUI.ScaleDown();
+        currentNPC._GUITween.ScaleDown();
         isInDialogue = true;
         EnablePanel();
         StartNextSentence();  
@@ -126,7 +126,7 @@ public class DialogueManager : GameBehaviour<DialogueManager>
             
             currentSentence = "";
             currentNPC.DisableOutline();
-            currentNPC.GUI.ScaleUp();
+            currentNPC._GUITween.ScaleUp();
             ClearNPCInformation();
             current_NPC_Dialogue_Text.text = "";
            

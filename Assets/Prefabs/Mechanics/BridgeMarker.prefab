@@ -505,10 +505,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cb46ecf7ea7d4d4d8ed4a74b1a67f27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tweenScale: {x: 1, y: 1, z: 1}
+  _tweenScale: {x: 1.5, y: 1.5, z: 1.5}
   _tweenTime: 1.5
-  canBuildColour: {r: 0.09411765, g: 0.14901961, b: 0.6117647, a: 0.42745098}
-  cantBuildColour: {r: 1, g: 0.09067254, b: 0, a: 0}
+  canBuildColour: {r: 0, g: 0.106060505, b: 1, a: 1}
+  cantBuildColour: {r: 1, g: 0.00000007152558, b: 0, a: 1}
+  emissionIntensity: 10
 --- !u!1 &7941000893956781815
 GameObject:
   m_ObjectHideFlags: 0

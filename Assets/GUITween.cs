@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-public class GUITween : MonoBehaviour
+public class GUITween : GameBehaviour
 {
     private Vector3 _destination;
     [SerializeField]
     private float _tweenTime;
     private float _scaleTweenTime = 0.3f;
 
+    private void OnEnable()
+    {
+        ScaleUp();
+    }
     void Start()
     {
         _destination = new Vector3(transform.position.x, transform.position.y + 0.75f, transform.position.z);

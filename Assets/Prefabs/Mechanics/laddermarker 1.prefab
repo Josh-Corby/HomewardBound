@@ -158,7 +158,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 8748892135801146194, guid: 4ba4c2a02833b6b42ab6a4878bb8dd46, type: 3}
+  - {fileID: 2100000, guid: 31b6ce0e23bf78f4f911f9402a10b6da, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -192,10 +192,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cb46ecf7ea7d4d4d8ed4a74b1a67f27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tweenScale: {x: 1, y: 1, z: 1}
+  _tweenScale: {x: 1.5, y: 1.5, z: 1.5}
   _tweenTime: 1.5
-  canBuildColour: {r: 0.09411765, g: 0.14901961, b: 0.6117647, a: 0.42745098}
-  cantBuildColour: {r: 1, g: 0.09067254, b: 0, a: 0}
+  canBuildColour: {r: 0, g: 0.106060505, b: 1, a: 1}
+  cantBuildColour: {r: 1, g: 0.00000007152558, b: 0, a: 1}
+  emissionIntensity: 10
 --- !u!1 &3143217920756387226
 GameObject:
   m_ObjectHideFlags: 0
