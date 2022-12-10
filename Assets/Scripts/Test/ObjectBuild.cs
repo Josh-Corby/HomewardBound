@@ -217,7 +217,6 @@ public class ObjectBuild : GameBehaviour
     }
     private void LandingMarker()
     {
-        Physics.Raycast(bridgeEndPoint.transform.position, bridgeLandPoint.transform.position);
         Physics.Raycast(bridgeEndPoint.transform.position, bridgeLandPoint.transform.position - bridgeEndPoint.transform.position, out RaycastHit hit, Mathf.Infinity, mask);
         landingMarker.transform.position = hit.point;
     }

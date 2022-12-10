@@ -56,9 +56,6 @@ public class BuildManager : GameBehaviour<BuildManager>
 
 
     public GameObject buildingObject;
-
-
-
     private int currentBuildObject_Index;
 
     private void Start()
@@ -162,12 +159,14 @@ public class BuildManager : GameBehaviour<BuildManager>
         {
             BuildItem(buildObjectIndex);
             currentBuildObject_Index = buildObjectIndex;
+            return;
         }
 
         if (buildObjectIndex == 3)
         {
             CancelBuilding();
             currentBuildObject_Index = buildObjectIndex;
+            return;
         }
     }
 
@@ -233,7 +232,7 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     public void CancelBuilding()
     {
-
+        UI.DeselectHotbarOutline();
         if (buildingObject != null)
         {
             Destroy(buildingObject);
@@ -243,6 +242,7 @@ public class BuildManager : GameBehaviour<BuildManager>
         canBuild = false;
         isBuilding = false;
         currentBuildObject_Index = -1;
+        
     }
     public void SetMaterialCosts(int index, int costMultiplier)
     {

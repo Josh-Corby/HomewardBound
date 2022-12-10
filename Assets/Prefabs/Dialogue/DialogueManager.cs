@@ -52,15 +52,6 @@ public class DialogueManager : GameBehaviour<DialogueManager>
         if (currentNPC != null)
         {
 
-            //if (!isConversationStarted)
-            //{
-            //    if (Input.GetKeyDown(KeyCode.E))
-            //    {             
-            //        StartDialogue();
-            //        return;
-            //    }
-            //}
-
             if (!isSentenceOver)
                 if (Input.GetKeyDown(KeyCode.E))
                 {
@@ -84,6 +75,7 @@ public class DialogueManager : GameBehaviour<DialogueManager>
             }
         }
     }
+
     public void GetNPCInformation(NPCDialog NPC)
     {
         currentNPC = NPC;
@@ -91,6 +83,22 @@ public class DialogueManager : GameBehaviour<DialogueManager>
         currentNPC_Name_Text.text = currentNPC_Name;
         currentNPC_Dialogue = currentNPC.NPC_Dialogue;
         currentSentence_Index = 0;
+
+        SetDialogueCharacterImage();
+        
+    }
+
+    private void SetDialogueCharacterImage()
+    {
+        if(currentNPC.type == NPCType.Ant)
+        {
+            dialoguePanel.GetComponent<Image>().sprite = dialoguePanelBackgrounds[0];
+        }
+
+        if(currentNPC.type == NPCType.Spider)
+        {
+            dialoguePanel.GetComponent<Image>().sprite = dialoguePanelBackgrounds[1];
+        }
     }
 
     private void StartNextSentence()

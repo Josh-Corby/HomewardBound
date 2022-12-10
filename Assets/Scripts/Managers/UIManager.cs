@@ -37,6 +37,9 @@ public class UIManager : GameBehaviour<UIManager>
     public TMP_Text currentNPC_Name_Text;
     public TMP_Text current_NPC_Dialogue_Text;
 
+    [SerializeField]
+    private Color outlineColour;
+
     private void Start()
     {
         PlayerManager.OnToolSelected += SelectControlUI;
@@ -49,7 +52,7 @@ public class UIManager : GameBehaviour<UIManager>
     private void Update()
     {
         Inputs();
-       
+
         #region Text Updaters
 
         /// <summary>
@@ -66,7 +69,7 @@ public class UIManager : GameBehaviour<UIManager>
     }
     public void UpdateMaterials(TMP_Text text, int amount)
     {
-        text.text =  amount.ToString();
+        text.text = amount.ToString();
     }
     /// <summary>
     /// Update UI of how many rocks the player has collected
@@ -169,7 +172,7 @@ public class UIManager : GameBehaviour<UIManager>
     {
         objectToToggle.SetActive(!objectToToggle);
     }
- 
+
     /// <summary>
     /// Pause the game and active the pause panel, manage cursor states
     /// </summary>
@@ -204,12 +207,16 @@ public class UIManager : GameBehaviour<UIManager>
             DeselectHotbarOutline();
         }
         CurrentOutline = outline;
-        CurrentOutline.color = Color.red;
+        CurrentOutline.color = outlineColour;
     }
 
     public void DeselectHotbarOutline()
     {
-        CurrentOutline.color = Color.black;
-        CurrentOutline = null;
+        if (CurrentOutline != null)
+        {
+
+            CurrentOutline.color = Color.black;
+            CurrentOutline = null;
+        }
     }
 }

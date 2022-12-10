@@ -9,10 +9,7 @@ public class GUITween : GameBehaviour
     private float _tweenTime;
     private float _scaleTweenTime = 0.3f;
 
-    private void OnEnable()
-    {
-        ScaleUp();
-    }
+
     void Start()
     {
         _destination = new Vector3(transform.position.x, transform.position.y + 0.75f, transform.position.z);
