@@ -32,13 +32,11 @@ public class DialogueManager : GameBehaviour<DialogueManager>
     
     public bool isConversationStarted;
 
+    [SerializeField]
+    private CameraTransform cam;
 
     private Coroutine typing;
 
-    [SerializeField]
-    private float defaultTypingSpeed;
-    [SerializeField]
-    private float fastTypingSpeed;
     private void Awake()
     {
         dialoguePanel = UI.DialoguePanel;
@@ -57,7 +55,7 @@ public class DialogueManager : GameBehaviour<DialogueManager>
             if (!isSentenceOver)
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    wordSpeed = fastTypingSpeed;
+                    wordSpeed = 0.005f;
                 }
 
             if (isSentenceOver)
@@ -155,9 +153,9 @@ public class DialogueManager : GameBehaviour<DialogueManager>
 
     IEnumerator Typing()
     {
-        //Debug.Log("is typing");
+        Debug.Log("is typing");
         isSentenceOver = false;
-        wordSpeed = defaultTypingSpeed;
+        wordSpeed = 0.02f;
         current_NPC_Dialogue_Text.text = "";
         foreach (char letter in currentSentence.ToCharArray())
         {

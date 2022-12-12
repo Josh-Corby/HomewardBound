@@ -204,10 +204,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         switch (groundState)
         {
             case GroundStates.Grounded:
-                if (Input.GetKeyDown(KeyCode.S))
-                {
-                    CancelSprinting();
-                }
+
                 ResetCoyoteTimer();
                 if (fallTimer <= 0)
                 {
@@ -287,9 +284,9 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         {
             if(Physics.Raycast(ray, out RaycastHit hit, 1,groundMask))
             {
-                //Debug.Log(hit.collider.gameObject);
+                Debug.Log(hit.collider.gameObject);
                 inEdgeMovement += (-ray.direction);
-                //Debug.Log(inEdgeMovement);
+                Debug.Log(inEdgeMovement);
             }
             controller.Move(inEdgeMovement * Time.deltaTime);
         }
@@ -308,7 +305,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         coyoteTimer -= Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Space) && groundState == GroundStates.Airborne && coyoteTimer > 0)
         {
-            //Debug.Log("jump");
+            Debug.Log("jump");
             StartCoroutine(Jump());
         }
     }
@@ -331,22 +328,47 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             moveSpeeds = MovementSpeeds.Walking;
 
         }
+
+        //if (groundState == GroundStates.Grounded)
+        //{
+        //    if (!Input.GetKey(KeyCode.LeftShift))
+        //    {
+        //        moveSpeeds = MovementSpeeds.Walking;
+        //    }
+        //}
+
         if (groundState == GroundStates.Grounded || groundState == GroundStates.Airborne)
         {
             if(Input.GetKeyDown(KeyCode.LeftShift))
             {
                 ToggleSprint();
             }
+
+
+            //if (Input.GetKey(KeyCode.LeftShift))
+            //{
+            //    moveSpeeds = MovementSpeeds.Sprinting;
+
+            //}
+
+            //if (Input.GetKeyUp(KeyCode.LeftShift))
+            //{
+
+            //    moveSpeeds = MovementSpeeds.Walking;
+            //}
         }
+
+        //switch (moveSpeeds)
+        //{
+        //    case MovementSpeeds.Walking:
+        //        basicMovementScript.speed = moveSpeed;
+        //        break;
+        //    case MovementSpeeds.Sprinting:
+        //        basicMovementScript.speed = sprintSpeed;
+        //        break;
+        //}
     }
 
-    private void CancelSprinting()
-    {
-        isSprinting = false;
-        basicMovementScript.speed = moveSpeed;
-        AM.SetBool("isSprinting", isSprinting);
-        AM.isSprinting = isSprinting;
-    }
     private void ToggleSprint()
     {
         isSprinting = !isSprinting;
