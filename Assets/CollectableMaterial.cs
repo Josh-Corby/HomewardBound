@@ -8,7 +8,7 @@ public class CollectableMaterial : GameBehaviour
     private bool isMovingTowardsPlayer;
     private Collider col;
 
-    private float moveSpeed = 0.3f;
+    private float moveSpeed = 0.4f;
 
     private void Awake()
     {
