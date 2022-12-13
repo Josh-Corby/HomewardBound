@@ -9,7 +9,8 @@ public class LadderClimb : GameBehaviour<LadderClimb>
     public bool inside = false;
     public float speedUpDown = 3.2f;
     public ThirdPlayerMovement TPMMovement;
-
+    [SerializeField]
+    private bool isClimbing;
     void Start()
     {
         inside = false;
@@ -18,6 +19,7 @@ public class LadderClimb : GameBehaviour<LadderClimb>
     {
         if (col.gameObject.tag == "LadderClimb")
         {
+            AM.isOnLadder = true;
             TPM.groundState = GroundStates.Grounded;
             TPM.enabled = false;
             inside = !inside;
@@ -27,6 +29,7 @@ public class LadderClimb : GameBehaviour<LadderClimb>
     {
         if (col.gameObject.tag == "LadderClimb")
         {
+            AM.isOnLadder = false;
             TPM.enabled = true;
             TPM.groundState = GroundStates.Grounded;
             inside = !inside;
@@ -38,6 +41,9 @@ public class LadderClimb : GameBehaviour<LadderClimb>
         if (inside == true && Input.GetKey("w"))
         {
             PlayerController.transform.position += Vector3.up / speedUpDown;
+            isClimbing = true;
+            SendIsClimbing();
+            return;
             //Debug.Log("Climbing Up");
         }
 
@@ -45,7 +51,22 @@ public class LadderClimb : GameBehaviour<LadderClimb>
         {
             PlayerController.transform.position += Vector3.down / speedUpDown;
             //Debug.Log("Climbing Down");
+            isClimbing = true;
+            SendIsClimbing();
+            return;
         }
+
+        else
+        {
+            isClimbing = false;
+            SendIsClimbing();
+        }
+    }
+
+    private void SendIsClimbing()
+    {
+        AM.isClimbing = isClimbing;
+        AM.SetAnimationBool("isClimbing", AM.isClimbing);
     }
 
 }

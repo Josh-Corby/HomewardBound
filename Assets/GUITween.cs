@@ -9,6 +9,10 @@ public class GUITween : GameBehaviour
     private float _tweenTime;
     private float _scaleTweenTime = 0.3f;
 
+    private void OnEnable()
+    {
+        ScaleUp();
+    }
 
     void Start()
     {
