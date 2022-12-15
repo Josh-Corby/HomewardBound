@@ -53,7 +53,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
                 if (objectToDestroy.CompareTag("Ladder"))
                 {
-                    LC.Inside = false;
+                    LC.inside = false;
                     TPM.enabled = true;
                     AM.SetOnLadder(false);
                 }

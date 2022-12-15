@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+enum HookshotStates
+{
+    Default,
+    HookshotThrown,
+    HookshotFlyingPlayer,
+    HookshotPullingObject
+}
 enum MovementSpeeds
 {
     Walking,
@@ -12,6 +19,7 @@ public enum GroundStates
 {
     Grounded,
     Airborne,
+    Gliding
 }
 public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 {
@@ -21,16 +29,20 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     public static event Action<bool> OnJump = null;
 
     [SerializeField]
-    private CameraTransform _cameraControl;
+    private CameraTransform cameraControl;
     [Header("References")]
-    public CharacterController Controller;
-    public Camera Cam;
+    public CharacterController controller;
+    public Camera cam;
     [SerializeField]
-    private Transform _cameraLookRight;
-    public Vector3 CharacterVelocityMomentum;
-
-    public GameObject GrappleHook;
-    public Transform GroundCheck;
+    private Transform cameraLookRight;
+    public Vector3 characterVelocityMomentum;
+    [SerializeField]
+    private Transform debugHitPointTransform;
+    [SerializeField]
+    private Transform hookshotTransform;
+    public GameObject grapplePoint;
+    public GameObject grappleHook;
+    public Transform groundCheck;
     public LayerMask groundMask;
     public LayerMask buildMask;
 
@@ -45,6 +57,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     public float jumpHeight = 3f;
     public float fallTimer;
     public float fallTimerMax = 5f;
+    //private float glidingSpeed = 1f;
     private float glideTimer;
     private float glideTimerMax = 5f;
     private float groundDistance = 0.8f;
@@ -59,19 +72,38 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     Vector3 moveDir;
     Vector3 velocity;
 
+    private Vector3 hookshotPosition;
+    private float hookshotSize;
+    [SerializeField]
+    private HookshotStates hookshotState;
     [SerializeField]
     private MovementSpeeds moveSpeeds;
     public GroundStates groundState;
 
     bool buildState;
 
+    [SerializeField]
+    private GameObject grappleHitObject;
+    private readonly float hookshotSpeedMin = 20f;
+    private readonly float hookshotSpeedMax = 40f;
+    private readonly float pullSpeedMin = 1;
+    private readonly float pullSpeedMax = 2;
+    private float grappleRange = 50f;
+    [SerializeField]
+    LayerMask grappleMask;
 
-    private Vector3 groundBox = new Vector3(0.3f, 0.5f, 0.3f);
+    private Vector3 groundBox =  new Vector3(0.3f, 0.5f, 0.3f);
 
+    public GameObject LilypadOffset;
 
 
     private bool isSprinting;
 
+    private void Awake()
+    {
+        hookshotState = HookshotStates.Default;
+        hookshotTransform.gameObject.SetActive(false);
+    }
 
     private void Start()
     {
@@ -82,16 +114,37 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     void Update()
     {
         LookFoward();
-
+        
         if (UI.menu == Menus.Paused)
             return;
     }
     private void LateUpdate()
     {
-        HandleMovement();
 
 
-        GrappleHook.transform.rotation = Camera.main.transform.rotation;
+        switch (hookshotState)
+        {
+            case HookshotStates.Default:
+                HandleMovement();
+                StartGrapple();
+                break;
+
+            case HookshotStates.HookshotThrown:
+                HandleHookShotThrow();
+                HandleMovement();
+                break;
+            case HookshotStates.HookshotFlyingPlayer:
+                EndCoyoteTimer();
+                HandleHookshotPlayerMovement();
+                break;
+
+            case HookshotStates.HookshotPullingObject:
+                PullLilypadTowardsPlayer();
+                HandleMovement();
+                break;
+        }
+
+        grappleHook.transform.rotation = Camera.main.transform.rotation;
 
         moveDir = Vector3.zero;
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -101,36 +154,54 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
         if (direction.magnitude >= 0.1f)
         {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + Cam.transform.eulerAngles.y;
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.transform.eulerAngles.y;
 
 
             moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
 
         }
-            Controller.Move(moveDir.normalized * speed * Time.deltaTime);
-        
+
+
+        if (LilypadOffset != null)
+        {
+            Vector3 translation = LilypadOffset.transform.position - transform.position;
+
+            controller.Move(translation + (moveDir.normalized * speed * Time.deltaTime));
+
+            LilypadOffset.transform.position = transform.position;
+        }
+
+        if (LilypadOffset == null)
+        {
+            controller.Move(moveDir.normalized * speed * Time.deltaTime);
+        }
     }
 
-
+   
     private void LookFoward()
     {
-        if (Vector3.Distance(Cam.transform.position, _cameraLookRight.transform.position) <= 0.8f)
+        if (Vector3.Distance(cam.transform.position, cameraLookRight.transform.position) <= 0.8f)
         {
+            //model.SetActive(false);
             return;
         }
-  
-        var lookPos = Cam.transform.position - _cameraLookRight.position;
+        else
+        {
+            //model.SetActive(true);
+        }
+        var lookPos = cam.transform.position - cameraLookRight.position;
         lookPos.y = 0;
         var rotation = Quaternion.LookRotation(lookPos);
         transform.rotation = rotation;
-
+        
 
     }
     private void HandleMovement()
     {
+        //groundState = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) ? GroundStates.Grounded : GroundStates.Airborne;
 
-        groundState = Physics.CheckBox(GroundCheck.position, groundBox, Quaternion.identity, groundMask) ? GroundStates.Grounded : GroundStates.Airborne;
-        BM.onBuildObject = Physics.CheckSphere(GroundCheck.position, groundDistance, buildMask);
+        groundState = Physics.CheckBox(groundCheck.position, groundBox, Quaternion.identity, groundMask) ? GroundStates.Grounded : GroundStates.Airborne;
+        BM.onBuildObject = Physics.CheckSphere(groundCheck.position, groundDistance, buildMask);
 
         switch (groundState)
         {
@@ -160,7 +231,11 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                     CoyoteTimer();
                 }
                 break;
-        
+            case GroundStates.Gliding:
+                OnGroundedStateChange?.Invoke(false);
+                Debug.Log("is gliding");
+
+                break;
         }
         if (Input.GetButtonDown("Jump") && coyoteTimer >= 0 && !UI.paused)
         {
@@ -168,15 +243,15 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             StartCoroutine(Jump());
         }
         velocity.y += gravity * Time.deltaTime;
-        velocity += CharacterVelocityMomentum;
+        velocity += characterVelocityMomentum;
         //Debug.Log(velocity);
         //Debug.Log(controller.velocity);
-        Controller.Move(velocity * Time.deltaTime);
+        controller.Move(velocity * Time.deltaTime);
         gravity = defaultGravity;
-
+       
         if (groundState == GroundStates.Airborne) return;
 
-        if (!IZ.isRolling)
+        if(!IZ.isRolling)
             HandleSprinting();
     }
 
@@ -189,7 +264,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private Ray CreateEdgeCheckRay(Vector3 dir)
     {
         Vector3 rayPos = transform.position;
-        rayPos.y -= Controller.height / 4f;
+        rayPos.y -= controller.height / 4f;
         Debug.DrawLine(rayPos, dir, Color.red);
         return new Ray(rayPos, dir);
     }
@@ -197,7 +272,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private Ray[] CreateSideRays()
     {
         Vector3 rayStart = transform.position;
-        rayStart.y -= (Controller.height / 4f);
+        rayStart.y -= (controller.height / 4f);
         Ray[] sideRays = new Ray[4];
         sideRays[0] = CreateEdgeCheckRay(rayStart + Vector3.right);
         sideRays[1] = CreateEdgeCheckRay(rayStart + Vector3.left);
@@ -211,13 +286,13 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         Vector3 inEdgeMovement = Vector3.zero;
         foreach (Ray ray in CreateSideRays())
         {
-            if (Physics.Raycast(ray, out RaycastHit hit, 1, groundMask))
+            if(Physics.Raycast(ray, out RaycastHit hit, 1,groundMask))
             {
                 Debug.Log(hit.collider.gameObject);
                 inEdgeMovement += (-ray.direction);
                 Debug.Log(inEdgeMovement);
             }
-            Controller.Move(inEdgeMovement * Time.deltaTime);
+            controller.Move(inEdgeMovement * Time.deltaTime);
         }
     }
 
@@ -241,6 +316,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private IEnumerator Jump()
     {
         OnJump?.Invoke(true);
+        LilypadOffset = null;
         velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
 
         yield return new WaitForSeconds(coyoteTimerOffset);
@@ -251,13 +327,50 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     }
     private void HandleSprinting()
     {
+        if (hookshotState == HookshotStates.HookshotThrown || groundState == GroundStates.Gliding)
+        {
+            moveSpeeds = MovementSpeeds.Walking;
+
+        }
+
+        //if (groundState == GroundStates.Grounded)
+        //{
+        //    if (!Input.GetKey(KeyCode.LeftShift))
+        //    {
+        //        moveSpeeds = MovementSpeeds.Walking;
+        //    }
+        //}
+
         if (groundState == GroundStates.Grounded || groundState == GroundStates.Airborne)
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            if(Input.GetKeyDown(KeyCode.LeftShift))
             {
                 ToggleSprint();
             }
+
+
+            //if (Input.GetKey(KeyCode.LeftShift))
+            //{
+            //    moveSpeeds = MovementSpeeds.Sprinting;
+
+            //}
+
+            //if (Input.GetKeyUp(KeyCode.LeftShift))
+            //{
+
+            //    moveSpeeds = MovementSpeeds.Walking;
+            //}
         }
+
+        //switch (moveSpeeds)
+        //{
+        //    case MovementSpeeds.Walking:
+        //        basicMovementScript.speed = moveSpeed;
+        //        break;
+        //    case MovementSpeeds.Sprinting:
+        //        basicMovementScript.speed = sprintSpeed;
+        //        break;
+        //}
     }
 
     private void ToggleSprint()
@@ -265,5 +378,112 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         isSprinting = !isSprinting;
         basicMovementScript.speed = isSprinting ? sprintSpeed : moveSpeed;
         OnSprintingStateChange?.Invoke(isSprinting);
+    }
+    #region GrappleHook
+    private void StartGrapple()
+    {
+        if (!UI.paused)
+        {
+            //if (!UI.buildPanelStatus)          
+        }
+    }
+
+    private void HandleHookShotThrow()
+    {
+        hookshotTransform.LookAt(hookshotPosition);
+        float hookshotThrowSpeed = 150f;
+        hookshotSize += hookshotThrowSpeed * Time.deltaTime;
+        hookshotTransform.localScale = new Vector3(1, 1, hookshotSize);
+
+
+        if (grappleHitObject.CompareTag("Lilypad"))
+        {
+            if (hookshotSize >= Vector3.Distance(transform.position, hookshotPosition))
+            {
+                grapplePoint.transform.parent = grappleHitObject.transform;
+                hookshotState = HookshotStates.HookshotPullingObject;
+                return;
+            }
+        }
+        if (hookshotSize >= Vector3.Distance(transform.position, hookshotPosition))
+        {
+            hookshotState = HookshotStates.HookshotFlyingPlayer;
+        }
+    }
+
+    private void HandleHookshotPlayerMovement()
+    {
+        LilypadOffset = null;
+        //hookshot looks at position of target hit
+        hookshotTransform.LookAt(hookshotPosition);
+        Vector3 hookshotDir = (hookshotPosition - transform.position).normalized;
+
+        //the speed the hookshot pulls the player
+        float hookshotSpeed = Mathf.Clamp(Vector3.Distance(transform.position, hookshotPosition), hookshotSpeedMin, hookshotSpeedMax);
+        float hookshotSpeedMultiplier = 2f;
+
+        //move the player in direction of hookshot at hookshot speed
+        controller.Move(hookshotDir * hookshotSpeed * hookshotSpeedMultiplier * Time.deltaTime);
+
+        ManageHookshotSize();
+        float reachedHookshotPositionDistance = 2f;
+        if (Vector3.Distance(transform.position, hookshotPosition) < reachedHookshotPositionDistance)
+        {
+            //Reached hookshot position
+            glideTimer = glideTimerMax;
+            StopHookshot();
+        }
+
+        if (IM.rClick_Input)
+        {
+            IM.rClick_Input = false;
+            StopHookshot();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //float momentumExtraSpeed = 7f;
+            //float jumpSpeed = 40f;
+            //characterVelocityMomentum = hookshotDir / 10;
+            //characterVelocityMomentum += Vector3.up * jumpSpeed;
+            StopHookshot();
+        }
+    }
+
+    private void PullLilypadTowardsPlayer()
+    {
+        if (UI.paused) return;
+
+        float hookshotSpeed = Mathf.Clamp(Vector3.Distance(transform.position, grappleHitObject.transform.position), pullSpeedMin, pullSpeedMax);
+        float hookshotSpeedMultiplier = 0.1f;
+
+        Vector3 pullDestination = new Vector3(gameObject.transform.position.x, grappleHitObject.transform.position.y, gameObject.transform.position.z);
+        grappleHitObject.transform.position = Vector3.MoveTowards(grappleHitObject.transform.position, pullDestination, hookshotSpeed * hookshotSpeedMultiplier);
+        //ManageHookshotSize();
+
+        if (Vector3.Distance(new Vector3(gameObject.transform.position.x, 0f, gameObject.transform.position.z), new Vector3(grappleHitObject.transform.position.x, 0f, grappleHitObject.transform.position.z)) < 2f)
+        {
+            StopHookshot();
+            grappleHitObject.GetComponent<LilyPad>().ResetLilyPad();
+        }
+    }
+
+    private void ManageHookshotSize()
+    {
+        hookshotSize = Vector3.Distance(transform.position, hookshotPosition);
+        hookshotTransform.localScale = new Vector3(1, 1, hookshotSize);
+    }
+
+    public void StopHookshot()
+    {
+        hookshotState = HookshotStates.Default;
+        hookshotTransform.gameObject.SetActive(false);
+        grapplePoint.transform.parent = gameObject.transform;
+        grapplePoint.transform.position = transform.position;
+    }
+    #endregion
+    private void DisableGrappleInput()
+    {
+        IM.rClick_Input = false;
     }
 }

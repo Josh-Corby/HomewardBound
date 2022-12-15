@@ -5,8 +5,9 @@ using DG.Tweening;
 public class GUITween : GameBehaviour
 {
     private Vector3 _destination;
-    [SerializeField] private float _tweenTime;
-    private readonly float _scaleTweenTime = 0.3f;
+    [SerializeField]
+    private float _tweenTime;
+    private float _scaleTweenTime = 0.3f;
 
     private void OnEnable()
     {

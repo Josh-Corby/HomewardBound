@@ -132,7 +132,6 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
                 SetWalkingBack(false);
                 SetStepLeft(false);
                 SetStepRight(false);
-
             } 
         }      
     }
@@ -199,5 +198,8 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
         animator.SetBool(IS_ON_LADDER, value);
         isOnLadder = value;
     }
-
+    public void SetAnimationBool(string name, bool value)
+    {
+        animator.SetBool(name, value);
+    }
 }

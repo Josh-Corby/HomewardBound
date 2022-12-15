@@ -5,34 +5,34 @@ using UnityEngine;
 public class FootSteps : GameBehaviour
 {
     [SerializeField]
-    private AudioClip[] _walkClips;
+    private AudioClip[] walkClips;
 
     [SerializeField]
-    private AudioClip[] _runClips;
+    private AudioClip[] runClips;
 
     [SerializeField]
-    private AudioClip[] _jumpClips;
+    private AudioClip[] jumpClips;
 
     [SerializeField]
-    private AudioClip[] _landClips;
+    private AudioClip[] landClips;
 
     private void Step()
     {
-        SM.StepSFX.PlayOneShot(_walkClips[Random.Range(0, _walkClips.Length)]);
+        SM.StepSFX.PlayOneShot(walkClips[Random.Range(0, walkClips.Length)]);
     }
 
     private void Run()
     {
-        SM.StepSFX.PlayOneShot(_walkClips[Random.Range(0, _runClips.Length)]);
+        SM.StepSFX.PlayOneShot(walkClips[Random.Range(0, runClips.Length)]);
     }
 
     private void Jump()
     {
-        SM.StepSFX.PlayOneShot(_walkClips[Random.Range(0, _jumpClips.Length)]);
+        SM.StepSFX.PlayOneShot(walkClips[Random.Range(0, jumpClips.Length)]);
     }
 
     private void Land()
     {
-        SM.StepSFX.PlayOneShot(_walkClips[Random.Range(0, _landClips.Length)]);
+        SM.StepSFX.PlayOneShot(walkClips[Random.Range(0, landClips.Length)]);
     }
 }

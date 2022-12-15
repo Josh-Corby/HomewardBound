@@ -9,139 +9,139 @@ public enum BuildType
 }
 public class ObjectBuild : GameBehaviour
 {
+    public BuildType type;
     public static event Action OnObjectLengthChange;
-    public BuildType Type;
 
-    public BoxCollider CurrentTrigger;
-
-    [SerializeField]
-    public int ObjectLength;
+    public BoxCollider currentTrigger;
 
     [SerializeField]
-    private List<BuildObjectTrigger> _objectColliders = new List<BuildObjectTrigger>();
+    public int objectLength;
+
+    [SerializeField]
+    private List<BuildObjectTrigger> ObjectColliders = new List<BuildObjectTrigger>();
 
     [SerializeField]
 
-    private MeshRenderer _renderer;
+    private MeshRenderer renderer;
 
     [SerializeField]
-    private Color _baseColour;
+    private Color baseColour;
 
     [SerializeField]
-    private bool _isBeingBuilt;
+    private bool isBeingBuilt;
 
     [SerializeField]
-    private bool _isTriggerNotColliding;
+    private bool isTriggerNotColliding;
 
 
-    public int StickRefundValue;
-    public int RockRefundValue;
-    public int StringRefundValue;
+    public int stick_Refund_Value;
+    public int rock_Refund_Value;
+    public int string_Refund_Value;
 
-    private Material _material;
+    private Material material;
 
-    private readonly float _objectBuildingAlpha = 1.1f;
-    private readonly float _objectBuiltAlpha = 2f;
-    private bool _isBuilt;
-
-    [SerializeField]
-    private GameObject[] _bridgeEndPoints;
-    [SerializeField]
-    private GameObject[] _bridgeLandPoints;
+    private float objectBuildingAlpha = 1.1f;
+    private float objectBuiltAlpha = 2f;
+    private bool isBuilt;
 
     [SerializeField]
-    private GameObject _bridgeEndPoint;
+    private GameObject[] bridgeEndPoints;
     [SerializeField]
-    private GameObject _bridgeLandPoint;
-
-    private bool _isMarking;
-    [SerializeField]
-    private LayerMask _mask;
+    private GameObject[] bridgeLandPoints;
 
     [SerializeField]
-    private GameObject _landingMarker;
+    private GameObject bridgeEndPoint;
+    [SerializeField]
+    private GameObject bridgeLandPoint;
+
+    private bool isMarking;
+    [SerializeField]
+    private LayerMask mask;
+
+    [SerializeField]
+    private GameObject landingMarker;
     private void Awake()
     {
-        _material = _renderer.material;
-        _baseColour = _material.GetColor("_colour");
-        for (int i = 1; i < _objectColliders.Count; i++)
+        material = renderer.material;
+        baseColour = material.GetColor("_colour");
+        for (int i = 1; i < ObjectColliders.Count; i++)
         {
-            _objectColliders[i].transform.gameObject.SetActive(false);
+            ObjectColliders[i].transform.gameObject.SetActive(false);
         }
-        CurrentTrigger = _objectColliders[0].gameObject.GetComponent<BoxCollider>();
+        currentTrigger = ObjectColliders[0].gameObject.GetComponent<BoxCollider>();
     }
 
     private void Start()
     {
-        _isBuilt = false;
-        ObjectLength = 0;
-        ChangeChangeValueOfMaterial(_objectBuildingAlpha);
-        if (Type == BuildType.BRIDGE)
+        isBuilt = false;
+        objectLength = 0;
+        ChangeChangeValueOfMaterial(objectBuildingAlpha);
+        if (type == BuildType.BRIDGE)
         {
-            UpdateLandingMarker(ObjectLength);
+            UpdateLandingMarker(objectLength);
         }
 
-        if (Type == BuildType.LADDER)
+        if(type == BuildType.LADDER)
         {
-            _isMarking = true;
+            isMarking = true;
         }
     }
     void Update()
     {
         if (UI.paused) return;
 
-        BM.collisionCheck = _isTriggerNotColliding;
+        BM.collisionCheck = isTriggerNotColliding;
 
-        _isBeingBuilt = gameObject == BM.buildingObject;
+        isBeingBuilt = gameObject == BM.buildingObject;
 
-        if (_isBeingBuilt == false)
+        if (isBeingBuilt == false)
         {
             ObjectBuilt();
         }
 
-        if (_isBeingBuilt)
+        if (isBeingBuilt)
         {
             if (Input.mouseScrollDelta.y > 0)
             {
                 //Debug.Log("Mouse up");
-                if (ObjectLength == _objectColliders.Count)
+                if (objectLength == ObjectColliders.Count)
                 {
                     return;
                 }
-                ObjectLength += 1;
+                objectLength += 1;
                 OnObjectLengthChange();
 
-                BM.SetMaterialCosts(2, ObjectLength);
+                BM.SetMaterialCosts(2, objectLength);
 
-                if (CurrentTrigger != null)
+                if (currentTrigger != null)
                 {
-                    CurrentTrigger.gameObject.SetActive(false);
+                    currentTrigger.gameObject.SetActive(false);
                 }
-                CurrentTrigger = _objectColliders[ObjectLength - 1].transform.gameObject.GetComponent<BoxCollider>();
+                currentTrigger = ObjectColliders[objectLength - 1].transform.gameObject.GetComponent<BoxCollider>();
 
-                CurrentTrigger.gameObject.SetActive(true);
+                currentTrigger.gameObject.SetActive(true);
 
             }
             if (Input.mouseScrollDelta.y < 0)
             {
-                if (ObjectLength <= 1)
+                if (objectLength <= 1)
                 {
                     return;
                 }
                 //Debug.Log("Mouse down");
-                if (CurrentTrigger == null) return;
-                ObjectLength -= 1;
+                if (currentTrigger == null) return;
+                objectLength -= 1;
                 OnObjectLengthChange();
 
-                BM.SetMaterialCosts(2, ObjectLength);
-                CurrentTrigger.gameObject.SetActive(false);
-                CurrentTrigger = _objectColliders[ObjectLength - 1].transform.gameObject.GetComponent<BoxCollider>();
-                CurrentTrigger.gameObject.SetActive(true);
+                BM.SetMaterialCosts(2, objectLength);
+                currentTrigger.gameObject.SetActive(false);
+                currentTrigger = ObjectColliders[objectLength - 1].transform.gameObject.GetComponent<BoxCollider>();
+                currentTrigger.gameObject.SetActive(true);
 
             }
             if (BM.materialsCheck)
             {
-                if (_isTriggerNotColliding)
+                if (isTriggerNotColliding)
                 {
                     ChangeColourOfObject(Color.blue);
 
@@ -163,14 +163,14 @@ public class ObjectBuild : GameBehaviour
             else
                 ChangeColourOfObject(Color.red);
 
-            ObjectLength = Mathf.Clamp(ObjectLength, 1, _objectColliders.Count);
+            objectLength = Mathf.Clamp(objectLength, 1, ObjectColliders.Count);
         }
 
 
-        if (Type == BuildType.BRIDGE)
+        if (type == BuildType.BRIDGE)
         {
-            UpdateLandingMarker(ObjectLength - 1);
-            if (_isMarking)
+            UpdateLandingMarker(objectLength - 1);
+            if (isMarking)
             {
                 LandingMarker();
             }
@@ -178,56 +178,47 @@ public class ObjectBuild : GameBehaviour
     }
     public void CanObjectBeBuilt(bool triggerCollision)
     {
-        _isTriggerNotColliding = triggerCollision;
+        isTriggerNotColliding = triggerCollision;
     }
     private void ChangeColourOfObject(Color colour)
     {
-        _material.SetColor("_colour", colour);
+        material.SetColor("_colour", colour);
     }
     private void ObjectBuilt()
     {
-        if (!_isBuilt)
+        if (!isBuilt)
         {
-            ChangeChangeValueOfMaterial(_objectBuiltAlpha);
-            ChangeColourOfObject(_baseColour);
-            _isBuilt = true;
-            _isMarking = false;
-            _landingMarker.SetActive(false);
+            ChangeChangeValueOfMaterial(objectBuiltAlpha);
+            ChangeColourOfObject(baseColour);
+            isBuilt = true;
+            isMarking = false;
+            landingMarker.SetActive(false);
         }
     }
     private void ChangeChangeValueOfMaterial(float alpha)
     {
         //Debug.Log("Alpha changed");
-        _material.SetFloat("_alphaValue", alpha);
+        material.SetFloat("_alphaValue", alpha);
     }
     public void RefundMaterials()
     {
-        GM.AddMaterials(StickRefundValue, RockRefundValue, StringRefundValue);
+        GM.AddMaterials(stick_Refund_Value, rock_Refund_Value, string_Refund_Value);
     }
     private void UpdateLandingMarker(int value)
     {
-        _isMarking = false;
-        if (_bridgeLandPoint != null)
-        {
-
-            _bridgeLandPoint.SetActive(false);
-        }
-
-        if (_bridgeEndPoint != null)
-        {
-
-            _bridgeEndPoint.SetActive(false);
-        }
-        _bridgeEndPoint = _bridgeEndPoints[value];
-        _bridgeLandPoint = _bridgeLandPoints[value];
-        _bridgeEndPoint.SetActive(true);
-        _bridgeLandPoint.SetActive(true);
-        _isMarking = true;
+        isMarking = false;
+        bridgeLandPoint.SetActive(false);
+        bridgeEndPoint.SetActive(false);
+        bridgeEndPoint = bridgeEndPoints[value];
+        bridgeLandPoint = bridgeLandPoints[value];
+        bridgeEndPoint.SetActive(true);
+        bridgeLandPoint.SetActive(true);
+        isMarking = true;
     }
     private void LandingMarker()
     {
-        Physics.Raycast(_bridgeEndPoint.transform.position, _bridgeLandPoint.transform.position - _bridgeEndPoint.transform.position, out RaycastHit hit, Mathf.Infinity, _mask);
-        _landingMarker.transform.position = hit.point;
+        Physics.Raycast(bridgeEndPoint.transform.position, bridgeLandPoint.transform.position - bridgeEndPoint.transform.position, out RaycastHit hit, Mathf.Infinity, mask);
+        landingMarker.transform.position = hit.point;
     }
 }
 
