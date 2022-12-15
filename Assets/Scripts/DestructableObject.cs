@@ -5,18 +5,18 @@ using UnityEngine;
 public class DestructableObject : GameBehaviour
 {
     public enum RotateDirection { X, Z}
-    public RotateDirection direction;
+    public RotateDirection Direction;
     [SerializeField]
-    private Transform FallingObjectSpawnPosition;
+    private Transform _fallingObjectSpawnPosition;
     [SerializeField]
-    private GameObject Child;
+    private GameObject _child;
 
-    private FallingObject fallingObject;
-    private Rigidbody FallingObjectRB;
+    private FallingObject _fallingObject;
+    private Rigidbody _fallingObjectRB;
 
-    private Outline outline;
+    private Outline _outline;
     [SerializeField]
-    private bool isVisible;
+    private bool _isVisible;
 
 
     [SerializeField]
@@ -31,41 +31,41 @@ public class DestructableObject : GameBehaviour
     }
     private void Awake()
     {
-        FallingObjectSpawnPosition.position = Child.transform.position;
-        FallingObjectRB = Child.GetComponent<Rigidbody>();
-        fallingObject = Child.GetComponent<FallingObject>();
-        outline = GetComponent<Outline>();
+        _fallingObjectSpawnPosition.position = _child.transform.position;
+        _fallingObjectRB = _child.GetComponent<Rigidbody>();
+        _fallingObject = _child.GetComponent<FallingObject>();
+        _outline = GetComponent<Outline>();
     }
 
     private void ResetObject()
     {
         gameObject.SetActive(true);
-        Child.transform.position = FallingObjectSpawnPosition.position;
-        FallingObjectRB.useGravity = false;
-        FallingObjectRB.constraints = RigidbodyConstraints.FreezeAll;
+        _child.transform.position = _fallingObjectSpawnPosition.position;
+        _fallingObjectRB.useGravity = false;
+        _fallingObjectRB.constraints = RigidbodyConstraints.FreezeAll;
     }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
             Debug.Log("Bullet hit");
-            if (FallingObjectRB != null)
+            if (_fallingObjectRB != null)
             {
-                FallingObjectRB.useGravity = true;
-                FallingObjectRB.constraints &= ~RigidbodyConstraints.FreezePositionY;
-                switch (direction)
+                _fallingObjectRB.useGravity = true;
+                _fallingObjectRB.constraints &= ~RigidbodyConstraints.FreezePositionY;
+                switch (Direction)
                 {
                     case RotateDirection.X:
-                        FallingObjectRB.constraints &= ~RigidbodyConstraints.FreezeRotationX;
+                        _fallingObjectRB.constraints &= ~RigidbodyConstraints.FreezeRotationX;
                         break;
                     case RotateDirection.Z:
-                        FallingObjectRB.constraints &= ~RigidbodyConstraints.FreezeRotationZ;
+                        _fallingObjectRB.constraints &= ~RigidbodyConstraints.FreezeRotationZ;
                         break;
                 }
 
                 
 
-                fallingObject.Unfreeze();
+                _fallingObject.Unfreeze();
             }
         }
     }
@@ -73,12 +73,12 @@ public class DestructableObject : GameBehaviour
     private void OnBecameVisible()
     {
 
-        isVisible = true;
+        _isVisible = true;
     }
 
 
     private void OnBecameInvisible() 
     {
-        isVisible = false;
+        _isVisible = false;
     }
 }

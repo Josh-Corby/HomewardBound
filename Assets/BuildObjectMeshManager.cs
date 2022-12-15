@@ -5,13 +5,13 @@ using UnityEngine;
 public class BuildObjectMeshManager : GameBehaviour
 {
     [SerializeField]
-    private MeshFilter Mesh;
+    private MeshFilter _mesh;
     [SerializeField]
-    private Mesh[] bridgeMeshesArray;
+    private Mesh[] _bridgeMeshesArray;
     [SerializeField]
-    private Transform[] meshPositions;
+    private Transform[] _meshPositions;
     [SerializeField]
-    private ObjectBuild objectBuild;
+    private ObjectBuild _objectBuild;
 
     private void OnEnable()
     {
@@ -25,12 +25,12 @@ public class BuildObjectMeshManager : GameBehaviour
 
     private void Start()
     {
-        Mesh.mesh = bridgeMeshesArray[0];
-        Mesh.transform.position = meshPositions[0].position;
+        _mesh.mesh = _bridgeMeshesArray[0];
+        _mesh.transform.position = _meshPositions[0].position;
     }
     public void ChangeBridgeMesh()
     {
-        Mesh.mesh = bridgeMeshesArray[objectBuild.objectLength - 1];
-        Mesh.transform.position = meshPositions[objectBuild.objectLength - 1].transform.position;     
+        _mesh.mesh = _bridgeMeshesArray[_objectBuild.ObjectLength - 1];
+        _mesh.transform.position = _meshPositions[_objectBuild.ObjectLength - 1].transform.position;     
     }
 }

@@ -90,12 +90,12 @@ public class DialogueManager : GameBehaviour<DialogueManager>
 
     private void SetDialogueCharacterImage()
     {
-        if(currentNPC.type == NPCType.Ant)
+        if(currentNPC.Type == NPCType.Ant)
         {
             dialoguePanel.GetComponent<Image>().sprite = dialoguePanelBackgrounds[0];
         }
 
-        if(currentNPC.type == NPCType.Spider)
+        if(currentNPC.Type == NPCType.Spider)
         {
             dialoguePanel.GetComponent<Image>().sprite = dialoguePanelBackgrounds[1];
         }
@@ -124,7 +124,7 @@ public class DialogueManager : GameBehaviour<DialogueManager>
     public void StartDialogue()
     {
         currentNPC.EnableOutline();
-        currentNPC._GUITween.ScaleDown();
+        currentNPC.GUITween.ScaleDown();
         isInDialogue = true;
         EnablePanel();
         StartNextSentence();  
@@ -137,7 +137,7 @@ public class DialogueManager : GameBehaviour<DialogueManager>
             
             currentSentence = "";
             currentNPC.DisableOutline();
-            currentNPC._GUITween.ScaleUp();
+            currentNPC.GUITween.ScaleUp();
             ClearNPCInformation();
             current_NPC_Dialogue_Text.text = "";
            

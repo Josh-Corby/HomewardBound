@@ -4,34 +4,34 @@ using UnityEngine;
 
 public class FallingObject : MonoBehaviour
 {
-    private Rigidbody rb;
-    private bool frozen;
+    private Rigidbody _rb;
+    private bool _frozen;
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
     }
 
     private void Start()
     {
-        frozen = false;
+        _frozen = false;
     }
 
     public void Unfreeze()
     {
-        frozen = false;
+        _frozen = false;
         StartCoroutine(FreezeCheck());
     }
 
     private IEnumerator FreezeCheck()
     {
         yield return new WaitForSeconds(0.1f);
-        if (!frozen)
+        if (!_frozen)
         {
-            if (rb.velocity == Vector3.zero)
+            if (_rb.velocity == Vector3.zero)
             {
                 Debug.Log("velocity is zero");
                 FreezeConstraints();
-                frozen = true;
+                _frozen = true;
                 yield return null;
             }
         }
@@ -41,9 +41,9 @@ public class FallingObject : MonoBehaviour
 
     public void FreezeConstraints()
     {
-        frozen = true;
-        rb.constraints = RigidbodyConstraints.FreezeAll;
-        rb.isKinematic = true;
+        _frozen = true;
+        _rb.constraints = RigidbodyConstraints.FreezeAll;
+        _rb.isKinematic = true;
     }
 
 }
