@@ -6,6 +6,7 @@ public class GameBehaviour : JMC
 {
     protected static GameManager GM { get { return GameManager.INSTANCE; } }
     protected static PlayerManager PM { get { return PlayerManager.INSTANCE; } }
+    protected static CameraManager CM { get { return CameraManager.INSTANCE; } }
     protected static AnimatorManager AM { get { return AnimatorManager.INSTANCE; } }
     protected static InputManager IM { get { return InputManager.INSTANCE; } }
     protected static UIManager UI { get { return UIManager.INSTANCE; } }

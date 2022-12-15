@@ -116,7 +116,7 @@ public class GameManager : GameBehaviour<GameManager>
 
 
         PM.isClimbing = false;
-        LC.Inside = false;
+        LC.inside = false;
         //Debug.Log("Player Respawned");
         BM.CancelBuilding();
 

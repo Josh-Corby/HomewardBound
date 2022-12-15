@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/LilyPad.cs.meta
+guid: 7bd2237c602d0a34fafd0dd459749cad
+========
+guid: a078ef5a6ce568a489c5744823cbf8f7
+>>>>>>>> Josh:Assets/MinableWall.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

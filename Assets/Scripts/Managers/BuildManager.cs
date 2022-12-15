@@ -5,9 +5,14 @@ using System;
 
 public enum BuildObjects
 {
+    Pickaxe,
     Ladder,
     Bridge,
-    Slingshot
+    Bonfire,
+    Slingshot,
+    Ammo,
+    GrappleHook,
+    Glider
 }
 public class BuildManager : GameBehaviour<BuildManager>
 {
@@ -38,6 +43,8 @@ public class BuildManager : GameBehaviour<BuildManager>
     private GameObject ladderPrefab;
     [SerializeField]
     private GameObject bridgePrefab;
+    [SerializeField]
+    private GameObject bonfirePrefab;
     #endregion
 
 
@@ -113,14 +120,14 @@ public class BuildManager : GameBehaviour<BuildManager>
 
                 // Reactivate Interaction Zone
                 IZ.Toggle(true);
-                buildingObject.GetComponent<ObjectBuild>().CurrentTrigger.isTrigger = false;
+                buildingObject.GetComponent<ObjectBuild>().currentTrigger.isTrigger = false;
                 SetObjectValue(buildingObject.GetComponent<ObjectBuild>());
 
 
                 if (buildingObject.GetComponent<BuildObjectRB>() != null)
                 {
                     buildingObject.gameObject.GetComponent<BuildObjectRB>().UnFreezeConstraints();
-                    buildingObject.gameObject.GetComponent<BuildObjectRB>().Frozen = false;
+                    buildingObject.gameObject.GetComponent<BuildObjectRB>().frozen = false;
                 }
                 UI.DeselectHotbarOutline();
                 SubtractCost();
@@ -133,14 +140,13 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     private void SetObjectValue(ObjectBuild objectBuilt)
     {
-        objectBuilt.StickRefundValue = stickCost / 2;
-        objectBuilt.RockRefundValue = rockCost / 2;
-        objectBuilt.StringRefundValue = stringCost / 2;
+        objectBuilt.stick_Refund_Value = stickCost / 2;
+        objectBuilt.rock_Refund_Value = rockCost / 2;
+        objectBuilt.string_Refund_Value = stringCost / 2;
     }
 
     private void ToolSelectListen(int buildObjectIndex)
     {
-        buildObjectIndex -= 1;
         if (buildObjectIndex == currentBuildObject_Index)
         {
             UI.DeselectHotbarOutline();
@@ -149,7 +155,7 @@ public class BuildManager : GameBehaviour<BuildManager>
             return;
         }
 
-        if (buildObjectIndex >= 0 && buildObjectIndex <= 1)
+        if (buildObjectIndex >= 1 && buildObjectIndex <= 2)
         {
             BuildItem(buildObjectIndex);
             currentBuildObject_Index = buildObjectIndex;
@@ -194,7 +200,11 @@ public class BuildManager : GameBehaviour<BuildManager>
                 StartCoroutine(BuildObject());
                 break;
 
-
+            case BuildObjects.Bonfire:
+                prefabToSpawn = bonfirePrefab;
+                SetMaterialCosts(value, 1);
+                StartCoroutine(BuildObject());
+                break;
         }
         IZ.Toggle(true);
         IZ.DisableInteractions();
@@ -249,7 +259,11 @@ public class BuildManager : GameBehaviour<BuildManager>
                 stringCost = 2 * costMultiplier;
                 RunMaterialChecks();
                 break;
-
+            case BuildObjects.Bonfire:
+                rockCost = 3;
+                stickCost = 3;
+                stringCost = 3;
+                break;
         }
     }
     /// <summary>

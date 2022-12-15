@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class SpawnPointTrigger : GameBehaviour
 {
-    private GameObject _spawnPoint;
+    private GameObject spawnPoint;
+    private BoxCollider spawnTrigger;
+
 
     private void Awake()
     {
-        _spawnPoint = transform.parent.gameObject;
+        spawnPoint = transform.parent.gameObject;
+        spawnTrigger = gameObject.GetComponent<BoxCollider>();
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            GM.SetSpawnPoint(_spawnPoint.transform);
+            GM.SetSpawnPoint(spawnPoint.transform);
             transform.parent.gameObject.SetActive(false);
+            //spawnTrigger.enabled = false;
         }       
     }
 }

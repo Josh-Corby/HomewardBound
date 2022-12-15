@@ -58,10 +58,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e552d296c916ec41a82d8c2aaca2422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollisionObjects: []
-  IsNotColliding: 0
+  collisionObjects: []
+  isNotColliding: 0
   ObjectMain: {fileID: 693926061621972264}
-  _collider: {fileID: 5059316588231909547}
+  collider: {fileID: 5059316588231909547}
 --- !u!1 &942558881058345414
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,10 +217,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e552d296c916ec41a82d8c2aaca2422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollisionObjects: []
-  IsNotColliding: 0
+  collisionObjects: []
+  isNotColliding: 0
   ObjectMain: {fileID: 693926061621972264}
-  _collider: {fileID: 3225330393399032365}
+  collider: {fileID: 3225330393399032365}
 --- !u!1 &2667988374427336607
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,37 +467,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc5c4b81729d21f41904b8426a859cf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
-  CurrentTrigger: {fileID: 5059316588231909547}
-  ObjectLength: 0
-  _objectColliders:
+  type: 1
+  currentTrigger: {fileID: 0}
+  objectLength: 0
+  ObjectColliders:
   - {fileID: 2531451962947662357}
   - {fileID: 407522953303716032}
   - {fileID: 9171085444678751628}
   - {fileID: 4363606661804630127}
-  _renderer: {fileID: 3861421459667651859}
-  _baseColour: {r: 0, g: 0, b: 0, a: 0}
-  _isBeingBuilt: 0
-  _isTriggerNotColliding: 0
-  StickRefundValue: 1
-  RockRefundValue: 1
-  StringRefundValue: 1
-  _bridgeEndPoints:
+  renderer: {fileID: 3861421459667651859}
+  baseColour: {r: 0, g: 0, b: 0, a: 0}
+  isBeingBuilt: 0
+  isTriggerNotColliding: 0
+  stick_Refund_Value: 0
+  rock_Refund_Value: 0
+  string_Refund_Value: 0
+  bridgeEndPoints:
   - {fileID: 8447485762647118934}
   - {fileID: 5616195087143244674}
   - {fileID: 3921880442665114281}
   - {fileID: 3636002707774721517}
-  _bridgeLandPoints:
+  bridgeLandPoints:
   - {fileID: 7633744617339987653}
   - {fileID: 8962222462460395786}
   - {fileID: 1867482275620301854}
   - {fileID: 8761877085599617986}
-  _bridgeEndPoint: {fileID: 0}
-  _bridgeLandPoint: {fileID: 0}
-  _mask:
+  bridgeEndPoint: {fileID: 8447485762647118934}
+  bridgeLandPoint: {fileID: 7633744617339987653}
+  mask:
     serializedVersion: 2
-    m_Bits: 2112
-  _landingMarker: {fileID: 6753353624854875935}
+    m_Bits: 64
+  landingMarker: {fileID: 7173761345814100156}
 --- !u!114 &276136619462600314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -510,9 +510,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9017c28d879ffd94683118581cb524ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _objectType: 0
-  Frozen: 0
-  _rb: {fileID: 649449721671240455}
+  objectType: 0
+  frozen: 0
+  rb: {fileID: 0}
 --- !u!114 &877173870650877913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -525,18 +525,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2387a70ad5481844b80620f95e660255, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mesh: {fileID: 5382333594218241483}
-  _bridgeMeshesArray:
+  Mesh: {fileID: 5382333594218241483}
+  bridgeMeshesArray:
   - {fileID: 8128075262371223473, guid: 1e8e218368e46ed4795138d250204c90, type: 3}
   - {fileID: -4562859212395215800, guid: b6983e1776ee33542b91bc17ea91a548, type: 3}
   - {fileID: 2393293847910847543, guid: 54590f6179db7d841a6cb605f7d8f509, type: 3}
   - {fileID: -1173257167285198723, guid: dab62952d04997244b2d7a98967490d0, type: 3}
-  _meshPositions:
+  meshPositions:
   - {fileID: 6617096554438181220}
   - {fileID: 787819116629735687}
   - {fileID: 739170454186505894}
   - {fileID: 8673189015292506757}
-  _objectBuild: {fileID: 693926061621972264}
+  objectBuild: {fileID: 693926061621972264}
 --- !u!114 &269268442351863548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -745,10 +745,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e552d296c916ec41a82d8c2aaca2422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollisionObjects: []
-  IsNotColliding: 0
+  collisionObjects: []
+  isNotColliding: 0
   ObjectMain: {fileID: 693926061621972264}
-  _collider: {fileID: 3807769492838885212}
+  collider: {fileID: 3807769492838885212}
 --- !u!1 &7633744617339987653
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,10 +873,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e552d296c916ec41a82d8c2aaca2422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollisionObjects: []
-  IsNotColliding: 0
+  collisionObjects: []
+  isNotColliding: 0
   ObjectMain: {fileID: 693926061621972264}
-  _collider: {fileID: 3257177374771474957}
+  collider: {fileID: 3257177374771474957}
 --- !u!1 &8447485762647118934
 GameObject:
   m_ObjectHideFlags: 0
@@ -1095,9 +1095,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tweenScale: {x: 1.25, y: 1.25, z: 1.25}
   _tweenTime: 0.75
-  _canBuildColour: {r: 0, g: 0.40026736, b: 1, a: 0}
-  _cantBuildColour: {r: 1, g: 0, b: 0.15377235, a: 0}
-  _emissionIntensity: 3
+  canBuildColour: {r: 0, g: 0.106060505, b: 1, a: 1}
+  cantBuildColour: {r: 1, g: 0.00000007152558, b: 0, a: 1}
+  emissionIntensity: 10
+--- !u!1 &7173761345814100156 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c5094ce88c866ad4c9b8969499793fe0,
+    type: 3}
+  m_PrefabInstance: {fileID: 8020691302265931245}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7549582475288977926 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c5094ce88c866ad4c9b8969499793fe0,

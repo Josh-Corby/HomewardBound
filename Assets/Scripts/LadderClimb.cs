@@ -10,12 +10,12 @@ public class LadderClimb : GameBehaviour<LadderClimb>
     public static event Action<bool> OnClimbingStateChange = null;
 
     public Transform PlayerController;
-    public bool Inside;
-    public float SpeedUpDown = 3.2f;
+    public bool inside = false;
+    public float speedUpDown = 3.2f;
     public ThirdPlayerMovement TPMMovement;
     void Start()
     {
-        Inside = false;
+        inside = false;
     }
 
     void OnTriggerEnter(Collider col)
@@ -25,7 +25,7 @@ public class LadderClimb : GameBehaviour<LadderClimb>
             OnLadderStateChange?.Invoke(true);
             TPM.groundState = GroundStates.Grounded;
             TPM.enabled = false;
-            Inside = true;
+            inside = true;
         }
     }
     void OnTriggerExit(Collider col)
@@ -36,22 +36,22 @@ public class LadderClimb : GameBehaviour<LadderClimb>
             OnLadderStateChange?.Invoke(false);
             TPM.enabled = true;
             TPM.groundState = GroundStates.Grounded;
-            Inside = false;
+            inside = false;
         }
     }
 
     private void LateUpdate()
     {
-        if (Inside == true && Input.GetKey("w"))
+        if (inside == true && Input.GetKey("w"))
         {
-            PlayerController.transform.position += Vector3.up / SpeedUpDown;
+            PlayerController.transform.position += Vector3.up / speedUpDown;
             OnClimbingStateChange?.Invoke(true);
             return;
         }
 
-        if (Inside == true && Input.GetKey("s"))
+        if (inside == true && Input.GetKey("s"))
         {
-            PlayerController.transform.position += Vector3.down / SpeedUpDown;
+            PlayerController.transform.position += Vector3.down / speedUpDown;
             OnClimbingStateChange?.Invoke(true);
             return;
         }
