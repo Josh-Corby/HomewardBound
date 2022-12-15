@@ -9,24 +9,24 @@ public enum BulletTypes
 }
 public class Bullet : MonoBehaviour
 {
-    private float bulletTimerMax, bulletTimer;
-    Rigidbody rb;
+    private float _bulletTimerMax, _bulletTimer;
+    private Rigidbody _rb;
 
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        bulletTimerMax = 3f;
-        bulletTimer = bulletTimerMax;
+        _rb = GetComponent<Rigidbody>();
+        _bulletTimerMax = 3f;
+        _bulletTimer = _bulletTimerMax;
         
     }
 
     private void Update()
     {
         Physics.IgnoreLayerCollision(10, 7);
-        bulletTimer = Mathf.Clamp(bulletTimer, 0, bulletTimerMax);
-        bulletTimer -= Time.deltaTime;
-        if(bulletTimer <= 0)
+        _bulletTimer = Mathf.Clamp(_bulletTimer, 0, _bulletTimerMax);
+        _bulletTimer -= Time.deltaTime;
+        if(_bulletTimer <= 0)
         {
             Destroy(gameObject);
         }

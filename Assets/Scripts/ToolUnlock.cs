@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 enum Pickups 
 { 
     Builder,
@@ -12,14 +11,13 @@ enum Pickups
 public class ToolUnlock : GameBehaviour
 {
     [SerializeField]
-    private Pickups pickups;
-    private bool canPickUp;
-    private Outline outline;
+    private Pickups _pickups;
+    private Outline _outline;
 
     private void Awake()
     {
-        outline = gameObject.GetComponent<Outline>();
-        outline.enabled = false;  
+        _outline = gameObject.GetComponent<Outline>();
+        _outline.enabled = false;  
     }
 
     IEnumerator WaitToDestroy()
@@ -46,7 +44,7 @@ public class ToolUnlock : GameBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            UnlockTool(pickups);
+            UnlockTool(_pickups);
             StartCoroutine(WaitToDestroy());
         }          
     }

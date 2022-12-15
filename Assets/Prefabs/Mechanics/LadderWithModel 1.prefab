@@ -150,9 +150,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9017c28d879ffd94683118581cb524ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectType: 1
-  frozen: 0
-  rb: {fileID: 0}
+  _objectType: 0
+  Frozen: 0
+  _rb: {fileID: 0}
 --- !u!114 &2708193910085613456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,26 +165,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc5c4b81729d21f41904b8426a859cf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
-  currentTrigger: {fileID: 0}
-  objectLength: 0
-  ObjectColliders:
+  Type: 0
+  CurrentTrigger: {fileID: 0}
+  ObjectLength: 0
+  _objectColliders:
   - {fileID: 2504912413395523635}
-  renderer: {fileID: 3487744809145207625}
-  baseColour: {r: 0, g: 0, b: 0, a: 0}
-  isBeingBuilt: 0
-  isTriggerNotColliding: 0
-  stick_Refund_Value: 0
-  rock_Refund_Value: 0
-  string_Refund_Value: 0
-  bridgeEndPoints: []
-  bridgeLandPoints: []
-  bridgeEndPoint: {fileID: 0}
-  bridgeLandPoint: {fileID: 0}
-  mask:
+  _renderer: {fileID: 3487744809145207625}
+  _baseColour: {r: 0, g: 0, b: 0, a: 0}
+  _isBeingBuilt: 0
+  _isTriggerNotColliding: 0
+  StickRefundValue: 1
+  RockRefundValue: 1
+  StringRefundValue: 1
+  _bridgeEndPoints: []
+  _bridgeLandPoints: []
+  _bridgeEndPoint: {fileID: 0}
+  _bridgeLandPoint: {fileID: 0}
+  _mask:
     serializedVersion: 2
     m_Bits: 0
-  landingMarker: {fileID: 6287997865824825433}
+  _landingMarker: {fileID: 7599153697957349370}
 --- !u!114 &1049562890509504813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,10 +261,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e552d296c916ec41a82d8c2aaca2422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collisionObjects: []
-  isNotColliding: 0
+  CollisionObjects: []
+  IsNotColliding: 0
   ObjectMain: {fileID: 2708193910085613456}
-  collider: {fileID: 3352449509118570833}
+  _collider: {fileID: 3352449509118570833}
 --- !u!1 &6563270710007697604
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,12 +431,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5094ce88c866ad4c9b8969499793fe0, type: 3}
---- !u!1 &6287997865824825433 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c5094ce88c866ad4c9b8969499793fe0,
-    type: 3}
-  m_PrefabInstance: {fileID: 6593865169165225224}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6631730852786563811 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c5094ce88c866ad4c9b8969499793fe0,
@@ -463,6 +457,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tweenScale: {x: 1.25, y: 1.25, z: 1.25}
   _tweenTime: 0.75
-  canBuildColour: {r: 0, g: 0.106060505, b: 1, a: 1}
-  cantBuildColour: {r: 1, g: 0.00000007152558, b: 0, a: 1}
-  emissionIntensity: 10
+  _canBuildColour: {r: 0, g: 0, b: 0, a: 0}
+  _cantBuildColour: {r: 0, g: 0, b: 0, a: 0}
+  _emissionIntensity: 0

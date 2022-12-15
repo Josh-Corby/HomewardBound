@@ -7,7 +7,7 @@ public class InputManager : GameBehaviour<InputManager>
     PlayerControls playerControls;
 
     [Header("Definitions of all inputs and what type they are")]
-    public Vector2 movementInput, cameraInput;
+    public Vector2 MovementInput, cameraInput;
     public float moveAmount;
     public float verticalInput, horizontalInput;
     public float mouseScrollY;
@@ -32,7 +32,7 @@ public class InputManager : GameBehaviour<InputManager>
         {
             playerControls = new PlayerControls();
 
-            playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
+            playerControls.PlayerMovement.Movement.performed += i => MovementInput = i.ReadValue<Vector2>();
             playerControls.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>();
 
             playerControls.PlayerActions.Sprint.performed += i => sprint_Input = true;

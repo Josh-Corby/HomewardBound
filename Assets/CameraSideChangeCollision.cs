@@ -8,43 +8,43 @@ using UnityEngine;
 public class CameraSideChangeCollision : MonoBehaviour
 {
 
-    private float _cameraSideEnterValue = 0;
-    private float _cameraSideExitValue = 1;
+    private readonly float _cameraSideEnterValue = 0;
+    private readonly float _cameraSideExitValue = 1;
 
     [SerializeField]
     private CameraTransform _camera;
 
-    public bool triggerState;
-    public bool canLerp;
+    public bool TriggerState;
+    public bool TanLerp;
 
-    private float waitTimer;
-    private float waitTimerMax = 0.5f;
-    private float lerpAmount = 0.005f;
+    private float _waitTimer;
+    private readonly float _waitTimerMax = 0.5f;
+    private readonly float _lerpAmount = 0.005f;
 
 
     private void Start()
     {
-        waitTimer = waitTimerMax;
+        _waitTimer = _waitTimerMax;
     }
 
     private void Update()
     {
-        if (!triggerState)
+        if (!TriggerState)
         {
-            waitTimer -= Time.deltaTime;
+            _waitTimer -= Time.deltaTime;
 
-            if (waitTimer <= 0f)
+            if (_waitTimer <= 0f)
             {
-                _camera.camfollow.CameraSide = Mathf.Lerp(_camera.camfollow.CameraSide, _cameraSideExitValue, lerpAmount);
+                _camera.CamFollow.CameraSide = Mathf.Lerp(_camera.CamFollow.CameraSide, _cameraSideExitValue, _lerpAmount);
                 return;
             }
         }
 
-        if (triggerState)
+        if (TriggerState)
         {
 
-            waitTimer = waitTimerMax;
-            _camera.camfollow.CameraSide = Mathf.Lerp(_camera.camfollow.CameraSide, _cameraSideEnterValue, lerpAmount);
+            _waitTimer = _waitTimerMax;
+            _camera.CamFollow.CameraSide = Mathf.Lerp(_camera.CamFollow.CameraSide, _cameraSideEnterValue, _lerpAmount);
         }
     }
 
@@ -52,7 +52,7 @@ public class CameraSideChangeCollision : MonoBehaviour
     {
         if (other.CompareTag("Wall"))
         {
-            triggerState = true;
+            TriggerState = true;
         }
     }
 
@@ -60,7 +60,7 @@ public class CameraSideChangeCollision : MonoBehaviour
     {
         if (other.CompareTag("Wall"))
         {
-            triggerState = false;
+            TriggerState = false;
         }
     }
 }

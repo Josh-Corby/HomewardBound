@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class WebTrigger : GameBehaviour
 {
-    private int MovementDivide = 2;
+    private readonly int _movementDivide = 2;
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject == TPM.gameObject || other.gameObject.GetComponent<Bullet>())
+        if (other.gameObject == TPM.gameObject || other.gameObject.GetComponent<Bullet>())
         {
-        TPM.DivideVelocity(MovementDivide);
-        Destroy(gameObject);
+            TPM.DivideVelocity(_movementDivide);
+            Destroy(gameObject);
 
         }
     }

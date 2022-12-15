@@ -5,12 +5,10 @@ using UnityEngine;
 public class SoundManager : GameBehaviour<SoundManager>
 {
     public AudioSource SFX;
-    [SerializeField]
-    private AudioSource BGM;
     public AudioSource StepSFX;
-    public AudioClip pickupClip; 
+    public AudioClip PickupClip; 
 
-    public void PlayClip(AudioClip clip)
+    public void PlaySFXClip(AudioClip clip)
     {
         SFX.clip = clip;
         SFX.Play();
