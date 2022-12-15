@@ -5,21 +5,21 @@ using UnityEngine;
 public class CollectableMaterial : GameBehaviour
 {
     [SerializeField]
-    private bool isMovingTowardsPlayer;
-    private Collider col;
+    private bool _isMovingTowardsPlayer;
+    private Collider _col;
 
-    private float moveSpeed = 0.3f;
+    private readonly float _moveSpeed = 0.3f;
 
     private void Awake()
     {
-        isMovingTowardsPlayer = false;
-        col = gameObject.GetComponent<Collider>();
+        _isMovingTowardsPlayer = false;
+        _col = gameObject.GetComponent<Collider>();
     }
 
     private void Update()
     {
 
-        if (isMovingTowardsPlayer)
+        if (_isMovingTowardsPlayer)
         {
             MoveTowardsPlayer();
         }
@@ -29,7 +29,7 @@ public class CollectableMaterial : GameBehaviour
             GM.IncreaseResources(gameObject);
             if (SM.SFX != null)
             {
-                SM.PlayClip(SM.pickupClip);
+                SM.PlaySFXClip(SM.PickupClip);
             }
 
             gameObject.SetActive(false);
@@ -37,12 +37,12 @@ public class CollectableMaterial : GameBehaviour
     }
     public void MoveTowardsPlayer()
     {
-        transform.position = Vector3.MoveTowards(transform.position, PM.pickUpSpot.transform.position, moveSpeed);
+        transform.position = Vector3.MoveTowards(transform.position, PM.pickUpSpot.transform.position, _moveSpeed);
     }
 
     public void StartMovingTowardsPlayer()
     {
-        isMovingTowardsPlayer = true;
-        col.isTrigger = true;
+        _isMovingTowardsPlayer = true;
+        _col.isTrigger = true;
     }
 }

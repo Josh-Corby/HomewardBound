@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class ActivateDialogue : MonoBehaviour
 {
-    public GameObject dialogueManager;
-    public GameObject dialogueStart;
-    public GameObject dialogueContinue;
-    public bool playerFound;
+    public GameObject DialogueManager;
+    public GameObject DialogueStart;
+    public GameObject DialogueContinue;
+    public bool PlayerFound;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            playerFound = true;
-            dialogueManager.SetActive(true);
+            PlayerFound = true;
+            DialogueManager.SetActive(true);
 
-            dialogueContinue.SetActive(false);
+            DialogueContinue.SetActive(false);
         }
     }
 
@@ -24,8 +24,8 @@ public class ActivateDialogue : MonoBehaviour
     {
         if (other.CompareTag("Player") && Input.GetMouseButton(0))
         {
-            dialogueStart.SetActive(false);
-            dialogueContinue.SetActive(true);
+            DialogueStart.SetActive(false);
+            DialogueContinue.SetActive(true);
         }
     }
 
@@ -33,10 +33,10 @@ public class ActivateDialogue : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            playerFound = false;
+            PlayerFound = false;
 
-            dialogueStart.SetActive(true);
-            dialogueManager.SetActive(false);
+            DialogueStart.SetActive(true);
+            DialogueManager.SetActive(false);
         }
     }
 

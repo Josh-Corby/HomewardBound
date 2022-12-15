@@ -5,22 +5,22 @@ using System;
 
 public class BuildObjectTrigger : GameBehaviour
 {
-    public List<GameObject> collisionObjects = new List<GameObject>();
-    public bool isNotColliding;
+    public List<GameObject> CollisionObjects = new List<GameObject>();
+    public bool IsNotColliding;
     public ObjectBuild ObjectMain;
     [SerializeField]
-    private BoxCollider collider;
+    private BoxCollider _collider;
 
     private void OnEnable()
     {
-        collisionObjects.Clear();
+        CollisionObjects.Clear();
         UpdateCanBuild();
-        collider.isTrigger = true;
+        _collider.isTrigger = true;
     }
     private void UpdateCanBuild()
     {
-        isNotColliding = collisionObjects.Count == 0;
-        ObjectMain.CanObjectBeBuilt(isNotColliding);
+        IsNotColliding = CollisionObjects.Count == 0;
+        ObjectMain.CanObjectBeBuilt(IsNotColliding);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -29,13 +29,13 @@ public class BuildObjectTrigger : GameBehaviour
         {
             return;
         }
-        collisionObjects.Add(other.gameObject);
+        CollisionObjects.Add(other.gameObject);
         UpdateCanBuild();
     }
 
     private void OnTriggerExit(Collider other)
     {
-        collisionObjects.Remove(other.gameObject);
+        CollisionObjects.Remove(other.gameObject);
         UpdateCanBuild();
     }
 

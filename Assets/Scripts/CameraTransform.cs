@@ -6,10 +6,10 @@ using Cinemachine;
 public class CameraTransform : GameBehaviour
 {
     [SerializeField]
-    private Camera cam;
+    private Camera _cam;
     [SerializeField]
-    private CinemachineVirtualCamera vcam;
-    public Cinemachine3rdPersonFollow camfollow;
+    private CinemachineVirtualCamera _vcam;
+    public Cinemachine3rdPersonFollow CamFollow;
 
 
     private float cameraDistance;
@@ -33,21 +33,21 @@ public class CameraTransform : GameBehaviour
 
     private void Awake()
     {
-        camfollow = vcam.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
+        CamFollow = _vcam.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
     }
 
     private void Start()
     {
         _cinemachineTargetYaw = gameObject.transform.rotation.eulerAngles.y;
-        cam = Camera.main;
+        _cam = Camera.main;
     }
 
     private void Update()
     {
         cameraDistance = 10f;
-        camfollow.CameraDistance = cameraDistance;
-        if (vcam.Follow == null) return;
-        if (vcam.LookAt == null) return;
+        CamFollow.CameraDistance = cameraDistance;
+        if (_vcam.Follow == null) return;
+        if (_vcam.LookAt == null) return;
 
         if (UI.menu != Menus.None || UI.paused)
             return;
@@ -61,14 +61,14 @@ public class CameraTransform : GameBehaviour
     }
     public void SetCameraTarget(Transform target)
     {
-        vcam.Follow = target;
-        vcam.LookAt = target;
+        _vcam.Follow = target;
+        _vcam.LookAt = target;
     }
 
     public void LookAtPlayer()
     {
-        vcam.Follow = gameObject.transform;
-        vcam.LookAt = gameObject.transform;
+        _vcam.Follow = gameObject.transform;
+        _vcam.LookAt = gameObject.transform;
     }
 
     public IEnumerator LerpCameraSide(float value)
@@ -77,16 +77,16 @@ public class CameraTransform : GameBehaviour
         float lerpDuration = 3f;
         while (timeElapsed < lerpDuration)
         {
-            camfollow.CameraSide = Mathf.Lerp(camfollow.CameraSide, value, timeElapsed / lerpDuration);
+            CamFollow.CameraSide = Mathf.Lerp(CamFollow.CameraSide, value, timeElapsed / lerpDuration);
             timeElapsed += Time.deltaTime;
             yield return null;
         }
-        camfollow.CameraSide = value;
+        CamFollow.CameraSide = value;
     }
 
     public void ChangeCameraSide(float value)
     {
-        camfollow.CameraSide = Mathf.Lerp(camfollow.CameraSide, value, 0.1f);
+        CamFollow.CameraSide = Mathf.Lerp(CamFollow.CameraSide, value, 0.1f);
 
     }
 
@@ -121,7 +121,7 @@ public class CameraTransform : GameBehaviour
 
     private void CameraPosition()
     {
-        Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        Ray ray = _cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
 
         if (Physics.Raycast(ray, out RaycastHit hit, 1, mask))
         {

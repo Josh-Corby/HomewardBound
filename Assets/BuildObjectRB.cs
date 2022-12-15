@@ -12,21 +12,21 @@ public enum ObjectType
 public class BuildObjectRB : MonoBehaviour
 {
     [SerializeField]
-    private ObjectType objectType;
-    public bool frozen;
+    private ObjectType _objectType;
+    public bool Frozen;
     [SerializeField]
-    private Rigidbody rb;
+    private Rigidbody _rb;
 
     private void Awake()
     {
 
-        rb = GetComponent<Rigidbody>();
-        rb.constraints = RigidbodyConstraints.FreezeAll;
+        _rb = GetComponent<Rigidbody>();
+        _rb.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     private void Start()
     {
-        frozen = false;
+        Frozen = false;
         StartCoroutine(FreezeCheck());
     }
 
@@ -34,12 +34,12 @@ public class BuildObjectRB : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        if (!frozen)
+        if (!Frozen)
         {
-            if (rb.velocity == Vector3.zero)
+            if (_rb.velocity == Vector3.zero)
             {
                 FreezeConstraints();
-                frozen = true;
+                Frozen = true;
                 yield return null;
             }
         }
@@ -49,22 +49,22 @@ public class BuildObjectRB : MonoBehaviour
 
     public void FreezeConstraints()
     {
-        frozen = true;
-        rb.constraints = RigidbodyConstraints.FreezeAll;
+        Frozen = true;
+        _rb.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     public void UnFreezeConstraints()
     {
-        if (objectType == ObjectType.Bridge)
+        if (_objectType == ObjectType.Bridge)
         {
             //Debug.Log("Unfreeze constraints");
-            rb.constraints = RigidbodyConstraints.None;
+            _rb.constraints = RigidbodyConstraints.None;
 
         }
 
-        if (objectType == ObjectType.Ladder)
+        if (_objectType == ObjectType.Ladder)
         {
-            rb.constraints &= ~RigidbodyConstraints.FreezePositionY;
+            _rb.constraints &= ~RigidbodyConstraints.FreezePositionY;
         }
     }
 
