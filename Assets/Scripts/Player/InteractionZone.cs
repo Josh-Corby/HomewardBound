@@ -44,72 +44,23 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         if (outlineObjectsList.Count < 0)
             canPickUp = false;
 
-        //if (OM.outfit == Outfits.Miner)
-        //{
-        //    //Break Items
-
-        //    if (/*UI.radialMenuStatus ||*/ UI.paused == true)
-        //    {
-        //        //canBreak = false;
-        //        return;
-        //    }
-
-
-        //    if (IM.rClick_Input)
-        //    {
-        //        if (objectToInteract == null)
-        //        {
-        //            IM.lClick_Input = false;
-        //            return;
-        //        }
-
-        //        if (objectToInteract.CompareTag("Rock"))
-        //        {
-        //            //canBreak = true;
-        //            outlineObjectsList.Remove(objectToInteract);
-        //            for (int i = 1; i <= 3; i++)
-        //            {
-        //                GameObject pebble = Instantiate(GM.pebblePrefab);
-        //                pebble.transform.parent = objectToInteract.transform;
-        //                pebble.transform.localPosition = new Vector3(Random.Range(0.0f, 1.0f), 0, Random.Range(0f, 1f));
-        //                pebbleCounter += 1;
-        //                pebble.transform.parent = null;
-        //                pebble.name = "Pebble_" + pebbleCounter;
-        //            }
-        //            Destroy(objectToInteract);
-        //            TogglePickUpBools();
-        //            canBreak = false;
-        //            return;
-        //        }
-
-        //        if (objectToInteract.CompareTag("MinableObject"))
-        //        {
-        //            StartCoroutine(objectToInteract.GetComponent<MinableWall>().Break());
-        //        }
-        //        else
-        //        {
-        //            return;
-        //        }
-        //    }
-        //}
-        //if (OM.outfit == Outfits.Builder)
-        //{
-            if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (canDestroy && UI.paused == false)
             {
-                if (canDestroy && UI.paused == false)
-                {
-                    objectToDestroy.GetComponent<ObjectBuild>().RefundMaterials();
+                objectToDestroy.GetComponent<ObjectBuild>().RefundMaterials();
 
-                    
-                    if (objectToDestroy.CompareTag("Ladder"))
-                    {
-                        LC.inside = false;
-                        TPM.enabled = true;
-                    }
-                    DestroyObject();
+
+                if (objectToDestroy.CompareTag("Ladder"))
+                {
+                    LC.inside = false;
+                    TPM.enabled = true;
+                    AM.SetOnLadder(false);
                 }
+                DestroyObject();
             }
-        //}
+        }
+
         #region Item Interactions
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -140,7 +91,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                         Debug.Log("Respawnset");
                         OnRespawnSet();
 
-                        
+
                         return;
                     }
 
@@ -169,7 +120,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
                     }
                     if (canPickUp)
                     {
-                        PickUpObjects();          
+                        PickUpObjects();
                     }
                 }
             }
@@ -182,7 +133,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
     {
         foreach (GameObject pickUpObject in outlineObjectsList)
         {
-            OnItemPickUp(pickUpObject);       
+            OnItemPickUp(pickUpObject);
             pickUpObject.SetActive(false);
         }
         outlineObjectsList.Clear();
@@ -224,9 +175,9 @@ public class InteractionZone : GameBehaviour<InteractionZone>
     private void OnTriggerEnter(Collider other)
     {
 
-    
 
-        if(other.CompareTag("Ladder") || other.CompareTag("Bridge"))
+
+        if (other.CompareTag("Ladder") || other.CompareTag("Bridge"))
         {
             OutlineObject(other.gameObject.GetComponentInParent<ObjectBuild>().gameObject);
         }
@@ -242,7 +193,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
     private void OnTriggerExit(Collider other)
     {
-     
+
 
         if (other.CompareTag("Ladder") || other.CompareTag("Bridge"))
         {
@@ -255,6 +206,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             PM.isClimbing = false;
             canClimb = false;
             canDestroy = false;
+
         }
         if (other.CompareTag("Bridge"))
         {
@@ -291,15 +243,15 @@ public class InteractionZone : GameBehaviour<InteractionZone>
     }
     public void DestroyObject()
     {
-        if(objectToDestroy != null)
+        if (objectToDestroy != null)
         {
 
-        Debug.Log(objectToDestroy);
-        Destroy(objectToDestroy);
-        objectToDestroy = null;
-        canDestroy = false;
-        canClimb = false;
-        UI.UpdateMaterialsCollected();
+            Debug.Log(objectToDestroy);
+            Destroy(objectToDestroy);
+            objectToDestroy = null;
+            canDestroy = false;
+            canClimb = false;
+            UI.UpdateMaterialsCollected();
         }
     }
 

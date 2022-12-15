@@ -6,16 +6,20 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
 {
     private Animator animator;
 
-    private bool isWalking;
+    private const string IS_WALKING = "isWalking";
+    private const string IS_JUMPING = "isJumping";
+    private const string IS_GROUNDED = "isGrounded";
+    private const string IS_WALKING_BACK = "isWalkingBack";
+    private const string IS_STEPPING_LEFT = "isSteppingLeft";
+    private const string IS_STEPPING_RIGHT = "isSteppingRight";
+    private const string IS_SPRINTING = "isSprinting";
+    private const string IS_TURNING_LEFT = "isTurningLeft";
+    private const string IS_TURNING_RIGHT = "isTurningRight";
+    private const string IS_CLIMBING = "isClimbing";
+    private const string IS_ON_LADDER = "isOnLadder";
+
+
     private bool isJumping;
-    private bool isGrounded;
-    private bool isWalkingBack;
-
-    private bool isSteppingLeft;
-    private bool isSteppingRight;
-    public bool isSprinting;
-
-
     public bool isTurningLeft;
     public bool isTurningRight;
     public bool isClimbing;
@@ -23,11 +27,24 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
     private void Awake()
     {
         animator = GetComponent<Animator>();
-
     }
-    private void Start()
+
+    private void OnEnable()
     {
-        isSprinting = false;
+        LadderClimb.OnLadderStateChange += SetOnLadder;
+        LadderClimb.OnClimbingStateChange += SetClimbing;
+        ThirdPlayerMovement.OnSprintingStateChange += SetSprinting;
+        ThirdPlayerMovement.OnGroundedStateChange += SetGrounded;
+        ThirdPlayerMovement.OnJump += SetJumping;
+    }
+
+    private void OnDisable()
+    {
+        LadderClimb.OnLadderStateChange -= SetOnLadder;
+        LadderClimb.OnClimbingStateChange -= SetClimbing;
+        ThirdPlayerMovement.OnSprintingStateChange -= SetSprinting;
+        ThirdPlayerMovement.OnGroundedStateChange -= SetGrounded;
+        ThirdPlayerMovement.OnJump -= SetJumping;
     }
 
     private void Update()
@@ -36,76 +53,151 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
     }
     private void ManageAnimations()
     {
-        if (TPM.groundState == GroundStates.Grounded)
+        if (isOnLadder)
         {
-            SetAnimationBool("isGrounded", true);
+            {
+                SetOnLadder(true);
+            }
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))
+            {
+                SetClimbing(true);
+                return;
+            }
+            else
+            {
+                SetClimbing(false);
+                return;
+            }
         }
 
-        if (TPM.groundState != GroundStates.Grounded)
+        else if (isJumping == true)
         {
-            SetAnimationBool("isGrounded", false);
+            return;
         }
-        if (isJumping == true) return;
 
-
-
-        if (!isOnLadder)
+        else if (isOnLadder == false)
         {
+            isTurningLeft = IM.cameraInput.x < 0;
+            isTurningRight = IM.cameraInput.x > 0;
+
+            SetTurnLeft(isTurningLeft);
+            SetTurnRight(isTurningRight);
+
             if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S))
             {
-                SetAnimationBool("isWalkingBack", isWalkingBack = false);
-                SetAnimationBool("isWalking", isWalking = false);
+                SetWalking(false);
+                SetWalkingBack(false);
                 return;
             }
 
             if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
             {
-                SetAnimationBool("isSteppingLeft", isSteppingLeft = false);
-                SetAnimationBool("isSteppingRight", isSteppingRight = false);
+                SetStepLeft(false);
+                SetStepRight(false);
                 return;
             }
 
-            isSteppingLeft = Input.GetKey(KeyCode.A);
-            SetAnimationBool("isSteppingLeft", isSteppingLeft);
+            if (Input.GetKey(KeyCode.A))
+            {
+                SetStepLeft(true);
+                return;
+            }
 
-            isSteppingRight = Input.GetKey(KeyCode.D);
-            SetAnimationBool("isSteppingRight", isSteppingRight);
+            if (Input.GetKey(KeyCode.W))
+            {
+                SetWalking(true);
+                return;
+            }
 
-            SetAnimationBool("isWalking", isWalking = Input.GetKey(KeyCode.W));
-            SetAnimationBool("isWalkingBack", isWalkingBack = Input.GetKey(KeyCode.S));
+            if (Input.GetKey(KeyCode.S))
+            {
+                SetWalkingBack(true);
+                return;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                SetStepLeft(true);
+                return;
+            }
 
+            if (Input.GetKey(KeyCode.D))
+            {
+                SetStepRight(true);
+                return;
+            }
 
-            isTurningLeft = IM.cameraInput.x < 0;
-            isTurningRight = IM.cameraInput.x > 0;
+            else
+            {
+                SetWalking(false);
+                SetWalkingBack(false);
+                SetStepLeft(false);
+                SetStepRight(false);
+            } 
+        }      
+    }
 
-            SetAnimationBool("isTurningLeft", isTurningLeft);
+    private void SetWalking(bool value)
+    {
+        animator.SetBool(IS_WALKING, value);
+    }
+    private void SetJumping(bool value)
+    {
+        isJumping = value;
+        animator.SetBool(IS_JUMPING, value);
+    }
+    private void SetWalkingBack(bool value)
+    {
+        animator.SetBool(IS_WALKING_BACK, value);
+    }
+    private void SetStepLeft(bool value)
+    {
+        animator.SetBool(IS_STEPPING_LEFT, value);
+    }
+    private void SetStepRight(bool value)
+    {
+        animator.SetBool(IS_STEPPING_RIGHT, value);
+    }
+    private void SetGrounded(bool value)
+    {
+        animator.SetBool(IS_GROUNDED, value);
+    }
+    private void SetSprinting(bool value)
+    {
+        animator.SetBool(IS_SPRINTING, value);
+    }
+    private void SetTurnLeft(bool value)
+    {
+        animator.SetBool(IS_TURNING_LEFT, value);
+    }
+    private void SetTurnRight(bool value)
+    {
+        animator.SetBool(IS_TURNING_RIGHT, value);
+    }
+    private void SetClimbing(bool value)
+    {
+        if (isOnLadder)
+        {
+            if (value)
+            {
+                animator.SetBool(IS_CLIMBING, value);
+                animator.enabled = true;
+            }
+            if (!value)
+            {
+                animator.enabled = false;
+            }
         }
-        SetAnimationBool("isTurningRight", isTurningRight);
+        else
+        {
+            animator.enabled = true;
+        }
     }
-
-    public void Jump()
+    public void SetOnLadder(bool value)
     {
-        SetAnimationBool("isJumping", true);
-
+        Debug.Log(value);
+        animator.SetBool(IS_ON_LADDER, value);
+        isOnLadder = value;
     }
-
-    public void StopJumping()
-    {
-        SetAnimationBool("isJumping", isJumping);
-    }
-
-    public void SetBool(bool boolToChange, bool boolToChangeTo)
-    {
-        boolToChange = boolToChangeTo;
-    }
-
-    public void SetClimb(bool value)
-    {
-        isClimbing = value;
-
-        SetAnimationBool("isClimbing", isClimbing);
-    }
-
     public void SetAnimationBool(string name, bool value)
     {
         animator.SetBool(name, value);

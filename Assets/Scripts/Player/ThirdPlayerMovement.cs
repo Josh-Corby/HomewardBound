@@ -24,6 +24,10 @@ public enum GroundStates
 public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 {
 
+    public static event Action<bool> OnSprintingStateChange = null;
+    public static event Action<bool> OnGroundedStateChange = null;
+    public static event Action<bool> OnJump = null;
+
     [SerializeField]
     private CameraTransform cameraControl;
     [Header("References")]
@@ -109,11 +113,9 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
     void Update()
     {
-
-
         LookFoward();
         
-        if (/*UI.buildPanelStatus || UI.radialMenuStatus || */UI.menu == Menus.Paused || UI.menu == Menus.Paused)
+        if (UI.menu == Menus.Paused)
             return;
     }
     private void LateUpdate()
@@ -204,7 +206,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         switch (groundState)
         {
             case GroundStates.Grounded:
-
+                OnGroundedStateChange?.Invoke(true);
                 ResetCoyoteTimer();
                 if (fallTimer <= 0)
                 {
@@ -223,12 +225,14 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
 
             case GroundStates.Airborne:
                 {
+                    OnGroundedStateChange?.Invoke(false);
                     CheckGroundRays();
                     fallTimer -= Time.deltaTime;
                     CoyoteTimer();
                 }
                 break;
             case GroundStates.Gliding:
+                OnGroundedStateChange?.Invoke(false);
                 Debug.Log("is gliding");
 
                 break;
@@ -311,7 +315,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     }
     private IEnumerator Jump()
     {
-        AM.Jump();
+        OnJump?.Invoke(true);
         LilypadOffset = null;
         velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
 
@@ -319,7 +323,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         coyoteTimer = 0f;
 
         yield return new WaitForSeconds(0.5f);
-        AM.StopJumping();
+        OnJump?.Invoke(false);
     }
     private void HandleSprinting()
     {
@@ -372,21 +376,15 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private void ToggleSprint()
     {
         isSprinting = !isSprinting;
-
         basicMovementScript.speed = isSprinting ? sprintSpeed : moveSpeed;
-        AM.SetAnimationBool("isSprinting", isSprinting);
-
-        AM.SetBool(AM.isSprinting, isSprinting);
+        OnSprintingStateChange?.Invoke(isSprinting);
     }
     #region GrappleHook
     private void StartGrapple()
     {
         if (!UI.paused)
         {
-            //if (!UI.buildPanelStatus)
-            
-             
-            
+            //if (!UI.buildPanelStatus)          
         }
     }
 
