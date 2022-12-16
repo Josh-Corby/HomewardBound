@@ -9,44 +9,42 @@ public class InteractionZone : GameBehaviour<InteractionZone>
     public static event Action OnRespawnSet;
     public static event Action<GameObject> OnItemPickUp;
 
-    public bool canPickUp;
-    public bool canDestroy;
-    public bool canClimb;
-    public bool canBreak;
-    public bool isRolling;
-    [SerializeField]
-    private bool atBonfire;
+    public bool CanPickUp;
+    public bool CanDestroy;
+    public bool CanClimb;
+    public bool CanBreak;
+    private bool AtBonfire;
     public GameObject Player;
     public GameObject objectToInteract;
     public GameObject objectToDestroy;
-    private GameObject LadderEntry;
-    public int lightPickUpValue = 8;
+    private readonly GameObject _ladderEntry;
+    public int LightPickUpValue = 8;
 
-    private int pebbleCounter = 0;
+    private int _pebbleCounter = 0;
 
-    public List<GameObject> outlineObjectsList = new List<GameObject>();
+    public List<GameObject> OutlineObjectsList = new List<GameObject>();
 
-    private readonly float interactRange = 3f;
+    private readonly float _interactRange = 3f;
 
-    private Collider col;
+    private Collider _col;
     private void Awake()
     {
         Player = TPM.gameObject;
-        col = GetComponent<BoxCollider>();
+        _col = GetComponent<BoxCollider>();
     }
     private void Update()
     {
-        if (outlineObjectsList.Count > 0)
-            OutlineCheck();
+        if (OutlineObjectsList.Count > 0)
+            //OutlineCheck();
 
-        if (outlineObjectsList.Count > 0)
-            canPickUp = true;
-        if (outlineObjectsList.Count < 0)
-            canPickUp = false;
+        if (OutlineObjectsList.Count > 0)
+            CanPickUp = true;
+        if (OutlineObjectsList.Count < 0)
+            CanPickUp = false;
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (canDestroy && UI.paused == false)
+            if (CanDestroy && UI.paused == false)
             {
                 objectToDestroy.GetComponent<ObjectBuild>().RefundMaterials();
 
@@ -64,65 +62,58 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         #region Item Interactions
         if (Input.GetKeyDown(KeyCode.E))
         {
-
             if (objectToInteract == null)
             {
-
                 return;
             }
             if (objectToInteract != null)
             {
-                if (isRolling)
-                {
-                    Debug.Log("Stop rolling");
-                    objectToInteract.transform.parent.parent = null;
 
-                    col.enabled = true;
-                    isRolling = false;
+                objectToInteract.transform.parent.parent = null;
+
+                _col.enabled = true;
+
+
+
+
+
+
+                if (AtBonfire)
+                {
+                    Debug.Log("Respawnset");
+                    OnRespawnSet();
+
 
                     return;
                 }
 
-
-                if (!isRolling)
+                if (objectToInteract.CompareTag("RollingRock"))
                 {
-                    if (atBonfire)
+                    if (TPM.groundState == GroundStates.Grounded)
                     {
-                        Debug.Log("Respawnset");
-                        OnRespawnSet();
 
+                        objectToInteract.transform.parent.SetParent(TPM.transform);
+                        _col.enabled = false;
 
                         return;
                     }
-
-                    if (objectToInteract.CompareTag("RollingRock"))
-                    {
-                        if (TPM.groundState == GroundStates.Grounded)
-                        {
-
-                            objectToInteract.transform.parent.SetParent(TPM.transform);
-                            col.enabled = false;
-                            isRolling = true;
-
-                            return;
-                        }
-                    }
-                    if (canClimb)
-                    {
-                        if (LadderEntry != null)
-                        {
-                            Player.transform.position = LadderEntry.transform.position;
-                            Player.transform.rotation = LadderEntry.transform.rotation;
-                            PM.isClimbing = true;
-                        }
-                        PM.isClimbing = true;
-                        Debug.Log("ClimbingLadder");
-                    }
-                    if (canPickUp)
-                    {
-                        PickUpObjects();
-                    }
                 }
+                if (CanClimb)
+                {
+                    if (_ladderEntry != null)
+                    {
+                        Player.transform.position = _ladderEntry.transform.position;
+                        Player.transform.rotation = _ladderEntry.transform.rotation;
+                        PM.isClimbing = true;
+                    }
+                    PM.isClimbing = true;
+                    Debug.Log("ClimbingLadder");
+                }
+                if (CanPickUp)
+                {
+                    PickUpObjects();
+                }
+
             }
         }
         #endregion
@@ -131,52 +122,23 @@ public class InteractionZone : GameBehaviour<InteractionZone>
     }
     private void PickUpObjects()
     {
-        foreach (GameObject pickUpObject in outlineObjectsList)
+        foreach (GameObject pickUpObject in OutlineObjectsList)
         {
             OnItemPickUp(pickUpObject);
             pickUpObject.SetActive(false);
         }
-        outlineObjectsList.Clear();
-        canPickUp = false;
+        OutlineObjectsList.Clear();
+        CanPickUp = false;
         objectToInteract = null;
 
     }
 
-    private void OutlineObjects()
-    {
-        if (outlineObjectsList.Count <= 0) return;
-        float closestDistanceSqr = interactRange;
-        Vector3 playerPosition = Player.transform.position;
+    
 
-        foreach (GameObject objectToOutline in outlineObjectsList)
-        {
-            Vector3 directionToTarget = objectToOutline.transform.position - playerPosition;
-            float dSqrToTarget = directionToTarget.sqrMagnitude;
-            if (dSqrToTarget < closestDistanceSqr)
-            {
-                objectToInteract = objectToOutline;
-                closestDistanceSqr = dSqrToTarget;
-                OutlineObject(objectToOutline);
-            }
-            if (dSqrToTarget > closestDistanceSqr)
-            {
-                //Debug.Log("Object not highlighted");
-                StopOutliningObject(objectToOutline);
-                //outlineObjectsList.Remove(objectToOutline);
-            }
-        }
-    }
 
-    private void OutlineCheck()
-    {
-        OutlineObjects();
-    }
 
     private void OnTriggerEnter(Collider other)
     {
-
-
-
         if (other.CompareTag("Ladder") || other.CompareTag("Bridge"))
         {
             OutlineObject(other.gameObject.GetComponentInParent<ObjectBuild>().gameObject);
@@ -185,16 +147,12 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         if (other.CompareTag("Ladder") || other.CompareTag("Bridge"))
         {
             objectToDestroy = other.gameObject.GetComponent<BuildObjectTrigger>().ObjectMain.gameObject;
-            canDestroy = true;
+            CanDestroy = true;
         }
-
-
     }
 
     private void OnTriggerExit(Collider other)
     {
-
-
         if (other.CompareTag("Ladder") || other.CompareTag("Bridge"))
         {
             StopOutliningObject(other.gameObject.GetComponentInParent<ObjectBuild>().gameObject);
@@ -204,31 +162,29 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         if (other.CompareTag("Ladder"))
         {
             PM.isClimbing = false;
-            canClimb = false;
-            canDestroy = false;
+            CanClimb = false;
+            CanDestroy = false;
 
         }
         if (other.CompareTag("Bridge"))
         {
-            canDestroy = false;
+            CanDestroy = false;
         }
         if (other.CompareTag("Bonfire"))
         {
-            atBonfire = false;
+            AtBonfire = false;
         }
     }
 
     public void DisableInteractions()
     {
-
         TogglePickUpBools();
     }
 
     public void TogglePickUpBools()
     {
         objectToInteract = null;
-        canDestroy = false;
-        //canBreak = false;
+        CanDestroy = false;
     }
     public void Toggle(bool isEnabled)
     {
@@ -249,8 +205,8 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             Debug.Log(objectToDestroy);
             Destroy(objectToDestroy);
             objectToDestroy = null;
-            canDestroy = false;
-            canClimb = false;
+            CanDestroy = false;
+            CanClimb = false;
             UI.UpdateMaterialsCollected();
         }
     }
@@ -263,15 +219,39 @@ public class InteractionZone : GameBehaviour<InteractionZone>
     {
         objectToStopOutlining.GetComponent<Outline>().enabled = false;
     }
+
+    /*
     private void AddOutline(GameObject objectToOutline)
     {
-        outlineObjectsList.Add(objectToOutline.gameObject);
-        OutlineCheck();
+        OutlineObjectsList.Add(objectToOutline.gameObject);
     }
     private void RemoveOutline(GameObject objectToOutline)
     {
         objectToOutline.GetComponent<Outline>().enabled = false;
-        outlineObjectsList.Remove(objectToOutline.gameObject);
-        OutlineCheck();
+        OutlineObjectsList.Remove(objectToOutline.gameObject);
     }
+
+    private void OutlineObjects()
+    {
+        if (OutlineObjectsList.Count <= 0) return;
+        float closestDistanceSqr = _interactRange;
+        Vector3 playerPosition = Player.transform.position;
+
+        foreach (GameObject objectToOutline in OutlineObjectsList)
+        {
+            Vector3 directionToTarget = objectToOutline.transform.position - playerPosition;
+            float dSqrToTarget = directionToTarget.sqrMagnitude;
+            if (dSqrToTarget < closestDistanceSqr)
+            {
+                objectToInteract = objectToOutline;
+                closestDistanceSqr = dSqrToTarget;
+                OutlineObject(objectToOutline);
+            }
+            if (dSqrToTarget > closestDistanceSqr)
+            {
+                StopOutliningObject(objectToOutline);
+            }
+        }
+    }
+    */
 }

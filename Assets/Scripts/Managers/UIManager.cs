@@ -76,28 +76,28 @@ public class UIManager : GameBehaviour<UIManager>
     /// </summary>
     public void UpdateRocksCollected()
     {
-        smallRocksCollected.text = GM.rocksCollected.ToString();
+        smallRocksCollected.text = GM.RocksCollected.ToString();
     }
     /// <summary>
     /// Update the UI of how many sticks the player has collected
     /// </summary>
     public void UpdateSticksCollected()
     {
-        sticksCollected.text = GM.sticksCollected.ToString();
+        sticksCollected.text = GM.SticksCollected.ToString();
     }
     /// <summary>
     /// Update the UI of how many mushrooms the player has collected
     /// </summary>
     public void UpdateStringCollected()
     {
-        stringCollected.text = GM.stringCollected.ToString();
+        stringCollected.text = GM.StringCollected.ToString();
     }
     /// <summary>
     /// Update the UI of how many Pebbles the player has collected
     /// </summary>
     public void UpdatePebblesCollected()
     {
-        pebblesCollected.text = GM.pebblesCollected.ToString();
+        pebblesCollected.text = GM.PebblesCollected.ToString();
     }
     /// <summary>
     /// Update UI prompt for when the player can build

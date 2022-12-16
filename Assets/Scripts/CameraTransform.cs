@@ -9,10 +9,11 @@ public class CameraTransform : GameBehaviour
     private Camera _cam;
     [SerializeField]
     private CinemachineVirtualCamera _vcam;
+    [HideInInspector]
     public Cinemachine3rdPersonFollow CamFollow;
 
 
-    private float cameraDistance;
+    private float _cameraDistance;
     private const float _threshold = 0.01f;
     [Tooltip("For locking the camera position on all axis")]
     public bool LockCameraPosition = false;
@@ -25,14 +26,13 @@ public class CameraTransform : GameBehaviour
     [Tooltip("Additional degress to override the camera. Useful for fine tuning camera position when locked")]
     public float CameraAngleOverride = 0.0f;
 
-    [SerializeField]
-    private bool isColliding;
 
     [SerializeField]
-    private LayerMask mask;
+    private LayerMask _mask;
 
     private void Awake()
     {
+        _cam = Camera.main;
         CamFollow = _vcam.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
     }
 
@@ -44,8 +44,8 @@ public class CameraTransform : GameBehaviour
 
     private void Update()
     {
-        cameraDistance = 10f;
-        CamFollow.CameraDistance = cameraDistance;
+        _cameraDistance = 10f;
+        CamFollow.CameraDistance = _cameraDistance;
         if (_vcam.Follow == null) return;
         if (_vcam.LookAt == null) return;
 
@@ -123,7 +123,7 @@ public class CameraTransform : GameBehaviour
     {
         Ray ray = _cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 1, mask))
+        if (Physics.Raycast(ray, out RaycastHit hit, 1, _mask))
         {
             Debug.Log(hit.collider.gameObject);
             transform.position = hit.transform.position;

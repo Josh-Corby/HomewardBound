@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3247960574866379360}
   - component: {fileID: 5059316588231909547}
   - component: {fileID: 2531451962947662357}
-  m_Layer: 14
+  m_Layer: 11
   m_Name: Collider (1)
   m_TagString: Bridge
   m_Icon: {fileID: 0}
@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 6743331244558032577}
   - component: {fileID: 3225330393399032365}
   - component: {fileID: 9171085444678751628}
-  m_Layer: 14
+  m_Layer: 11
   m_Name: Collider (3)
   m_TagString: Bridge
   m_Icon: {fileID: 0}
@@ -411,7 +411,7 @@ GameObject:
   - component: {fileID: 276136619462600314}
   - component: {fileID: 877173870650877913}
   - component: {fileID: 269268442351863548}
-  m_Layer: 14
+  m_Layer: 11
   m_Name: BridgeTest 1
   m_TagString: Bridge
   m_Icon: {fileID: 0}
@@ -496,7 +496,7 @@ MonoBehaviour:
   _bridgeLandPoint: {fileID: 0}
   _mask:
     serializedVersion: 2
-    m_Bits: 2112
+    m_Bits: 2240
   _landingMarker: {fileID: 6753353624854875935}
 --- !u!114 &276136619462600314
 MonoBehaviour:
@@ -512,7 +512,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _objectType: 0
   Frozen: 0
-  _rb: {fileID: 649449721671240455}
 --- !u!114 &877173870650877913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -551,7 +550,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 1
   outlineColor: {r: 0.17268857, g: 0, b: 0.38679248, a: 1}
-  outlineWidth: 6.02
+  outlineWidth: 10
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
@@ -698,7 +697,7 @@ GameObject:
   - component: {fileID: 6818304885804219311}
   - component: {fileID: 3807769492838885212}
   - component: {fileID: 4363606661804630127}
-  m_Layer: 14
+  m_Layer: 11
   m_Name: Collider (4)
   m_TagString: Bridge
   m_Icon: {fileID: 0}
@@ -826,7 +825,7 @@ GameObject:
   - component: {fileID: 8663863024433521497}
   - component: {fileID: 3257177374771474957}
   - component: {fileID: 407522953303716032}
-  m_Layer: 14
+  m_Layer: 11
   m_Name: Collider (2)
   m_TagString: Bridge
   m_Icon: {fileID: 0}

@@ -19,11 +19,11 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
     private const string IS_ON_LADDER = "isOnLadder";
 
 
-    private bool isJumping;
-    public bool isTurningLeft;
-    public bool isTurningRight;
-    public bool isClimbing;
-    public bool isOnLadder;
+    private bool _isJumping;
+    public bool IsTurningLeft;
+    public bool IsTurningRight;
+    public bool IsClimbing;
+    public bool IsOnLadder;
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -53,7 +53,7 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
     }
     private void ManageAnimations()
     {
-        if (isOnLadder)
+        if (IsOnLadder)
         {
             {
                 SetOnLadder(true);
@@ -70,18 +70,18 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
             }
         }
 
-        else if (isJumping == true)
+        else if (_isJumping == true)
         {
             return;
         }
 
-        else if (isOnLadder == false)
+        else if (IsOnLadder == false)
         {
-            isTurningLeft = IM.cameraInput.x < 0;
-            isTurningRight = IM.cameraInput.x > 0;
+            IsTurningLeft = IM.cameraInput.x < 0;
+            IsTurningRight = IM.cameraInput.x > 0;
 
-            SetTurnLeft(isTurningLeft);
-            SetTurnRight(isTurningRight);
+            SetTurnLeft(IsTurningLeft);
+            SetTurnRight(IsTurningRight);
 
             if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S))
             {
@@ -143,7 +143,7 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
     }
     private void SetJumping(bool value)
     {
-        isJumping = value;
+        _isJumping = value;
         animator.SetBool(IS_JUMPING, value);
     }
     private void SetWalkingBack(bool value)
@@ -176,7 +176,7 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
     }
     private void SetClimbing(bool value)
     {
-        if (isOnLadder)
+        if (IsOnLadder)
         {
             if (value)
             {
@@ -195,9 +195,9 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
     }
     public void SetOnLadder(bool value)
     {
-        Debug.Log(value);
+        IsOnLadder = value;
         animator.SetBool(IS_ON_LADDER, value);
-        isOnLadder = value;
+
     }
 
 }

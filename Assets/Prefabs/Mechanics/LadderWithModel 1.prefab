@@ -150,9 +150,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9017c28d879ffd94683118581cb524ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _objectType: 0
+  _objectType: 1
   Frozen: 0
-  _rb: {fileID: 0}
 --- !u!114 &2708193910085613456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 0
-  CurrentTrigger: {fileID: 0}
+  CurrentTrigger: {fileID: 3352449509118570833}
   ObjectLength: 0
   _objectColliders:
   - {fileID: 2504912413395523635}
@@ -199,7 +198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 1
   outlineColor: {r: 0.17254902, g: 0, b: 0.3882353, a: 1}
-  outlineWidth: 3.03
+  outlineWidth: 10
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
@@ -214,7 +213,7 @@ GameObject:
   - component: {fileID: 8756231197694832304}
   - component: {fileID: 3352449509118570833}
   - component: {fileID: 2504912413395523635}
-  m_Layer: 14
+  m_Layer: 11
   m_Name: BuildTrigger
   m_TagString: Ladder
   m_Icon: {fileID: 0}
@@ -457,6 +456,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tweenScale: {x: 1.25, y: 1.25, z: 1.25}
   _tweenTime: 0.75
-  _canBuildColour: {r: 0, g: 0, b: 0, a: 0}
-  _cantBuildColour: {r: 0, g: 0, b: 0, a: 0}
-  _emissionIntensity: 0
+  _canBuildColour: {r: 0, g: 0.40026736, b: 1, a: 0}
+  _cantBuildColour: {r: 1, g: 0, b: 0.15377235, a: 0}
+  _emissionIntensity: 3

@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class CollectableMaterial : GameBehaviour
 {
-    [SerializeField]
     private bool _isMovingTowardsPlayer;
     private Collider _col;
-
     private readonly float _moveSpeed = 0.3f;
 
     private void Awake()

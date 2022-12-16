@@ -6,34 +6,34 @@ using System;
 public class BonfireManager : GameBehaviour
 {
     [SerializeField]
-    private Transform SpawnPoint;
+    private Transform _spawnPoint;
     [SerializeField]
-    private GameObject particles;
+    private GameObject _particles;
     [SerializeField]
-    private BoxCollider col;
+    private BoxCollider _col;
     [SerializeField]
-    private AudioSource sounds;
+    private AudioSource _sounds;
     [SerializeField]
-    private AudioClip bonfireClip;
+    private AudioClip _bonfireClip;
 
     private void Awake()
     {
-        col = GetComponent<BoxCollider>();
+        _col = GetComponent<BoxCollider>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == TPM.gameObject)
         {
-            col.enabled = false;
+            _col.enabled = false;
             SetRespawnPoint();
-            sounds.PlayOneShot(bonfireClip);
+            _sounds.PlayOneShot(_bonfireClip);
         }
     }
 
     private void SetRespawnPoint()
     {
-        GM.spawnPoint = SpawnPoint;
-        particles.SetActive(true);
+        GM.SpawnPoint = _spawnPoint;
+        _particles.SetActive(true);
     }
 }

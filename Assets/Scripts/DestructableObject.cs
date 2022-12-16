@@ -12,15 +12,9 @@ public class DestructableObject : GameBehaviour
     private GameObject _child;
 
     private FallingObject _fallingObject;
+
     private Rigidbody _fallingObjectRB;
 
-    private Outline _outline;
-    [SerializeField]
-    private bool _isVisible;
-
-
-    [SerializeField]
-    private string rotateDirection;
     private void OnEnable()
     {
         GameManager.OnPlayerRespawn += ResetObject;
@@ -34,7 +28,6 @@ public class DestructableObject : GameBehaviour
         _fallingObjectSpawnPosition.position = _child.transform.position;
         _fallingObjectRB = _child.GetComponent<Rigidbody>();
         _fallingObject = _child.GetComponent<FallingObject>();
-        _outline = GetComponent<Outline>();
     }
 
     private void ResetObject()
@@ -62,23 +55,8 @@ public class DestructableObject : GameBehaviour
                         _fallingObjectRB.constraints &= ~RigidbodyConstraints.FreezeRotationZ;
                         break;
                 }
-
-                
-
                 _fallingObject.Unfreeze();
             }
         }
-    }
-
-    private void OnBecameVisible()
-    {
-
-        _isVisible = true;
-    }
-
-
-    private void OnBecameInvisible() 
-    {
-        _isVisible = false;
     }
 }

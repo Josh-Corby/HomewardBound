@@ -14,42 +14,43 @@ public class BuildManager : GameBehaviour<BuildManager>
     public static event Action<bool> OnCanBuildStatus = null;
 
     [Header("Build Checks")]
-    public bool isBuilding;
-    public bool canBuild;
-    public bool collisionCheck;
-    public bool onBuildObject;
+    public bool IsBuilding;
+    public bool CanBuild;
+    public bool CollisionCheck;
+    public bool OnBuildObject;
 
     [Header("Crafting Checks")]
-    private bool pebbleCheck;
-    private bool stickCheck;
-    private bool stringCheck;
-    public bool materialsCheck;
-    public bool allChecks;
+    private bool _pebbleCheck;
+    private bool _stickCheck;
+    private bool _stringCheck;
+    public bool MaterialsCheck;
+    public bool AllChecks;
 
 
     [Header("Craft Costs")]
-    public int rockCost;
-    public int stickCost;
-    public int stringCost;
+    public int RockCost;
+    public int StickCost;
+    public int StringCost;
 
     [Header("Build Prefabs")]
-    #region Build Prefabs
-    [SerializeField]
-    private GameObject ladderPrefab;
-    [SerializeField]
-    private GameObject bridgePrefab;
-    #endregion
-
-
 
     [SerializeField]
-    private GameObject buildZone;
+    private GameObject _ladderPrefab;
+    [SerializeField]
+    private GameObject _bridgePrefab;
 
-    public GameObject prefabToSpawn;
 
 
-    public GameObject buildingObject;
-    private int currentBuildObject_Index;
+
+    [SerializeField]
+    private GameObject _buildZone;
+
+    [HideInInspector]
+    public GameObject PrefabToSpawn;
+
+    [HideInInspector]
+    public GameObject BuildingObject;
+    private int _currentBuildObjectIndex;
 
     private void Start()
     {
@@ -60,67 +61,67 @@ public class BuildManager : GameBehaviour<BuildManager>
     private void Update()
     {
         // If the player isn't building cancel the build input
-        if (!isBuilding)
+        if (!IsBuilding)
         {
-            if (IM.cancel_Input)
+            if (IM.CancelInput)
             {
-                IM.cancel_Input = false;
+                IM.CancelInput = false;
                 return;
             }
         }
-        if (isBuilding)
+        if (IsBuilding)
         {
-            if (IM.cancel_Input)
+            if (IM.CancelInput)
             {
-                if (prefabToSpawn != null)
+                if (PrefabToSpawn != null)
                 {
                     CancelBuilding();
                 }
             }
 
-            if (TPM.groundState != GroundStates.Grounded || onBuildObject)
+            if (TPM.groundState != GroundStates.Grounded || OnBuildObject)
             {
-                canBuild = false;
+                CanBuild = false;
             }
             if (TPM.groundState == GroundStates.Grounded)
             {
-                canBuild = materialsCheck;
+                CanBuild = MaterialsCheck;
             }
 
-            if (TPM.groundState == GroundStates.Grounded && canBuild && collisionCheck && !onBuildObject && !UI.paused)
+            if (TPM.groundState == GroundStates.Grounded && CanBuild && CollisionCheck && !OnBuildObject && !UI.paused)
             {
 
-                allChecks = true;
+                AllChecks = true;
                 OnCanBuildStatus(true);
             }
 
-            if(TPM.groundState != GroundStates.Grounded || !canBuild || !collisionCheck || onBuildObject || UI.paused)
+            if(TPM.groundState != GroundStates.Grounded || !CanBuild || !CollisionCheck || OnBuildObject || UI.paused)
             {
-                allChecks = false;
+                AllChecks = false;
                 OnCanBuildStatus(false);
             }
         }
 
         // Checks for if player can build
-        if (Input.GetKeyDown(KeyCode.Mouse0) && isBuilding && !UI.paused)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && IsBuilding && !UI.paused)
         {
             // If material comparisons return true
-            if (materialsCheck && canBuild && collisionCheck && !onBuildObject)
+            if (MaterialsCheck && CanBuild && CollisionCheck && !OnBuildObject)
             {
 
                 // Detach object from buildzone
-                buildZone.transform.DetachChildren();
+                _buildZone.transform.DetachChildren();
 
                 // Reactivate Interaction Zone
                 IZ.Toggle(true);
-                buildingObject.GetComponent<ObjectBuild>().CurrentTrigger.isTrigger = false;
-                SetObjectValue(buildingObject.GetComponent<ObjectBuild>());
+                BuildingObject.GetComponent<ObjectBuild>().CurrentTrigger.isTrigger = false;
+                SetObjectValue(BuildingObject.GetComponent<ObjectBuild>());
 
 
-                if (buildingObject.GetComponent<BuildObjectRB>() != null)
+                if (BuildingObject.GetComponent<BuildObjectRB>() != null)
                 {
-                    buildingObject.gameObject.GetComponent<BuildObjectRB>().UnFreezeConstraints();
-                    buildingObject.gameObject.GetComponent<BuildObjectRB>().Frozen = false;
+                    BuildingObject.gameObject.GetComponent<BuildObjectRB>().UnFreezeConstraints();
+                    BuildingObject.gameObject.GetComponent<BuildObjectRB>().Frozen = false;
                 }
                 UI.DeselectHotbarOutline();
                 SubtractCost();
@@ -133,33 +134,33 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     private void SetObjectValue(ObjectBuild objectBuilt)
     {
-        objectBuilt.StickRefundValue = stickCost / 2;
-        objectBuilt.RockRefundValue = rockCost / 2;
-        objectBuilt.StringRefundValue = stringCost / 2;
+        objectBuilt.StickRefundValue = StickCost / 2;
+        objectBuilt.RockRefundValue = RockCost / 2;
+        objectBuilt.StringRefundValue = StringCost / 2;
     }
 
     private void ToolSelectListen(int buildObjectIndex)
     {
         buildObjectIndex -= 1;
-        if (buildObjectIndex == currentBuildObject_Index)
+        if (buildObjectIndex == _currentBuildObjectIndex)
         {
             UI.DeselectHotbarOutline();
             CancelBuilding();
-            currentBuildObject_Index = -1;
+            _currentBuildObjectIndex = -1;
             return;
         }
 
         if (buildObjectIndex >= 0 && buildObjectIndex <= 1)
         {
             BuildItem(buildObjectIndex);
-            currentBuildObject_Index = buildObjectIndex;
+            _currentBuildObjectIndex = buildObjectIndex;
             return;
         }
 
         if (buildObjectIndex == 3)
         {
             CancelBuilding();
-            currentBuildObject_Index = buildObjectIndex;
+            _currentBuildObjectIndex = buildObjectIndex;
             return;
         }
     }
@@ -167,11 +168,11 @@ public class BuildManager : GameBehaviour<BuildManager>
     private void ResetBuildObject()
     {
         // Reset manager bools
-        buildingObject = null;
-        prefabToSpawn = null;
-        canBuild = false;
-        isBuilding = false;
-        currentBuildObject_Index = -1;
+        BuildingObject = null;
+        PrefabToSpawn = null;
+        CanBuild = false;
+        IsBuilding = false;
+        _currentBuildObjectIndex = -1;
     }
 
     /// <summary>
@@ -183,13 +184,13 @@ public class BuildManager : GameBehaviour<BuildManager>
         switch ((BuildObjects)value)
         {
             case BuildObjects.Ladder:
-                prefabToSpawn = ladderPrefab;
+                PrefabToSpawn = _ladderPrefab;
                 SetMaterialCosts(value, 1);
                 StartCoroutine(BuildObject());
                 break;
 
             case BuildObjects.Bridge:
-                prefabToSpawn = bridgePrefab;
+                PrefabToSpawn = _bridgePrefab;
                 SetMaterialCosts(value, 1);
                 StartCoroutine(BuildObject());
                 break;
@@ -207,31 +208,31 @@ public class BuildManager : GameBehaviour<BuildManager>
     IEnumerator BuildObject()
     {
         // Destroy any objects that shouldnt be there and make buildingobject null for function
-        Destroy(buildingObject);
-        buildingObject = null;
+        Destroy(BuildingObject);
+        BuildingObject = null;
         // Wait a frame for other functions and updates to process that object has been destroyed
         yield return new WaitForEndOfFrame();
 
         // Instantiate object as a child of buildZone
-        GameObject BuildObject = Instantiate(prefabToSpawn, buildZone.transform);
-        buildingObject = BuildObject;
+        GameObject BuildObject = Instantiate(PrefabToSpawn, _buildZone.transform);
+        BuildingObject = BuildObject;
         //UI.BuildMenuToggle();
-        isBuilding = true;
-        materialsCheck = CompareChecks();
+        IsBuilding = true;
+        MaterialsCheck = CompareChecks();
     }
 
     public void CancelBuilding()
     {
         UI.DeselectHotbarOutline();
-        if (buildingObject != null)
+        if (BuildingObject != null)
         {
-            Destroy(buildingObject);
+            Destroy(BuildingObject);
         }
 
-        prefabToSpawn = null;
-        canBuild = false;
-        isBuilding = false;
-        currentBuildObject_Index = -1;
+        PrefabToSpawn = null;
+        CanBuild = false;
+        IsBuilding = false;
+        _currentBuildObjectIndex = -1;
         
     }
     public void SetMaterialCosts(int index, int costMultiplier)
@@ -239,14 +240,14 @@ public class BuildManager : GameBehaviour<BuildManager>
         switch ((BuildObjects)index)
         {
             case BuildObjects.Ladder:
-                rockCost = 2;
-                stickCost = 2;
-                stringCost = 2;
+                RockCost = 2;
+                StickCost = 2;
+                StringCost = 2;
                 break;
             case BuildObjects.Bridge:
-                rockCost = 2 * costMultiplier;
-                stickCost = 2 * costMultiplier;
-                stringCost = 2 * costMultiplier;
+                RockCost = 2 * costMultiplier;
+                StickCost = 2 * costMultiplier;
+                StringCost = 2 * costMultiplier;
                 RunMaterialChecks();
                 break;
 
@@ -260,20 +261,20 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     private void RunMaterialChecks()
     {
-        if (isBuilding)
+        if (IsBuilding)
         {
-            materialsCheck = CompareChecks();
+            MaterialsCheck = CompareChecks();
         }
     }
     private bool CompareChecks()
     {
         //Debug.Log("Comparing materials");
 
-        pebbleCheck = GM.rocksCollected >= rockCost;
-        stickCheck = GM.sticksCollected >= stickCost;
-        stringCheck = GM.stringCollected >= stringCost;
+        _pebbleCheck = GM.RocksCollected >= RockCost;
+        _stickCheck = GM.SticksCollected >= StickCost;
+        _stringCheck = GM.StringCollected >= StringCost;
 
-        if (pebbleCheck == true && stickCheck == true && stringCheck)
+        if (_pebbleCheck == true && _stickCheck == true && _stringCheck)
             return true;
         else
             return false;
@@ -283,9 +284,9 @@ public class BuildManager : GameBehaviour<BuildManager>
     /// </summary>
     private void SubtractCost()
     {
-        GM.rocksCollected -= rockCost;
-        GM.sticksCollected -= stickCost;
-        GM.stringCollected -= stringCost;
+        GM.RocksCollected -= RockCost;
+        GM.SticksCollected -= StickCost;
+        GM.StringCollected -= StringCost;
         UI.UpdateMaterialsCollected();
     }
     /// <summary>
@@ -293,9 +294,9 @@ public class BuildManager : GameBehaviour<BuildManager>
     /// </summary>
     private void AddCost()
     {
-        GM.rocksCollected += rockCost;
-        GM.sticksCollected += stickCost;
-        GM.stringCollected += stringCost;
+        GM.RocksCollected += RockCost;
+        GM.SticksCollected += StickCost;
+        GM.StringCollected += StringCost;
         UI.UpdateMaterialsCollected();
     }
 

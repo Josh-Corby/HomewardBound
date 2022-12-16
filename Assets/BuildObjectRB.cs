@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public enum ObjectType
 {
     Bridge,
@@ -14,7 +13,6 @@ public class BuildObjectRB : MonoBehaviour
     [SerializeField]
     private ObjectType _objectType;
     public bool Frozen;
-    [SerializeField]
     private Rigidbody _rb;
 
     private void Awake()

@@ -184,17 +184,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroy: 0
-  canPickUp: 0
-  canDestroy: 0
-  canClimb: 0
-  canBreak: 0
-  isRolling: 0
-  atBonfire: 0
+  CanPickUp: 0
+  CanDestroy: 0
+  CanClimb: 0
+  CanBreak: 0
   Player: {fileID: 8710679983595202227}
   objectToInteract: {fileID: 0}
   objectToDestroy: {fileID: 0}
-  lightPickUpValue: 8
-  outlineObjectsList: []
+  LightPickUpValue: 8
+  OutlineObjectsList: []
 --- !u!54 &2485466207724806836
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -262,8 +260,7 @@ MonoBehaviour:
   TopClamp: 70
   BottomClamp: -70
   CameraAngleOverride: 0
-  isColliding: 0
-  mask:
+  _mask:
     serializedVersion: 2
     m_Bits: 0
 --- !u!1 &2971507129487608043
@@ -424,7 +421,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4724074168082408273}
   m_LocalRotation: {x: -0, y: -0.000000014901159, z: -0, w: 1}
-  m_LocalPosition: {x: -0.04, y: -1.156, z: -2.13}
+  m_LocalPosition: {x: 0.21, y: -1.156, z: -2.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -779,16 +776,8 @@ MonoBehaviour:
   moveAmount: 0
   verticalInput: 0
   horizontalInput: 0
-  mouseScrollY: 0
-  sprint_Input: 0
-  jump_Input: 0
-  interact_Input: 0
-  glide_Input: 0
-  buildMenu_Input: 0
-  destroy_Input: 0
-  cancel_Input: 0
-  lClick_Input: 0
-  rClick_Input: 0
+  CancelInput: 0
+  LeftClickInput: 0
 --- !u!1001 &3070578333265410550
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1024,10 +1013,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroy: 0
-  isTurningLeft: 0
-  isTurningRight: 0
-  isClimbing: 0
-  isOnLadder: 0
+  IsTurningLeft: 0
+  IsTurningRight: 0
+  IsClimbing: 0
+  IsOnLadder: 0
 --- !u!114 &5255001425672898020
 MonoBehaviour:
   m_ObjectHideFlags: 0

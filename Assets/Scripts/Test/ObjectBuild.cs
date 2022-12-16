@@ -90,9 +90,9 @@ public class ObjectBuild : GameBehaviour
     {
         if (UI.paused) return;
 
-        BM.collisionCheck = _isTriggerNotColliding;
+        BM.CollisionCheck = _isTriggerNotColliding;
 
-        _isBeingBuilt = gameObject == BM.buildingObject;
+        _isBeingBuilt = gameObject == BM.BuildingObject;
 
         if (_isBeingBuilt == false)
         {
@@ -139,7 +139,7 @@ public class ObjectBuild : GameBehaviour
                 CurrentTrigger.gameObject.SetActive(true);
 
             }
-            if (BM.materialsCheck)
+            if (BM.MaterialsCheck)
             {
                 if (_isTriggerNotColliding)
                 {
@@ -149,7 +149,7 @@ public class ObjectBuild : GameBehaviour
                     {
                         ChangeColourOfObject(Color.blue);
 
-                        if (!BM.onBuildObject)
+                        if (!BM.OnBuildObject)
                             ChangeColourOfObject(Color.blue);
                         else
                             ChangeColourOfObject(Color.red);

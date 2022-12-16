@@ -31,11 +31,11 @@ public class ToolUnlock : GameBehaviour
         switch (pickups) 
         {
             case Pickups.Builder:
-                GM.haveBuilding = !GM.haveBuilding;
+                GM.HaveBuilding = !GM.HaveBuilding;
                 break;
 
             case Pickups.Slingshot:
-                GM.haveSlingshot = !GM.haveSlingshot;
+                GM.HaveSlingshot = !GM.HaveSlingshot;
                 break;
         }
     }

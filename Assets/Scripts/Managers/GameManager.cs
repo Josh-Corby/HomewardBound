@@ -9,31 +9,24 @@ public class GameManager : GameBehaviour<GameManager>
     public static event Action OnPlayerRespawn = null;
 
     [Header("Resources Collected")]
-    public int rocksCollected;
-    public int sticksCollected;
-    public int stringCollected;
-    public int pebblesCollected;
+    public int RocksCollected;
+    public int SticksCollected;
+    public int StringCollected;
+    public int PebblesCollected;
 
 
     public GameObject Player;
-    public Transform spawnPoint;
+    public Transform SpawnPoint;
 
     [Header("Tools bools")]
-    public bool havePickaxe;
-    public bool haveSlingshot;
-    public bool haveBuilding;
-    //public bool haveGlider;
-    public bool haveGrappleHook;
+    public bool HaveSlingshot;
+    public bool HaveBuilding;
 
     private void Start()
     {
         RespawnPlayer();
-        haveGrappleHook = false;
-        //haveGlider = false;
-        haveBuilding = false;
-        haveSlingshot = false;
-        havePickaxe = false;
-
+        HaveBuilding = false;
+        HaveSlingshot = false;
         InteractionZone.OnItemPickUp += IncreaseResources;
     }
 
@@ -41,13 +34,10 @@ public class GameManager : GameBehaviour<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-            haveGrappleHook = true;
-            //haveGlider = true;
-            haveBuilding = true;
-            haveSlingshot = true;
-            havePickaxe = true;
+            HaveBuilding = true;
+            HaveSlingshot = true;
 
-            pebblesCollected += 1000;
+            PebblesCollected += 1000;
             AddMaterials(1000, 1000, 1000);
             SS.UpdateAmmo();
         }
@@ -56,45 +46,41 @@ public class GameManager : GameBehaviour<GameManager>
 
     public void AddMaterials(int sticks, int rocks, int strings)
     {
-        sticksCollected += sticks;
-        rocksCollected += rocks;
-        stringCollected += strings;
+        SticksCollected += sticks;
+        RocksCollected += rocks;
+        StringCollected += strings;
         OnMaterialsUpdated?.Invoke();
     }
 
    
     public void IncreaseResources(GameObject resourceCollected)
     {
-        //Debug.Log(resourceCollected);
-
         if (resourceCollected.CompareTag("Rock"))
         { 
-            rocksCollected += 1;
-            UI.UpdateMaterials(UI.smallRocksCollected,rocksCollected);
+            RocksCollected += 1;
+            UI.UpdateMaterials(UI.smallRocksCollected,RocksCollected);
             OnMaterialsUpdated?.Invoke();
             return;
         }
         if (resourceCollected.CompareTag("Stick"))
         { 
-            sticksCollected += 1;
-            UI.UpdateMaterials(UI.sticksCollected,sticksCollected);
+            SticksCollected += 1;
+            UI.UpdateMaterials(UI.sticksCollected,SticksCollected);
             OnMaterialsUpdated?.Invoke();
             return;
         }
         if (resourceCollected.CompareTag("String"))
         { 
-            stringCollected += 1;
-            UI.UpdateMaterials(UI.stringCollected,stringCollected);
+            StringCollected += 1;
+            UI.UpdateMaterials(UI.stringCollected,StringCollected);
             OnMaterialsUpdated?.Invoke();
             return;
         }
         if (resourceCollected.CompareTag("Pebble"))
         { 
-            pebblesCollected += 1;
-            //UI.UpdateMaterials(UI.pebblesCollected, pebblesCollected);
+            PebblesCollected += 1;
             OnMaterialsUpdated?.Invoke();
-            SS.UpdateAmmo();
-            
+            SS.UpdateAmmo();       
             return;
         }       
     }
@@ -106,24 +92,16 @@ public class GameManager : GameBehaviour<GameManager>
     {
         Player = TPM.gameObject;
         Player.GetComponent<CharacterController>().enabled = false;
-        Player.transform.position = spawnPoint.transform.position;
-        Player.transform.rotation = spawnPoint.transform.rotation;
-
+        Player.transform.position = SpawnPoint.transform.position;
+        Player.transform.rotation = SpawnPoint.transform.rotation;
         Player.GetComponent<CharacterController>().enabled = true;
-
         TPM.fallTimer = TPM.fallTimerMax;
         TPM.enabled = true;
-
-
         PM.isClimbing = false;
         LC.Inside = false;
-        //Debug.Log("Player Respawned");
         BM.CancelBuilding();
-
-
         OnPlayerRespawn?.Invoke();
     }
-
 
 
     /// <summary>
@@ -132,7 +110,7 @@ public class GameManager : GameBehaviour<GameManager>
     /// <param name="SP"> Transform of spawn point to be changed to</param>
     public void SetSpawnPoint(Transform SP)
     {
-        spawnPoint = SP;
+        SpawnPoint = SP;
     }
 
 }

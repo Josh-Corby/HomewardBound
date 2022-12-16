@@ -107,8 +107,8 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
             moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
 
         }
-            Controller.Move(moveDir.normalized * speed * Time.deltaTime);
-        
+        Controller.Move(moveDir.normalized * speed * Time.deltaTime);
+
     }
 
 
@@ -118,7 +118,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         {
             return;
         }
-  
+
         var lookPos = Cam.transform.position - _cameraLookRight.position;
         lookPos.y = 0;
         var rotation = Quaternion.LookRotation(lookPos);
@@ -130,7 +130,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     {
 
         groundState = Physics.CheckBox(GroundCheck.position, groundBox, Quaternion.identity, groundMask) ? GroundStates.Grounded : GroundStates.Airborne;
-        BM.onBuildObject = Physics.CheckSphere(GroundCheck.position, groundDistance, buildMask);
+        BM.OnBuildObject = Physics.CheckSphere(GroundCheck.position, groundDistance, buildMask);
 
         switch (groundState)
         {
@@ -160,11 +160,10 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                     CoyoteTimer();
                 }
                 break;
-        
+
         }
         if (Input.GetButtonDown("Jump") && coyoteTimer >= 0 && !UI.paused)
         {
-            if (IZ.isRolling) return;
             StartCoroutine(Jump());
         }
         velocity.y += gravity * Time.deltaTime;
@@ -174,10 +173,10 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         Controller.Move(velocity * Time.deltaTime);
         gravity = defaultGravity;
 
-        if (groundState == GroundStates.Airborne) return;
-
-        if (!IZ.isRolling)
+        if (groundState == GroundStates.Grounded)
+        {
             HandleSprinting();
+        }
     }
 
     public void DivideVelocity(int value)

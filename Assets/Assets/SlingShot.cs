@@ -50,11 +50,11 @@ public class SlingShot : GameBehaviour<SlingShot>
 
     private void Update()
     {
-        if (GM.haveSlingshot)
+        if (GM.HaveSlingshot)
         {
             if (OM.outfit == Outfits.Slingshot)
             {
-                if (BM.isBuilding || UI.paused == true)
+                if (BM.IsBuilding || UI.paused == true)
                 {
                     return;
                 }
@@ -178,11 +178,11 @@ public class SlingShot : GameBehaviour<SlingShot>
 
     public void UpdateAmmo()
     {
-        ammo = GM.pebblesCollected;
+        ammo = GM.PebblesCollected;
     }
     private void SubtractAmmo()
     {
-        GM.pebblesCollected -= 1;
+        GM.PebblesCollected -= 1;
         UpdateAmmo();
         UI.UpdatePebblesCollected();
     }

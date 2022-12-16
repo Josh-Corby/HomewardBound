@@ -10,15 +10,12 @@ public enum BulletTypes
 public class Bullet : MonoBehaviour
 {
     private float _bulletTimerMax, _bulletTimer;
-    private Rigidbody _rb;
-
 
     private void Start()
     {
-        _rb = GetComponent<Rigidbody>();
         _bulletTimerMax = 3f;
         _bulletTimer = _bulletTimerMax;
-        
+       
     }
 
     private void Update()
@@ -36,7 +33,6 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("BreakableWall"))
         {
-
             Destroy(collision.gameObject);
         }
 
@@ -44,11 +40,7 @@ public class Bullet : MonoBehaviour
         {
             return;
         }
-        Debug.Log(collision.gameObject);
-        //Debug.Log(collision.gameObject.name);
-        //gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         StartCoroutine(nameof(DestroyBullet));
-        //StartCoroutine(DestroyBullet());
     }
 
     IEnumerator DestroyBullet()

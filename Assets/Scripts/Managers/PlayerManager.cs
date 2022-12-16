@@ -25,13 +25,13 @@ public class PlayerManager : GameBehaviour<PlayerManager>
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if (GM.haveBuilding)
+            if (GM.HaveBuilding)
             { OnToolSelected(1); }
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            if (GM.haveBuilding)
+            if (GM.HaveBuilding)
             { OnToolSelected(2); }
         }
 
@@ -39,7 +39,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            if (GM.haveSlingshot)
+            if (GM.HaveSlingshot)
             { OnToolSelected(3); }
         }
 
