@@ -71,7 +71,7 @@ public class BuildObjectRB : MonoBehaviour
         if (collision.gameObject == gameObject || collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Player") 
             || collision.gameObject.CompareTag("Bridge") || collision.gameObject.CompareTag("Ladder") || collision.gameObject.CompareTag("Bonfire")) return;
 
-        Debug.Log(collision.gameObject.name);
+        //Debug.Log(collision.gameObject.name);
         FreezeConstraints();
     }
 }

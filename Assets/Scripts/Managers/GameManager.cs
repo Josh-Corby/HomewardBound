@@ -24,6 +24,7 @@ public class GameManager : GameBehaviour<GameManager>
 
     private void Start()
     {
+        Player = TPM.gameObject;
         RespawnPlayer();
         HaveBuilding = false;
         HaveSlingshot = false;
@@ -52,37 +53,37 @@ public class GameManager : GameBehaviour<GameManager>
         OnMaterialsUpdated?.Invoke();
     }
 
-   
+
     public void IncreaseResources(GameObject resourceCollected)
     {
         if (resourceCollected.CompareTag("Rock"))
-        { 
+        {
             RocksCollected += 1;
-            UI.UpdateMaterials(UI.smallRocksCollected,RocksCollected);
+            UI.UpdateMaterials(UI.smallRocksCollected, RocksCollected);
             OnMaterialsUpdated?.Invoke();
             return;
         }
         if (resourceCollected.CompareTag("Stick"))
-        { 
+        {
             SticksCollected += 1;
-            UI.UpdateMaterials(UI.sticksCollected,SticksCollected);
+            UI.UpdateMaterials(UI.sticksCollected, SticksCollected);
             OnMaterialsUpdated?.Invoke();
             return;
         }
         if (resourceCollected.CompareTag("String"))
-        { 
+        {
             StringCollected += 1;
-            UI.UpdateMaterials(UI.stringCollected,StringCollected);
+            UI.UpdateMaterials(UI.stringCollected, StringCollected);
             OnMaterialsUpdated?.Invoke();
             return;
         }
         if (resourceCollected.CompareTag("Pebble"))
-        { 
+        {
             PebblesCollected += 1;
             OnMaterialsUpdated?.Invoke();
-            SS.UpdateAmmo();       
+            SS.UpdateAmmo();
             return;
-        }       
+        }
     }
 
     /// <summary>
@@ -90,17 +91,20 @@ public class GameManager : GameBehaviour<GameManager>
     /// </summary>
     public void RespawnPlayer()
     {
-        Player = TPM.gameObject;
-        Player.GetComponent<CharacterController>().enabled = false;
-        Player.transform.position = SpawnPoint.transform.position;
-        Player.transform.rotation = SpawnPoint.transform.rotation;
-        Player.GetComponent<CharacterController>().enabled = true;
-        TPM.fallTimer = TPM.fallTimerMax;
-        TPM.enabled = true;
-        PM.isClimbing = false;
-        LC.Inside = false;
-        BM.CancelBuilding();
-        OnPlayerRespawn?.Invoke();
+        if (SpawnPoint != null)
+        {
+            Player.GetComponent<CharacterController>().enabled = false;
+            Player.transform.position = SpawnPoint.transform.position;
+            Player.transform.rotation = SpawnPoint.transform.rotation;
+            Player.GetComponent<CharacterController>().enabled = true;
+            TPM.fallTimer = TPM.fallTimerMax;
+            TPM.enabled = true;
+            PM.isClimbing = false;
+            LC.Inside = false;
+            BM.CancelBuilding();
+            OnPlayerRespawn?.Invoke();
+        }
+        
     }
 
 

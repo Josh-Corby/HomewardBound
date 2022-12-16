@@ -24,7 +24,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
 
     public List<GameObject> OutlineObjectsList = new List<GameObject>();
 
-    private readonly float _interactRange = 3f;
+    //private readonly float _interactRange = 3f;
 
     private Collider _col;
     private void Awake()

@@ -168,8 +168,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         }
         velocity.y += gravity * Time.deltaTime;
         velocity += CharacterVelocityMomentum;
-        //Debug.Log(velocity);
-        //Debug.Log(controller.velocity);
         Controller.Move(velocity * Time.deltaTime);
         gravity = defaultGravity;
 
@@ -233,7 +231,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         coyoteTimer -= Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Space) && groundState == GroundStates.Airborne && coyoteTimer > 0)
         {
-            Debug.Log("jump");
+            //Debug.Log("jump");
             StartCoroutine(Jump());
         }
     }
@@ -252,6 +250,13 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     {
         if (groundState == GroundStates.Grounded || groundState == GroundStates.Airborne)
         {
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                isSprinting = false;
+                basicMovementScript.speed = isSprinting ? sprintSpeed : moveSpeed;
+                OnSprintingStateChange?.Invoke(isSprinting);
+            }
+
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 ToggleSprint();
