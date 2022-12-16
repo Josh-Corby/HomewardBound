@@ -26,12 +26,14 @@ public class LadderClimb : GameBehaviour<LadderClimb>
             TPM.groundState = GroundStates.Grounded;
             TPM.enabled = false;
             Inside = true;
+            TPM.StopSprinting();
         }
     }
     void OnTriggerExit(Collider col)
     {
         if (col.gameObject.tag == "LadderClimb")
         {
+            AM.SetClimbing(false);
             Debug.Log("Not On Ladder");
             OnLadderStateChange?.Invoke(false);
             TPM.enabled = true;

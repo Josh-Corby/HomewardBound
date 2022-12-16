@@ -19,9 +19,15 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
     private const string IS_ON_LADDER = "isOnLadder";
 
 
+    private bool _isWalking;
+    private bool _isRunning;
+    private bool _isWalkingBack;
     private bool _isJumping;
     public bool IsTurningLeft;
     public bool IsTurningRight;
+    private bool _isSteppingLeft;
+    private bool _isSteppingRight;
+
     public bool IsClimbing;
     public bool IsOnLadder;
     private void Awake()
@@ -83,58 +89,33 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
             SetTurnLeft(IsTurningLeft);
             SetTurnRight(IsTurningRight);
 
-            if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S))
-            {
-                SetWalking(false);
-                SetWalkingBack(false);
-                return;
-            }
+            _isWalking = Input.GetKey(KeyCode.W);
+            _isSteppingLeft = Input.GetKey(KeyCode.A);
+            _isSteppingRight = Input.GetKey(KeyCode.D);
+            _isWalkingBack = Input.GetKey(KeyCode.S);
 
-            if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
+            if (_isWalking ^ _isWalkingBack)
             {
-                SetStepLeft(false);
-                SetStepRight(false);
-                return;
+                SetWalking(_isWalking);
+                SetWalkingBack(_isWalkingBack);
             }
-
-            if (Input.GetKey(KeyCode.A))
-            {
-                SetStepLeft(true);
-                return;
-            }
-
-            if (Input.GetKey(KeyCode.W))
-            {
-                SetWalking(true);
-                return;
-            }
-
-            if (Input.GetKey(KeyCode.S))
-            {
-                SetWalkingBack(true);
-                return;
-            }
-            if (Input.GetKey(KeyCode.A))
-            {
-                SetStepLeft(true);
-                return;
-            }
-
-            if (Input.GetKey(KeyCode.D))
-            {
-                SetStepRight(true);
-                return;
-            }
-
             else
             {
                 SetWalking(false);
                 SetWalkingBack(false);
+            }
+
+            if (_isSteppingLeft ^ _isSteppingRight)
+            {
+                SetStepLeft(_isSteppingLeft);
+                SetStepRight(_isSteppingRight);
+            }
+            else
+            {
                 SetStepLeft(false);
                 SetStepRight(false);
-
-            } 
-        }      
+            }        
+        }
     }
 
     private void SetWalking(bool value)
@@ -174,7 +155,7 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
     {
         animator.SetBool(IS_TURNING_RIGHT, value);
     }
-    private void SetClimbing(bool value)
+    public void SetClimbing(bool value)
     {
         if (IsOnLadder)
         {
@@ -198,6 +179,10 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
         IsOnLadder = value;
         animator.SetBool(IS_ON_LADDER, value);
 
+        if (value = false)
+        {
+            SetClimbing(false);
+        }
     }
 
 }

@@ -63,13 +63,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private MovementSpeeds moveSpeeds;
     public GroundStates groundState;
 
-    bool buildState;
-
-
     private Vector3 groundBox = new Vector3(0.3f, 0.5f, 0.3f);
-
-
-
     private bool isSprinting;
 
 
@@ -210,9 +204,9 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         {
             if (Physics.Raycast(ray, out RaycastHit hit, 1, groundMask))
             {
-                Debug.Log(hit.collider.gameObject);
+                //Debug.Log(hit.collider.gameObject);
                 inEdgeMovement += (-ray.direction);
-                Debug.Log(inEdgeMovement);
+                //Debug.Log(inEdgeMovement);
             }
             Controller.Move(inEdgeMovement * Time.deltaTime);
         }
@@ -252,9 +246,12 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         {
             if (Input.GetKeyDown(KeyCode.S))
             {
-                isSprinting = false;
-                basicMovementScript.speed = isSprinting ? sprintSpeed : moveSpeed;
-                OnSprintingStateChange?.Invoke(isSprinting);
+                StopSprinting();
+            }
+
+            if(!Input.GetKey(KeyCode.W) && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D)))
+            {
+                StopSprinting();
             }
 
             if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -264,6 +261,12 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         }
     }
 
+    public void StopSprinting()
+    {
+        isSprinting = false;
+        basicMovementScript.speed = isSprinting ? sprintSpeed : moveSpeed;
+        OnSprintingStateChange?.Invoke(isSprinting);
+    }
     private void ToggleSprint()
     {
         isSprinting = !isSprinting;

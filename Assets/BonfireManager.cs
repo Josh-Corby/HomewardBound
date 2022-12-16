@@ -19,6 +19,7 @@ public class BonfireManager : GameBehaviour
     private void Awake()
     {
         _col = GetComponent<BoxCollider>();
+        _sounds = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)

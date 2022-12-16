@@ -8,6 +8,7 @@ public class GUITween : GameBehaviour
     [SerializeField] private float _tweenTime;
     private readonly float _scaleTweenTime = 0.3f;
 
+
     private void OnEnable()
     {
         ScaleUp();
@@ -28,7 +29,7 @@ public class GUITween : GameBehaviour
 
     public void ScaleUp()
     {
-        transform.DOScale(1, _scaleTweenTime);
+        transform.DOScale(transform.localScale, _scaleTweenTime);
     }
 
 }
