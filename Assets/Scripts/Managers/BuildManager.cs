@@ -95,7 +95,7 @@ public class BuildManager : GameBehaviour<BuildManager>
                 OnCanBuildStatus(true);
             }
 
-            if(TPM.groundState != GroundStates.Grounded || !CanBuild || !CollisionCheck || OnBuildObject || UI.paused)
+            if (TPM.groundState != GroundStates.Grounded || !CanBuild || !CollisionCheck || OnBuildObject || UI.paused)
             {
                 AllChecks = false;
                 OnCanBuildStatus(false);
@@ -207,8 +207,11 @@ public class BuildManager : GameBehaviour<BuildManager>
     /// </summary>
     IEnumerator BuildObject()
     {
-        // Destroy any objects that shouldnt be there and make buildingobject null for function
-        Destroy(BuildingObject);
+        foreach (Transform child in _buildZone.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
         BuildingObject = null;
         // Wait a frame for other functions and updates to process that object has been destroyed
         yield return new WaitForEndOfFrame();
@@ -223,17 +226,19 @@ public class BuildManager : GameBehaviour<BuildManager>
 
     public void CancelBuilding()
     {
-        UI.DeselectHotbarOutline();
-        if (BuildingObject != null)
+
+        foreach (Transform child in _buildZone.transform)
         {
-            Destroy(BuildingObject);
+            Destroy(child.gameObject);
         }
+        UI.DeselectHotbarOutline();
+
 
         PrefabToSpawn = null;
         CanBuild = false;
         IsBuilding = false;
         _currentBuildObjectIndex = -1;
-        
+
     }
     public void SetMaterialCosts(int index, int costMultiplier)
     {
@@ -243,6 +248,7 @@ public class BuildManager : GameBehaviour<BuildManager>
                 RockCost = 2;
                 StickCost = 2;
                 StringCost = 2;
+                RunMaterialChecks();
                 break;
             case BuildObjects.Bridge:
                 RockCost = 2 * costMultiplier;

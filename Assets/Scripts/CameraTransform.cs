@@ -12,6 +12,10 @@ public class CameraTransform : GameBehaviour
     [HideInInspector]
     public Cinemachine3rdPersonFollow CamFollow;
 
+    [Range(1, 10)]
+    public float Sensitivity;
+
+    private float _sensitivityDamp = 4;
 
     private float _cameraDistance;
     private const float _threshold = 0.01f;
@@ -38,6 +42,8 @@ public class CameraTransform : GameBehaviour
 
     private void Start()
     {
+        Sensitivity = 4;
+        UI.SetSensitivity(Sensitivity);
         _cinemachineTargetYaw = gameObject.transform.rotation.eulerAngles.y;
         _cam = Camera.main;
     }
@@ -51,9 +57,6 @@ public class CameraTransform : GameBehaviour
 
         if (UI.menu != Menus.None || UI.paused)
             return;
-        // CameraPosition();
-
-
     }
     private void LateUpdate()
     {
@@ -103,8 +106,8 @@ public class CameraTransform : GameBehaviour
                 //Don't multiply mouse input by Time.deltaTime;
                 float deltaTimeMultiplier = 0.1f;
 
-                _cinemachineTargetYaw += IM.cameraInput.x * deltaTimeMultiplier;
-                _cinemachineTargetPitch += -IM.cameraInput.y * deltaTimeMultiplier;
+                _cinemachineTargetYaw += IM.cameraInput.x * deltaTimeMultiplier / _sensitivityDamp * Sensitivity;
+                _cinemachineTargetPitch += -IM.cameraInput.y * deltaTimeMultiplier / _sensitivityDamp * Sensitivity;
             }
 
 
@@ -117,6 +120,11 @@ public class CameraTransform : GameBehaviour
         // Cinemachine will follow this target
         gameObject.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride,
             _cinemachineTargetYaw, 0.0f);
+    }
+
+    public void ChangeSensitivity(float sensitivity)
+    {
+        Sensitivity = sensitivity;
     }
 
     private void CameraPosition()

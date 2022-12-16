@@ -256,6 +256,7 @@ MonoBehaviour:
   _cam: {fileID: 0}
   _vcam: {fileID: 0}
   CamFollow: {fileID: 0}
+  Sensitivity: 0
   LockCameraPosition: 0
   TopClamp: 70
   BottomClamp: -70
@@ -701,7 +702,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroy: 0
-  _cameraControl: {fileID: 9083536425567448531}
   Controller: {fileID: 8710679983595202224}
   Cam: {fileID: 0}
   _cameraLookRight: {fileID: 843888646440674099}

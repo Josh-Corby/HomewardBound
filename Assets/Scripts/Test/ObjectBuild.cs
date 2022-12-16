@@ -111,7 +111,7 @@ public class ObjectBuild : GameBehaviour
                 ObjectLength += 1;
                 OnObjectLengthChange();
 
-                BM.SetMaterialCosts(2, ObjectLength);
+                BM.SetMaterialCosts(1, ObjectLength);
 
                 if (CurrentTrigger != null)
                 {
@@ -206,6 +206,10 @@ public class ObjectBuild : GameBehaviour
     }
     private void UpdateLandingMarker(int value)
     {
+        if (value < 0)
+        {
+            value = 0;
+        }
         _isMarking = false;
         if (_bridgeLandPoint != null)
         {

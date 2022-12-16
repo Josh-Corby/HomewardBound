@@ -20,8 +20,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     public static event Action<bool> OnGroundedStateChange = null;
     public static event Action<bool> OnJump = null;
 
-    [SerializeField]
-    private CameraTransform _cameraControl;
     [Header("References")]
     public CharacterController Controller;
     public Camera Cam;

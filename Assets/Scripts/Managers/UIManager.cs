@@ -40,10 +40,24 @@ public class UIManager : GameBehaviour<UIManager>
     [SerializeField]
     private Color outlineColour;
 
+
+    [SerializeField]
+    private GameObject _settingsPanel;
+    [SerializeField]
+    private Slider _sensitivitySlider;
+
+    private CameraTransform cam;
+
+    private void Awake()
+    {
+        cam = TPM.gameObject.GetComponentInChildren<CameraTransform>();
+    }
     private void Start()
     {
+        _sensitivitySlider.value = cam.Sensitivity;
         PlayerManager.OnToolSelected += SelectControlUI;
         // Set UI values for start of game
+        gameUI.SetActive(true);
         pausePanel.SetActive(false);
         paused = false;
         Time.timeScale = 1;
@@ -194,6 +208,11 @@ public class UIManager : GameBehaviour<UIManager>
         }
     }
 
+    public void ToggleSettings()
+    {
+        _settingsPanel.SetActive(!_settingsPanel.activeSelf);
+        pausePanel.SetActive(!pausePanel.activeSelf);
+    }
 
     private void SelectControlUI(int panelIndex)
     {
@@ -218,5 +237,14 @@ public class UIManager : GameBehaviour<UIManager>
             CurrentOutline.color = Color.black;
             CurrentOutline = null;
         }
+    }
+
+    public void SetSensitivity(float sensitivity)
+    {
+        _sensitivitySlider.value = sensitivity;
+    }
+    public void ChangeSensitivity(Slider slider)
+    {
+        cam.ChangeSensitivity(slider.value);
     }
 }
