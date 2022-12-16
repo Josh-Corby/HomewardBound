@@ -205,6 +205,7 @@ public class UIManager : GameBehaviour<UIManager>
         if (!paused)
         {
             Cursor.lockState = CursorLockMode.Locked;
+            _settingsPanel.SetActive(false);
         }
     }
 
