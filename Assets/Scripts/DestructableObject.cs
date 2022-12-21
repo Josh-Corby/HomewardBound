@@ -15,6 +15,9 @@ public class DestructableObject : GameBehaviour
 
     private Rigidbody _fallingObjectRB;
 
+    [SerializeField]
+    private GameObject _particles;
+
     private void OnEnable()
     {
         GameManager.OnPlayerRespawn += ResetObject;
@@ -56,6 +59,12 @@ public class DestructableObject : GameBehaviour
                         break;
                 }
                 _fallingObject.Unfreeze();
+
+                if(_particles != null)
+                {
+                    GameObject particles = Instantiate(_particles);
+                    particles.GetComponent<ParticleSystem>().Play();
+                }
             }
         }
     }

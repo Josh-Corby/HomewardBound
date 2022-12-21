@@ -154,6 +154,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 break;
 
         }
+
         if (Input.GetButtonDown("Jump") && coyoteTimer >= 0 && !UI.paused)
         {
             StartCoroutine(Jump());
@@ -202,9 +203,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         {
             if (Physics.Raycast(ray, out RaycastHit hit, 1, groundMask))
             {
-                //Debug.Log(hit.collider.gameObject);
                 inEdgeMovement += (-ray.direction);
-                //Debug.Log(inEdgeMovement);
             }
             Controller.Move(inEdgeMovement * Time.deltaTime);
         }
@@ -223,7 +222,6 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
         coyoteTimer -= Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Space) && groundState == GroundStates.Airborne && coyoteTimer > 0)
         {
-            //Debug.Log("jump");
             StartCoroutine(Jump());
         }
     }
@@ -247,10 +245,10 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                 StopSprinting();
             }
 
-            if(!Input.GetKey(KeyCode.W) && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D)))
-            {
-                StopSprinting();
-            }
+            //if(!Input.GetKey(KeyCode.W) && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D)))
+            //{
+            //    StopSprinting();
+            //}
 
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {

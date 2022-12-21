@@ -48,12 +48,21 @@ public class UIManager : GameBehaviour<UIManager>
 
     private CameraTransform cam;
 
+
+    [SerializeField]
+    private GameObject _ladderImage;
+    [SerializeField]
+    private GameObject _bridgeImage;
+    [SerializeField]
+    private GameObject _slingshotImage;
+
     private void Awake()
     {
         cam = TPM.gameObject.GetComponentInChildren<CameraTransform>();
     }
     private void Start()
     {
+        
         _sensitivitySlider.value = cam.Sensitivity;
         PlayerManager.OnToolSelected += SelectControlUI;
         // Set UI values for start of game
@@ -62,6 +71,9 @@ public class UIManager : GameBehaviour<UIManager>
         paused = false;
         Time.timeScale = 1;
         UpdateMaterialsCollected();
+        SetSlingshotUIStatus(false);
+        SetBuildUIStatus(false);
+
     }
     private void Update()
     {
@@ -235,7 +247,7 @@ public class UIManager : GameBehaviour<UIManager>
         if (CurrentOutline != null)
         {
 
-            CurrentOutline.color = Color.black;
+            CurrentOutline.color = Color.white;
             CurrentOutline = null;
         }
     }
@@ -247,5 +259,16 @@ public class UIManager : GameBehaviour<UIManager>
     public void ChangeSensitivity(Slider slider)
     {
         cam.ChangeSensitivity(slider.value);
+    }
+
+    public void SetBuildUIStatus(bool status)
+    {
+        _ladderImage.SetActive(status);
+        _bridgeImage.SetActive(status);
+    }
+
+    public void SetSlingshotUIStatus(bool status)
+    {
+        _slingshotImage.SetActive(status);
     }
 }

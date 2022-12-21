@@ -32,10 +32,12 @@ public class ToolUnlock : GameBehaviour
         {
             case Pickups.Builder:
                 GM.HaveBuilding = !GM.HaveBuilding;
+                UI.SetBuildUIStatus(true);
                 break;
 
             case Pickups.Slingshot:
                 GM.HaveSlingshot = !GM.HaveSlingshot;
+                UI.SetSlingshotUIStatus(true);
                 break;
         }
     }
