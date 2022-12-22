@@ -4,19 +4,12 @@ using UnityEngine;
 
 public class DestructableObject : GameBehaviour
 {
-    public enum RotateDirection { X, Z}
+    public enum RotateDirection { X, Z }
     public RotateDirection Direction;
     [SerializeField]
-    private Transform _fallingObjectSpawnPosition;
-    [SerializeField]
     private GameObject _child;
-
     private FallingObject _fallingObject;
-
     private Rigidbody _fallingObjectRB;
-
-    [SerializeField]
-    private GameObject _particles;
 
     private void OnEnable()
     {
@@ -28,17 +21,21 @@ public class DestructableObject : GameBehaviour
     }
     private void Awake()
     {
-        _fallingObjectSpawnPosition.position = _child.transform.position;
-        _fallingObjectRB = _child.GetComponent<Rigidbody>();
-        _fallingObject = _child.GetComponent<FallingObject>();
+        if (_child != null)
+        {
+            _fallingObjectRB = _child.GetComponent<Rigidbody>();
+            _fallingObject = _child.GetComponent<FallingObject>();
+        }
     }
 
     private void ResetObject()
     {
         gameObject.SetActive(true);
-        _child.transform.position = _fallingObjectSpawnPosition.position;
+        if(_fallingObjectRB != null)
+        {
         _fallingObjectRB.useGravity = false;
         _fallingObjectRB.constraints = RigidbodyConstraints.FreezeAll;
+        }
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -60,11 +57,7 @@ public class DestructableObject : GameBehaviour
                 }
                 _fallingObject.Unfreeze();
 
-                if(_particles != null)
-                {
-                    GameObject particles = Instantiate(_particles);
-                    particles.GetComponent<ParticleSystem>().Play();
-                }
+                transform.parent.GetComponent<SpiderWeb>().StartParticles();
             }
         }
     }

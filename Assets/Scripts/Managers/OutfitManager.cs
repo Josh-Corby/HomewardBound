@@ -17,11 +17,14 @@ public class OutfitManager : GameBehaviour<OutfitManager>
     public bool canChangeOutfits;
     //public bool haveSlingshot = true;
 
+    [SerializeField]
+    private GameObject SlingshotObject;
     private void Start()
     {
         canChangeOutfits = true;
 
         PlayerManager.OnToolSelected += ChangeOutfits;
+        SlingshotObject.SetActive(false);
     }
 
     /// <summary>
@@ -58,10 +61,12 @@ public class OutfitManager : GameBehaviour<OutfitManager>
         {
             case Outfits.Builder:
                 outfit = Outfits.Builder;
+                SlingshotObject.SetActive(false);
                 break;
 
             case Outfits.Slingshot:
                 outfit = Outfits.Slingshot;
+                SlingshotObject.SetActive(true);
                 break;
 
             case Outfits.None:

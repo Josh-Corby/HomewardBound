@@ -41,6 +41,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>
         {
             if (GM.HaveSlingshot)
             { OnToolSelected(3); }
+
         }
 
     
