@@ -22,6 +22,12 @@ public class CollectableMaterial : GameBehaviour
             MoveTowardsPlayer();
         }
 
+        
+    }
+    public void MoveTowardsPlayer()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, PM.pickUpSpot.transform.position, _moveSpeed);
+
         if (Vector3.Distance(transform.position, PM.pickUpSpot.transform.position) <= 0.1f)
         {
             GM.IncreaseResources(gameObject);
@@ -32,10 +38,6 @@ public class CollectableMaterial : GameBehaviour
 
             gameObject.SetActive(false);
         }
-    }
-    public void MoveTowardsPlayer()
-    {
-        transform.position = Vector3.MoveTowards(transform.position, PM.pickUpSpot.transform.position, _moveSpeed);
     }
 
     public void StartMovingTowardsPlayer()

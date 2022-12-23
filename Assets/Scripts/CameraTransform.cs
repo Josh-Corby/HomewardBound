@@ -15,7 +15,7 @@ public class CameraTransform : GameBehaviour
     [Range(1, 10)]
     public float Sensitivity;
 
-    private float _sensitivityDamp = 4;
+    private float _sensitivityDamp = 6;
 
     private float _cameraDistance;
     private const float _threshold = 0.01f;
