@@ -26,7 +26,10 @@ public class PlayerManager : GameBehaviour<PlayerManager>
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             if (GM.HaveBuilding)
-            { OnToolSelected(1); }
+            { 
+                OnToolSelected(1); 
+
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -43,12 +46,5 @@ public class PlayerManager : GameBehaviour<PlayerManager>
             { OnToolSelected(3); }
 
         }
-
-    
     }
-
-    private void PlayerStealth()
-    { playerIsStealthed = true; }
-    private void PlayerUnstealth()
-    { playerIsStealthed = false; }
 }

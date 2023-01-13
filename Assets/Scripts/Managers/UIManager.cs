@@ -64,7 +64,6 @@ public class UIManager : GameBehaviour<UIManager>
     {
         
         _sensitivitySlider.value = cam.Sensitivity;
-        PlayerManager.OnToolSelected += SelectControlUI;
         // Set UI values for start of game
         gameUI.SetActive(true);
         pausePanel.SetActive(false);
@@ -227,9 +226,10 @@ public class UIManager : GameBehaviour<UIManager>
         pausePanel.SetActive(!pausePanel.activeSelf);
     }
 
-    private void SelectControlUI(int panelIndex)
+    public void SelectControlUI(int panelIndex)
     {
-        SelectHotbarOutline(HotbarOutlines[panelIndex - 1]);
+        Debug.Log(panelIndex);
+        SelectHotbarOutline(HotbarOutlines[panelIndex]);
     }
 
     private void SelectHotbarOutline(Image outline)

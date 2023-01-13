@@ -179,7 +179,7 @@ public class AnimatorManager : GameBehaviour<AnimatorManager>
         IsOnLadder = value;
         animator.SetBool(IS_ON_LADDER, value);
 
-        if (value = false)
+        if (value == false)
         {
             SetClimbing(false);
         }

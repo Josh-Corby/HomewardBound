@@ -65,6 +65,10 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     private bool isSprinting;
 
 
+    private void Awake()
+    {
+        Cam = Camera.main;
+    }
     private void Start()
     {
         fallTimer = fallTimerMax;
@@ -233,16 +237,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     {
         if (groundState == GroundStates.Grounded || groundState == GroundStates.Airborne)
         {
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                StopSprinting();
-            }
-
-            //if(!Input.GetKey(KeyCode.W) && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D)))
-            //{
-            //    StopSprinting();
-            //}
-
+          
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 ToggleSprint();

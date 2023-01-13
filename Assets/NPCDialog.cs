@@ -11,7 +11,7 @@ public class NPCDialog : GameBehaviour
     [HideInInspector] public GUITween GUITween;
     private GameObject _gui;
     private Outline _outline;
-    private readonly int _distanceToPlayer = 200;
+    private readonly int _distanceToPlayer = 100;
 
     private void Awake()
     {

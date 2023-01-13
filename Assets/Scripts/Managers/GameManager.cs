@@ -22,6 +22,8 @@ public class GameManager : GameBehaviour<GameManager>
     public bool HaveSlingshot;
     public bool HaveBuilding;
 
+    [SerializeField]
+    private bool CheatCodes;
     private void Start()
     {
         Player = TPM.gameObject;
@@ -33,14 +35,18 @@ public class GameManager : GameBehaviour<GameManager>
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha0))
+        if (CheatCodes)
         {
-            HaveBuilding = true;
-            HaveSlingshot = true;
 
-            PebblesCollected += 1000;
-            AddMaterials(1000, 1000, 1000);
-            SS.UpdateAmmo();
+            if (Input.GetKeyDown(KeyCode.Alpha0))
+            {
+                HaveBuilding = true;
+                HaveSlingshot = true;
+
+                PebblesCollected += 1000;
+                AddMaterials(1000, 1000, 1000);
+                SS.UpdateAmmo();
+            }
         }
 
     }
@@ -104,7 +110,7 @@ public class GameManager : GameBehaviour<GameManager>
             BM.CancelBuilding();
             OnPlayerRespawn?.Invoke();
         }
-        
+
     }
 
 

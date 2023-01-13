@@ -19,6 +19,7 @@ public class OutfitManager : GameBehaviour<OutfitManager>
 
     [SerializeField]
     private GameObject SlingshotObject;
+    private int currentOutfitValue;
     private void Start()
     {
         canChangeOutfits = true;
@@ -33,7 +34,7 @@ public class OutfitManager : GameBehaviour<OutfitManager>
     /// <param name="outfitValue"> Index value of outfit enum case to be changed to</param>
     public void ChangeOutfits (int outfitValue)
     {
-  
+
         if (!canChangeOutfits)
         {
             return;
@@ -53,24 +54,32 @@ public class OutfitManager : GameBehaviour<OutfitManager>
             outfitValue =2;
         }
         //Debug.Log(outfitValue);
-
         Outfits CurrentOutfit = (Outfits)outfitValue;
-
 
         switch (CurrentOutfit)
         {
             case Outfits.Builder:
                 outfit = Outfits.Builder;
                 SlingshotObject.SetActive(false);
+                currentOutfitValue = outfitValue;
                 break;
 
             case Outfits.Slingshot:
+                if(currentOutfitValue == outfitValue)
+                {
+                    outfit = Outfits.None;
+                    SlingshotObject.SetActive(false);
+                    currentOutfitValue = -1;
+                    return;
+                }
                 outfit = Outfits.Slingshot;
                 SlingshotObject.SetActive(true);
+                currentOutfitValue = outfitValue;
                 break;
 
             case Outfits.None:
                 outfit = Outfits.None;
+                currentOutfitValue = -1;
                 break;
         }
 

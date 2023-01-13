@@ -152,15 +152,17 @@ public class BuildManager : GameBehaviour<BuildManager>
 
         if (buildObjectIndex >= 0 && buildObjectIndex <= 1)
         {
+            UI.SelectControlUI(buildObjectIndex);
             BuildItem(buildObjectIndex);
             _currentBuildObjectIndex = buildObjectIndex;
             return;
         }
 
-        if (buildObjectIndex == 3)
+        if (buildObjectIndex == 2)
         {
             CancelBuilding();
             _currentBuildObjectIndex = buildObjectIndex;
+            UI.SelectControlUI(buildObjectIndex);
             return;
         }
     }
@@ -194,8 +196,6 @@ public class BuildManager : GameBehaviour<BuildManager>
                 SetMaterialCosts(value, 1);
                 StartCoroutine(BuildObject());
                 break;
-
-
         }
         IZ.Toggle(true);
         IZ.DisableInteractions();
