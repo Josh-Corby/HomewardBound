@@ -11,7 +11,7 @@ public class FogModifyer : GameBehaviour
     private void Start()
     {
         _turnOffFog = false;
-        TreeObject.SetActive(true);
+        TreeObject.SetActive(false);
     }
     private void Update()
     {

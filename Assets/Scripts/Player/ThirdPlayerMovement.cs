@@ -71,6 +71,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
     }
     private void Start()
     {
+
         fallTimer = fallTimerMax;
         basicMovementScript = GetComponent<ThirdPlayerMovement>();
     }
@@ -146,6 +147,7 @@ public class ThirdPlayerMovement : GameBehaviour<ThirdPlayerMovement>
                     OnGroundedStateChange?.Invoke(false);
                     CheckGroundRays();
                     fallTimer -= Time.deltaTime;
+                    fallTimer = Mathf.Clamp(fallTimer, 0, fallTimerMax);
                     CoyoteTimer();
                 }
                 break;
