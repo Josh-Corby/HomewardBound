@@ -122,7 +122,7 @@ public class UIManager : GameBehaviour<UIManager>
     /// </summary>
     public void UpdatePebblesCollected()
     {
-        pebblesCollected.text = GM.PebblesCollected.ToString();
+        //pebblesCollected.text = GM.PebblesCollected.ToString();
     }
     /// <summary>
     /// Update UI prompt for when the player can build

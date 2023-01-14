@@ -36,6 +36,9 @@ public class SlingShot : GameBehaviour<SlingShot>
     [SerializeField]
     private LayerMask mask;
 
+
+    [SerializeField]
+    private AudioSource audioSource;
     private void Awake()
     {
         //make sure magazine is full
@@ -128,6 +131,7 @@ public class SlingShot : GameBehaviour<SlingShot>
                                                                                                            //Rotate bullet to shoot direction
             currentBul.transform.forward = directionWithSpread.normalized;
 
+            audioSource.Play();
             //Add forces to bullet
             currentBul.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
             currentBul.GetComponent<Rigidbody>().AddForce(fpsCam.transform.up * upwardForce, ForceMode.Impulse);

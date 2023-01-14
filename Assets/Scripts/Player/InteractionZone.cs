@@ -208,6 +208,7 @@ public class InteractionZone : GameBehaviour<InteractionZone>
             CanDestroy = false;
             CanClimb = false;
             UI.UpdateMaterialsCollected();
+            BM.PlayBuildSound();
         }
     }
 
@@ -220,38 +221,4 @@ public class InteractionZone : GameBehaviour<InteractionZone>
         objectToStopOutlining.GetComponent<Outline>().enabled = false;
     }
 
-    /*
-    private void AddOutline(GameObject objectToOutline)
-    {
-        OutlineObjectsList.Add(objectToOutline.gameObject);
-    }
-    private void RemoveOutline(GameObject objectToOutline)
-    {
-        objectToOutline.GetComponent<Outline>().enabled = false;
-        OutlineObjectsList.Remove(objectToOutline.gameObject);
-    }
-
-    private void OutlineObjects()
-    {
-        if (OutlineObjectsList.Count <= 0) return;
-        float closestDistanceSqr = _interactRange;
-        Vector3 playerPosition = Player.transform.position;
-
-        foreach (GameObject objectToOutline in OutlineObjectsList)
-        {
-            Vector3 directionToTarget = objectToOutline.transform.position - playerPosition;
-            float dSqrToTarget = directionToTarget.sqrMagnitude;
-            if (dSqrToTarget < closestDistanceSqr)
-            {
-                objectToInteract = objectToOutline;
-                closestDistanceSqr = dSqrToTarget;
-                OutlineObject(objectToOutline);
-            }
-            if (dSqrToTarget > closestDistanceSqr)
-            {
-                StopOutliningObject(objectToOutline);
-            }
-        }
-    }
-    */
 }

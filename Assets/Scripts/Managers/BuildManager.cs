@@ -39,9 +39,6 @@ public class BuildManager : GameBehaviour<BuildManager>
     [SerializeField]
     private GameObject _bridgePrefab;
 
-
-
-
     [SerializeField]
     private GameObject _buildZone;
 
@@ -51,6 +48,11 @@ public class BuildManager : GameBehaviour<BuildManager>
     [HideInInspector]
     public GameObject BuildingObject;
     private int _currentBuildObjectIndex;
+
+    [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip clip;
 
     private void Start()
     {
@@ -126,6 +128,7 @@ public class BuildManager : GameBehaviour<BuildManager>
                 UI.DeselectHotbarOutline();
                 SubtractCost();
                 ResetBuildObject();
+                PlayBuildSound();
                 return;
             }
             return;
@@ -200,7 +203,10 @@ public class BuildManager : GameBehaviour<BuildManager>
         IZ.Toggle(true);
         IZ.DisableInteractions();
     }
-
+    public void PlayBuildSound()
+    {
+        audioSource.PlayOneShot(clip);
+    }
 
     /// <summary>
     /// Assigns object to be built and instantiates it as a parent of the buildZone
