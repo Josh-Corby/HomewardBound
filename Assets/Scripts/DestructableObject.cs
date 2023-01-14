@@ -41,6 +41,7 @@ public class DestructableObject : GameBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
+            SM.WebSFX.Play();
             Debug.Log("Bullet hit");
             if (_fallingObjectRB != null)
             {
