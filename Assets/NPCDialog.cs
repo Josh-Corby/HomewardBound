@@ -13,6 +13,8 @@ public class NPCDialog : GameBehaviour
     private Outline _outline;
     private readonly int _distanceToPlayer = 100;
 
+    public bool FinalAnt = false;
+
     private void Awake()
     {
         _outline = transform.parent.GetComponentInChildren<Outline>();

@@ -18,6 +18,7 @@ public class GameBehaviour : JMC
     protected static LadderClimb LC { get { return LadderClimb.INSTANCE; } }
     protected static DialogueManager DM { get { return DialogueManager.INSTANCE; } }
     protected static SoundManager SM { get { return SoundManager.INSTANCE; } }
+    protected static SceneController SC { get { return SceneController.INSTANCE; } }
 }
 
 public class GameBehaviour<T> : GameBehaviour where T : GameBehaviour

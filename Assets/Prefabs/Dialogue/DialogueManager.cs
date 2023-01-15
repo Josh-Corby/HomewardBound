@@ -26,6 +26,8 @@ public class DialogueManager : GameBehaviour<DialogueManager>
     public bool IsConversationStarted;
     private Coroutine typing;
 
+
+    private bool FinalAnt;
     private void Awake()
     {
         _dialoguePanel = UI.DialoguePanel;
@@ -72,7 +74,7 @@ public class DialogueManager : GameBehaviour<DialogueManager>
         _currentNPCNameText.text = _currentNPCName;
         _currentNPCDialogue = _currentNPC.NPC_Dialogue;
         _currentSentenceIndex = 0;
-
+        FinalAnt = _currentNPC.FinalAnt;
         SetDialogueCharacterImage();
         
     }
@@ -137,6 +139,14 @@ public class DialogueManager : GameBehaviour<DialogueManager>
             _currentSentenceIndex = 0;
            
             StopCoroutine(typing);
+
+            if (FinalAnt)
+            {
+                UI.gameUI.SetActive(false);
+                UI.creditsUI.SetActive(true);
+                Cursor.lockState = CursorLockMode.None;
+                UI.creditsOn = true;
+            }
         }
     }
 

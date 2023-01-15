@@ -56,6 +56,9 @@ public class UIManager : GameBehaviour<UIManager>
     [SerializeField]
     private GameObject _slingshotImage;
 
+    public GameObject creditsUI;
+
+    public bool creditsOn;
     private void Awake()
     {
         cam = TPM.gameObject.GetComponentInChildren<CameraTransform>();
@@ -140,6 +143,10 @@ public class UIManager : GameBehaviour<UIManager>
     /// </summary>
     public void Inputs()
     {
+        if (creditsOn)
+        {
+            return;
+        }
         //Pause menu input
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -150,47 +157,6 @@ public class UIManager : GameBehaviour<UIManager>
         {
             return;
         }
-
-        ToggleMenus();
-
-    }
-    /// <summary>
-    /// Toggle UI depending on enum case
-    /// </summary>
-    public void ToggleMenus()
-    {
-        switch (menu)
-        {
-            default:
-                Cursor.lockState = CursorLockMode.Locked;
-
-                if (CurrentPanel != null)
-                {
-                    CurrentPanel.SetActive(false);
-                }
-                break;
-
-            case Menus.Paused:
-                ChangeMenu(pausePanel);
-                Pause();
-                break;
-        }
-    }
-
-    /// <summary>
-    /// Change which UI panel will be activated when this function is called
-    /// </summary>
-    /// <param name="menuToChangeTo">Panel to change to</param>
-    private void ChangeMenu(GameObject menuToChangeTo)
-    {
-        if (menuToChangeTo == null)
-        {
-            return;
-        }
-
-        CurrentPanel = menuToChangeTo;
-        CurrentPanel.SetActive(true);
-        Cursor.lockState = CursorLockMode.None;
     }
 
     public void Toggle(GameObject objectToToggle)
@@ -270,5 +236,13 @@ public class UIManager : GameBehaviour<UIManager>
     public void SetSlingshotUIStatus(bool status)
     {
         _slingshotImage.SetActive(status);
+    }
+
+    public void DisableCredits()
+    {
+        creditsOn = false;
+        creditsUI.SetActive(false);
+        gameUI.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
     }
 }
